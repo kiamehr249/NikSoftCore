@@ -6,7 +6,7 @@
 <div class="row">
     @foreach (var item in companies)
     {
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="feature-md">
                 <img src="/@item.Introductions.Where(x => x.ImageFile != null).First().ImageFile" alt="feature img">
                 <h5>@item.CoName</h5>

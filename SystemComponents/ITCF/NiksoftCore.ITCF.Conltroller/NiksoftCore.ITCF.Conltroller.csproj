@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Business\**" />
     <Compile Remove="General\Factories\**" />
+    <EmbeddedResource Remove="Business\**" />
     <EmbeddedResource Remove="General\Factories\**" />
+    <None Remove="Business\**" />
     <None Remove="General\Factories\**" />
   </ItemGroup>
 
@@ -26,10 +29,6 @@
     <ProjectReference Include="..\..\..\Utilities\NiksoftCore.Utilities\NiksoftCore.Utilities.csproj" />
     <ProjectReference Include="..\..\..\ViewModel\NiksoftCore.ViewModel\NiksoftCore.ViewModel.csproj" />
     <ProjectReference Include="..\NiksoftCore.ITCF.Service\NiksoftCore.ITCF.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Business\" />
   </ItemGroup>
 
 </Project>

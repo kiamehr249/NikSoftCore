@@ -2260,14 +2260,14 @@ ul.page-numbers li .current {
   color: #919499;
   font-style: italic;
   font-size: 13px;
-  padding: 0 0 0 8px;
+  padding: 0 8px 0 0;
 }
 
 .blog-posts-list .blog-post .post-meta li:after {
   position: absolute;
   content: "/";
   top: -1px;
-  right: -8px;
+  left: -8px;
 }
 
 .blog-posts-list .blog-post .post-meta li:first-of-type {
@@ -4318,14 +4318,14 @@ ul.page-numbers li .current {
   color: #919499;
   font-style: italic;
   font-size: 13px;
-  padding: 0 0 0 8px;
+  padding: 0 8px 0 0;
 }
 
 .portfolio-box-circle .categories li:after {
   position: absolute;
   content: "/";
   top: -1px;
-  right: -8px;
+  left: -8px;
 }
 
 .portfolio-box-circle .categories li:first-of-type {
@@ -6819,4 +6819,31 @@ input.form-send {
 
 .block_overflow {
   overflow: hidden;
+}
+
+.form-group {
+  display: block;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.form-group input, 
+.form-group select {
+  display: block;
+  width: 100%;
+  height: 35px;
+  border-bottom: 1px solid silver;
+  color: #333;
+}
+
+::-webkit-input-placeholder {
+  color: #333;
+}
+
+:-ms-input-placeholder {
+  color: #333;
+}
+
+::placeholder {
+  color: #333;
 }

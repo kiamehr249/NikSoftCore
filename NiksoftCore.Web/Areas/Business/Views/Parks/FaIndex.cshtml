@@ -1,0 +1,114 @@
+﻿@using NiksoftCore.ITCF.Service
+@model NiksoftCore.ITCF.Service.ParkSearchRequest
+@{
+    ViewData["Title"] = "شهرک های صنعتی";
+    Layout = "~/Areas/Business/Views/Shared/_FaLayout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    var Contents = (List<IndustrialPark>)ViewBag.Contents;
+    var Provinces = (SelectList)ViewBag.Provinces;
+}
+
+<div class="content-wrapper">
+    <section class="hero-section">
+        <h2 class="hidden">Slider Section</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="rev_slider_wrapper">
+                        <div class="fullwidth_slider rev_slider" data-type="hero" data-height="750">
+                            <ul>
+                                <li data-transition="fade">
+                                    <img src="~/templates/UiTemplate/FbBusiness/img/portfolio-page-intro.jpg" alt="slide1" data-bgfit="cover" data-bgposition="center center" data-kenburns="on" data-duration="7000" data-ease="Linear.easeNone" data-scalestart="110" data-scaleend="100" data-rotatestart="0" data-rotateend="0" data-offsetstart="0 0" data-offsetend="0 0" data-bgparallax="10" class="rev-slidebg" data-no-retina>
+
+                                    <div class="tp-caption WhiteTtl px40 tp-resizeme"
+                                         data-x="right" data-hoffset="0"
+                                         data-y="middle" data-voffset="-25"
+                                         data-whitespace="nowrap"
+                                         data-transform_idle="o:1;"
+                                         data-transform_in="y:-100px;opacity:0;s:1000;e:Power4.easeOut;"
+                                         data-transform_out="opacity:0;s:500;s:500;"
+                                         data-start="1300"
+                                         data-responsive_offset="on">
+                                        شهرک ها و مناطق صنعتی
+                                    </div>
+
+                                    <div class="tp-caption WhiteTtlp"
+                                         data-x="right" data-hoffset="0"
+                                         data-y="middle" data-voffset="25"
+                                         data-transform_idle="o:1;"
+                                         data-transform_in="y:70px;opacity:0;s:1000;e:Power4.easeOut;"
+                                         data-transform_out="opacity:0;s:500;s:500;"
+                                         data-start="1600">
+                                        کسب و کار بر اساس شهرک ها و مناطق صنعتی ایران
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br />
+    <br />
+    <div class="container">
+        <div class="blog-posts-list">
+            <form class="respond-form" method="get">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @placeholder = "عنوان" })
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            @Html.DropDownListFor(m => m.ProvinceId, Provinces, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="text-right">
+                            <button class="form-send btn yellow dark-hover" type="submit">جستجو</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                @foreach (var item in Contents)
+                {
+                    <div class="col-sm-3">
+                        <div class="blog-post">
+                            <h5 class="post-title"><a href="/">@item.Title</a></h5>
+                            <ul class="post-meta clean-list">
+                                <li><a href="#">@item.Province.Title</a></li>
+                                <li><a href="#">@item.City.Title</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+            @if (pager.TotalSize > pager.PageSize)
+            {
+                <ul class="page-numbers">
+
+                    <li><a class="prev page-numbers" href="@Context.Request.Path?part=1">نخست</a></li>
+                    @for (int i = 1; i <= pager.GetTotalParts(); i++)
+                    {
+                        if (pager.Part == i)
+                        {
+                            <li><span class="page-numbers current">@i</span></li>
+                        }
+                        else
+                        {
+                            <li><a class="page-numbers" href="@Context.Request.Path?part=@i">@i</a></li>
+                        }
+
+                    }
+                    <li><a class="next page-numbers" href="@Context.Request.Path?part=@pager.GetTotalParts()">آخر</a></li>
+                </ul>
+            }
+        </div>
+    </div>
+</div>
