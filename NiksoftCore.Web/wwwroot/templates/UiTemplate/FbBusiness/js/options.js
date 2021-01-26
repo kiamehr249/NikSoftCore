@@ -93,7 +93,7 @@
 						tmp:'<span class="nav-bullet"></span>',        
 						h_align:"right",
 						v_align:"center",
-						h_offset:30,
+						h_offset:0,
 						v_offset:0
 					}	
 				},

@@ -1,12 +1,11 @@
 ﻿@using NiksoftCore.ITCF.Service
-@model NiksoftCore.ITCF.Service.ParkSearchRequest
+@model NiksoftCore.ITCF.Service.CategorySearchRequest
 @{
-    ViewData["Title"] = "شهرک های صنعتی";
-    Layout = "~/Areas/Business/Views/Shared/_FaLayout.cshtml";
+    ViewData["Title"] = "دسته بندی های کسب و کار";
+    Layout = "~/Areas/Business/Views/Shared/_FaLayout2.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
-    var Contents = (List<IndustrialPark>)ViewBag.Contents;
-    var Provinces = (SelectList)ViewBag.Provinces;
+    var Contents = (List<BusinessCategory>)ViewBag.Contents;
 }
 
 <div class="content-wrapper">
@@ -15,15 +14,32 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="section-header">
-                        <h3>شهرک ها و مناطق صنعتی</h3>
-                        <span><i></i></span>
+                    <div class="rev_slider_wrapper" style="direction: ltr;">
+                        <div class="fullwidth_slider rev_slider" data-type="hero" data-height="600">
+                            <ul>
+                                <li data-transition="fade">
+                                    <img src="~/templates/UiTemplate/FbBusiness/img/contact-page-bg.jpg" alt="slide1" data-bgfit="cover" data-bgposition="center center" data-kenburns="on" data-duration="7000" data-ease="Linear.easeNone" data-scalestart="110" data-scaleend="100" data-rotatestart="0" data-rotateend="0" data-offsetstart="0 0" data-offsetend="0 0" data-bgparallax="10" class="rev-slidebg" data-no-retina>
+
+                                    <div class="tp-caption WhiteTtl tp-resizeme"
+                                         data-x="center" data-hoffset="0"
+                                         data-y="middle" data-voffset="-30"
+                                         data-whitespace="nowrap"
+                                         data-transform_idle="o:1;"
+                                         data-transform_in="y:-100px;opacity:0;s:1000;e:Power4.easeOut;"
+                                         data-transform_out="opacity:0;s:500;s:500;"
+                                         data-start="1300"
+                                         data-fontsize="['50','45','35','30']"
+                                         data-responsive_offset="on">
+                                        دسته بندی ها
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <br />
     <br />
     <div class="container">
         <div class="blog-posts-list">
@@ -32,11 +48,6 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @placeholder = "عنوان" })
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            @Html.DropDownListFor(m => m.ProvinceId, Provinces, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -54,7 +65,7 @@
                     <div class="col-sm-12">
                         <div class="section-header">
                             <h5 class="subtitle">متاسفانه</h5>
-                            <h4>هیچ شهرکی در اینجا پیدا نشد</h4>
+                            <h4>هیچ دسته بندی پیدا نشد</h4>
                             <span><i></i></span>
                         </div>
                     </div>
@@ -62,13 +73,19 @@
 
                 @foreach (var item in Contents)
                 {
-                    <div class="col-sm-3">
-                        <div class="blog-post">
-                            <h5 class="post-title"><a href="/Business/Parks/ParkBisuness?ParkId=@item.Id">@item.Title</a></h5>
-                            <ul class="post-meta clean-list">
-                                <li><a href="#">@item.Province.Title</a></li>
-                                <li><a href="#">@item.City.Title</a></li>
-                            </ul>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="portfolio-box-circle masonry">
+                            <div class="image">
+                                <a href="/Business/Company/CategoryCompanies?CatgoryId=@item.Id">
+                                    <img src="/@item.Image" alt="portfolio box">
+                                </a>
+                            </div>
+                            <h6 class="title">
+                                <a href="/Business/Company/CategoryCompanies?CatgoryId=@item.Id">@item.Title</a>
+                            </h6>
+                            <p>
+                                @item.Description
+                            </p>
                         </div>
                     </div>
                 }

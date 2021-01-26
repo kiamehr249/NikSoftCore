@@ -6,7 +6,7 @@
     <title>بازرگانی مرکز تجارت بین الملل</title>
     <meta name="description" content="مرکز تجارت بین الملل" />
     <meta name="author" content="فکر برتر" />
-    <link rel="shortcut icon" href="img/fav.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="~/templates/UiTemplate/NikFace/rtl/images/fav.png" type="image/x-icon" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -48,38 +48,38 @@
                     </span>
 
                     <div class="logo">
-                        <a href="index.html">
+                        <a href="/Business">
                             <img src="~/templates/UiTemplate/FbBusiness/img/logo-1-1.png" />
                         </a>
                     </div>
 
                     <nav class="main-nav">
                         <ul class="menu">
-                            <li class="menu-item menu-item-has-children current-menu-parent">
+                            <li class="menu-item">
                                 <a href="/Business">خانه</a>
                             </li>
                             <li class="menu-item">
                                 <a href="#">مناطق اقتصادی</a>
                                 <ul class="sub-menu">
                                     <li class="menu-item">
-                                        <a href="about.html">شهرک های صنعتی</a>
+                                        <a href="/Business/Parks">شهرک های صنعتی</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="coming-soon.html">دسته بندی ها</a>
+                                        <a href="/Business/Company/Categories">دسته بندی ها</a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="menu-item menu-item-has-children">
-                                <a href="#">محصولات</a>
+                                <a href="/Business/Company">شرکت ها</a>
                             </li>
                             <li class="menu-item menu-item-has-children">
                                 <a href="#">خدمات بازرگانی</a>
                                 <ul class="sub-menu">
                                     <li class="menu-item">
-                                        <a href="blog.html">معرفی خدمات</a>
+                                        <a href="#l">معرفی خدمات</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="single-gallery.html">قوانین و مقررات</a>
+                                        <a href="#">قوانین و مقررات</a>
                                     </li>
                                 </ul>
                             </li>
@@ -87,10 +87,10 @@
                                 <a href="#">ورود/ثبت نام</a>
                                 <ul class="sub-menu">
                                     <li class="menu-item">
-                                        <a href="/">ورود</a>
+                                        <a href="/Auth/Account/Login">ورود</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="/">ثبت نام</a>
+                                        <a href="/Auth/Account/Register">ثبت نام</a>
                                     </li>
                                 </ul>
                             </li>
@@ -149,7 +149,7 @@
                                             <div class="tp-caption WhiteTtlp tp-resizeme"
                                                  data-x="center" data-hoffset="0"
                                                  data-y="middle" data-voffset="30"
-                                                 data-whitespace="pre"
+                                                 data-whitespace="nowrap"
                                                  data-transform_idle="o:1;"
                                                  data-transform_in="y:-100px;opacity:0;s:1000;e:Power2.easeOut;"
                                                  data-transform_out="opacity:0;s:500;s:500;"
@@ -285,28 +285,7 @@
                             <div class="row content">
                                 <div class="col-md-10 col-md-offset-1">
                                     <div class="clients-row">
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <a href="#"><img src="~/templates/UiTemplate/FbBusiness/img/partner-logo-1.png" alt="partner logo"></a>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <a href="#"><img src="~/templates/UiTemplate/FbBusiness/img/partner-logo-2.png" alt="partner logo"></a>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <a href="#"><img src="~/templates/UiTemplate/FbBusiness/img/partner-logo-3.png" alt="partner logo"></a>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <a href="#"><img src="~/templates/UiTemplate/FbBusiness/img/partner-logo-4.png" alt="partner logo"></a>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <a href="#"><img src="~/templates/UiTemplate/FbBusiness/img/partner-logo-5.png" alt="partner logo"></a>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <a href="#"><img src="~/templates/UiTemplate/FbBusiness/img/partner-logo-6.png" alt="partner logo"></a>
-                                            </div>
-                                        </div>
+                                        @await Component.InvokeAsync("WCopmanyLogos")
                                     </div>
                                 </div>
                             </div>

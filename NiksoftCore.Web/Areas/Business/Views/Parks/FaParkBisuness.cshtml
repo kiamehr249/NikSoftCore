@@ -1,12 +1,11 @@
 ﻿@using NiksoftCore.ITCF.Service
-@model NiksoftCore.ITCF.Service.ParkSearchRequest
+@model NiksoftCore.ITCF.Service.BusinessSearchRequest
 @{
     ViewData["Title"] = "شهرک های صنعتی";
     Layout = "~/Areas/Business/Views/Shared/_FaLayout.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
-    var Contents = (List<IndustrialPark>)ViewBag.Contents;
-    var Provinces = (SelectList)ViewBag.Provinces;
+    var Contents = (List<Business>)ViewBag.Contents;
 }
 
 <div class="content-wrapper">
@@ -16,7 +15,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="section-header">
-                        <h3>شهرک ها و مناطق صنعتی</h3>
+                        <h3>@ViewBag.PageTitle</h3>
                         <span><i></i></span>
                     </div>
                 </div>
@@ -29,18 +28,14 @@
         <div class="blog-posts-list">
             <form class="respond-form" method="get">
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <div class="form-group">
-                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @placeholder = "عنوان" })
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            @Html.DropDownListFor(m => m.ProvinceId, Provinces, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.CoName, new { @class = "form-control", @placeholder = "عنوان" })
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="text-right">
+                            @Html.HiddenFor(m => m.ParkId)
                             <button class="form-send btn yellow dark-hover" type="submit">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
@@ -54,17 +49,16 @@
                     <div class="col-sm-12">
                         <div class="section-header">
                             <h5 class="subtitle">متاسفانه</h5>
-                            <h4>هیچ شهرکی در اینجا پیدا نشد</h4>
+                            <h4>هیچ کسب و کاری در اینجا پیدا نشد</h4>
                             <span><i></i></span>
                         </div>
                     </div>
                 }
-
                 @foreach (var item in Contents)
                 {
                     <div class="col-sm-3">
                         <div class="blog-post">
-                            <h5 class="post-title"><a href="/Business/Parks/ParkBisuness?ParkId=@item.Id">@item.Title</a></h5>
+                            <h5 class="post-title"><a href="/">@item.CoName</a></h5>
                             <ul class="post-meta clean-list">
                                 <li><a href="#">@item.Province.Title</a></li>
                                 <li><a href="#">@item.City.Title</a></li>

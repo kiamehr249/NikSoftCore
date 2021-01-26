@@ -1,0 +1,131 @@
+﻿@using NiksoftCore.ITCF.Service
+@model NiksoftCore.ITCF.Service.BusinessRequest
+@{
+    ViewData["Title"] = "کسب و کارها";
+    Layout = "~/Areas/Business/Views/Shared/_FaLayout2.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    var Contents = (List<Business>)ViewBag.Contents;
+    var Provinces = (SelectList)ViewBag.Provinces;
+}
+
+<div class="content-wrapper">
+    <section class="hero-section">
+        <h2 class="hidden">Slider Section</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="rev_slider_wrapper" style="direction: ltr;">
+                        <div class="fullwidth_slider rev_slider" data-type="hero" data-height="600">
+                            <ul>
+                                <li data-transition="fade">
+                                    <img src="~/templates/UiTemplate/FbBusiness/img/testimonials-section-bg.jpg" alt="slide1" data-bgfit="cover" data-bgposition="center center" data-kenburns="on" data-duration="7000" data-ease="Linear.easeNone" data-scalestart="110" data-scaleend="100" data-rotatestart="0" data-rotateend="0" data-offsetstart="0 0" data-offsetend="0 0" data-bgparallax="10" class="rev-slidebg" data-no-retina>
+
+                                    <div class="tp-caption WhiteTtl tp-resizeme"
+                                         data-x="center" data-hoffset="0"
+                                         data-y="middle" data-voffset="-30"
+                                         data-whitespace="nowrap"
+                                         data-transform_idle="o:1;"
+                                         data-transform_in="y:-100px;opacity:0;s:1000;e:Power4.easeOut;"
+                                         data-transform_out="opacity:0;s:500;s:500;"
+                                         data-start="1300"
+                                         data-fontsize="['50','45','35','30']"
+                                         data-responsive_offset="on">
+                                        کسب و کارها
+                                    </div>
+
+                                    <div class="tp-caption WhiteTtlp"
+                                         data-x="center" data-hoffset="0"
+                                         data-y="middle" data-voffset="30"
+                                         data-whitespace="nowrap"
+                                         data-transform_idle="o:1;"
+                                         data-transform_in="y:70px;opacity:0;s:1000;e:Power4.easeOut;"
+                                         data-transform_out="opacity:0;s:500;s:500;"
+                                         data-fontsize="['30','25','20','16']"
+                                         data-start="1600">
+                                        کسب و کار های فعال در بخش بازرگانی مرکز تجارت فکربرتر
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br />
+    <div class="container-fluid">
+        <form class="respond-form" method="get">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.CoName, new { @class = "form-control", @placeholder = "عنوان" })
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.ProvinceId, Provinces, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="text-right">
+                        <button class="form-send btn yellow dark-hover" type="submit">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            @if (Contents.Count == 0)
+            {
+                <div class="col-sm-12">
+                    <div class="section-header">
+                        <h5 class="subtitle">متاسفانه</h5>
+                        <h4>هیچ شرکتی در اینجا پیدا نشد</h4>
+                        <span><i></i></span>
+                    </div>
+                </div>
+            }
+
+            @foreach (var item in Contents)
+            {
+                <div class="col-md-3 col-xs-6">
+                    <div class="portfolio-box">
+                        <div class="cover">
+                            <a href="/Business/Company/SingleCompany?Id=@item.Id">
+                                <img src="/@item.Image" alt="portfolio project">
+                            </a>
+                            <h6 class="title">@item.CoName</h6>
+                            <ul class="categories clean-list">
+                                <li><a href="/Business/Company/SingleCompany?Id=@item.Id">@item.Province.Title</a></li>
+                                <li><a href="/Business/Company/SingleCompany?Id=@item.Id">@item.City.Title</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        @if (pager.TotalSize > pager.PageSize)
+        {
+            <ul class="page-numbers">
+
+                <li><a class="prev page-numbers" href="@Context.Request.Path?part=1">نخست</a></li>
+                @for (int i = 1; i <= pager.GetTotalParts(); i++)
+                {
+                    if (pager.Part == i)
+                    {
+                        <li><span class="page-numbers current">@i</span></li>
+                    }
+                    else
+                    {
+                        <li><a class="page-numbers" href="@Context.Request.Path?part=@i">@i</a></li>
+                    }
+
+                }
+                <li><a class="next page-numbers" href="@Context.Request.Path?part=@pager.GetTotalParts()">آخر</a></li>
+            </ul>
+        }
+    </div>
+</div>

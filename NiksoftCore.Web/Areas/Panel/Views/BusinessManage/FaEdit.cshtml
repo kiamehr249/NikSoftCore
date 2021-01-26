@@ -14,7 +14,7 @@
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/BusinessManage/Edit" method="post">
+<form action="/Panel/BusinessManage/Edit" method="post" enctype="multipart/form-data">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
@@ -71,6 +71,30 @@
                     <select class="form-control m-b" asp-for="IndustrialParkId" asp-items="ViewBag.Parks">
                         <option selected="selected" value="0">انتخاب کنید</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="LogoFile" class="btn btn-outline-primary">
+                        انتخاب لگو(200x200)
+                        <input asp-for="LogoFile" type="file" class="d-none" />
+                    </label>
+                    @if (!string.IsNullOrEmpty(Model.Logo))
+                    {
+                        <img src="/@Model.Logo" style="max-width: 70px;" />
+                    }
+                </div>
+                <div class="form-group">
+                    <label for="ImageFile" class="btn btn-outline-primary">
+                        انتخاب تصویر(800x500)
+                        <input asp-for="ImageFile" type="file" class="d-none" />
+                    </label>
+                    @if (!string.IsNullOrEmpty(Model.Image))
+                    {
+                        <img src="/@Model.Image" style="max-width: 70px;" />
+                    }
+                </div>
+                <div class="form-group">
+                    <label for="txtDesc" class="control-label">توضیحات مختصر(زمینه فعالیت)</label>
+                    @Html.TextAreaFor(m => m.Description, new { placeholder = "توضیحات", @class = "form-control", @id = "txtDesc", rows = "3" })
                 </div>
                 <div class="form-group">
                     <label for="txtAddress" class="control-label">آدرس</label>

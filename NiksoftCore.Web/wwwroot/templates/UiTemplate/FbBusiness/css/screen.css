@@ -510,8 +510,8 @@ header .main-nav ul li a:before,
 
 .btn.grey:hover,
 .btn.yellow {
-  background: #b07300;
-  border-color: #ffc104;
+  background: #ffac0f;
+  border-color: #ffac0f;
   color: #fff;
 }
 
@@ -4191,7 +4191,7 @@ ul.page-numbers li .current {
   color: #fff;
   font-style: italic;
   font-size: 13px;
-  padding: 0 0 0 8px;
+  padding: 0 8px 0 0;
 }
 
 .portfolio-box .project-meta li {
@@ -4207,7 +4207,7 @@ ul.page-numbers li .current {
   position: absolute;
   content: "/";
   top: -1px;
-  right: -8px;
+  left: -8px;
 }
 
 .portfolio-box .project-meta li:last-of-type:after,
@@ -6846,4 +6846,25 @@ input.form-send {
 
 ::placeholder {
   color: #333;
+}
+
+.slotholder {
+  position: relative;
+}
+.slotholder:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #04011c63;
+  z-index: 10;
+}
+
+.portfolio-box .cover > a {
+  display: block;
+  background: #000;
+}
+
+.portfolio-box .cover > a > img {
+  opacity: 0.4;
 }
