@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using NiksoftCore.ITCF.Service;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.Utilities;
+using NiksoftCore.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,6 +94,13 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 return View(GetViewName(lang, "Create"), request);
             }
 
+            string logo = "";
+            if (request.LogoFile != null)
+                logo = await FileUpload(request.LogoFile);
+            string image = "";
+            if (request.ImageFile != null)
+                image = await FileUpload(request.ImageFile);
+
             var newCat = new Service.Business
             {
                 CoName = request.CoName,
@@ -104,6 +113,9 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 CityId = request.CityId,
                 Address = request.Address,
                 Location = request.Location,
+                Logo = logo,
+                Image = image,
+                Description = request.Description,
                 IndustrialParkId = request.IndustrialParkId == 0 ? null : request.IndustrialParkId,
                 CatgoryId = request.CatgoryId,
                 CreatorId = theUser.Id,
@@ -143,6 +155,9 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 CityId = item.CityId,
                 Address = item.Address,
                 Location = item.Location,
+                Logo = item.Logo,
+                Image = item.Image,
+                Description = item.Description,
                 IndustrialParkId = item.IndustrialParkId,
                 CatgoryId = item.CatgoryId
             };
@@ -173,6 +188,13 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 return View(GetViewName(lang, "Create"), request);
             }
 
+            string logo = "";
+            if (request.LogoFile != null)
+                logo = await FileUpload(request.LogoFile);
+            string image = "";
+            if (request.ImageFile != null)
+                image = await FileUpload(request.ImageFile);
+
 
 
             var theContent = iITCFServ.IBusinessServ.Find(x => x.Id == request.Id);
@@ -186,6 +208,11 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             theContent.CityId = request.CityId;
             theContent.Address = request.Address;
             theContent.Location = request.Location;
+            if (!string.IsNullOrEmpty(logo))
+                theContent.Logo = logo;
+            if (!string.IsNullOrEmpty(image))
+                theContent.Image = image;
+            theContent.Description = request.Description;
             theContent.IndustrialParkId = request.IndustrialParkId == 0 ? null : request.IndustrialParkId;
             theContent.Status = theContent.Status == BusinessStatus.EditConfirm ? BusinessStatus.RegisterConfirm : theContent.Status;
             await iITCFServ.IBusinessServ.SaveChangesAsync();
@@ -304,7 +331,55 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 result = false;
             }
 
+            if (request.Id == 0 && request.LogoFile.Length == 0)
+            {
+                if (lang == "fa")
+                    AddError("لوگو باید مقدار داشته باشد", "fa");
+                else
+                    AddError("Logo can not be null", "en");
+                result = false;
+            }
+
+            if (request.Id == 0 && request.ImageFile.Length == 0)
+            {
+                if (lang == "fa")
+                    AddError("تصویر باید مقدار داشته باشد", "fa");
+                else
+                    AddError("تصویر can not be null", "en");
+                result = false;
+            }
+
             return result;
+        }
+
+
+        private async Task<string> FileUpload(IFormFile file)
+        {
+            string Image = string.Empty;
+            if (file != null && file.Length > 0)
+            {
+                var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
+                {
+                    File = file,
+                    RootPath = hosting.ContentRootPath,
+                    UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                });
+
+                if (!SaveImage.Success)
+                {
+                    Messages.Add(new NikMessage
+                    {
+                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Type = MessageType.Error,
+                        Language = "Fa"
+                    });
+                    ViewBag.Messages = Messages;
+                }
+
+                Image = SaveImage.FilePath;
+            }
+
+            return Image;
         }
 
     }

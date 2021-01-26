@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.ITCF.Service;
 using System;
@@ -10,20 +9,18 @@ using System.Threading.Tasks;
 
 namespace NiksoftCore.ITCF.Conltroller.Widgets
 {
-    public class WCompanies : ViewComponent
+    public class WCopmanyLogos : ViewComponent
     {
-        private readonly UserManager<DataModel.User> userManager;
         public IITCFService IITCFServ { get; set; }
 
-        public WCompanies(IConfiguration Configuration, UserManager<DataModel.User> userManager)
+        public WCopmanyLogos(IConfiguration Configuration)
         {
-            this.userManager = userManager;
             IITCFServ = new ITCFService(Configuration);
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            ViewBag.Companies = IITCFServ.IBusinessServ.GetAll(x => x.Status == BusinessStatus.ConfirmShow);
+            ViewBag.Logos = IITCFServ.IBusinessServ.GetPart(x => true, 0, 6);
             return View();
         }
 
