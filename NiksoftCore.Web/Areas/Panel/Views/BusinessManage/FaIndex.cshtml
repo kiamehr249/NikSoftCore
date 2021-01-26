@@ -108,13 +108,13 @@
                         else
                         {
                             <div class="btn-group-vertical btn-group-sm">
-                                @if (item.Status == BusinessStatus.EditConfirm || item.Status == BusinessStatus.RegisterConfirm)
+                                @if (item.Status == BusinessStatus.EditConfirm || item.Status == BusinessStatus.RegisterConfirm || item.Status == BusinessStatus.ConfirmShow)
                                 {
                                     <a href="/Panel/BusinessManage/EditRequest?Id=@item.Id" class="btn btn-outline-info btn-sm">
                                         درخواست تغییر
                                     </a>
                                 }
-                                @if (item.Status != BusinessStatus.ConfirmShow && item.Status != BusinessStatus.ShowRequest)
+                                @if (item.Status != BusinessStatus.ConfirmShow && item.Status != BusinessStatus.ShowRequest && item.Status != BusinessStatus.EditRequest)
                                 {
                                     <a href="/Panel/BusinessManage/ShowRequest/@item.Id" class="btn btn-outline-primary btn-sm">
                                         نمایش در سایت
