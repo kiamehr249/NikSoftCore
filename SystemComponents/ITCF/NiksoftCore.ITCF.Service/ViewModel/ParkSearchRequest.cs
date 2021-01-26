@@ -1,11 +1,11 @@
-﻿namespace NiksoftCore.ITCF.Service
+﻿using NiksoftCore.ViewModel;
+
+namespace NiksoftCore.ITCF.Service
 {
-    public class ParkSearchRequest
+    public class ParkSearchRequest : BaseRequest
     {
         public string Title { get; set; }
         public int? ProvinceId { get; set; }
         public int CityId { get; set; }
-        public string lang { get; set; }
-        public int part { get; set; }
     }
 }
