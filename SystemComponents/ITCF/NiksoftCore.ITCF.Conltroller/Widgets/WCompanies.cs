@@ -2,10 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.ITCF.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.ITCF.Conltroller.Widgets
@@ -23,7 +19,7 @@ namespace NiksoftCore.ITCF.Conltroller.Widgets
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            ViewBag.Companies = IITCFServ.IBusinessServ.GetAll(x => x.Status == BusinessStatus.ConfirmShow);
+            ViewBag.Companies = IITCFServ.IBusinessServ.GetPart(x => x.Status == BusinessStatus.ConfirmShow, 0, 4);
             return View();
         }
 

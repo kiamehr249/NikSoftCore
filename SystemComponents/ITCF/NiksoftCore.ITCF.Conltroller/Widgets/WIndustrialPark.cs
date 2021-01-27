@@ -22,7 +22,7 @@ namespace NiksoftCore.ITCF.Conltroller.Widgets
         public async Task<IViewComponentResult> InvokeAsync()
         {
             ViewBag.Parks = IITCFServ.IIndustrialParkServ.GetPart(x =>
-            true, 0, 20);
+            true, 0, 10);
             return View();
         }
 

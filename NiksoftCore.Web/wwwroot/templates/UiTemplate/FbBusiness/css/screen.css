@@ -1857,13 +1857,13 @@ ul.page-numbers li a.next {
 }
 
 ul.page-numbers li a.prev {
-  padding-right: 25px;
-  padding-left: 0;
+  padding-right: 0;
+  padding-left: 25px;
 }
 
 ul.page-numbers li a.next {
-  padding-left: 25px;
-  padding-right: 0;
+  padding-left: 0;
+  padding-right: 25px;
 }
 
 ul.page-numbers li a.next:before,
@@ -1877,11 +1877,11 @@ ul.page-numbers li a.prev:before {
 }
 
 ul.page-numbers li a.prev:before {
-  right: 5px;
+  left: 5px;
 }
 
 ul.page-numbers li a.next:before {
-  left: 5px;
+  right: 5px;
 }
 
 ul.page-numbers li .current {

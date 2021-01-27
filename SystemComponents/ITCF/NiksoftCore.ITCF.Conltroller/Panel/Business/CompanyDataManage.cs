@@ -402,6 +402,31 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 return View(GetViewName(lang, "CreatePart3"), request);
             }
 
+            string image = string.Empty;
+            if (request.Image != null && request.Image.Length > 0)
+            {
+                var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
+                {
+                    File = request.Image,
+                    RootPath = hosting.ContentRootPath,
+                    UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                });
+
+                if (!SaveImage.Success)
+                {
+                    Messages.Add(new NikMessage
+                    {
+                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Type = MessageType.Error,
+                        Language = "Fa"
+                    });
+                    ViewBag.Messages = Messages;
+                    return View(GetViewName(lang, "CreatePart3"), request);
+                }
+
+                image = SaveImage.FilePath;
+            }
+
             string video = string.Empty;
             if (request.Video != null && request.Video.Length > 0)
             {
@@ -431,6 +456,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             {
                 Title = request.Title,
                 Description = request.Description,
+                ImageFile = image,
                 VideoFile = video,
                 KeyValue = Tools.GetUnitKey(3),
                 BusinessId = theBusiness.Id,
@@ -445,7 +471,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditPart([FromQuery] string lang, int Id)
+        public async Task<IActionResult> EditPart1([FromQuery] string lang, int Id)
         {
             var theUser = await userManager.GetUserAsync(HttpContext.User);
             var item = iITCFServ.iIntroductionServ.Find(x => x.Id == Id);
@@ -488,12 +514,12 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 CreateDate = item.CreateDate
             };
 
-            return View(GetViewName(lang, "EditPart"), request);
+            return View(GetViewName(lang, "EditPart1"), request);
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditPart([FromQuery] string lang, [FromForm] IntroductionRequest request)
+        public async Task<IActionResult> EditPart1([FromQuery] string lang, [FromForm] IntroductionRequest request)
         {
             var theUser = await userManager.GetUserAsync(HttpContext.User);
             var item = iITCFServ.iIntroductionServ.Find(x => x.Id == request.Id);
@@ -524,7 +550,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 if (!FormVlideUnit1(lang, request))
                 {
                     ViewBag.Messages = Messages;
-                    return View(GetViewName(lang, "EditPart"), request);
+                    return View(GetViewName(lang, "EditPart1"), request);
                 }
 
                 string Image = string.Empty;
@@ -546,7 +572,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                             Language = "Fa"
                         });
                         ViewBag.Messages = Messages;
-                        return View(GetViewName(lang, "EditPart"), request);
+                        return View(GetViewName(lang, "EditPart1"), request);
                     }
 
                     Image = SaveImage.FilePath;
@@ -561,7 +587,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 if (!FormVlideUnit3(lang, request))
                 {
                     ViewBag.Messages = Messages;
-                    return View(GetViewName(lang, "EditPart"), request);
+                    return View(GetViewName(lang, "EditPart1"), request);
                 }
 
                 string video = string.Empty;
@@ -583,7 +609,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                             Language = "Fa"
                         });
                         ViewBag.Messages = Messages;
-                        return View(GetViewName(lang, "EditPart"), request);
+                        return View(GetViewName(lang, "EditPart1"), request);
                     }
 
                     video = SaveImage.FilePath;
@@ -592,6 +618,316 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 if (!string.IsNullOrEmpty(video))
                     item.VideoFile = video;
             }
+
+
+
+
+            item.Title = request.Title;
+            item.Description = request.Description;
+
+            await iITCFServ.iIntroductionServ.SaveChangesAsync();
+            return Redirect("/Panel/CompanyDataManage/IntroList/?bid=" + request.BusinessId + "&unit=" + Tools.GetUnitNum(item.KeyValue));
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditPart2([FromQuery] string lang, int Id)
+        {
+            var theUser = await userManager.GetUserAsync(HttpContext.User);
+            var item = iITCFServ.iIntroductionServ.Find(x => x.Id == Id);
+            var theBusiness = iITCFServ.IBusinessServ.Find(x => x.Id == item.BusinessId && x.CreatorId == theUser.Id);
+            if (theBusiness == null)
+            {
+                return Redirect("/Panel");
+            }
+
+            ViewBag.Company = theBusiness;
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(1);
+            else
+                ViewBag.PageTitle = "Company Content Management";
+
+
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            var request = new IntroductionRequest
+            {
+                Id = item.Id,
+                Title = item.Title,
+                Description = item.Description,
+                ImageFile = item.ImageFile,
+                VideoFile = item.VideoFile,
+                SoundFile = item.SoundFile,
+                KeyValue = item.KeyValue,
+                BusinessId = item.BusinessId,
+                UserId = item.UserId,
+                CreateDate = item.CreateDate
+            };
+
+            return View(GetViewName(lang, "EditPart2"), request);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPart2([FromQuery] string lang, [FromForm] IntroductionRequest request)
+        {
+            var theUser = await userManager.GetUserAsync(HttpContext.User);
+            var item = iITCFServ.iIntroductionServ.Find(x => x.Id == request.Id);
+            var theBusiness = iITCFServ.IBusinessServ.Find(x => x.Id == request.BusinessId && x.CreatorId == theUser.Id);
+            if (theBusiness == null)
+            {
+                return Redirect("/Panel");
+            }
+
+            ViewBag.Company = theBusiness;
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(1);
+            else
+                ViewBag.PageTitle = "Company Content Management";
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+            if (item.KeyValue == "unit1" || item.KeyValue == "unit2")
+            {
+                if (!FormVlideUnit1(lang, request))
+                {
+                    ViewBag.Messages = Messages;
+                    return View(GetViewName(lang, "EditPart2"), request);
+                }
+
+                string Image = string.Empty;
+                if (request.Image != null && request.Image.Length > 0)
+                {
+                    var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
+                    {
+                        File = request.Image,
+                        RootPath = hosting.ContentRootPath,
+                        UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                    });
+
+                    if (!SaveImage.Success)
+                    {
+                        Messages.Add(new NikMessage
+                        {
+                            Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                            Type = MessageType.Error,
+                            Language = "Fa"
+                        });
+                        ViewBag.Messages = Messages;
+                        return View(GetViewName(lang, "EditPart2"), request);
+                    }
+
+                    Image = SaveImage.FilePath;
+                }
+
+                if (!string.IsNullOrEmpty(Image))
+                    item.ImageFile = Image;
+
+            }
+            else
+            {
+                if (!FormVlideUnit3(lang, request))
+                {
+                    ViewBag.Messages = Messages;
+                    return View(GetViewName(lang, "EditPart2"), request);
+                }
+
+                string video = string.Empty;
+                if (request.Video != null && request.Video.Length > 0)
+                {
+                    var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
+                    {
+                        File = request.Video,
+                        RootPath = hosting.ContentRootPath,
+                        UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                    });
+
+                    if (!SaveImage.Success)
+                    {
+                        Messages.Add(new NikMessage
+                        {
+                            Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                            Type = MessageType.Error,
+                            Language = "Fa"
+                        });
+                        ViewBag.Messages = Messages;
+                        return View(GetViewName(lang, "EditPart2"), request);
+                    }
+
+                    video = SaveImage.FilePath;
+                }
+
+                if (!string.IsNullOrEmpty(video))
+                    item.VideoFile = video;
+            }
+
+
+
+
+            item.Title = request.Title;
+            item.Description = request.Description;
+
+            await iITCFServ.iIntroductionServ.SaveChangesAsync();
+            return Redirect("/Panel/CompanyDataManage/IntroList/?bid=" + request.BusinessId + "&unit=" + Tools.GetUnitNum(item.KeyValue));
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditPart3([FromQuery] string lang, int Id)
+        {
+            var theUser = await userManager.GetUserAsync(HttpContext.User);
+            var item = iITCFServ.iIntroductionServ.Find(x => x.Id == Id);
+            var theBusiness = iITCFServ.IBusinessServ.Find(x => x.Id == item.BusinessId && x.CreatorId == theUser.Id);
+            if (theBusiness == null)
+            {
+                return Redirect("/Panel");
+            }
+
+            ViewBag.Company = theBusiness;
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(1);
+            else
+                ViewBag.PageTitle = "Company Content Management";
+
+
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            var request = new IntroductionRequest
+            {
+                Id = item.Id,
+                Title = item.Title,
+                Description = item.Description,
+                ImageFile = item.ImageFile,
+                VideoFile = item.VideoFile,
+                SoundFile = item.SoundFile,
+                KeyValue = item.KeyValue,
+                BusinessId = item.BusinessId,
+                UserId = item.UserId,
+                CreateDate = item.CreateDate
+            };
+
+            return View(GetViewName(lang, "EditPart3"), request);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPart3([FromQuery] string lang, [FromForm] IntroductionRequest request)
+        {
+            var theUser = await userManager.GetUserAsync(HttpContext.User);
+            var item = iITCFServ.iIntroductionServ.Find(x => x.Id == request.Id);
+            var theBusiness = iITCFServ.IBusinessServ.Find(x => x.Id == request.BusinessId && x.CreatorId == theUser.Id);
+            if (theBusiness == null)
+            {
+                return Redirect("/Panel");
+            }
+
+            ViewBag.Company = theBusiness;
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = Tools.GetUnitTitle(1);
+            else
+                ViewBag.PageTitle = "Company Content Management";
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+
+            if (!FormVlideUnit3(lang, request))
+            {
+                ViewBag.Messages = Messages;
+                return View(GetViewName(lang, "EditPart3"), request);
+            }
+
+            string image = string.Empty;
+            if (request.Image != null && request.Image.Length > 0)
+            {
+                var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
+                {
+                    File = request.Image,
+                    RootPath = hosting.ContentRootPath,
+                    UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                });
+
+                if (!SaveImage.Success)
+                {
+                    Messages.Add(new NikMessage
+                    {
+                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Type = MessageType.Error,
+                        Language = "Fa"
+                    });
+                    ViewBag.Messages = Messages;
+                    return View(GetViewName(lang, "EditPart3"), request);
+                }
+
+                image = SaveImage.FilePath;
+            }
+
+            if (!string.IsNullOrEmpty(image))
+                item.ImageFile = image;
+
+            string video = string.Empty;
+            if (request.Video != null && request.Video.Length > 0)
+            {
+                var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
+                {
+                    File = request.Video,
+                    RootPath = hosting.ContentRootPath,
+                    UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                });
+
+                if (!SaveImage.Success)
+                {
+                    Messages.Add(new NikMessage
+                    {
+                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Type = MessageType.Error,
+                        Language = "Fa"
+                    });
+                    ViewBag.Messages = Messages;
+                    return View(GetViewName(lang, "EditPart3"), request);
+                }
+
+                video = SaveImage.FilePath;
+            }
+
+            if (!string.IsNullOrEmpty(video))
+                item.VideoFile = video;
 
 
 

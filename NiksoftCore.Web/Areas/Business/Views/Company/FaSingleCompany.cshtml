@@ -8,6 +8,7 @@
 
     var firstItem = Contents.Where(x => x.KeyValue == "unit1").First();
     var secondItems = Contents.Where(x => x.KeyValue == "unit2");
+    var vItems = Contents.Where(x => x.KeyValue == "unit3").ToList();
     var cc1 = 0;
     ViewData["Title"] = theCom.CoName;
 }
@@ -66,54 +67,54 @@
                 cc1++;
                 if (cc1 == 1)
                 {
-                    @Html.Raw("<div class='row bg-alfa pos-relative'>")
-                    <div class="col-md-4 no-padding pos-static">
-                        <div class="row-bg left">
-                            <img src="/@item.ImageFile" alt="skills section">
-                        </div>
-                    </div>
-                    <div class="col-md-4 no-padding">
-                        <div class="about-item">
-                            <i class="icon icon-House"></i>
-                            <h4>@item.Title</h4>
-                            <p class="description">@item.Description</p>
-                            <p class="number">01</p>
-                        </div>
-                    </div>
+            @Html.Raw("<div class='row bg-alfa pos-relative'>")
+            <div class="col-md-4 no-padding pos-static">
+                <div class="row-bg left">
+                    <img src="/@item.ImageFile" alt="skills section">
+                </div>
+            </div>
+            <div class="col-md-4 no-padding">
+                <div class="about-item">
+                    <i class="icon icon-House"></i>
+                    <h4>@item.Title</h4>
+                    <p class="description">@item.Description</p>
+                    <p class="number">01</p>
+                </div>
+            </div>
                 }
                 else if (cc1 == 2)
                 {
-                    <div class="col-md-4 no-padding pos-static">
-                        <div class="row-bg">
-                            <img src="/@item.ImageFile" alt="skills section">
-                        </div>
-                    </div>
-                    @Html.Raw("</div><div class='row bg-alfa pos-relative'>")
-                    <div class="col-md-4 no-padding">
-                        <div class="about-item">
-                            <i class="icon icon-Presentation"></i>
-                            <h4>@item.Title</h4>
-                            <p class="description">@item.Description</p>
-                            <p class="number">02</p>
-                        </div>
-                    </div>
+            <div class="col-md-4 no-padding pos-static">
+                <div class="row-bg">
+                    <img src="/@item.ImageFile" alt="skills section">
+                </div>
+            </div>
+            @Html.Raw("</div><div class='row bg-alfa pos-relative'>")
+            <div class="col-md-4 no-padding">
+                <div class="about-item">
+                    <i class="icon icon-Presentation"></i>
+                    <h4>@item.Title</h4>
+                    <p class="description">@item.Description</p>
+                    <p class="number">02</p>
+                </div>
+            </div>
                 }
                 else if (cc1 == 3)
                 {
-                    <div class="col-md-4 no-padding pos-static">
-                        <div class="row-bg center">
-                            <img src="/@item.ImageFile" alt="skills section">
-                        </div>
-                    </div>
-                    <div class="col-md-4 no-padding">
-                        <div class="about-item">
-                            <i class="icon icon-Lightbulb"></i>
-                            <h4>@item.Title</h4>
-                            <p class="description">@item.Description</p>
-                            <p class="number">03</p>
-                        </div>
-                    </div>
-                    @Html.Raw("</div>")
+            <div class="col-md-4 no-padding pos-static">
+                <div class="row-bg center">
+                    <img src="/@item.ImageFile" alt="skills section">
+                </div>
+            </div>
+            <div class="col-md-4 no-padding">
+                <div class="about-item">
+                    <i class="icon icon-Lightbulb"></i>
+                    <h4>@item.Title</h4>
+                    <p class="description">@item.Description</p>
+                    <p class="number">03</p>
+                </div>
+            </div>
+            @Html.Raw("</div>")
                 }
             }
         </div>
@@ -130,25 +131,45 @@
             <div class="row">
                 @foreach (var item in Products)
                 {
-                    <div class="col-md-3 col-sm-6">
-                        <div class="team-member v2">
-                            <div class="cover">
-                                <img src="/@item.Image" alt="team member avatar">
-                                <div class="hover">
-                                    <ul class="socials clean-list">
-                                        <li><a href="#"><i class="fa fa-facebook-square facebook"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-pinterest-square pinterest"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-twitter-square twitter"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-google-plus-square google-plus"></i></a></li>
-                                    </ul>
-                                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="team-member v2">
+                        <div class="cover">
+                            <img src="/@item.Image" alt="team member avatar">
+                            <div class="hover">
+                                <ul class="socials clean-list">
+                                    <li><a href="#"><i class="fa fa-facebook-square facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest-square pinterest"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter-square twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus-square google-plus"></i></a></li>
+                                </ul>
                             </div>
-                            <h6 class="name">@item.Title</h6>
-                            <span class="position">@item.ProductGroup.Title</span>
                         </div>
+                        <h6 class="name">@item.Title</h6>
+                        <span class="position">@item.ProductGroup.Title</span>
                     </div>
+                </div>
                 }
             </div>
+            @if (vItems.Count > 0)
+            {
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-md-8">
+                    <div class="showcase-image-wrapper">
+                        <div class="image-block">
+                            <div class="block-content">
+                                <div class="inner-content">
+                                    <img src="/@vItems.First().ImageFile" alt="macbook showcase image">
+                                    <a href="/@vItems.First().VideoFile" class="video-link"></a>
+                                </div>
+                            </div>
+                            <img src="~/templates/UiTemplate/FbBusiness/img/macbook-showcase.png" class="image-block-base" alt="showcase">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+            }
         </div>
     </section>
 
