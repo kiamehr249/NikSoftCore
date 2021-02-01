@@ -1,14 +1,17 @@
-﻿@{
-    ViewData["Title"] = "پنل مدیریت - مدیریت منو ها";
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    ViewData["Title"] = "مدیریت منو ها";
     Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
+    var parent = (PanelMenu)ViewBag.ParentMenu;
     var contents = (List<NiksoftCore.SystemBase.Service.PanelMenu>)ViewBag.Contents;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
     int pageNumber = 0;
 }
 <div class="text-right">
-    <div class="btn-group">
-        <a href="/Panel/PanelMenuManage/Create" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
-    </div>
+    <a href="/Panel/PanelMenuManage/CreateItem?ParentId=@parent.Id" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    <a href="/Panel/PanelMenuManage" class="btn btn-outline-info btn-sm">
+        <i class="fas fa-arrow-left"></i>
+    </a>
 </div>
 
 <br />
@@ -28,41 +31,41 @@
             @foreach (var item in contents)
             {
                 pageNumber++;
-            <tr>
-                <td>@(pager.StartIndex + pageNumber)</td>
-                <td>@item.Title</td>
-                <td>@item.Link</td>
-                <td>
-                    <a href="/Panel/PanelMenuManage/MenuItems?ParentId=@item.Id" class="btn btn-outline-info btn-sm">
-                        زیرمنو ها
-                    </a>
-                </td>
-                <td>
-                    @if (item.Enabled)
-                    {
-                        <a href="/Panel/PanelMenuManage/Enable?Id=@item.Id" class="btn btn-outline-success btn-sm">
-                            <i class="fas fa-check"></i>
+                <tr>
+                    <td>@(pager.StartIndex + pageNumber)</td>
+                    <td>@item.Title</td>
+                    <td>@item.Link</td>
+                    <td>
+                        <a href="/Panel/PanelMenuManage/MenuItems?ParentId=@item.Id" class="btn btn-outline-info btn-sm">
+                            زیرمنو ها
                         </a>
-                    }
-                    else
-                    {
-                        <a href="/Panel/PanelMenuManage/Enable?Id=@item.Id" class="btn btn-outline-warning btn-sm">
-                            <i class="fas fa-times"></i>
-                        </a>
-                    }
+                    </td>
+                    <td>
+                        @if (item.Enabled)
+                        {
+                            <a href="/Panel/PanelMenuManage/EnableItem?Id=@item.Id" class="btn btn-outline-success btn-sm">
+                                <i class="fas fa-check"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="/Panel/PanelMenuManage/EnableItem?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        }
 
-                </td>
-                <td>
-                    <div class="btn-group btn-group-sm">
-                        <a href="/Panel/PanelMenuManage/Edit?Id=@item.Id" class="btn btn-outline-warning btn-sm">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="/Panel/PanelMenuManage/Remove?Id=@item.Id" class="btn btn-outline-danger btn-sm">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="/Panel/PanelMenuManage/CreateItem?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/Panel/PanelMenuManage/RemoveItem?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

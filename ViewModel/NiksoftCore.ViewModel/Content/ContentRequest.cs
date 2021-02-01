@@ -13,6 +13,7 @@ namespace NiksoftCore.ViewModel
         public string Image { get; set; }
         public IFormFile ImageFile { get; set; }
         public string KeyValue { get; set; }
+        public bool Enabled { get; set; }
         public int CategoryId { get; set; }
     }
 }

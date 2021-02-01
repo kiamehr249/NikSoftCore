@@ -51,6 +51,16 @@ namespace NiksoftCore.DataAccess
             return TEntity.Count(predicate);
         }
 
+        public int Count(List<Expression<Func<T, bool>>> predicates)
+        {
+            var query = TEntity.Where(predicates[0]);
+            foreach (var cond in predicates)
+            {
+                query = query.Where(cond);
+            }
+            return query.Count();
+        }
+
         public async Task<T> FindAsync(Expression<Func<T, bool>> predicate)
         {
             return await TEntity.Where(predicate).Skip(0).Take(1).FirstOrDefaultAsync();

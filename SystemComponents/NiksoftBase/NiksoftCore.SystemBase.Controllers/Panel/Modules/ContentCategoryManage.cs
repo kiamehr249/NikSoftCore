@@ -32,7 +32,10 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             else
                 lang = defaultLang.ShortName.ToLower();
 
-            var total = ISystemBaseServ.iContentCategoryServ.Count(x => true);
+            var query = ISystemBaseServ.iContentCategoryServ.ExpressionMaker();
+            query.Add(x => true);
+
+            var total = ISystemBaseServ.iContentCategoryServ.Count(query);
             var pager = new Pagination(total, 20, part);
             ViewBag.Pager = pager;
 
@@ -43,7 +46,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             else
                 ViewBag.PageTitle = "Business Category Management";
 
-            ViewBag.Contents = ISystemBaseServ.iContentCategoryServ.GetPart(x => true, pager.StartIndex, pager.PageSize).ToList();
+            ViewBag.Contents = ISystemBaseServ.iContentCategoryServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
 
             return View(GetViewName(lang, "Index"));
         }

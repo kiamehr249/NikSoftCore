@@ -17,6 +17,8 @@ namespace NiksoftCore.DataAccess
 
         int Count(Expression<Func<T, bool>> predicate);
 
+        int Count(List<Expression<Func<T, bool>>> predicates);
+
         Task<T> FindAsync(Expression<Func<T, bool>> predicate);
 
         T Find(Expression<Func<T, bool>> predicate);

@@ -38,6 +38,11 @@
                     @Html.ValidationMessageFor(m => m.Controller)
                 </div>
                 <div class="form-group">
+                    <label for="txtController" class="control-label">نفش ها</label>
+                    @Html.TextBoxFor(m => m.Roles, new { placeholder = "Admin", @class = "form-control", @id = "txtController" })
+                    @Html.ValidationMessageFor(m => m.Roles)
+                </div>
+                <div class="form-group">
                     <label for="txtDesc" class="control-label">توضیحات</label>
                     @Html.TextAreaFor(m => m.Description, new { placeholder = "توضیح", @class = "form-control", @id = "txtDesc", rows = "3" })
                     @Html.ValidationMessageFor(m => m.Description)

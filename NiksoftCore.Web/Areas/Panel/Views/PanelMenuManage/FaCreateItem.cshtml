@@ -1,19 +1,19 @@
 ﻿
 @model NiksoftCore.SystemBase.Service.PanelMenu
 @{
-    ViewData["Title"] = "ایجاد نقش";
+    ViewData["Title"] = "ایجاد منو";
     Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
 }
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/PanelMenuManage" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/PanelMenuManage/MenuItems?ParentId=@Model.ParentId" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/PanelMenuManage/Edit" method="post">
+<form action="/Panel/PanelMenuManage/CreateItem" method="post">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
@@ -47,7 +47,8 @@
                     @Html.TextAreaFor(m => m.Description, new { placeholder = "توضیح", @class = "form-control", @id = "txtDesc", rows = "3" })
                     @Html.ValidationMessageFor(m => m.Description)
                 </div>
-                @Html.HiddenFor(x => x.Id, new { value = Model.Id })
+                @Html.HiddenFor(m => m.ParentId)
+                @Html.HiddenFor(m => m.Id)
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-success">ذخیره</button>
                 </div>

@@ -23,7 +23,7 @@ namespace NiksoftCore.SystemBase.Service
             {
                 query = query.Where(predicate[i]);
             }
-            return query.OrderBy(i => i.Id).ThenBy(t => t.Id).Skip(startIndex).Take(pageSize).ToList();
+            return query.OrderByDescending(i => i.Id).ThenBy(t => t.Id).Skip(startIndex).Take(pageSize).ToList();
         }
     }
 }

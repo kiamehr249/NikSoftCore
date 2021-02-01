@@ -130,6 +130,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             theMenu.Link = request.Link;
             theMenu.Icon = request.Icon;
             theMenu.Controller = request.Controller;
+            theMenu.Roles = request.Roles;
             theMenu.Description = request.Description;
             await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
 
@@ -152,5 +153,112 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
             return Redirect("/Panel/PanelMenuManage");
         }
+
+
+
+        public async Task<IActionResult> MenuItems([FromQuery] string lang, int part, int ParentId)
+        {
+            var parent = await ISystemBaseServ.iPanelMenuService.FindAsync(x => x.Id == ParentId);
+            ViewBag.ParentMenu = parent;
+
+            var total = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == ParentId);
+            var pager = new Pagination(total, 20, part);
+            ViewBag.Pager = pager;
+
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = "مدیریت منوهای " + parent.Title;
+            else
+                ViewBag.PageTitle = "Sub Menu " + parent.Title;
+
+            ViewBag.Contents = ISystemBaseServ.iPanelMenuService.GetPart(x => x.ParentId == ParentId, pager.StartIndex, pager.PageSize).OrderBy(x => x.Ordering).ToList();
+
+            return View(GetViewName(lang, "MenuItems"));
+        }
+
+        [HttpGet]
+        public IActionResult CreateItem([FromQuery] string lang, int Id, int ParentId)
+        {
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (lang == "fa")
+                ViewBag.PageTitle = "ایجاد منو";
+            else
+                ViewBag.PageTitle = "Create Menu";
+
+            PanelMenu request;
+            if (Id > 0)
+            {
+                request = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == Id);
+            }
+            else
+            {
+                request = new PanelMenu();
+                request.ParentId = ParentId;
+            }
+
+            return View(GetViewName(lang, "CreateItem"), request);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateItem([FromQuery] string lang, PanelMenu request)
+        {
+            if (!string.IsNullOrEmpty(lang))
+                lang = lang.ToLower();
+            else
+                lang = defaultLang.ShortName.ToLower();
+
+            if (string.IsNullOrEmpty(request.Title))
+            {
+                if (lang == "fa")
+                    AddError("نام باید مقدار داشته باشد", "fa");
+                else
+                    AddError("Title can not be null", "en");
+            }
+
+            if (Messages.Any(x => x.Type == MessageType.Error))
+            {
+                ViewBag.Messages = Messages;
+                return View(GetViewName(lang, "Create"), request);
+            }
+
+
+            if (request.Id == 0)
+            {
+                request.Enabled = true;
+                request.Ordering = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == null) + 1;
+                ISystemBaseServ.iPanelMenuService.Add(request);
+            }
+            
+            await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
+
+            return Redirect("/Panel/PanelMenuManage/MenuItems?ParentId=" + request.ParentId);
+
+        }
+
+        public async Task<IActionResult> RemoveItem(int Id)
+        {
+            var theMenu = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == Id);
+            int? parentId = theMenu.ParentId;
+            ISystemBaseServ.iPanelMenuService.Remove(theMenu);
+            await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
+            return Redirect("/Panel/PanelMenuManage/MenuItems?ParentId=" + parentId);
+        }
+
+        public async Task<IActionResult> EnableItem(int Id)
+        {
+            var theMenu = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == Id);
+            theMenu.Enabled = !theMenu.Enabled;
+            await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
+            return Redirect("/Panel/PanelMenuManage/MenuItems?ParentId=" + theMenu.ParentId);
+        }
+
     }
 }
