@@ -12,6 +12,8 @@ namespace NiksoftCore.SystemBase.Service
         public string Icon { get; set; }
         public string Image { get; set; }
         public string KeyValue { get; set; }
+        public string Link { get; set; }
+        public string LinkTitle { get; set; }
         public bool Enabled { get; set; }
         public int CategoryId { get; set; }
 

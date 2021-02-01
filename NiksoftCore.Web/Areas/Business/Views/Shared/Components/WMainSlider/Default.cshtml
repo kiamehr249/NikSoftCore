@@ -3,10 +3,65 @@
     var sliderContents = (List<GeneralContent>)ViewBag.BigSlider;
 }
 
+
 <div class="row">
-    @foreach (var item in sliderContents)
-    {
-        
-    }
+    <div class="col-sm-12">
+        <div class="rev_slider_wrapper" style="direction: ltr;">
+            <div class="fullscreen_slider rev_slider">
+                <ul>
+                    @foreach (var item in sliderContents)
+                    {
+                        <li data-transition="fade">
+                            <img src="~/@item.Image" alt="slide1" data-bgfit="cover" data-bgposition="center center" data-kenburns="on" data-duration="7000" data-ease="Linear.easeNone" data-scalestart="110" data-scaleend="100" data-rotatestart="0" data-rotateend="0" data-offsetstart="0 0" data-offsetend="0 0" data-bgparallax="10" class="rev-slidebg" data-no-retina>
+
+                            <div class="tp-caption WhiteTtl tp-resizeme"
+                                 data-x="center" data-hoffset="0"
+                                 data-y="middle" data-voffset="-50"
+                                 data-whitespace="nowrap"
+                                 data-transform_idle="o:1;"
+                                 data-transform_in="y:-150px;opacity:0;s:1000;e:Power4.easeOut;"
+                                 data-transform_out="opacity:0;s:500;s:500;"
+                                 data-fontsize="['50', '45', '35', '30']"
+                                 data-start="1300"
+                                 data-responsive_offset="on">
+                                @item.Title
+                            </div>
+
+                            <div class="tp-caption WhiteTtlp tp-resizeme"
+                                 data-x="center" data-hoffset="0"
+                                 data-y="middle" data-voffset="30"
+                                 data-whitespace="nowrap"
+                                 data-transform_idle="o:1;"
+                                 data-transform_in="y:-100px;opacity:0;s:1000;e:Power2.easeOut;"
+                                 data-transform_out="opacity:0;s:500;s:500;"
+                                 data-start="1700"
+                                 data-fontsize="['25', '20', '18', '16']"
+                                 data-responsive_offset="on">
+                                @item.Header
+                            </div>
+
+                            <div class="tp-caption tp-resizeme"
+                                 data-x="center" data-hoffset="0"
+                                 data-y="middle" data-voffset="110"
+                                 data-whitespace="nowrap"
+                                 data-transform_idle="o:1;"
+                                 data-transform_in="y:100px;opacity:0;s:1000;e:Power4.easeOut;"
+                                 data-transform_out="y:0;opacity:0;s:300;e:Power4.easeIn;"
+                                 data-start="2000"
+                                 data-responsive_offset="on"
+                                 data-fontsize="['25', '20', '18', '16']">
+                                <a class="btn yellow medium" href="@item.Link">@item.LinkTitle</a>
+                            </div>
+
+                        </li>
+                    }
+                </ul>
+
+                <span class="scroll">
+                    <i class="icon-Down"></i>
+                </span>
+            </div>
+        </div>
+    </div>
 </div>
 

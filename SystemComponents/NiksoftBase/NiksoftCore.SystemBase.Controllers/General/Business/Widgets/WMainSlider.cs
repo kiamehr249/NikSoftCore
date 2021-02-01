@@ -27,9 +27,9 @@ namespace NiksoftCore.SystemBase.Controllers.General.Business.Widgets
             defaultLang = iSystemBaseServ.iPortalLanguageServ.Find(x => x.IsDefault);
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string key)
         {
-            var Contents = iSystemBaseServ.iGeneralContentServ.GetAll(x => x.ContentCategory.KeyValue == "b_bigslider");
+            var Contents = iSystemBaseServ.iGeneralContentServ.GetAll(x => x.ContentCategory.KeyValue == key);
             ViewBag.BigSlider = Contents;
             return View();
         }

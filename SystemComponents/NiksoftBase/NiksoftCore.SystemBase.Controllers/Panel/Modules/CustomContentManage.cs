@@ -110,6 +110,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 request.Icon = item.Icon;
                 request.Image = item.Image;
                 request.KeyValue = item.KeyValue;
+                request.Link = item.Link;
+                request.LinkTitle = item.LinkTitle;
                 request.Enabled = item.Enabled;
                 request.CategoryId = item.CategoryId;
             }
@@ -196,7 +198,13 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             item.BodyText = request.BodyText;
             item.Footer = request.Footer;
             item.Icon = request.Icon;
-            item.Image = Image;
+            if (!string.IsNullOrEmpty(Image))
+            {
+                item.Image = Image;
+            }
+            
+            item.Link = request.Link;
+            item.LinkTitle = request.LinkTitle;
             item.CategoryId = request.CategoryId;
 
             if (request.Id == 0)
