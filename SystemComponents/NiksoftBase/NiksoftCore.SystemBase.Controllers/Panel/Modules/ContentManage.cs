@@ -7,6 +7,7 @@ using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.SystemBase.Service;
 using NiksoftCore.Utilities;
 using NiksoftCore.ViewModel;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -69,6 +70,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpPost]
         public async Task<IActionResult> Create([FromQuery] string lang, [FromForm] ContentRequest request)
         {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
             else
@@ -116,7 +119,9 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 Footer = request.Footer,
                 Icon = request.Icon,
                 Image = Image,
-                CategoryId = request.CategoryId
+                CategoryId = request.CategoryId,
+                CreatedBy = user.Id,
+                CreateDate = DateTime.Now
             };
 
             ISystemBaseServ.iGeneralContentServ.Add(newItem);
@@ -158,6 +163,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpPost]
         public async Task<IActionResult> Edit([FromQuery] string lang, [FromForm] ContentRequest request)
         {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
             else
@@ -216,6 +223,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             if (!string.IsNullOrEmpty(imageEdit))
                 theContent.Image = imageEdit;
             theContent.CategoryId = request.CategoryId;
+            theContent.EditedBy = user.Id;
+            theContent.EditDate = DateTime.Now;
             await ISystemBaseServ.iGeneralContentServ.SaveChangesAsync();
 
             return Redirect("/Panel/ContentManage");

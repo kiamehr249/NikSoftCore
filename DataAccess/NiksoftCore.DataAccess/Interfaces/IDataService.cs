@@ -27,6 +27,8 @@ namespace NiksoftCore.DataAccess
 
         IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size);
 
+        IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size, Expression<Func<T, int>> keySelect, bool desc);
+
         IList<T> GetAll(Expression<Func<T, bool>> predicate);
 
         IList<T> GetAll(List<Expression<Func<T, bool>>> predicate);

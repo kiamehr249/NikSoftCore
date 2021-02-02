@@ -135,6 +135,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpPost]
         public async Task<IActionResult> Create([FromQuery] string lang, [FromForm] ContentRequest request)
         {
+            var user = await userManager.GetUserAsync(HttpContext.User);
             if (!string.IsNullOrEmpty(lang))
                 lang = lang.ToLower();
             else
@@ -186,6 +187,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             if (request.Id > 0)
             {
                 item = await ISystemBaseServ.iGeneralContentServ.FindAsync(x => x.Id == request.Id);
+                item.EditDate = DateTime.Now;
+                item.EditedBy = user.Id;
             }
             else
             {
@@ -209,6 +212,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
             if (request.Id == 0)
             {
+                item.CreatedBy = user.Id;
+                item.CreateDate = DateTime.Now;
                 ISystemBaseServ.iGeneralContentServ.Add(item);
             }
 

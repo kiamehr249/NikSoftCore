@@ -20,7 +20,8 @@ namespace NiksoftCore.DataAccess
             TEntity = _uow.Set<T>();
         }
 
-        public int Update(T entity) {
+        public int Update(T entity)
+        {
             TEntity.Update(entity);
             return SaveChanges();
         }
@@ -84,6 +85,19 @@ namespace NiksoftCore.DataAccess
         public virtual IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size)
         {
             return TEntity.Where(predicate).Skip(startIndex).Take(size).ToList();
+        }
+
+        public virtual IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size, Expression<Func<T, int>> keySelect,  bool desc)
+        {
+            if (desc)
+            {
+                return TEntity.Where(predicate).OrderByDescending(keySelect).Skip(startIndex).Take(size).ToList();
+            }
+            else
+            {
+                return TEntity.Where(predicate).OrderBy(keySelect).Skip(startIndex).Take(size).ToList();
+            }
+            
         }
 
         public virtual IList<T> GetAll(Expression<Func<T, bool>> predicate)

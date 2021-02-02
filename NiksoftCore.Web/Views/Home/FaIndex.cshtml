@@ -50,32 +50,8 @@
         </div>
     </nav>
 
-    <!--HOME-->
     <section class="home slider" id="home">
-        <div class="home-content">
-            <div class="container">
-                <h1 class="text-right hidden"><span class="element" data-text1="Fekrbartar International Trade Center" data-text2="Easy investment for international companies" data-loop="true" data-backdelay="3000"></span></h1>
-                <h1 class="text-left"><span class="element" data-text1="مرکز تجارت بین الملل فکرتر" data-text2="تسهیل سرمایه گذاری خارجی برای تولید کننده ایرانی" data-loop="true" data-backdelay="3000"></span></h1>
-                <div class="social">
-                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i>  </a>
-                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i>  </a>
-                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i>  </a>
-                    <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i>  </a>
-                    <a href="#"><i class="fa fa-behance" aria-hidden="true"></i>  </a>
-                    <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i>  </a>
-                </div>
-                <a class="home-down bounce" href="/Auth/Account/Login"><i class="fa fa-angle-down"></i></a>
-            </div>
-        </div>
-        <div class="home-slider">
-            <div id="slides">
-                <div class="slides-container">
-                    <img src="~/templates/UiTemplate/NikFace/rtl/images/home-2.jpg" alt="">
-                    <img src="~/templates/UiTemplate/NikFace/rtl/images/slider-1.jpg" alt="">
-                    <img src="~/templates/UiTemplate/NikFace/rtl/images/slider-2.jpg" alt="">
-                </div>
-            </div>
-        </div>
+        @await Component.InvokeAsync("WContents", new { key = "m_bigslider" })
         <svg class="diagonal home-left" width="21%" height="170" viewBox="0 0 100 102" preserveAspectRatio="none">
             <path d="M0 100 L100 100 L0 10 Z"></path>
         </svg>
@@ -83,62 +59,12 @@
             <path d="M0 100 L100 100 L100 10 Z"></path>
         </svg>
     </section>
-    <!--ABOUT-->
     <section class="about dgray-bg" id="about">
         <div class="about type-1 padbot_120">
             <div class="container">
-                <!-- about image -->
-                <div class="col-md-4 col-sm-12 about-image top_30">
-                    <div class="row">
-                        <img src="~/templates/UiTemplate/NikFace/rtl/images/p7.jpeg" alt="">
-                    </div>
-                </div>
-                <!-- about text -->
-                <div class="col-md-7 col-md-offset-1 col-sm-12 about-text">
-                    <div class="section-title dright bottom_30">
-                        <br>
-                        <h2>مشاوره و خدمات</h2>
-                    </div>
-                    <p>مرکز تجارت بین الملل سعی دارد تا با استفاده از پتانسیل های موجود تسهیلات لازم را برای تولیدکنندگان داخلی و خارجی جهت رونق فروش محصولات بویژه محصولات تولید ملی فراهم آورد. در این راستا شما تولید کننده داخلی می توانید با بهره گیری از خدمات این مجموعه از قبیل عرضه محصولات با کیفیت خود در غرفه های شهر آفتاب جهت ارائه به سرمایه گذاران خارجی و همچنین از خدمات ثبت شرکت و خدمات مشاوره ای تجاری ما بهرمند شوید.  </p>
-                    <p>
-                        <a href="/PageContent/?Id=2">قوانین و مقررات</a>
-                    </p>
-                </div>
+                @await Component.InvokeAsync("WContents", new { key = "m_part2" })
 
-                <!-- work areas -->
-                <div class="owl-carousel work-areas top_120 bottom_120">
-                    <!-- an area -->
-                    <div class="area col-md-12 item">
-                        <div class="icon">
-                            <i data-icon="1" class="icon"></i>
-                        </div>
-                        <div class="text">
-                            <h6>خدمات بازرگانی</h6>
-                            <p>این مجموعه خدمات جهت تسهیلات خرید و فروش می باشد.</p>
-                        </div>
-                    </div>
-                    <!-- an area -->
-                    <div class="area col-md-12 item">
-                        <div class="icon">
-                            <i data-icon="!" class="icon"></i>
-                        </div>
-                        <div class="text">
-                            <h6>خدمات حقوقی</h6>
-                            <p>خدمات حقوقی شامل تمام فرایند های حقوقی ثبت شرکت و برندینگ داخلی و خارجی می باشد.</p>
-                        </div>
-                    </div>
-                    <!-- an area -->
-                    <div class="area col-md-12 item">
-                        <div class="icon">
-                            <i data-icon="#" class="icon"></i>
-                        </div>
-                        <div class="text">
-                            <h6>خدمات گردشگری</h6>
-                            <p>مجوعه خدمات گردشگری شامل اقامت و بازدید از مراکز تجاری و تولیدی در شهر آفتاب می باشد.</p>
-                        </div>
-                    </div>
-                </div>
-
+                @await Component.InvokeAsync("WContents", new { key = "m_part3" })
             </div>
             <svg class="diagonal-gray" width="100%" height="170" viewBox="0 0 100 102" preserveAspectRatio="none">
                 <path d="M0 0 L70 100 L100 0 Z"></path>
@@ -149,48 +75,7 @@
     
     <section class="portfolio" id="portfolio">
         <div class="container">
-            <div class="section-title dright top_120 bottom_90">
-                <h2>خدمات بین الملل</h2>
-                <div class="portfolio_filter">
-                    <ul>
-                        <li class="select-cat" data-filter="*">همه</li>
-                        <li data-filter=".business">بازرگانی</li>
-                        <li data-filter=".law">حقوقی</li>
-                        <li data-filter=".tourism">گردشگری</li>
-                    </ul>
-                </div>
-            </div>
-            <!--Portfolio Items-->
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="isotope_items row">
-                        <!-- Item -->
-                        <a href="/Business" class="popup-youtube single_item link business col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <img src="~/templates/UiTemplate/NikFace/rtl/images/p2.jpeg" alt="">
-                        </a>
-                        <!-- Item -->
-                        <a href="/Business" class="single_item link business col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.2s">
-                            <img src="~/templates/UiTemplate/NikFace/rtl/images/p3.jpeg" alt="">
-                        </a>
-                        <!-- Item -->
-                        <a href="/Business" class="single_item link law col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                            <img src="~/templates/UiTemplate/NikFace/rtl/images/p4.jpeg" alt="">
-                        </a>
-                        <!-- Item -->
-                        <a href="/Business" class="single_item link business col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.4s">
-                            <img src="~/templates/UiTemplate/NikFace/rtl/images/p5.jpeg" alt="">
-                        </a>
-                        <!-- Item -->
-                        <a href="/Business" class="single_item link law col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                            <img src="~/templates/UiTemplate/NikFace/rtl/images/p6.jpeg" alt="">
-                        </a>
-                        <!-- Item -->
-                        <a href="/Business" class="single_item link tourism col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.6s">
-                            <img src="~/templates/UiTemplate/NikFace/rtl/images/p7.jpeg" alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
+            @await Component.InvokeAsync("WContents", new { key = "m_part4" })
         </div>
         <svg class="diagonal-white" width="100%" height="170" viewBox="0 0 100 102" preserveAspectRatio="none">
             <path d="M0 0 L30 100 L100 0 Z"></path>
@@ -205,33 +90,7 @@
                     <h2>رویدادها</h2>
                 </div>
                 <!-- Blogs -->
-                <div class="row">
-                    <a href="single-blog.html" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-content wow fadeInUp" data-wow-delay="0.4s">
-                        <div class="blog-image">
-                            <img src="~/templates/UiTemplate/NikFace/rtl/images/blog-1.jpg">
-                        </div>
-                        <h2 class="blog-title">بازدید هجده کشور از غرفه های شهر آفتاب</h2>
-                        <p>کشورهای بزرگانان تاجیکستان، هندوستان، عراق، ترکیه، امارات عربی و غیره امروز از غرفه های شهر آفتاب بازدید کردند.</p>
-                        <span class="blog-info"><span>بخش خبری</span> - 7 آذر 1399 </span>
-                    </a>
-                    <a href="single-blog.html" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-content wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="blog-image">
-                            <img src="~/templates/UiTemplate/NikFace/rtl/images/blog-2.jpg">
-                        </div>
-                        <h2 class="blog-title">بازدید هجده کشور از غرفه های شهر آفتاب</h2>
-                        <p>کشورهای بزرگانان تاجیکستان، هندوستان، عراق، ترکیه، امارات عربی و غیره امروز از غرفه های شهر آفتاب بازدید کردند.</p>
-                        <span class="blog-info"><span>بخش خبری</span> - 7 آذر 1399 </span>
-                    </a>
-                    <a href="single-blog.html" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-content wow hidden-sm fadeInUp" data-wow-delay="0.8s">
-                        <div class="blog-image">
-                            <img src="~/templates/UiTemplate/NikFace/rtl/images/blog-3.jpg">
-                        </div>
-                        <h2 class="blog-title">بازدید هجده کشور از غرفه های شهر آفتاب</h2>
-                        <p>کشورهای بزرگانان تاجیکستان، هندوستان، عراق، ترکیه، امارات عربی و غیره امروز از غرفه های شهر آفتاب بازدید کردند.</p>
-                        <span class="blog-info"><span>بخش خبری</span> - 7 آذر 1399 </span>
-                    </a>
-                    <a href="blog-page.html" class="sitebtn pull-left top_45">بیشتر</a>
-                </div>
+                @await Component.InvokeAsync("WContents", new { key = "m_part5", size = 3 })
             </div>
             <svg class="diagonal-gray" width="100%" height="170" viewBox="0 0 100 102" preserveAspectRatio="none">
                 <path d="M0 0 L70 100 L100 0 Z"></path>

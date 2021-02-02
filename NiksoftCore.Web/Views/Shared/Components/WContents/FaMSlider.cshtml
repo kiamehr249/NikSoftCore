@@ -1,0 +1,43 @@
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    var contents = (List<GeneralContent>)ViewBag.Contents;
+    int cc1 = 0;
+    string frame1 = "<span class='element'";
+}
+
+
+<div class="home-content">
+    <div class="container">
+        @foreach (var item in contents)
+        {
+            cc1++;
+            frame1 += "data-text" + cc1 + "='" + item.Title + "'";
+        }
+        @{
+            frame1 += "data-loop='true' data-backdelay='3000'></span>";
+        }
+        <h1 class="text-left">
+            @Html.Raw(frame1)
+        </h1>
+        <div class="social">
+            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i>  </a>
+            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i>  </a>
+            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i>  </a>
+            <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i>  </a>
+            <a href="#"><i class="fa fa-behance" aria-hidden="true"></i>  </a>
+            <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i>  </a>
+        </div>
+        <a class="home-down bounce" href="/#about"><i class="fa fa-angle-down"></i></a>
+    </div>
+</div>
+<div class="home-slider">
+    <div id="slides">
+        <div class="slides-container">
+            @foreach (var item in contents)
+            {
+                <img src="~/@item.Image" alt="@item.Title">
+            }
+        </div>
+    </div>
+</div>
+

@@ -13,6 +13,8 @@
         IContentCategoryService iContentCategoryServ { get; set; }
         IGeneralContentService iGeneralContentServ { get; set; }
         IContentFileService iContentFileServ { get; set; }
+        IMenuCategoryService iMenuCategoryServ { get; set; }
+        IMenuService iMenuServ { get; set; }
     }
 
     public class SystemBaseService : ISystemBaseService
@@ -28,6 +30,8 @@
         public IContentCategoryService iContentCategoryServ { get; set; }
         public IGeneralContentService iGeneralContentServ { get; set; }
         public IContentFileService iContentFileServ { get; set; }
+        public IMenuCategoryService iMenuCategoryServ { get; set; }
+        public IMenuService iMenuServ { get; set; }
 
         public SystemBaseService(string connection)
         {
@@ -43,6 +47,8 @@
             iContentCategoryServ = new ContentCategoryService(uow);
             iGeneralContentServ = new GeneralContentService(uow);
             iContentFileServ = new ContentFileService(uow);
+            iMenuCategoryServ = new MenuCategoryService(uow);
+            iMenuServ = new MenuService(uow);
         }
 
 

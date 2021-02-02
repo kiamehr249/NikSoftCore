@@ -49,7 +49,10 @@
                         @item.ContentCategory.Title
                     </td>
                     <td>
-                        <img src="/@item.Image" style="height: 70px; width: 70px;" />
+                        @if (!string.IsNullOrEmpty(item.Image))
+                        {
+                            <img src="/@item.Image" style="height: 70px; width: 70px;" />
+                        }
                     </td>
                     <td>
                         <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" data-toggle="modal" data-target="#mod_@item.Id">جزئیات</button>

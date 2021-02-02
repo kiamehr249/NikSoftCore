@@ -26,6 +26,8 @@ namespace NiksoftCore.SystemBase.Service
         public DbSet<ContentCategory> ContentCategories { get; set; }
         public DbSet<GeneralContent> GeneralContents { get; set; }
         public DbSet<ContentFile> ContentFiles { get; set; }
+        public DbSet<MenuCategory> MenuCategories { get; set; }
+        public DbSet<Menu> Menus { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -40,6 +42,8 @@ namespace NiksoftCore.SystemBase.Service
             builder.ApplyConfiguration(new ContentCategoryMap());
             builder.ApplyConfiguration(new GeneralContentMap());
             builder.ApplyConfiguration(new ContentFileMap());
+            builder.ApplyConfiguration(new MenuCategoryMap());
+            builder.ApplyConfiguration(new MenuMap());
         }
     }
 }

@@ -125,7 +125,7 @@
             <section class="hero-section">
                 <h2 class="hidden">اسلایدر اصلی</h2>
                 <div class="container">
-                    @await Component.InvokeAsync("WMainSlider", new { key = "b_bigslider" })
+                    @await Component.InvokeAsync("WContents", new { key = "b_bigslider" })
                 </div>
             </section>
 
@@ -137,41 +137,7 @@
 
             <section class="features-section v2">
                 <div class="container-fluid">
-                    <div class="row bg-alfa pos-relative">
-                        <div class="col-md-6 no-padding pos-static">
-                            <div class="row-bg">
-                                <img src="~/templates/UiTemplate/FbBusiness/img/features-section-bg.jpg" alt="features bg">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="section-header">
-                                <h5 class="subtitle">گام های پیشرف</h5>
-                                <h2>مراحل اجرای کار</h2>
-                                <span><i></i></span>
-                                <p>مسیر پیشرفت از تولید تا فروش</p>
-                            </div>
-
-                            <div class="row content">
-                                <div class="col-lg-8 col-lg-offset-2">
-                                    <div class="feature-line">
-                                        <img src="~/templates/UiTemplate/FbBusiness/img/feature-line-1.png" alt="features img">
-                                        <h6>معرفی شرکت</h6>
-                                        <p>شامل تصاویر و متن درباره کارخانه / تولیدی و محصولات شما می باشد که معرف شما خواهد بود</p>
-                                    </div>
-                                    <div class="feature-line">
-                                        <img src="~/templates/UiTemplate/FbBusiness/img/feature-line-2.png" alt="features img">
-                                        <h6>معرفی شما به بازار جهانی</h6>
-                                        <p>ما شما را به بازار جهانی معرفی کرده و با کشف فروش به با شما تماس می گیریم</p>
-                                    </div>
-                                    <div class="feature-line">
-                                        <img src="~/templates/UiTemplate/FbBusiness/img/feature-line-3.png" alt="features img">
-                                        <h6>قرارداد مشارکت</h6>
-                                        <p>ما با شما قراردادی تنظیم  و شما را در فروش یاری خواهیم کرد.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @await Component.InvokeAsync("WContents", new { key = "b_part2" })
                 </div>
             </section>
 
@@ -179,13 +145,7 @@
                 <div class="container-fluid">
                     <div class="row bg-alfa pos-relative">
                         <div class="col-md-6">
-                            <div class="section-header">
-                                <h5 class="subtitle">مشتریان ما</h5>
-                                <h2>برخی از مشتریان موفق ما</h2>
-                                <span><i></i></span>
-                                <p>مشتریان برگزیده که بیشترین موفقیت را در بازار جهانی از آن خود کرده اند.</p>
-                            </div>
-
+                            @await Component.InvokeAsync("WContents", new { key = "b_part3" })
                             <div class="row content">
                                 <div class="col-md-10 col-md-offset-1">
                                     <div class="clients-row">
@@ -221,58 +181,7 @@
 
             <section class="services-section">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12 col-lg-4">
-                            <div class="service-box">
-                                <span class="subtitle">خدمات ما</span>
-                                <h3 class="title">زمینه های کاری</h3>
-                                <p class="description">علاوه بر معرفی و فروش محصل شما در خارج از ایران ما تورهای بازرگانی برای بازدید از کارخانجات شما تدارک خواهیم داد تا بازرگانان خارجی و داخلی از محصولات شما در کارخانه بازدید کنند و کشف مستقیم مشتری برای شما ایجاد می کنیم.</p>
-                                <a href="#" class="btn yellow">مطالب بیشتر</a>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-sm-6 col-lg-4">
-                            <div class="service-box-icon">
-                                <div class="front">
-                                    <i class="icon icon-House"></i>
-                                    <h5 class="title">خدمات مشارکت فروش</h5>
-                                    <span class="subtitle">فروش محصولات شما توسط مرکز تجارت</span>
-                                </div>
-
-                                <p class="description">متن داده شود</p>
-                            </div>
-
-                            <div class="service-box-icon">
-                                <div class="front">
-                                    <i class="icon icon-Lightbulb"></i>
-                                    <h5 class="title">نمایندگی فروش</h5>
-                                    <span class="subtitle">اخذ نمایندی فروش از شرکت شما</span>
-                                </div>
-
-                                <p class="description">متن داده شود</p>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-sm-6 col-lg-4">
-                            <div class="service-box-icon">
-                                <div class="front">
-                                    <i class="icon icon-Presentation"></i>
-                                    <h5 class="title">ثبت شرکت و برند در خارج از ایران</h5>
-                                    <span class="subtitle">جهانی شدن برند شما</span>
-                                </div>
-
-                                <p class="description">متن داده شود</p>
-                            </div>
-
-                            <div class="service-box-icon">
-                                <div class="front">
-                                    <i class="icon icon-Briefcase"></i>
-                                    <h5 class="title">مشاوره تجاری</h5>
-                                    <span class="subtitle">مشاوران ما شما را راهنمایی می کنند</span>
-                                </div>
-
-                                <p class="description">متن داده شود</p>
-                            </div>
-                        </div>
-                    </div>
+                    @await Component.InvokeAsync("WContents", new { key = "b_part4" })
                 </div>
             </section>
         </div>

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using NiksoftCore.ViewModel;
+using System.Collections.Generic;
 
 namespace NiksoftCore.SystemBase.Service
 {
-    public class GeneralContent
+    public class GeneralContent : LogModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -1,0 +1,53 @@
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    var contents = (List<GeneralContent>)ViewBag.Contents;
+    int cc1 = 0;
+}
+
+<div class="row">
+    @foreach (var item in contents)
+    {
+        cc1++;
+
+        if (cc1 == 1)
+        {
+            <div class="col-md-4 col-sm-12 col-lg-4">
+                <div class="service-box">
+                    <span class="subtitle">@item.Title</span>
+                    <h3 class="title">@item.Header</h3>
+                    <p class="description">@item.Footer</p>
+                    <a href="@item.Link" class="btn yellow">@item.LinkTitle</a>
+                </div>
+            </div>
+        }
+
+        if (cc1 == 2)
+        {
+            @Html.Raw("<div class='col-md-8 col-sm-6 col-lg-4'>")
+        }
+
+        if (cc1 > 1)
+        {
+            <div class="service-box-icon">
+                <div class="front">
+                    @Html.Raw(item.Icon)
+                    <h5 class="title">@item.Title</h5>
+                    <span class="subtitle">@item.Header</span>
+                </div>
+
+                <p class="description">@item.Footer</p>
+            </div>
+        }
+
+        if (cc1 == 3)
+        {
+            @Html.Raw("</div><div class='col-md-8 col-sm-6 col-lg-4'>")
+        }
+
+        if (cc1 == 4)
+        {
+            @Html.Raw("</div>")
+        }
+
+    }
+</div>

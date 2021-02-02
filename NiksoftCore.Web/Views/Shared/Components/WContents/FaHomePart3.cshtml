@@ -1,0 +1,19 @@
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    var contents = (List<GeneralContent>)ViewBag.Contents;
+}
+
+<div class="owl-carousel work-areas top_120 bottom_120">
+    @foreach (var item in contents)
+    {
+        <div class="area col-md-12 item">
+            <div class="icon">
+                @Html.Raw(item.Icon)
+            </div>
+            <div class="text">
+                <h6>@item.Title</h6>
+                <p>@item.Header</p>
+            </div>
+        </div>
+    }
+</div>

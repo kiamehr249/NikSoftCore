@@ -1,0 +1,18 @@
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    var contents = (List<GeneralContent>)ViewBag.Contents;
+    var theConetnt = contents.FirstOrDefault();
+}
+
+<div class="col-md-4 col-sm-12 about-image top_30">
+    <div class="row">
+        <img src="~/@theConetnt.Image" alt="@theConetnt.Title">
+    </div>
+</div>
+<div class="col-md-7 col-md-offset-1 col-sm-12 about-text">
+    <div class="section-title dright bottom_30">
+        <br>
+        <h2>@theConetnt.Title</h2>
+    </div>
+    <p>@theConetnt.Header</p>
+</div>

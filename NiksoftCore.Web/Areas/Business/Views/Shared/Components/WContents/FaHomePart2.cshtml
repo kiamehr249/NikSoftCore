@@ -1,0 +1,43 @@
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    var contents = (List<GeneralContent>)ViewBag.Contents;
+    int cc1 = 0;
+}
+
+
+<div class="row bg-alfa pos-relative">
+    @foreach (var item in contents)
+    {
+        cc1++;
+        if (cc1 == 1)
+        {
+            <div class="col-md-6 no-padding pos-static">
+                <div class="row-bg">
+                    <img src="~/@item.Image" alt="features bg">
+                </div>
+            </div>
+            @Html.Raw("<div class='col-md-6'>");
+            <div class="section-header">
+                <h5 class="subtitle">@item.Title</h5>
+                <h2>@item.Header</h2>
+                <span><i></i></span>
+                <p>@item.Footer</p>
+            </div>
+            @Html.Raw("<div class='row content'><div class='col-lg-8 col-lg-offset-2'>");
+        }
+        else
+        {
+            <div class="feature-line">
+                <img src="~/@item.Image" alt="features img">
+                <h6>@item.Title</h6>
+                <p>@item.Header</p>
+            </div>
+        }
+
+    }
+
+    @Html.Raw("</div></div></div>");
+
+
+</div>
+
