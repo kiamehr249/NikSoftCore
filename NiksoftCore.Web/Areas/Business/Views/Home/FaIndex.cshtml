@@ -47,55 +47,7 @@
                         <span class="menui bottom-menu"></span>
                     </span>
 
-                    <div class="logo">
-                        <a href="/Business">
-                            <img src="~/templates/UiTemplate/FbBusiness/img/logo-1-1.png" />
-                        </a>
-                    </div>
-
-                    <nav class="main-nav">
-                        <ul class="menu">
-                            <li class="menu-item">
-                                <a href="/Business">خانه</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#">مناطق اقتصادی</a>
-                                <ul class="sub-menu">
-                                    <li class="menu-item">
-                                        <a href="/Business/Parks">شهرک های صنعتی</a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="/Business/Company/Categories">دسته بندی ها</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item menu-item-has-children">
-                                <a href="/Business/Company">شرکت ها</a>
-                            </li>
-                            <li class="menu-item menu-item-has-children">
-                                <a href="#">خدمات بازرگانی</a>
-                                <ul class="sub-menu">
-                                    <li class="menu-item">
-                                        <a href="#l">معرفی خدمات</a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="#">قوانین و مقررات</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item menu-item-has-children">
-                                <a href="#">ورود/ثبت نام</a>
-                                <ul class="sub-menu">
-                                    <li class="menu-item">
-                                        <a href="/Auth/Account/Login">ورود</a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="/Auth/Account/Register">ثبت نام</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
+                    @await Component.InvokeAsync("WMenus", new { key = "b_menu" })
 
                     <ul class="actions">
                         <li class="custom-select">

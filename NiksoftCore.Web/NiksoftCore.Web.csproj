@@ -191,6 +191,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\files\business\" />
+    <Folder Include="wwwroot\files\base\" />
     <Folder Include="wwwroot\lib\noty\" />
     <Folder Include="wwwroot\templates\UiTemplate\NikFace\" />
   </ItemGroup>

@@ -1,0 +1,17 @@
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    var content = (MenuCategory)ViewBag.Contents;
+}
+
+<div class="container">
+    <div class="logo">
+        <img src="~/@content.Image" alt="">
+    </div>
+    <div class="responsive"><i data-icon="m" class="icon"></i></div>
+    <ul class="nav-menu">
+        @foreach (var item in content.Menus)
+        {
+            <li><a href="@item.Link" class="smoothScroll">@item.Title</a></li>
+        }
+    </ul>
+</div>

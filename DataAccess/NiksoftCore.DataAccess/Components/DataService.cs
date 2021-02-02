@@ -87,17 +87,42 @@ namespace NiksoftCore.DataAccess
             return TEntity.Where(predicate).Skip(startIndex).Take(size).ToList();
         }
 
-        public virtual IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size, Expression<Func<T, int>> keySelect,  bool desc)
+        public virtual IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size, Expression<Func<T, int>> orderKey, bool desc)
         {
             if (desc)
             {
-                return TEntity.Where(predicate).OrderByDescending(keySelect).Skip(startIndex).Take(size).ToList();
+                return TEntity.Where(predicate).OrderByDescending(orderKey).Skip(startIndex).Take(size).ToList();
             }
             else
             {
-                return TEntity.Where(predicate).OrderBy(keySelect).Skip(startIndex).Take(size).ToList();
+                return TEntity.Where(predicate).OrderBy(orderKey).Skip(startIndex).Take(size).ToList();
             }
-            
+
+        }
+
+        public virtual IList<T> GetPart(List<Expression<Func<T, bool>>> predicates, int startIndex, int size, Expression<Func<T, int>> orderKey, bool desc)
+        {
+            var query = TEntity.Where(predicates[0]);
+            int cc = 0;
+            foreach (var cond in predicates)
+            {
+                cc++;
+                if (cc != 1)
+                {
+                    query = query.Where(cond);
+                }
+            }
+
+
+            if (desc)
+            {
+                return query.OrderByDescending(orderKey).Skip(startIndex).Take(size).ToList();
+            }
+            else
+            {
+                return query.OrderBy(orderKey).Skip(startIndex).Take(size).ToList();
+            }
+
         }
 
         public virtual IList<T> GetAll(Expression<Func<T, bool>> predicate)
@@ -105,10 +130,10 @@ namespace NiksoftCore.DataAccess
             return TEntity.Where(predicate).ToList();
         }
 
-        public virtual IList<T> GetAll(List<Expression<Func<T, bool>>> predicate)
+        public virtual IList<T> GetAll(List<Expression<Func<T, bool>>> predicates)
         {
-            var query = TEntity.Where(predicate[0]);
-            foreach (var cond in predicate)
+            var query = TEntity.Where(predicates[0]);
+            foreach (var cond in predicates)
             {
                 query = query.Where(cond);
             }
@@ -120,10 +145,10 @@ namespace NiksoftCore.DataAccess
             return TEntity.Where(predicate).Select(selectItem).ToList();
         }
 
-        public virtual IList<TResult> GetAll<TResult>(List<Expression<Func<T, bool>>> predicate, Expression<Func<T, TResult>> selectItem)
+        public virtual IList<TResult> GetAll<TResult>(List<Expression<Func<T, bool>>> predicates, Expression<Func<T, TResult>> selectItem)
         {
-            var query = TEntity.Where(predicate[0]);
-            foreach (var cond in predicate)
+            var query = TEntity.Where(predicates[0]);
+            foreach (var cond in predicates)
             {
                 query = query.Where(cond);
             }

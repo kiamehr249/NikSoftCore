@@ -23,19 +23,21 @@ namespace NiksoftCore.DataAccess
 
         T Find(Expression<Func<T, bool>> predicate);
 
-        IList<T> GetPartOptional(List<Expression<Func<T, bool>>> predicate, int startIndex, int size);
+        IList<T> GetPartOptional(List<Expression<Func<T, bool>>> predicates, int startIndex, int size);
 
         IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size);
 
-        IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size, Expression<Func<T, int>> keySelect, bool desc);
+        IList<T> GetPart(Expression<Func<T, bool>> predicate, int startIndex, int size, Expression<Func<T, int>> orderKey, bool desc);
+
+        IList<T> GetPart(List<Expression<Func<T, bool>>> predicates, int startIndex, int size, Expression<Func<T, int>> orderKey, bool desc);
 
         IList<T> GetAll(Expression<Func<T, bool>> predicate);
 
-        IList<T> GetAll(List<Expression<Func<T, bool>>> predicate);
+        IList<T> GetAll(List<Expression<Func<T, bool>>> predicates);
 
         IList<TResult> GetAll<TResult>(Expression<Func<T, bool>> predicate, Expression<Func<T, TResult>> selectItem);
 
-        IList<TResult> GetAll<TResult>(List<Expression<Func<T, bool>>> predicate, Expression<Func<T, TResult>> selectItem);
+        IList<TResult> GetAll<TResult>(List<Expression<Func<T, bool>>> predicates, Expression<Func<T, TResult>> selectItem);
 
         List<Expression<Func<T, bool>>> ExpressionMaker();
 

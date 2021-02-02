@@ -34,21 +34,7 @@
 
     <nav class="subpage-nav">
         <div class="row">
-            <div class="container">
-                <div class="logo">
-                    <img src="~/templates/UiTemplate/NikFace/rtl/images/logo.png" alt="">
-                </div>
-                <div class="responsive"><i data-icon="m" class="icon"></i></div>
-                <ul class="nav-menu">
-                    <li><a href="/#home" class="smoothScroll">خانه</a></li>
-                    <li><a href="/#about" class="smoothScroll">درباره ما</a></li>
-                    <li><a href="/#portfolio" class="smoothScroll">خدمات</a></li>
-                    <li><a href="/#blog" class="smoothScroll">رویدادها</a></li>
-                    <li><a href="/#contact" class="smoothScroll">تماس با ما</a></li>
-                    <li><a href="/PageContent/?Id=2" class="smoothScroll">قوانین و مقررات</a></li>
-                    <li><a href="/Auth/Account/Login" class="smoothScroll">ورود/عضویت</a></li>
-                </ul>
-            </div>
+            @await Component.InvokeAsync("WMenus", new { key = "m_menu" })
         </div>
     </nav>
 

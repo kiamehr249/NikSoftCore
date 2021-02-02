@@ -1,0 +1,32 @@
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    var content = (MenuCategory)ViewBag.Contents;
+}
+
+<div class="logo">
+    <a href="/Business">
+        <img src="~/@content.Image" />
+    </a>
+</div>
+
+<nav class="main-nav">
+    <ul class="menu">
+        @foreach (var item in content.Menus.Where(x => x.ParentId == null).ToList())
+        {
+            <li class="menu-item">
+                <a href="@item.Link">@item.Title</a>
+                @if (item.Childs.Count > 0)
+                {
+                    <ul class="sub-menu">
+                        @foreach (var subItem in item.Childs)
+                        {
+                            <li class="menu-item">
+                                <a href="@subItem.Link">@subItem.Title</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+    </ul>
+</nav>
