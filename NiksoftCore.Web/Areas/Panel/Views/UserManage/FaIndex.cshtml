@@ -1,9 +1,9 @@
 ﻿@using NiksoftCore.SystemBase.Service
-@model NiksoftCore.ViewModel.MenuCategoryGridRequest
+@model NiksoftCore.ViewModel.UserGridRequest
 @{
-    ViewData["Title"] = "مدیریت دسته بندی ها";
+    ViewData["Title"] = "مدیریت کاربران";
     Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
-    var contents = (List<MenuCategory>)ViewBag.Contents;
+    var contents = (List<NikUser>)ViewBag.Contents;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
     int pageNumber = 0;
 
@@ -12,7 +12,7 @@
     var accBtn = isSearch ? "aria-expanded='true'" : "";
 }
 <div class="text-right">
-    <a href="/Panel/MenuManage/Create" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    <a href="/Panel/UserManage/Create" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
     <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
         <i class="fa fa-search"></i>
     </a>
@@ -24,8 +24,8 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="txtTitle" class="control-label">عنوان</label>
-                        @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                        <label for="txtTitle" class="control-label">نام کاربری</label>
+                        @Html.TextBoxFor(m => m.UserName, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
                     </div>
                 </div>
                 <div class="col-sm-3" style="padding-top: 29px;">
@@ -44,11 +44,10 @@
         <thead>
             <tr>
                 <th class="text-primary text-center" width="30px">ردیف</th>
-                <th class="text-primary text-center">عنوان</th>
-                <th class="text-primary text-center">تصویر</th>
-                <th class="text-primary text-center">توضیحات</th>
-                <th class="text-primary text-center">آیتم ها</th>
-                <th class="text-primary text-center">وضعیت</th>
+                <th class="text-primary text-center">نام کاربری</th>
+                <th class="text-primary text-center">ایمیل</th>
+                <th class="text-primary text-center">موبایل</th>
+                <th class="text-primary text-center">سایر</th>
                 <th class="text-primary text-center" width="100px">عملیات</th>
             </tr>
         </thead>
@@ -58,43 +57,24 @@
                 pageNumber++;
                 <tr>
                     <td>@(pager.StartIndex + pageNumber)</td>
-                    <td>@item.Title</td>
+                    <td>@item.UserName</td>
                     <td>
-                        @if (!string.IsNullOrEmpty(item.Image))
-                        {
-                            <img src="/@item.Image" style="height: 70px; width: 70px;" />
-                        }
+                        @item.Email
                     </td>
                     <td>
-                        @item.Description
+                        @item.PhoneNumber
                     </td>
                     <td>
-                        <a href="/Panel/MenuManage/MenuGrid?CategoryId=@item.Id" class="btn btn-outline-info btn-sm">
-                            آیتم ها <span class="badge badge-warning">@item.Menus.Count</span>
+                        <a href="/" class="btn btn-outline-info btn-sm">
+                            نقش ها
                         </a>
                     </td>
                     <td>
-                        @if (item.Enabled)
-                        {
-                            <a href="/Panel/MenuManage/Enable?Id=@item.Id" class="btn btn-outline-success btn-sm">
-                                <i class="fas fa-check"></i>
-                            </a>
-                        }
-                        else
-                        {
-                            <a href="/Panel/MenuManage/Enable?Id=@item.Id" class="btn btn-outline-warning btn-sm">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        }
-
-                    </td>
-                    
-                    <td>
                         <div class="btn-group btn-group-sm">
-                            <a href="/Panel/MenuManage/Create?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                            <a href="/Panel/UserManage/Create?Id=@item.Id" class="btn btn-outline-warning btn-sm">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="/Panel/MenuManage/Remove?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                            <a href="/Panel/UserManage/Remove?Id=@item.Id" class="btn btn-outline-danger btn-sm">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </div>

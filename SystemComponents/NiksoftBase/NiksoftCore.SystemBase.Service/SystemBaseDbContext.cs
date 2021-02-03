@@ -28,6 +28,9 @@ namespace NiksoftCore.SystemBase.Service
         public DbSet<ContentFile> ContentFiles { get; set; }
         public DbSet<MenuCategory> MenuCategories { get; set; }
         public DbSet<Menu> Menus { get; set; }
+        public DbSet<NikUser> NikUsers { get; set; }
+        public DbSet<NikRole> NikRoles { get; set; }
+        public DbSet<BaseImport> BaseImports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -44,6 +47,9 @@ namespace NiksoftCore.SystemBase.Service
             builder.ApplyConfiguration(new ContentFileMap());
             builder.ApplyConfiguration(new MenuCategoryMap());
             builder.ApplyConfiguration(new MenuMap());
+            builder.ApplyConfiguration(new NikUserMap());
+            builder.ApplyConfiguration(new NikRoleMap());
+            builder.ApplyConfiguration(new BaseImportMap());
         }
     }
 }

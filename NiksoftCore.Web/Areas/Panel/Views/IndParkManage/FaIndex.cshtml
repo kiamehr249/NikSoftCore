@@ -58,7 +58,12 @@
                     </a>
                 </li>
 
-                @for (int i = 1; i <= pager.GetTotalParts(); i++)
+                @if (pager.GetStartShow() >= pager.MaxShow)
+                {
+                    <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetBackRang()" class="page-link">...</a></li>
+                }
+
+                @for (int i = pager.GetStartShow(); i <= pager.GetEndShow(); i++)
                 {
                     if (pager.Part == i)
                     {
@@ -69,6 +74,11 @@
                         <li class="page-item"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
                     }
 
+                }
+
+                @if (pager.GetTotalParts() > pager.MaxShow)
+                {
+                    <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetEndShow()" class="page-link">...</a></li>
                 }
                 <li class="page-item">
                     <a class="page-link" href="@Context.Request.Path?part=@pager.GetTotalParts()" aria-label="Next">

@@ -1,0 +1,61 @@
+﻿
+@using NiksoftCore.SystemBase.Service
+@model NiksoftCore.ViewModel.UserRequest
+@{
+    ViewData["Title"] = "ایجاد کاربر";
+    Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+    //var contents = (List<BaseImport>)ViewBag.Contents;
+}
+
+
+@*<table class="table table-bordered table-dark">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>NCode</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in contents)
+        {
+            <tr>
+                <td>@item.Email</td>
+                <td>@item.NCode</td>
+            </tr>
+        }
+    </tbody>
+</table>*@
+
+<script>
+
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+
+    });
+</script>

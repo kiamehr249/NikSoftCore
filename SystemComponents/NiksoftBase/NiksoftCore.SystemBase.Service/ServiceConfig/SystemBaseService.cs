@@ -15,6 +15,10 @@
         IContentFileService iContentFileServ { get; set; }
         IMenuCategoryService iMenuCategoryServ { get; set; }
         IMenuService iMenuServ { get; set; }
+        INikUserService iNikUserServ { get; set; }
+        INikRoleService iNikRoleServ { get; set; }
+        INikUserRoleService iNikUserRoleServ { get; set; }
+        IBaseImportService iBaseImportServ { get; set; }
     }
 
     public class SystemBaseService : ISystemBaseService
@@ -32,6 +36,10 @@
         public IContentFileService iContentFileServ { get; set; }
         public IMenuCategoryService iMenuCategoryServ { get; set; }
         public IMenuService iMenuServ { get; set; }
+        public INikUserService iNikUserServ { get; set; }
+        public INikRoleService iNikRoleServ { get; set; }
+        public INikUserRoleService iNikUserRoleServ { get; set; }
+        public IBaseImportService iBaseImportServ { get; set; }
 
         public SystemBaseService(string connection)
         {
@@ -49,6 +57,10 @@
             iContentFileServ = new ContentFileService(uow);
             iMenuCategoryServ = new MenuCategoryService(uow);
             iMenuServ = new MenuService(uow);
+            iNikUserServ = new NikUserService(uow);
+            iNikRoleServ = new NikRoleService(uow);
+            iNikUserRoleServ = new NikUserRoleService(uow);
+            iBaseImportServ = new BaseImportService(uow);
         }
 
 

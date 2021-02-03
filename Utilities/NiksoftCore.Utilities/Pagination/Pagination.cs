@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NiksoftCore.Utilities
 {
@@ -12,13 +8,15 @@ namespace NiksoftCore.Utilities
         public int PageSize { get; set; }
         public int Part { get; set; }
         public int StartIndex { get; set; }
+        public int MaxShow { get; set; }
 
         public Pagination(int totalSize, int pageSize, int part)
         {
             TotalSize = totalSize;
             PageSize = pageSize;
-            Part = part;
+            Part = part == 0 ? 1 : part;
             StartIndex = GetSkip();
+            MaxShow = 10;
         }
 
         public int GetSkip()
@@ -33,6 +31,31 @@ namespace NiksoftCore.Utilities
         public int GetTotalParts()
         {
             return Convert.ToInt32(Math.Ceiling((double)TotalSize / PageSize));
+        }
+
+        public int GetStartShow()
+        {
+            if (MaxShow > Part)
+            {
+                return 1;
+            }
+            else
+            {
+                return Convert.ToInt32(Math.Floor((double)Part / MaxShow)) * MaxShow;
+            }
+        }
+
+        public int GetEndShow()
+        {
+            if (Part < MaxShow)
+                return 10;
+            else
+                return GetStartShow() + MaxShow;
+        }
+
+        public int GetBackRang()
+        {
+            return GetStartShow() - MaxShow;
         }
     }
 }
