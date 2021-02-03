@@ -30,7 +30,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.Widgets
             List<string> KeyValues;
             IList<GeneralContent> contents;
             IList<ContentCategory> categories;
-            if (theCategory.Childs.Count > 0)
+            if (theCategory != null && theCategory.Childs.Count > 0)
             {
                 categories = iSystemBaseServ.iContentCategoryServ.GetAll(x => x.Parent.KeyValue == key);
                 KeyValues = categories.Select(x => x.KeyValue).ToList();

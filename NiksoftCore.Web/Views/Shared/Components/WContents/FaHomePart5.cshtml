@@ -3,17 +3,20 @@
     var contents = (List<GeneralContent>)ViewBag.Contents;
 }
 
-<div class="row">
-    @foreach (var item in contents)
-    {
-        <a href="/News/Single/@item.Id" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-content wow fadeInUp" data-wow-delay="0.4s">
-            <div class="blog-image">
-                <img src="~/@item.Image">
-            </div>
-            <h2 class="blog-title">@item.Title</h2>
-            <p>@item.Header</p>
-            @*<span class="blog-info"><span>بخش خبری</span></span>*@
-        </a>
-    }
-    <a href="/News" class="sitebtn pull-left top_45">بیشتر</a>
-</div>
+@if (contents != null)
+{
+    <div class="row">
+        @foreach (var item in contents)
+        {
+            <a href="/News/Single/@item.Id" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-content wow fadeInUp" data-wow-delay="0.4s">
+                <div class="blog-image">
+                    <img src="~/@item.Image">
+                </div>
+                <h2 class="blog-title">@item.Title</h2>
+                <p>@item.Header</p>
+                @*<span class="blog-info"><span>بخش خبری</span></span>*@
+            </a>
+        }
+        <a href="/News" class="sitebtn pull-left top_45">بیشتر</a>
+    </div>
+}
