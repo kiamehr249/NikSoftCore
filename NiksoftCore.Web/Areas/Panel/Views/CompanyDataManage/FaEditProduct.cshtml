@@ -24,7 +24,7 @@
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
                     <label for="CatgoryId" class="control-label">دسته بندی</label>
-                    <select class="form-control m-b" asp-for="GroupId" asp-items="ViewBag.Groups">
+                    <select class="form-control m-b" asp-for="CategoryId" asp-items="ViewBag.Categories">
                         <option selected="selected" value="0">انتخاب کنید</option>
                     </select>
                 </div>
@@ -58,6 +58,7 @@
                 </div>
                 @Html.HiddenFor(m => m.BusinessId)
                 @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.BusinessCatId)
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-success">ذخیره</button>
                 </div>

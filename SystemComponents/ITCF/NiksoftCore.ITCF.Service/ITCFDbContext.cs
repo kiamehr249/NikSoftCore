@@ -23,8 +23,10 @@ namespace NiksoftCore.ITCF.Service
         public DbSet<Province> Provinces { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Introduction> Introductions { get; set; }
-        public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<UserPurchase> UserPurchases { get; set; }
+        public DbSet<UserModel> UserModels { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
 
 
 
@@ -38,9 +40,10 @@ namespace NiksoftCore.ITCF.Service
             builder.ApplyConfiguration(new ProvinceMap());
             builder.ApplyConfiguration(new CityMap());
             builder.ApplyConfiguration(new IntroductionMap());
-            builder.ApplyConfiguration(new ProductGroupMap());
             builder.ApplyConfiguration(new ProductMap());
-
+            builder.ApplyConfiguration(new UserPurchaseMap());
+            builder.ApplyConfiguration(new UserModelMap());
+            builder.ApplyConfiguration(new UserProfileMap());
         }
     }
 }

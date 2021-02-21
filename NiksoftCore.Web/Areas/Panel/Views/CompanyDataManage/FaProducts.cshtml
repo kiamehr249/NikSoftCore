@@ -29,6 +29,7 @@
                 <th class="text-primary text-center">عنوان</th>
                 <th class="text-primary text-center">تصویر</th>
                 <th class="text-primary text-center">ویدیو</th>
+                <th class="text-primary text-center">دسته بندی</th>
                 <th class="text-primary text-center">توضیحات</th>
                 <th class="text-primary text-center" width="150px">عملیات</th>
             </tr>
@@ -52,6 +53,7 @@
                             <a href="/@item.Video" class="btn btn-info btn-sm" target="_blank">نمایش ویدیو</a>
                         }
                     </td>
+                    <td>@item.BusinessCategory.Title</td>
                     <td>@item.Description</td>
                     <td>
                         <div class="btn-group btn-group-sm">

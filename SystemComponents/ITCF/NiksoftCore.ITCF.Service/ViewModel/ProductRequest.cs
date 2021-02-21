@@ -11,7 +11,8 @@ namespace NiksoftCore.ITCF.Service
         public IFormFile ImageFile { get; set; }
         public string Video { get; set; }
         public IFormFile VideoFile { get; set; }
-        public int GroupId { get; set; }
+        public int CategoryId { get; set; }
         public int BusinessId { get; set; }
+        public int BusinessCatId { get; set; }
     }
 }

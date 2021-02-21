@@ -173,5 +173,20 @@ namespace NiksoftCore.ITCF.Service
             }
             return false;
         }
+
+        public static string GetPurchaseStatusName(PurchaseStatus status)
+        {
+            switch (status)
+            {
+                case PurchaseStatus.Requested:
+                    return "درخواست خرید";
+                case PurchaseStatus.Confirmed:
+                    return "تایید خرید";
+                case PurchaseStatus.Rejected:
+                    return "رد درخواست";
+                default:
+                    return "نا مشخص";
+            }
+        }
     }
 }

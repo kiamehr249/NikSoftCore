@@ -1,0 +1,88 @@
+﻿@using NiksoftCore.ITCF.Service
+@model NiksoftCore.ITCF.Service.PurchaseCheckRequest
+@{
+    ViewData["Title"] = "بررسی درخواست";
+    Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+    var theContent = (UserPurchase)ViewBag.Content;
+    var theUser = (UserModel)ViewBag.User;
+    var profile = (UserProfile)ViewBag.Profile;
+}
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/PurchaseManage" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary()
+<form action="/Panel/IndParkManage/Create" method="post">
+    <div class="registerdiv">
+        <div class="table-responsive">
+            <table>
+                <tbody>
+                    <tr>
+                        @if (profile != null)
+                        {
+                            <td>نام: @profile.Firstname @profile.Lastname</td>
+                        }
+
+                        <td>تلفن: @theUser.PhoneNumber</td>
+                        <td>محصول: @theContent.Product.Title</td>
+                        <td>شرکت تولید کننده: @theContent.Product.Business.CoName</td>
+                        <td>تعداد سفارش: @theContent.Count</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <div class="form-group">
+                    <label for="Status" class="control-label">Country</label>
+                    <select class="form-control m-b" asp-for="Status" asp-items="ViewBag.Country">
+                        <option selected="selected" value="0">Select Country</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+
+    });
+</script>

@@ -24,7 +24,7 @@ namespace NiksoftCore.Web
                     //webBuilder.UseKestrel();
                     webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
                     webBuilder.UseIISIntegration();
-                    webBuilder.UseStartup<Startup>(); ;
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }

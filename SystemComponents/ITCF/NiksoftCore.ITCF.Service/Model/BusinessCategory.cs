@@ -14,5 +14,6 @@ namespace NiksoftCore.ITCF.Service
         public virtual BusinessCategory Parent { get; set; }
         public virtual ICollection<BusinessCategory> Childs { get; set; }
         public virtual ICollection<Business> Businesses { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

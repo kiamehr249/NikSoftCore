@@ -12,8 +12,10 @@ namespace NiksoftCore.ITCF.Service
         IProvinceService iProvinceServ { get; set; }
         ICityService iCityServ { get; set; }
         IIntroductionService iIntroductionServ { get; set; }
-        IProductGroupService iProductGroupServ { get; set; }
         IProductService iProductServ { get; set; }
+        IUserPurchaseService iUserPurchaseServ { get; set; }
+        IUserModelService iUserModelServ { get; set; }
+        IUserProfileService iUserProfileServ { get; set; }
     }
 
     public class ITCFService : IITCFService
@@ -26,8 +28,10 @@ namespace NiksoftCore.ITCF.Service
         public IProvinceService iProvinceServ { get; set; }
         public ICityService iCityServ { get; set; }
         public IIntroductionService iIntroductionServ { get; set; }
-        public IProductGroupService iProductGroupServ { get; set; }
         public IProductService iProductServ { get; set; }
+        public IUserPurchaseService iUserPurchaseServ { get; set; }
+        public IUserModelService iUserModelServ { get; set; }
+        public IUserProfileService iUserProfileServ { get; set; }
 
 
         public ITCFService(IConfiguration Configuration)
@@ -41,8 +45,10 @@ namespace NiksoftCore.ITCF.Service
             iProvinceServ = new ProvinceService(uow);
             iCityServ = new CityService(uow);
             iIntroductionServ = new IntroductionService(uow);
-            iProductGroupServ = new ProductGroupService(uow);
             iProductServ = new ProductService(uow);
+            iUserPurchaseServ = new UserPurchaseService(uow);
+            iUserModelServ = new UserModelService(uow);
+            iUserProfileServ = new UserProfileService(uow);
         }
 
 

@@ -6,59 +6,65 @@
     var Contents = (List<Introduction>)ViewBag.Contents;
     var Products = (List<Product>)ViewBag.Products;
 
-    var firstItem = Contents.Where(x => x.KeyValue == "unit1").First();
+    var firstItem = Contents.Count > 0 ? Contents.Where(x => x.KeyValue == "unit1").First() : null;
     var secondItems = Contents.Where(x => x.KeyValue == "unit2");
     var vItems = Contents.Where(x => x.KeyValue == "unit3").ToList();
     var cc1 = 0;
     ViewData["Title"] = theCom.CoName;
+    var loginedHide = User.Identity.IsAuthenticated ? "style='display: none;'" : "";
+    var loginedShow = !User.Identity.IsAuthenticated ? "style='display: none;'" : "";
 }
 
 
 <div class="content-wrapper">
-    <section class="hero-section">
-        <h2 class="hidden">@theCom.CoName</h2>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="rev_slider_wrapper" style="direction: ltr;">
-                        <div class="fullwidth_slider rev_slider" data-arrows="false" data-height="600">
-                            <ul>
-                                <li data-transition="fade">
-                                    <img src="/@firstItem.ImageFile" alt="slide1" data-bgfit="cover" data-bgposition="center center" data-kenburns="on" data-duration="7000" data-ease="Linear.easeNone" data-scalestart="110" data-scaleend="100" data-rotatestart="0" data-rotateend="0" data-offsetstart="0 0" data-offsetend="0 0" data-bgparallax="10" class="rev-slidebg" data-no-retina>
+    @if (firstItem != null)
+    {
+        <section class="hero-section">
+            <h2 class="hidden">@theCom.CoName</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="rev_slider_wrapper" style="direction: ltr;">
+                            <div class="fullwidth_slider rev_slider" data-arrows="false" data-height="600">
+                                <ul>
+                                    <li data-transition="fade">
+                                        <img src="/@firstItem.ImageFile" alt="slide1" data-bgfit="cover" data-bgposition="center center" data-kenburns="on" data-duration="7000" data-ease="Linear.easeNone" data-scalestart="110" data-scaleend="100" data-rotatestart="0" data-rotateend="0" data-offsetstart="0 0" data-offsetend="0 0" data-bgparallax="10" class="rev-slidebg" data-no-retina>
 
-                                    <div class="tp-caption WhiteTtl tp-resizeme"
-                                         data-x="center" data-hoffset="0"
-                                         data-y="middle" data-voffset="-32"
-                                         data-whitespace="nowrap"
-                                         data-transform_idle="o:1;"
-                                         data-transform_in="y:-150px;opacity:0;s:1000;e:Power4.easeOut;"
-                                         data-transform_out="opacity:0;s:500;s:500;"
-                                         data-start="1300"
-                                         data-fontsize="['50','45','35','30']"
-                                         data-responsive_offset="on">
-                                        @firstItem.Title
-                                    </div>
+                                        <div class="tp-caption WhiteTtl tp-resizeme"
+                                             data-x="center" data-hoffset="0"
+                                             data-y="middle" data-voffset="-32"
+                                             data-whitespace="nowrap"
+                                             data-transform_idle="o:1;"
+                                             data-transform_in="y:-150px;opacity:0;s:1000;e:Power4.easeOut;"
+                                             data-transform_out="opacity:0;s:500;s:500;"
+                                             data-start="1300"
+                                             data-fontsize="['50','45','35','30']"
+                                             data-responsive_offset="on">
+                                            @firstItem.Title
+                                        </div>
 
-                                    <div class="tp-caption WhiteTtlp tp-resizeme"
-                                         data-x="center" data-hoffset="0"
-                                         data-y="middle" data-voffset="32"
-                                         data-whitespace="nowrap"
-                                         data-transform_idle="o:1;"
-                                         data-transform_in="y:-100px;opacity:0;s:1000;e:Power2.easeOut;"
-                                         data-transform_out="opacity:0;s:500;s:500;"
-                                         data-start="1700"
-                                         data-fontsize="['30','25','20','16']"
-                                         data-responsive_offset="on">
-                                        @firstItem.Description
-                                    </div>
-                                </li>
-                            </ul>
+                                        <div class="tp-caption WhiteTtlp tp-resizeme"
+                                             data-x="center" data-hoffset="0"
+                                             data-y="middle" data-voffset="32"
+                                             data-whitespace="nowrap"
+                                             data-transform_idle="o:1;"
+                                             data-transform_in="y:-100px;opacity:0;s:1000;e:Power2.easeOut;"
+                                             data-transform_out="opacity:0;s:500;s:500;"
+                                             data-start="1700"
+                                             data-fontsize="['30','25','20','16']"
+                                             data-responsive_offset="on">
+                                            @firstItem.Description
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    }
+
 
     <section class="about-us-section items">
         <div class="container-fluid">
@@ -67,54 +73,54 @@
                 cc1++;
                 if (cc1 == 1)
                 {
-            @Html.Raw("<div class='row bg-alfa pos-relative'>")
-            <div class="col-md-4 no-padding pos-static">
-                <div class="row-bg left">
-                    <img src="/@item.ImageFile" alt="skills section">
-                </div>
-            </div>
-            <div class="col-md-4 no-padding">
-                <div class="about-item">
-                    <i class="icon icon-House"></i>
-                    <h4>@item.Title</h4>
-                    <p class="description">@item.Description</p>
-                    <p class="number">01</p>
-                </div>
-            </div>
+                    @Html.Raw("<div class='row bg-alfa pos-relative'>")
+                    <div class="col-md-4 no-padding pos-static">
+                        <div class="row-bg left">
+                            <img src="/@item.ImageFile" alt="skills section">
+                        </div>
+                    </div>
+                    <div class="col-md-4 no-padding">
+                        <div class="about-item">
+                            <i class="icon icon-House"></i>
+                            <h4>@item.Title</h4>
+                            <p class="description">@item.Description</p>
+                            <p class="number">01</p>
+                        </div>
+                    </div>
                 }
                 else if (cc1 == 2)
                 {
-            <div class="col-md-4 no-padding pos-static">
-                <div class="row-bg">
-                    <img src="/@item.ImageFile" alt="skills section">
-                </div>
-            </div>
-            @Html.Raw("</div><div class='row bg-alfa pos-relative'>")
-            <div class="col-md-4 no-padding">
-                <div class="about-item">
-                    <i class="icon icon-Presentation"></i>
-                    <h4>@item.Title</h4>
-                    <p class="description">@item.Description</p>
-                    <p class="number">02</p>
-                </div>
-            </div>
+                    <div class="col-md-4 no-padding pos-static">
+                        <div class="row-bg">
+                            <img src="/@item.ImageFile" alt="skills section">
+                        </div>
+                    </div>
+                    @Html.Raw("</div><div class='row bg-alfa pos-relative'>")
+                    <div class="col-md-4 no-padding">
+                        <div class="about-item">
+                            <i class="icon icon-Presentation"></i>
+                            <h4>@item.Title</h4>
+                            <p class="description">@item.Description</p>
+                            <p class="number">02</p>
+                        </div>
+                    </div>
                 }
                 else if (cc1 == 3)
                 {
-            <div class="col-md-4 no-padding pos-static">
-                <div class="row-bg center">
-                    <img src="/@item.ImageFile" alt="skills section">
-                </div>
-            </div>
-            <div class="col-md-4 no-padding">
-                <div class="about-item">
-                    <i class="icon icon-Lightbulb"></i>
-                    <h4>@item.Title</h4>
-                    <p class="description">@item.Description</p>
-                    <p class="number">03</p>
-                </div>
-            </div>
-            @Html.Raw("</div>")
+                    <div class="col-md-4 no-padding pos-static">
+                        <div class="row-bg center">
+                            <img src="/@item.ImageFile" alt="skills section">
+                        </div>
+                    </div>
+                    <div class="col-md-4 no-padding">
+                        <div class="about-item">
+                            <i class="icon icon-Lightbulb"></i>
+                            <h4>@item.Title</h4>
+                            <p class="description">@item.Description</p>
+                            <p class="number">03</p>
+                        </div>
+                    </div>
+                    @Html.Raw("</div>")
                 }
             }
         </div>
@@ -131,53 +137,255 @@
             <div class="row">
                 @foreach (var item in Products)
                 {
-                <div class="col-md-3 col-sm-6">
-                    <div class="team-member v2">
-                        <div class="cover">
-                            <img src="/@item.Image" alt="team member avatar">
-                            <div class="hover">
-                                <ul class="socials clean-list">
-                                    <li><a href="#"><i class="fa fa-facebook-square facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-pinterest-square pinterest"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter-square twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-google-plus-square google-plus"></i></a></li>
-                                </ul>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="shop-item-small shop-order" data-id="@item.Id">
+                            <div class="cover">
+                                <img class="pimg" src="/@item.Image" alt="@item.Title">
+                                <a href="#orderModal" data-toggle="modal" data-target="#orderModal">
+                                </a>
+                            </div>
+                            <div class="category"><a href="#orderModal" data-toggle="modal" data-target="#orderModal">@item.BusinessCategory.Title</a></div>
+                            <h6><a class="ptitle" href="#orderModal" data-toggle="modal" data-target="#orderModal">@item.Title</a></h6>
+                            <div class="actions">
+                                <a class="add-btn shop" href="#orderModal" data-toggle="modal" data-target="#orderModal">درخواست خرید</a>
                             </div>
                         </div>
-                        <h6 class="name">@item.Title</h6>
-                        <span class="position">@item.ProductGroup.Title</span>
                     </div>
-                </div>
                 }
             </div>
             @if (vItems.Count > 0)
             {
-            <div class="row">
-                <div class="col-sm-2"></div>
-                <div class="col-md-8">
-                    <div class="showcase-image-wrapper">
-                        <div class="image-block">
-                            <div class="block-content">
-                                <div class="inner-content">
-                                    <img src="/@vItems.First().ImageFile" alt="macbook showcase image">
-                                    <a href="/@vItems.First().VideoFile" class="video-link"></a>
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-md-8">
+                        <div class="showcase-image-wrapper">
+                            <div class="image-block">
+                                <div class="block-content">
+                                    <div class="inner-content">
+                                        <img src="/@vItems.First().ImageFile" alt="macbook showcase image">
+                                        <a href="/@vItems.First().VideoFile" class="video-link"></a>
+                                    </div>
+                                </div>
+                                <img src="~/templates/UiTemplate/FbBusiness/img/macbook-showcase.png" class="image-block-base" alt="showcase">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+            }
+
+            <div id="orderModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="part-loading loading1" style="display: none;">
+                                <div class="loading-content">
+                                    <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+                                    <div class="lo-text">لطفا کمی صبر کنید</div>
                                 </div>
                             </div>
-                            <img src="~/templates/UiTemplate/FbBusiness/img/macbook-showcase.png" class="image-block-base" alt="showcase">
+
+                            <div id="loginwrrap" class="order-form" @Html.Raw(loginedHide)>
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+                                    <div class="section-header pt-30">
+                                        <h4>ورود به حساب کاربری</h4>
+                                        <span><i></i></span>
+                                        <p>جهت ادامه سفارش باید در حساب کاربری خود وارد شوید</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input id="txtUsername" type="text" class="form-control" placeholder="نام کاربری" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input id="txtPassword" type="password" class="form-control" placeholder="رمزعبور" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                        </div>
+                                    </div>
+                                    <p class="text-center">
+                                        <a href="/Auth/Account/Register">جهت ثبت نام اینجا کلیک کنید</a>
+                                    </p>
+                                }
+                            </div>
+
+                            <div id="orderwrrap" class="login-form" @Html.Raw(loginedShow)>
+                                <div class="section-header pt-30">
+                                    <h4>ثبت سفارش</h4>
+                                    <span><i></i></span>
+                                    <p>جهت ثبت سفارش تعداد درخواستی خود را وارد کنید</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="basket-item text-center">
+                                            <img id="bimg" src="" class="img-responsive" />
+                                            <br />
+                                            <h5 id="btitle" class="p-title"></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                                </span>
+                                                <input id="txtOrderCount" type="text" class="form-control" placeholder="تعداد سفارش" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer text-center">
+                            <button type="button" id="closeOrder" class="btn btn-warning btn-sm" data-dismiss="modal">لغو درخواست</button>
+                            <button type="button" id="btnOrderSave" class="btn btn-success btn-sm" @Html.Raw(loginedShow)>
+                                <span>ثبت سفارش</span>
+                            </button>
+                            <button type="button" id="btnLogin" class="btn btn-success btn-sm" @Html.Raw(loginedHide)>
+                                <span>ورود به سامانه</span>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-2"></div>
             </div>
-            }
         </div>
     </section>
 
-    <section class="features-section v2">
-        <div class="container-fluid">
-            <div class="map-frame">
-                @Html.Raw(theCom.Location)
+    @*<section class="features-section v2">
+            <div class="container-fluid">
+                <div class="map-frame">
+                    @Html.Raw(theCom.Location)
+                </div>
             </div>
-        </div>
-    </section>
+        </section>*@
 </div>
+
+<script>
+    var theProduct = {
+        id: 0,
+        title: '',
+        img: '',
+        count: 0
+    };
+
+    $(document).ready(function () {
+        $('.shop-order').on('click', function () {
+            var item = $(this);
+            theProduct.id = item.data('id');
+            theProduct.img = item.find('.pimg').attr('src');
+            theProduct.title = item.find('.ptitle').text();
+            $('#bimg').attr('src', theProduct.img);
+            $('#btitle').text(theProduct.title);
+        });
+
+        $('#btnLogin').on('click', function () {
+            var item = $(this);
+            var username = $('#txtUsername').val();
+            var password = $('#txtPassword').val();
+            if (username == undefined || username === '') {
+                showMessage({ text: 'نام کاربری را وارد کنید', type: 'error' });
+                return false;
+            }
+
+            if (password == undefined || password === '') {
+                showMessage({ text: 'رمز عبور را وارد کنید', type: 'error' });
+                return false;
+            }
+
+            $('.loading1').show();
+            callApi({
+                url: '/api/base/AccountApi/SignInUser',
+                data: {
+                    Username: username,
+                    Password: password,
+                    RememberMe: true
+                },
+                success: function (data, status, xhr) {
+                    if (data.status == 200) {
+                        item.hide();
+                        $('#loginwrrap').hide();
+                        $('#orderwrrap').show();
+                        $('#btnOrderSave').show();
+                        showMessage({ text: 'ورود با موفقیت انجام شد', type: 'success' });
+                    } else {
+                        showMessage({ text: data.message, type: 'error' });
+                    }
+
+                    $('.loading1').hide();
+
+                }
+            });
+
+        });
+
+        $('#btnOrderSave').click(function () {
+            var item = $(this);
+
+            var theCount = $('#txtOrderCount').val();
+            if (theCount == undefined || theCount === '') {
+                showMessage({ text: 'تعداد سفارش را وارد کنید', type: 'error' });
+                return false;
+            }
+
+            theProduct.count = faToEnNumbers(theCount);
+            console.log(theProduct.count);
+            if (isNaN(theProduct.count)) {
+                showMessage({ text: 'تعداد سفارش را صحیح وارد کنید', type: 'error' });
+                return false;
+            }
+
+            
+
+
+            $('.loading1').show();
+            callApi({
+                url: '/api/ProductApi/SetProductOrder',
+                data: {
+                    Id: theProduct.id,
+                    Count: theProduct.count
+                },
+                success: function (data, status, xhr) {
+                    if (data.status == 200) {
+                        $('#txtOrderCount').val('');
+                        $('#closeOrder').click();
+                        showMessage({ text: 'در خواست شما ثبت شد، جهت پیگیری آن به پروفایل خود مراجعه کنید', type: 'success' });
+                    } else {
+                        showMessage({ text: data.message, type: 'error' });
+                    }
+
+                    $('.loading1').hide();
+
+                }
+            });
+        });
+
+
+    });
+
+
+</script>

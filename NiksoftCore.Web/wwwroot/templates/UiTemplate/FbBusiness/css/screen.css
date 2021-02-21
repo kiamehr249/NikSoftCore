@@ -6868,3 +6868,25 @@ input.form-send {
 .portfolio-box .cover > a > img {
   opacity: 0.4;
 }
+
+.pt-30 {
+  padding-top: 30px;
+}
+
+.part-loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #060228ad;
+  left: 0;
+  top: 0;
+  color: #fff;
+  z-index: 100;
+}
+
+.part-loading .loading-content {
+  position: absolute;
+  top: calc(50% - 15px);
+  left: calc(50% - 50px);
+  text-align: center;
+}

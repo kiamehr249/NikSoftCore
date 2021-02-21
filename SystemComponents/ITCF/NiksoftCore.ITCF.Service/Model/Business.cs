@@ -30,7 +30,6 @@ namespace NiksoftCore.ITCF.Service
         public virtual IndustrialPark IndustrialPark { get; set; }
 
         public virtual ICollection<Introduction> Introductions { get; set; }
-        public virtual ICollection<ProductGroup> ProductGroups { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
 }

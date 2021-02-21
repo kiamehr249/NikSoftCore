@@ -103,7 +103,7 @@ namespace NiksoftCore.ITCF.Conltroller.General.Business
                 ViewBag.PageTitle = "Categories";
 
             var query = iITCFServ.IBusinessCategoryServ.ExpressionMaker();
-            query.Add(x => true);
+            query.Add(x => x.ParentId == null);
 
             if (!string.IsNullOrEmpty(request.Title))
             {

@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 {
     [Area("Panel")]
-    [Authorize(Roles = "NikAdmin,Admin,User")]
+    [Authorize(Roles = "NikAdmin,Admin")]
     public class BusinessManage : NikController
     {
         private readonly UserManager<DataModel.User> userManager;

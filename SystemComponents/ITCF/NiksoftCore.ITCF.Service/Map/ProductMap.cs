@@ -14,9 +14,9 @@ namespace NiksoftCore.ITCF.Service
                 .WithMany(x => x.Products)
                 .HasForeignKey(x => x.BusinessId).IsRequired(false);
 
-            builder.HasOne(x => x.ProductGroup)
+            builder.HasOne(x => x.BusinessCategory)
                 .WithMany(x => x.Products)
-                .HasForeignKey(x => x.BusinessId).IsRequired(false);
+                .HasForeignKey(x => x.CategoryId).IsRequired(false);
 
 
         }

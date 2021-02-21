@@ -28,4 +28,8 @@
     <Folder Include="Manager\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ViewModel\NiksoftCore.ViewModel\NiksoftCore.ViewModel.csproj" />
+  </ItemGroup>
+
 </Project>

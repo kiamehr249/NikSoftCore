@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using NiksoftCore.DataModel;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.SystemBase.Service;
 using NiksoftCore.Utilities;
@@ -247,7 +248,11 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
 
                 if (result.Succeeded)
                 {
-                    await userManager.AddClaimAsync(user, new Claim("UserRole", "Admin"));
+                    if (user.AccountType == AccountType.Merchant)
+                    {
+                        return Redirect("/Home/Profile");
+                    }
+
                     return Redirect("/Panel");
                 }
                 else if (result.IsLockedOut)

@@ -6,17 +6,17 @@ using System.Linq.Expressions;
 
 namespace NiksoftCore.ITCF.Service
 {
-    public interface IProductGroupService : IDataService<ProductGroup>
+    public interface IUserProfileService : IDataService<UserProfile>
     {
     }
 
-    public class ProductGroupService : DataService<ProductGroup>, IProductGroupService
+    public class UserProfileService : DataService<UserProfile>, IUserProfileService
     {
-        public ProductGroupService(IITCFUnitOfWork uow) : base(uow)
+        public UserProfileService(IITCFUnitOfWork uow) : base(uow)
         {
         }
 
-        public override IList<ProductGroup> GetPartOptional(List<Expression<Func<ProductGroup, bool>>> predicate, int startIndex, int pageSize)
+        public override IList<UserProfile> GetPartOptional(List<Expression<Func<UserProfile, bool>>> predicate, int startIndex, int pageSize)
         {
             var query = TEntity.Where(predicate[0]);
             for (int i = 1; i < predicate.Count; i++)
