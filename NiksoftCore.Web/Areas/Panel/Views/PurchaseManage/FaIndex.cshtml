@@ -1,4 +1,6 @@
-﻿@using NiksoftCore.ITCF.Service;
+﻿
+@using NiksoftCore.ITCF.Service;
+@model UserPurchaseGridRequest
 @{
     ViewData["Title"] = "مدیریت درخواست ها";
     Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
@@ -7,12 +9,39 @@
     int pageNumber = 0;
 }
 @*<div class="text-right">
-    <div class="btn-group">
-        <a href="/Panel/BusinessManage/Create" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
-    </div>
-</div>*@
+        <div class="btn-group">
+            <a href="/Panel/BusinessManage/Create" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+        </div>
+    </div>*@
 
-<br />
+<hr />
+<form method="get">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="DeliveryType" class="control-label">نوع سفارش</label>
+                <select class="form-control m-b" asp-for="DeliveryType" asp-items="ViewBag.DeliveryTypes">
+                </select>
+                <span asp-validation-for="DeliveryType" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="Status" class="control-label">وضعیت سفارش</label>
+                <select class="form-control m-b" asp-for="Status" asp-items="ViewBag.Statuses">
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-3" style="padding-top: 29px;">
+            <button type="submit" class="btn btn-outline-info">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<hr />
+
 <div class="table-responsive">
     <table class="table table-hover text-center">
         <thead>
@@ -41,8 +70,8 @@
                     </td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                            <a href="/Panel/PurchaseManage/CheckRequest?Id=@item.Id" class="btn btn-outline-success btn-sm">
-                                <i class="fas fa-check"></i>
+                            <a href="/Panel/PurchaseManage/CheckRequest?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-edit"></i>
                             </a>
                             <a href="/Panel/PurchaseManage/Reject?Id=@item.Id" class="btn btn-outline-danger btn-sm">
                                 <i class="fas fa-trash-alt"></i>

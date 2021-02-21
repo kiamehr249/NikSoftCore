@@ -17,10 +17,10 @@
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/IndParkManage/Create" method="post">
+<form action="/Panel/PurchaseManage/CheckRequest" method="post">
     <div class="registerdiv">
         <div class="table-responsive">
-            <table>
+            <table class="table table-bordered text-center">
                 <tbody>
                     <tr>
                         @if (profile != null)
@@ -39,14 +39,21 @@
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
-                    <label for="Status" class="control-label">Country</label>
-                    <select class="form-control m-b" asp-for="Status" asp-items="ViewBag.Country">
-                        <option selected="selected" value="0">Select Country</option>
+                    <label for="DeliveryType" class="control-label">نوع سفارش</label>
+                    <select class="form-control m-b" asp-for="DeliveryType" asp-items="ViewBag.DeliveryTypes">
+                    </select>
+                    <span asp-validation-for="DeliveryType" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Status" class="control-label">وضعیت سفارش</label>
+                    <select class="form-control m-b" asp-for="Status" asp-items="ViewBag.Statuses">
                     </select>
                     <span asp-validation-for="Status" class="text-danger"></span>
                 </div>
+                @Html.HiddenFor(m => m.Id)
                 <div class="form-group text-center">
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success">ثبت</button>
                 </div>
             </div>
         </div>

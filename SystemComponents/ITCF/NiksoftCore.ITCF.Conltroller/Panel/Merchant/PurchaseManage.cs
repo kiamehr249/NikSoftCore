@@ -41,16 +41,11 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Merchant
                 request.lang = defaultLang.ShortName.ToLower();
 
             var query = iITCFServ.iUserPurchaseServ.ExpressionMaker();
-            query.Add(x => x.Status == request.Status);
+            query.Add(x => x.Status == request.Status && x.DeliveryType == request.DeliveryType);
 
-            if (request.UserId != 0)
+            if (!string.IsNullOrEmpty(request.UserName))
             {
-                query.Add(x => x.UserId == request.UserId);
-            }
-
-            if (request.ProductId != 0)
-            {
-                query.Add(x => x.ProductId == request.ProductId);
+                query.Add(x => x.User.UserName.Contains(request.UserName));
             }
 
             var total = iITCFServ.iUserPurchaseServ.Count(query);
@@ -62,9 +57,9 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Merchant
             else
                 ViewBag.PageTitle = "Purchase Management";
 
-            ViewBag.Contents = iITCFServ.iUserPurchaseServ.GetPart(x => x.Status == PurchaseStatus.Requested, pager.StartIndex, pager.PageSize).ToList();
-
-            return View(GetViewName(request.lang, "Index"));
+            ViewBag.Contents = iITCFServ.iUserPurchaseServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            ComboBinder(request.DeliveryType, request.Status);
+            return View(GetViewName(request.lang, "Index"), request);
         }
 
         public IActionResult CheckRequest(int Id, string lang)
@@ -78,7 +73,12 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Merchant
             ViewBag.Content = theRequest;
             ViewBag.User = iITCFServ.iUserModelServ.Find(x => x.Id == theRequest.UserId);
             ViewBag.Profile = iITCFServ.iUserProfileServ.Find(x => x.UserId == theRequest.UserId);
-            return View(GetViewName(lang, "CheckRequest"));
+            var request = new PurchaseCheckRequest();
+            request.Id = theRequest.Id;
+            request.Status = theRequest.Status;
+            request.DeliveryType = theRequest.DeliveryType;
+            ComboBinder(request.DeliveryType, request.Status);
+            return View(GetViewName(lang, "CheckRequest"), request);
         }
 
         [HttpPost]
@@ -99,15 +99,15 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Merchant
             return Redirect("/Panel/PurchaseManage");
         }
 
-        private void ComboBinder(PurchaseCheckRequest request)
+        private void ComboBinder(DeliveryType dtype, PurchaseStatus stype)
         {
             var typeList = from PurchaseStatus d in Enum.GetValues(typeof(PurchaseStatus))
                            select new { Id = (int)d, Title = d.GetDisplayName() };
-            ViewBag.Statuses = new SelectList(typeList.ToList(), "Id", "Title", request.Status);
+            ViewBag.Statuses = new SelectList(typeList.ToList(), "Id", "Title", (int)stype);
 
             var DeliveryList = from DeliveryType d in Enum.GetValues(typeof(DeliveryType))
                            select new { Id = (int)d, Title = d.GetDisplayName() };
-            ViewBag.DeliveryTypes = new SelectList(DeliveryList.ToList(), "Id", "Title", request.DeliveryType);
+            ViewBag.DeliveryTypes = new SelectList(DeliveryList.ToList(), "Id", "Title", (int)dtype);
         }
 
         public IActionResult Reject(int Id)
