@@ -31,4 +31,8 @@
     <ProjectReference Include="..\NiksoftCore.ITCF.Service\NiksoftCore.ITCF.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Panel\Product\" />
+  </ItemGroup>
+
 </Project>

@@ -22,6 +22,7 @@
                 <th class="text-primary text-center">دسته بندی</th>
                 <th class="text-primary text-center">نوع کسب و کار</th>
                 <th class="text-primary text-center">سایر اطلاعات</th>
+                <th class="text-primary text-center">محصولات</th>
                 <th class="text-primary text-center">وضعیت</th>
                 <th class="text-primary text-center" width="100px">عملیات</th>
             </tr>
@@ -81,6 +82,11 @@
                                 </div>
                             </div>
                         </div>
+                    </td>
+                    <td>
+                        <a href="/Panel/AdminBusinessManage/Products/?bid=@item.Id" class="btn btn-outline-success btn-sm">
+                            محصولات
+                        </a>
                     </td>
                     <td>
                         @Tools.GetStatusName(item.Status, "fa")
