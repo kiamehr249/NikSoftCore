@@ -114,7 +114,11 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
             var newCat = new BusinessCategory
             {
                 Title = request.Title,
+                EnTitle = request.EnTitle,
+                ArTitle = request .ArTitle,
                 Description = request.Description,
+                EnDescription = request.EnDescription,
+                ArDescription = request.ArDescription,
                 Icone = request.Icone,
                 Image = Image,
                 ParentId = request.ParentId == 0 ? null : request.ParentId
@@ -144,7 +148,11 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
             {
                 Id = catItem.Id,
                 Title = catItem.Title,
+                EnTitle = catItem.EnTitle,
+                ArTitle = catItem.ArTitle,
                 Description = catItem.Description,
+                EnDescription = catItem.EnDescription,
+                ArDescription = catItem.ArDescription,
                 Icone = catItem.Icone,
                 Image = catItem.Image,
                 ParentId = catItem.ParentId
@@ -206,7 +214,11 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.BaseInfo
 
             var theContent = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == request.Id);
             theContent.Title = request.Title;
+            theContent.EnTitle = request.EnTitle;
+            theContent.ArTitle = request.ArTitle;
             theContent.Description = request.Description;
+            theContent.EnDescription = request.EnDescription;
+            theContent.ArDescription = request.ArDescription;
             theContent.Icone = request.Icone;
             if (!string.IsNullOrEmpty(imageEdit))
                 theContent.Image = imageEdit;

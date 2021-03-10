@@ -19,8 +19,16 @@
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
-                    <label for="txtTitle" class="control-label">عنوان</label>
-                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                    <label for="txtTitle" class="control-label">عنوان فارسی</label>
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان فارسی", @class = "form-control", @id = "txtTitle" })
+                </div>
+                <div class="form-group">
+                    <label for="txtEnTitle" class="control-label">عنوان انگلسی</label>
+                    @Html.TextBoxFor(m => m.EnTitle, new { placeholder = "عنوان انگلسی", @class = "form-control", @id = "txtEnTitle" })
+                </div>
+                <div class="form-group">
+                    <label for="txtArTitle" class="control-label">عنوان عربی</label>
+                    @Html.TextBoxFor(m => m.ArTitle, new { placeholder = "عنوان عربی", @class = "form-control", @id = "txtArTitle" })
                 </div>
                 <div class="form-group">
                     <label for="ParentId" class="control-label">دسته بالاتر</label>
@@ -40,8 +48,16 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="txtDesc" class="control-label">توضیحات</label>
-                    @Html.TextAreaFor(m => m.Description, new { placeholder = "توضیحات", @class = "form-control", @id = "txtDesc", rows = "3" })
+                    <label for="txtDesc" class="control-label">توضیحات فارسی</label>
+                    @Html.TextAreaFor(m => m.Description, new { placeholder = "توضیحات فارسی", @class = "form-control", @id = "txtDesc", rows = "3" })
+                </div>
+                <div class="form-group">
+                    <label for="txtEnDesc" class="control-label">توضیحات انگلیسی</label>
+                    @Html.TextAreaFor(m => m.EnDescription, new { placeholder = "توضیحات انگلیسی", @class = "form-control", @id = "txtEnDesc", rows = "3" })
+                </div>
+                <div class="form-group">
+                    <label for="txtArDesc" class="control-label">توضیحات عربی</label>
+                    @Html.TextAreaFor(m => m.ArDescription, new { placeholder = "توضیحات عربی", @class = "form-control", @id = "txtArDesc", rows = "3" })
                 </div>
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-success">ذخیره</button>
