@@ -13,5 +13,8 @@ namespace NiksoftCore.SystemBase.Service
         public string ZipCode { get; set; }
         public DateTime? BirthDate { get; set; }
         public int UserId { get; set; }
+        public string Avatar { get; set; }
+
+        public virtual NikUser User { get; set; } 
     }
 }

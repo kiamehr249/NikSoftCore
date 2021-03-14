@@ -14,6 +14,7 @@ namespace NiksoftCore.ITCF.Service
         public string Icone { get; set; }
         public string Image { get; set; }
         public int? ParentId { get; set; }
+        public bool Enabled { get; set; }
 
         public virtual BusinessCategory Parent { get; set; }
         public virtual ICollection<BusinessCategory> Childs { get; set; }

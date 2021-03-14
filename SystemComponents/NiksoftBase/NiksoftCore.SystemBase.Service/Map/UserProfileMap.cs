@@ -9,6 +9,10 @@ namespace NiksoftCore.SystemBase.Service
         {
             builder.HasKey(x => x.Id);
             builder.ToTable("UserProfiles");
+
+            builder.HasOne(x => x.User)
+                .WithMany(x => x.UserProfiles)
+                .HasForeignKey(x => x.UserId).IsRequired(true);
         }
     }
 }

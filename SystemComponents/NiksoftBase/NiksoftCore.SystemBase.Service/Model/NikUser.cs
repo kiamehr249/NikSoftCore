@@ -12,6 +12,6 @@ namespace NiksoftCore.SystemBase.Service
         public string PasswordHash { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
 
-        //public virtual ICollection<NikUserRole> NikUserRoles { get; set; }
+        public virtual ICollection<UserProfile> UserProfiles { get; set; }
     }
 }
