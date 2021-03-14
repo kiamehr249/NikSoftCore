@@ -311,7 +311,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 
 
         [HttpGet]
-        public async Task<IActionResult> Products([FromQuery] string lang, int part, int bid)
+        public async Task<IActionResult> Products(int part, int bid)
         {
             //var theUser = await userManager.GetUserAsync(HttpContext.User);
             var theBusiness = await iITCFServ.IBusinessServ.FindAsync(x => x.Id == bid);
@@ -320,17 +320,9 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 return Redirect("/Panel");
             }
 
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
             ViewBag.Company = theBusiness;
 
-            if (lang == "fa")
-                ViewBag.PageTitle = "محصولات";
-            else
-                ViewBag.PageTitle = "Company Content Management";
+            ViewBag.PageTitle = "محصولات";
 
             var total = iITCFServ.iProductServ.Count(x => x.BusinessId == bid);
             var pager = new Pagination(total, 20, part);
@@ -338,7 +330,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 
             ViewBag.Contents = iITCFServ.iProductServ.GetAll(x => x.BusinessId == bid).ToList();
 
-            return View(GetViewName(lang, "Products"));
+            return View();
         }
 
         [HttpGet]
@@ -621,6 +613,128 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             return Redirect("/Panel/AdminBusinessManage/Products/?bid=" + bid);
         }
 
+        public async Task<IActionResult> ProductFiles(int Id, int part)
+        {
+            var theProduct = await iITCFServ.iProductServ.FindAsync(x => x.Id == Id);
+            if (theProduct == null)
+            {
+                return Redirect("/Panel");
+            }
+
+            ViewBag.Product = theProduct;
+
+            ViewBag.PageTitle = "فایل های " + theProduct.Title;
+
+            var total = iITCFServ.iProductFileServ.Count(x => x.ProductId == Id);
+            var pager = new Pagination(total, 20, part);
+            ViewBag.Pager = pager;
+
+            ViewBag.Contents = iITCFServ.iProductFileServ.GetAll(x => x.ProductId == Id).ToList();
+
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateFile(int Id, int ProductId)
+        {
+            var theProduct = await iITCFServ.iProductServ.FindAsync(x => x.Id == ProductId);
+            if (theProduct == null)
+            {
+                return Redirect("/Panel");
+            }
+            ViewBag.Product = theProduct;
+
+            ViewBag.PageTitle = "افزودن تصاویر محصول " + theProduct.Title;
+
+            var request = new ProductFileRequest();
+
+            if (Id > 0)
+            {
+                var thisItem = await iITCFServ.iProductFileServ.FindAsync(x => x.Id == Id);
+                request.Id = thisItem.Id;
+                request.Title = thisItem.Title;
+                request.EnTitle = thisItem.EnTitle;
+                request.ArTitle = thisItem.ArTitle;
+                request.Description = thisItem.Description;
+                request.EnDescription = thisItem.EnDescription;
+                request.ArDescription = thisItem.ArDescription;
+                request.Path = thisItem.Path;
+                request.ProductId = thisItem.ProductId;
+            }
+            else
+            {
+                request.ProductId = ProductId;
+            }
+
+            return View(request);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateFile(ProductFileRequest request)
+        {
+            var theProduct = await iITCFServ.iProductServ.FindAsync(x => x.Id == request.ProductId);
+            if (theProduct == null)
+            {
+                return Redirect("/Panel");
+            }
+            ViewBag.Product = theProduct;
+
+            if (!FormFileCheck(request))
+            {
+                ViewBag.Messages = Messages;
+                return View(request);
+            }
+
+            string Image = string.Empty;
+            if (request.FileData != null && request.FileData.Length > 0)
+            {
+                var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
+                {
+                    File = request.FileData,
+                    RootPath = hosting.ContentRootPath,
+                    UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                });
+
+                if (!SaveImage.Success)
+                {
+                    Messages.Add(new NikMessage
+                    {
+                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Type = MessageType.Error,
+                        Language = "Fa"
+                    });
+                    ViewBag.Messages = Messages;
+                    return View(request);
+                }
+
+                Image = SaveImage.FilePath;
+            }
+
+            ProductFile item = new ProductFile();
+
+            if (request.Id > 0)
+            {
+                item = await iITCFServ.iProductFileServ.FindAsync(x => x.Id == request.Id);
+            }
+
+            item.Title = request.Title;
+            item.EnTitle = request.EnTitle;
+            item.ArTitle = request.ArTitle;
+            item.Description = request.Description;
+            item.EnDescription = request.EnDescription;
+            item.ArDescription = request.ArDescription;
+            item.Path = Image;
+            item.ProductId = request.ProductId;
+
+            if (request.Id == 0)
+            {
+                iITCFServ.iProductFileServ.Add(item);
+            }
+            
+            await iITCFServ.iProductFileServ.SaveChangesAsync();
+            return Redirect("/Panel/AdminBusinessManage/ProductFiles/?Id=" + request.ProductId);
+        }
+
         private void DropDownBinder(ProductRequest request)
         {
             var cats = new List<BusinessCategory>();
@@ -636,8 +750,6 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 
             ViewBag.Categories = new SelectList(cats, "Id", "Title", request?.CategoryId);
         }
-
-
 
         private bool FormProduct(string lang, ProductRequest request)
         {
@@ -702,6 +814,30 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                     AddError("حجم ویدیو نباید بیشتر از 5 MB باشد", "fa");
                 else
                     AddError("Title can not be null", "en");
+                result = false;
+            }
+
+            return result;
+        }
+
+        private bool FormFileCheck(ProductFileRequest request)
+        {
+            bool result = true;
+            if (string.IsNullOrEmpty(request.Title))
+            {
+                AddError("عنوان فارسی باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            if (request.FileData == null || request.FileData.Length == 0)
+            {
+                AddError("هیچ فایلی انتخاب نشده است", "fa");
+                result = false;
+            }
+
+            if (request.FileData != null && request.FileData.Length > 512000)
+            {
+                AddError("حجم تصویر نباید بیشتر از 500 KB باشد", "fa");
                 result = false;
             }
 

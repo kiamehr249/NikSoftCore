@@ -105,22 +105,18 @@ namespace NiksoftCore.ITCF.Conltroller.General.Business
             return View(request);
         }
 
-        public IActionResult SingleProduct(int Id, string lang)
+        public IActionResult SingleProduct(int Id)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
 
             var theProduct = iITCFServ.iProductServ.Find(x => x.Id == Id);
             ViewBag.Product = theProduct;
 
-            if (lang == "fa")
-                ViewBag.PageTitle = theProduct.Title;
-            else
-                ViewBag.PageTitle = theProduct.Title;
+            var SameProducts = iITCFServ.iProductServ.GetAll(x => x.BusinessId == theProduct.BusinessId).ToList();
+            ViewBag.SameProducts = SameProducts;
 
-            return View(GetViewName(lang, "SingleProduct"));
+            ViewBag.PageTitle = theProduct.Title;
+
+            return View();
         }
 
         private void BindCombos(ProductSearchRequest request)
