@@ -1,6 +1,6 @@
 ﻿@using NiksoftCore.ITCF.Service;
 @{
-    ViewData["Title"] = "پنل مدیریت - مدیریت کسب و کار";
+    ViewData["Title"] = "مدیریت کسب و کار";
     Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
     var contents = (List<NiksoftCore.ITCF.Service.Product>)ViewBag.Contents;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
@@ -31,6 +31,7 @@
                 <th class="text-primary text-center">ویدیو</th>
                 <th class="text-primary text-center">دسته بندی</th>
                 <th class="text-primary text-center">توضیحات</th>
+                <th class="text-primary text-center">افزودن تصاویر</th>
                 <th class="text-primary text-center" width="150px">عملیات</th>
             </tr>
         </thead>
@@ -55,6 +56,11 @@
                     </td>
                     <td>@item.BusinessCategory.Title</td>
                     <td>@item.Description</td>
+                    <td>
+                        <a href="/Panel/AdminBusinessManage/ProductFiles?Id=@item.Id" class="btn btn-outline-info btn-sm">
+                            افزودن تصاویر <span class="badge badge-warning">@item.Files.Count</span>
+                        </a>
+                    </td>
                     <td>
                         <div class="btn-group btn-group-sm">
                             <a href="/Panel/AdminBusinessManage/EditProduct?Id=@item.Id" class="btn btn-outline-warning btn-sm">
