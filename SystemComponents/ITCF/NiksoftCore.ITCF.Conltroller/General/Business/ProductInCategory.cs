@@ -5,10 +5,12 @@ using Microsoft.Extensions.Configuration;
 using NiksoftCore.ITCF.Service;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.Utilities;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NiksoftCore.ITCF.Conltroller.General.Business
 {
+    [Area("Business")]
     public class ProductInCategory : NikController
     {
         private readonly UserManager<DataModel.User> userManager;
@@ -20,7 +22,7 @@ namespace NiksoftCore.ITCF.Conltroller.General.Business
             iITCFServ = new ITCFService(Configuration);
         }
 
-        public IActionResult Index([FromQuery] ProductSearchRequest request)
+        public IActionResult Index(ProductSearchRequest request)
         {
             if (!string.IsNullOrEmpty(request.lang))
                 request.lang = request.lang.ToLower();
@@ -40,9 +42,26 @@ namespace NiksoftCore.ITCF.Conltroller.General.Business
                 query.Add(x => x.Title.Contains(request.Title) || x.Description.Contains(request.Title));
             }
 
+
+            ViewBag.Parent = null;
             if (request.CategoryId > 0)
             {
-                query.Add(x => x.CategoryId == request.CategoryId);
+                var firstCat = iITCFServ.IBusinessCategoryServ.Find(x => x.Id == request.CategoryId);
+                ViewBag.Parent = firstCat;
+                List<int> catIds = new List<int>();
+                catIds.Add(request.CategoryId);
+                foreach (var subcat in firstCat.Childs)
+                {
+                    catIds.Add(subcat.Id);
+                    foreach (var subcat2 in subcat.Childs)
+                    {
+                        catIds.Add(subcat2.Id);
+                    }
+
+                }
+
+                query.Add(x => catIds.Contains(x.CategoryId));
+
             }
 
             if (request.BusinessId > 0)
@@ -54,9 +73,36 @@ namespace NiksoftCore.ITCF.Conltroller.General.Business
             var pager = new Pagination(total, 20, request.part);
             ViewBag.Pager = pager;
 
-            ViewBag.Contents = iITCFServ.iProductServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
-            BindCombos(request);
-            return View(GetViewName(request.lang, "Index"));
+            if (request.OrderType == 1)
+            {
+                ViewBag.Contents = iITCFServ.iProductServ.GetPart(query, pager.StartIndex, pager.PageSize, x => x.Id, true).ToList();
+            }
+            else if (request.OrderType == 2)
+            {
+                
+            }
+            else
+            {
+                ViewBag.Contents = iITCFServ.iProductServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            }
+
+
+
+
+
+            var query2 = iITCFServ.IBusinessCategoryServ.ExpressionMaker();
+            query2.Add(x => x.Enabled);
+            if (request.CategoryId != 0)
+            {
+                query2.Add(x => x.ParentId == request.CategoryId);
+            }
+            else
+            {
+                query2.Add(x => x.ParentId == null);
+            }
+
+            ViewBag.Categories = iITCFServ.IBusinessCategoryServ.GetAll(query2).ToList();
+            return View(request);
         }
 
         public IActionResult SingleProduct(int Id, string lang)
