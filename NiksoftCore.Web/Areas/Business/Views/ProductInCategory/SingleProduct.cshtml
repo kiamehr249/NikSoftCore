@@ -1,0 +1,197 @@
+﻿@using NiksoftCore.ITCF.Service
+@{
+    Layout = "~/Areas/Business/Views/Shared/_FaLayout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+    var thisProduct = (Product)ViewBag.Product;
+    var sameProducts = (List<Product>)ViewBag.SameProducts;
+    var loginedHide = User.Identity.IsAuthenticated ? "style='display: none;'" : "";
+    var loginedShow = !User.Identity.IsAuthenticated ? "style='display: none;'" : "";
+    ViewData["Title"] = thisProduct.Title;
+}
+
+<div class="content-wrapper">
+    <section class="single-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="photo-slider">
+                        <div class="slick-carousel cover-photos-slider" data-breakpoint="0" data-items-desktop="1" data-dots="false" data-arrows="false" data-infinite="false">
+                            <ul class="clean-list carousel-items">
+                                <li class="carousel-item">
+                                    <div class="image">
+                                        <img src="/@thisProduct.Image" alt="product photo" />
+                                        <a href="/@thisProduct.Image" class="photozoom"></a>
+                                    </div>
+                                </li>
+                                @foreach (var item in thisProduct.Files)
+                                {
+                                    <li class="carousel-item">
+                                        <div class="image">
+                                            <img src="/@item.Path" alt="product photo" />
+                                            <a href="/@item.Path" class="photozoom"></a>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="slick-carousel nav-carousel" data-breakpoint="0" data-items-desktop="3" data-infinite="false" data-dots="true" data-arrows="false" data-items-to-slide="1" data-as-nav-for=".cover-photos-slider .carousel-items">
+                            <ul class="clean-list carousel-items">
+                                <li class="carousel-item">
+                                    <div class="image">
+                                        <img src="/@thisProduct.Image" alt="product photo" />
+                                    </div>
+                                </li>
+                                @foreach (var item in thisProduct.Files)
+                                {
+                                    <li class="carousel-item">
+                                        <div class="image">
+                                            <img src="/@item.Path" alt="product photo" />
+                                            <a href="/@item.Path" class="photozoom"></a>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-description">
+                        <h1>@thisProduct.Title</h1>
+                        <ul class="rating clean-list">
+                            <li class="count">امتیاز </li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star-o"></i></li>
+                        </ul>
+
+                        <div class="entry">
+                            <p>@thisProduct.Description</p>
+                        </div>
+
+                        <div class="actions">
+                            <form class="cart" action="javascript:void(0)">
+                                <div class="quantity">
+                                    <input class="input-text qty text" type="number" title="تعداد" value="1" name="quantity">
+                                    <button class="btn yellow add-cart dark-hover">افزودن به سبد</button>
+                                </div>
+                            </form>
+
+                            <p class="product-id">شرکت سازنده: <span>@thisProduct.Business.CoName</span></p>
+                            <p class="category">دسته بندی: <span><a href="/Business/ProductInCategory?CategoryId=@thisProduct.CategoryId">@thisProduct.BusinessCategory.Title</a></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-tabs tabbed-content">
+                <ul class="tabs">
+                    <li class="tab-link current" data-tab="description">درباره تولید کننده</li>
+                    <li class="tab-link d-none" data-tab="additional">سایر اطلاعات</li>
+                    <li class="tab-link" data-tab="reviews">دیدگاه ها</li>
+                </ul>
+
+
+                <ul class="tabbed-body clean-list">
+                    <li id="description" class="tab-content current">
+                        <p>@thisProduct.Business.Description</p>
+                    </li>
+
+                    <li id="additional" class="tab-content">
+                        <ul class="product-additional clean-list">
+                            <li>Weight: 1.5 kg</li>
+                            <li>Dimensions: 200 x 110 x 55 cm</li>
+                            <li>Composition: 90% Leather, 10% Suede</li>
+                            <li>Other Info: Machine wash according to instructions on care label</li>
+                            <li>Size: Extra Large, Extra Small, Large, Medium, One Size Fits All, Small</li>
+                        </ul>
+                    </li>
+
+                    <li id="reviews" class="tab-content">
+                        <div class="reviews">
+                            <ul class="reviews-list">
+                                <li class="review">
+                                    <div class="review-body">
+                                        <div class="avatar">
+                                            <img src="img/testimonial-4.png" alt="review img">
+                                        </div>
+                                        <h5 class="name">Rachel Williamson</h5>
+                                        <p class="date">25 December 2015</p>
+                                        <ul class="rating clean-list">
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                        </ul>
+                                        <p class="description">نظر مساعد دارم</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="review-form">
+                            <h6 class="box-title">ثبت دیدگاه</h6>
+                            <form class="respond-form" action="javascript:void(0);">
+                                <div class="rating-select">
+                                    <div class="stars">
+                                        <span class="title">امتیاز دهی</span>
+                                        <input class="star star-1" id="star-1" type="radio" name="star" />
+                                        <label class="star star-1" for="star-1"></label>
+                                        <input class="star star-2" id="star-2" type="radio" name="star" />
+                                        <label class="star star-2" for="star-2"></label>
+                                        <input class="star star-3" id="star-3" type="radio" name="star" />
+                                        <label class="star star-3" for="star-3"></label>
+                                        <input class="star star-4" id="star-4" type="radio" name="star" />
+                                        <label class="star star-4" for="star-4"></label>
+                                        <input class="star star-5" id="star-5" type="radio" name="star" />
+                                        <label class="star star-5" for="star-5"></label>
+                                    </div>
+                                </div>
+
+                                <div class="input-line">
+                                    <input type="text" name="contact-name" class="check-value">
+                                    <span>نام و نام خانوادگی</span>
+                                </div>
+                                <div class="input-line">
+                                    <input type="text" name="contact-email" class="check-value">
+                                    <span>ایمیل</span>
+                                </div>
+
+                                <div class="input-line textarea">
+                                    <textarea class="check-value" name="contact-message" placeholder=""></textarea>
+                                    <span>متن دیدگاه</span>
+                                </div>
+                                <button class="form-send btn yellow dark-hover" type="submit">ارسال دیدگاه</button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="related-items">
+                <h6 class="box-title">محصولات مرتبط</h6>
+
+                <div class="row">
+                    @foreach (var same in sameProducts)
+                    {
+                        <div class="col-md-3 col-sm-6">
+                            <div class="shop-item-small">
+                                <div class="cover">
+                                    <img src="/@same.Image" alt="shop item">
+                                    <a href="@same.Id"></a>
+                                </div>
+                                <div class="category"><a href="#">@same.BusinessCategory.Title</a></div>
+                                <h6><a href="single-product.html">@same.Business.CoName</a></h6>
+                                <div class="actions">
+                                    <a class="add-btn shop" href="#">افزودن به سبد</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
