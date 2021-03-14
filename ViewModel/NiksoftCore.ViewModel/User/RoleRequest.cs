@@ -1,4 +1,4 @@
-﻿namespace NiksoftCore.ViewModel.User
+﻿namespace NiksoftCore.ViewModel
 {
     public class RoleRequest
     {
