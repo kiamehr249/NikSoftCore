@@ -1,0 +1,151 @@
+﻿@using NiksoftCore.ITCF.Service
+@model NiksoftCore.ITCF.Service.ProductSearchRequest
+@{
+    ViewData["Title"] = "محصولات";
+    Layout = "~/Areas/Business/Views/Shared/_FaLayout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    var Contents = (List<Product>)ViewBag.Contents;
+    var Categories = (List<BusinessCategory>)ViewBag.Categories;
+    var ParentItem = (BusinessCategory)ViewBag.Parent;
+}
+
+
+
+<div class="content-wrapper">
+    <section class="content-section">
+        <div class="container">
+            <div class="section-header">
+                <h1>محصولات</h1>
+                <span><i></i></span>
+                <p>محصولات موجود بر اساس دسته بندی ها</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-9 col-content">
+                    <div class="shop-options">
+                        <div class="custom-select">
+                            <span class="default"><span class="content">مرتب سازی</span></span>
+                            <ul class="select-options">
+                                <li><a href="/Business/ProductInCategory?OrderType=1">آخرین محصولات</a></li>
+                                <li>پرفروش ترین ها</li>
+                                <li>محبوب ترین ها</li>
+                                <li>امتیاز ها</li>
+                            </ul>
+                        </div>
+                        <span class="results">صفحه @pager.Part از @pager.GetTotalParts()</span>
+                    </div>
+
+                    <div class="row row-fit-10">
+                        @foreach (var product in Contents)
+                        {
+                            <div class="col-sm-4 col-xs-6">
+                                <div class="shop-item-small">
+                                    <div class="cover">
+                                        <img src="~/@product.Image" alt="shop item">
+                                        <a href="/"></a>
+                                    </div>
+                                    <div class="category">
+                                        <a href="/Business/ProductInCategory?CategoryId=@product.CategoryId">@product.BusinessCategory.Title</a>
+                                    </div>
+                                    <h6>
+                                        <a href="">@product.Title</a>
+                                    </h6>
+                                    <div class="actions">
+                                        <a class="add-btn shop" href="#">افزودن به سبد</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    @if (pager.TotalSize > pager.PageSize)
+                    {
+                        <ul class="page-numbers shop">
+                            <li><a class="prev page-numbers" href="@Context.Request.Path?part=1"><i class="fa fa-angle-right"></i></a></li>
+
+                            @if (pager.GetStartShow() >= pager.MaxShow)
+                            {
+                                <li><a class="page-numbers" href="@Context.Request.Path?part=@pager.GetBackRang()">...</a></li>
+                            }
+
+                            @for (int i = pager.GetStartShow(); i <= pager.GetEndShow(); i++)
+                            {
+                                if (pager.Part == i)
+                                {
+                                    <li><span class="page-numbers current">@i</span></li>
+                                }
+                                else
+                                {
+                                    <li><a class="page-numbers" href="@Context.Request.Path?part=@i">@i</a></li>
+                                }
+
+                            }
+
+                            @if (pager.GetTotalParts() > pager.MaxShow)
+                            {
+                                <li><a class="page-numbers" href="@Context.Request.Path?part=@pager.GetEndShow()">...</a></li>
+                            }
+                            <li><a class="next page-numbers" href="@Context.Request.Path?part=@pager.GetTotalParts()"><i class="fa fa-angle-left"></i></a></li>
+                        </ul>
+                    }
+
+                </div>
+
+                <div class="col-md-3 col-sidebar">
+                    <div class="sidebar">
+                        <div class="row isotope">
+                            <div class="col-md-12 col-sm-6 col-xs-12 isotope-item">
+                                <div class="widget widget_search">
+                                    <form class="search-form" method="get">
+                                        <div class="input-line">
+                                            @Html.TextBoxFor(m => m.Title, new { placeholder = "نام محصول", @class = "form-control" })
+                                            <button class="search-submit"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-6 col-xs-12 isotope-item">
+                                <div class="widget widget_categories">
+                                    <h4 class="widget-title">دسته بندی ها</h4>
+                                    <ul>
+                                        @if (ParentItem != null)
+                                        {
+                                            if (ParentItem.ParentId != null)
+                                            {
+                                                <li><a href="/Business/ProductInCategory?CategoryId=@ParentItem.ParentId">@ParentItem.Parent.Title</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a href="/Business/ProductInCategory?CategoryId=@ParentItem.ParentId">دسته های اصلی</a></li>
+                                            }
+
+                                        }
+
+                                        @foreach (var cat in Categories)
+                                        {
+                                            <li><a href="/Business/ProductInCategory?CategoryId=@cat.Id">@cat.Title</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-6 col-xs-12 isotope-item">
+                                <div class="widget widget_tag_cloud">
+                                    <h4 class="widget-title">کلید واژه های پرکاربرد</h4>
+                                    <div class="tagcloud">
+                                        @foreach (var cat in Categories)
+                                        {
+                                            <a href="/Business/ProductInCategory?CategoryId=@cat.Id">@cat.Title</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
