@@ -7,5 +7,7 @@ namespace NiksoftCore.ITCF.Service
         public string Title { get; set; }
         public int CategoryId { get; set; }
         public int BusinessId { get; set; }
+        public int OrderType { get; set; }
+
     }
 }
