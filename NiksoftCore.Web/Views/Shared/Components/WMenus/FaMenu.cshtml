@@ -14,7 +14,7 @@
     <ul class="nav-menu">
         @if (content != null)
         {
-            @foreach (var item in content.Menus)
+            @foreach (var item in content.Menus.OrderBy(x => x.OrderId).ToList())
             {
                 <li><a href="@item.Link" class="smoothScroll">@item.Title</a></li>
             }

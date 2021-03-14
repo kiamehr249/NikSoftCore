@@ -25,7 +25,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.Widgets
 
         public async Task<IViewComponentResult> InvokeAsync(string key, int size = 8)
         {
-            var theCategory = iSystemBaseServ.iMenuCategoryServ.Find(x => x.KeyValue == key);
+            var theCategory = await iSystemBaseServ.iMenuCategoryServ.FindAsync(x => x.KeyValue == key);
             ViewBag.Contents = theCategory;
             return View("FaMenu");
         }
