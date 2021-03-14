@@ -649,7 +649,7 @@ header .main-nav ul li a:before,
 
 .search-form .input-line .search-submit {
   position: absolute;
-  right: 18px;
+  left: 18px;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -1595,16 +1595,16 @@ footer .widget .widget-title {
 
 .widget.widget_categories ul li a {
   position: relative;
-  padding: 0 0 0 14px;
+  padding: 0 14px 0 0;
 }
 
 .widget.widget_categories ul li a:before {
   position: absolute;
-  content: "\f054";
+  content: "\f053";
   font-family: FontAwesome;
   font-size: 9px;
   top: 4px;
-  left: 0;
+  right: 0;
 }
 
 .widget.widget_pricefilter .price-slider {
@@ -4536,10 +4536,11 @@ ul.page-numbers li .current {
 
 .shop-options .custom-select .default {
   position: relative;
-  padding: 0 16px 0 0;
+  padding: 0 0 0 16px;
   color: #919499;
   font-weight: 400;
   font-size: 14px;
+  display: inline-block;
 }
 
 .shop-options .custom-select .default:before {
@@ -4549,7 +4550,7 @@ ul.page-numbers li .current {
   font-size: 10px;
   font-weight: 400;
   top: 1px;
-  right: 0;
+  left: 0;
 }
 
 .shop-options .custom-select span:hover,
@@ -4603,7 +4604,7 @@ ul.page-numbers li .current {
 }
 
 .shop-options .results {
-  float: right;
+  float: left;
   color: #919499;
   font-size: 14px;
 }
