@@ -27,6 +27,7 @@ namespace NiksoftCore.ITCF.Service
         public DbSet<UserPurchase> UserPurchases { get; set; }
         public DbSet<UserModel> UserModels { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<ProductFile> ProductFiles { get; set; }
 
 
 
@@ -44,6 +45,7 @@ namespace NiksoftCore.ITCF.Service
             builder.ApplyConfiguration(new UserPurchaseMap());
             builder.ApplyConfiguration(new UserModelMap());
             builder.ApplyConfiguration(new UserProfileMap());
+            builder.ApplyConfiguration(new ProductFileMap());
         }
     }
 }

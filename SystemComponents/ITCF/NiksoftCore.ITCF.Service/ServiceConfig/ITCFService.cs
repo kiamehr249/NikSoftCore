@@ -16,6 +16,7 @@ namespace NiksoftCore.ITCF.Service
         IUserPurchaseService iUserPurchaseServ { get; set; }
         IUserModelService iUserModelServ { get; set; }
         IUserProfileService iUserProfileServ { get; set; }
+        IProductFileService iProductFileServ { get; set; }
     }
 
     public class ITCFService : IITCFService
@@ -32,6 +33,7 @@ namespace NiksoftCore.ITCF.Service
         public IUserPurchaseService iUserPurchaseServ { get; set; }
         public IUserModelService iUserModelServ { get; set; }
         public IUserProfileService iUserProfileServ { get; set; }
+        public IProductFileService iProductFileServ { get; set; }
 
 
         public ITCFService(IConfiguration Configuration)
@@ -49,6 +51,7 @@ namespace NiksoftCore.ITCF.Service
             iUserPurchaseServ = new UserPurchaseService(uow);
             iUserModelServ = new UserModelService(uow);
             iUserProfileServ = new UserProfileService(uow);
+            iProductFileServ = new ProductFileService(uow);
         }
 
 

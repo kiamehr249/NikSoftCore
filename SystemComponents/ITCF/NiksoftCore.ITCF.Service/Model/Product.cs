@@ -20,5 +20,6 @@ namespace NiksoftCore.ITCF.Service
         public virtual Business Business { get; set; }
 
         public virtual ICollection<UserPurchase> Purchases { get; set; }
+        public virtual ICollection<ProductFile> Files { get; set; }
     }
 }
