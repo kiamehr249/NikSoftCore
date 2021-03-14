@@ -44,7 +44,15 @@
 
     <li class="dropdown">
         <a href="#" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
-            <img src="~/@profile.Avatar" alt="user-img" class="rounded-circle">
+            @if (profile != null)
+            {
+                <img src="~/@profile.Avatar" alt="user-img" class="rounded-circle">
+            }
+            else
+            {
+                <img src="~/templates/dashboard/NikFace/images/users/avatar-1.jpg" alt="user-img" class="rounded-circle">
+            }
+
         </a>
         <ul class="dropdown-menu dropdown-menu-right">
             <li><a href="/Panel/UserProfileManage" class="dropdown-item"> پروفایل</a></li>
