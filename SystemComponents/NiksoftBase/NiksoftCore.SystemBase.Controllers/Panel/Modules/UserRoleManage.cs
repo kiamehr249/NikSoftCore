@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.ViewModel;
-using NiksoftCore.ViewModel.User;
 using System.Linq;
 using System.Threading.Tasks;
 

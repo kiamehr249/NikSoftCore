@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.SystemBase.Service;
@@ -214,6 +215,52 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
 
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowUserRoles(UserRoleRequest request)
+        {
+            if (!string.IsNullOrEmpty(request.lang))
+                request.lang = request.lang.ToLower();
+            else
+                request.lang = defaultLang.ShortName.ToLower();
+
+            var theUser = await userManager.FindByIdAsync(request.UserId.ToString());
+
+            var rolNames = await userManager.GetRolesAsync(theUser);
+
+            var userRoles = ISystemBaseServ.iNikRoleServ.GetAll(x => rolNames.Contains(x.Name)).ToList();
+
+            if (request.lang == "fa")
+                ViewBag.PageTitle = "مدیریت نقش ها " + theUser.UserName;
+            else
+                ViewBag.PageTitle = "User Role Management " + theUser.UserName;
+
+            var allRoles = roleManager.Roles.Where(x => true).Select(x => new { x.Id, x.Name }).ToList();
+
+            ViewBag.User = theUser;
+            ViewBag.Roles = new SelectList(allRoles, "Id", "Name", request?.RoleId);
+            ViewBag.Contents = userRoles.ToList();
+
+            return View(GetViewName(request.lang, "ShowUserRoles"));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRole(UserRoleRequest request)
+        {
+            var theUser = await userManager.FindByIdAsync(request.UserId.ToString());
+            var theRole = await ISystemBaseServ.iNikRoleServ.FindAsync(x => x.Id == request.RoleId);
+            await userManager.AddToRoleAsync(theUser, theRole.Name);
+            return Redirect("/Panel/UserManage/ShowUserRoles?UserId=" + request.UserId);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveRole(UserRoleRequest request)
+        {
+            var theUser = await userManager.FindByIdAsync(request.UserId.ToString());
+            var theRole = await ISystemBaseServ.iNikRoleServ.FindAsync(x => x.Id == request.RoleId);
+            await userManager.RemoveFromRoleAsync(theUser, theRole.Name);
+            return Redirect("/Panel/UserManage/ShowUserRoles?UserId=" + request.UserId);
         }
 
 
