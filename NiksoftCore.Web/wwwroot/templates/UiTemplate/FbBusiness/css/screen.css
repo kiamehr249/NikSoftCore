@@ -598,7 +598,7 @@ header .main-nav ul li a:before,
 .respond-form .input-line span {
   position: absolute;
   top: 9px;
-  left: 22px;
+  right: 22px;
   color: #919499;
   font-size: 14px;
   pointer-events: none;
@@ -1405,7 +1405,7 @@ footer .widget .widget-title {
 }
 
 .widget.widget_contact .contact-info li .socials li:last-of-type {
-  padding: 0;
+  /*! padding: 0; */
 }
 
 .widget.widget_contact .contact-info li .socials li a {
@@ -2906,7 +2906,7 @@ ul.page-numbers li .current {
 
 .single-product .product-description h1 {
   margin: 0 0 17px;
-  letter-spacing: 0.095em;
+  letter-spacing: 0;
 }
 
 .single-product .product-description .entry {
@@ -3049,7 +3049,7 @@ ul.page-numbers li .current {
   font-size: 14px;
   font-weight: 400;
   color: #919499;
-  padding: 0 9px 0 0;
+  padding: 0 0 0 9px;
 }
 
 .single-product .rating-select .stars {
@@ -3061,7 +3061,7 @@ ul.page-numbers li .current {
 }
 
 .single-product .rating-select .stars label.star {
-  float: right;
+  float: left;
   padding: 3px 4px 0 0;
   font-size: 13px;
   color: #919499;
