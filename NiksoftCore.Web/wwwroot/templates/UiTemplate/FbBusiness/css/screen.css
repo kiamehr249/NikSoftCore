@@ -1111,7 +1111,7 @@ header .actions .cart-btn .cart-items {
   visibility: hidden;
   opacity: 0;
   filter: alpha(opacity=0);
-  right: 0;
+  left: 0;
 }
 
 header .actions .cart-btn:hover .cart-items {
@@ -1125,7 +1125,7 @@ header .actions .cart-btn .cart-items .cart {
   width: 325px;
   min-height: 60px;
   padding: 19px;
-  text-align: left;
+  text-align: right;
   text-transform: none;
 }
 
@@ -2128,6 +2128,7 @@ ul.page-numbers li .current {
   width: 100%;
   max-width: 575px;
   margin: 0 auto;
+  text-align: justify;
 }
 
 .section-header h3 {
@@ -2604,7 +2605,7 @@ ul.page-numbers li .current {
   line-height: 20px;
   text-transform: none;
   font-weight: 400;
-  text-align: left;
+  text-align: right;
   padding: 9px 0;
 }
 
@@ -2620,7 +2621,7 @@ ul.page-numbers li .current {
   line-height: 24px;
   text-transform: none;
   font-weight: 400;
-  text-align: left;
+  text-align: right;
 }
 
 .cart-table .products-table tbody td.product-item {
@@ -2638,7 +2639,7 @@ ul.page-numbers li .current {
   -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
-  left: 80px;
+  right: 80px;
 }
 
 .cart-table .products-table tbody .product-price,
