@@ -50,6 +50,8 @@
     <None Include="wwwroot\lib\jquery\dist\jquery.js" />
     <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
     <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+    <None Include="wwwroot\lib\VueJs\vue.js" />
+    <None Include="wwwroot\lib\VueJs\vue.min.js" />
     <None Include="wwwroot\templates\dashboard\NikFace\css\rtl\bootstrap-grid.min.css.map" />
     <None Include="wwwroot\templates\dashboard\NikFace\css\rtl\bootstrap-reboot.min.css.map" />
     <None Include="wwwroot\templates\dashboard\NikFace\css\rtl\bootstrap.min.css.map" />

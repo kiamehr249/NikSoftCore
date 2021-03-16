@@ -7,6 +7,7 @@
     var theContent = (UserPurchase)ViewBag.Content;
     var theUser = (UserModel)ViewBag.User;
     var profile = (UserProfile)ViewBag.Profile;
+    var theBusiness = (Business)ViewBag.Business;
 }
 <div class="text-right">
     <div class="btn-group">
@@ -23,6 +24,9 @@
             <table class="table table-bordered text-center">
                 <tbody>
                     <tr>
+                        <td class="bg-dark" colspan="5">اطلاعات مشتری</td>
+                    </tr>
+                    <tr>
                         @if (profile != null)
                         {
                             <td>نام: @profile.Firstname @profile.Lastname</td>
@@ -32,6 +36,16 @@
                         <td>محصول: @theContent.Product.Title</td>
                         <td>شرکت تولید کننده: @theContent.Product.Business.CoName</td>
                         <td>تعداد سفارش: @theContent.Count</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-dark" colspan="5">اطلاعات تولید کننده</td>
+                    </tr>
+                    <tr>
+                        <td>شرکت: @theBusiness.CoName</td>
+                        <td>شماره تماس: @theBusiness.Tel</td>
+                        <td>ایمیل: @theBusiness.Email</td>
+                        <td>وبسایت: @theBusiness.Website</td>
+                        <td>آدرس: @theBusiness.Address</td>
                     </tr>
                 </tbody>
             </table>
@@ -44,12 +58,26 @@
                     </select>
                     <span asp-validation-for="DeliveryType" class="text-danger"></span>
                 </div>
-
                 <div class="form-group">
                     <label for="Status" class="control-label">وضعیت سفارش</label>
                     <select class="form-control m-b" asp-for="Status" asp-items="ViewBag.Statuses">
                     </select>
                     <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="txtUnitAmount" class="control-label">مبلغ واحد (ریال)</label>
+                    @Html.TextBoxFor(m => m.UnitAmount, new { placeholder = "مبلغ واحد", @class = "form-control", @id = "txtUnitAmount" })
+                    @Html.ValidationMessageFor(m => m.UnitAmount)
+                </div>
+                <div class="form-group">
+                    <label for="txtTransportAmount" class="control-label">هزینه ارسال (ریال)</label>
+                    @Html.TextBoxFor(m => m.TransportAmount, new { placeholder = "عنوان", @class = "form-control", @id = "txtTransportAmount" })
+                    @Html.ValidationMessageFor(m => m.TransportAmount)
+                </div>
+                <div class="form-group">
+                    <label for="txtPrePayment" class="control-label">پیش پرداخت (ریال)</label>
+                    @Html.TextBoxFor(m => m.PrePayment, new { placeholder = "پیش پرداخت", @class = "form-control", @id = "txtPrePayment" })
+                    @Html.ValidationMessageFor(m => m.PrePayment)
                 </div>
                 @Html.HiddenFor(m => m.Id)
                 <div class="form-group text-center">

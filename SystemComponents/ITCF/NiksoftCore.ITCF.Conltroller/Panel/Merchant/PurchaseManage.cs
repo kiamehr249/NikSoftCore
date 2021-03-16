@@ -7,11 +7,8 @@ using Microsoft.Extensions.Configuration;
 using NiksoftCore.ITCF.Service;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.Utilities;
-using NiksoftCore.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.ITCF.Conltroller.Panel.Merchant
@@ -35,10 +32,6 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Merchant
         public async Task<IActionResult> Index([FromQuery] UserPurchaseGridRequest request)
         {
             var theUser = await userManager.GetUserAsync(HttpContext.User);
-            if (!string.IsNullOrEmpty(request.lang))
-                request.lang = request.lang.ToLower();
-            else
-                request.lang = defaultLang.ShortName.ToLower();
 
             var query = iITCFServ.iUserPurchaseServ.ExpressionMaker();
             query.Add(x => x.Status == request.Status && x.DeliveryType == request.DeliveryType);
@@ -52,48 +45,38 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Merchant
             var pager = new Pagination(total, 20, request.part);
             ViewBag.Pager = pager;
 
-            if (request.lang == "fa")
-                ViewBag.PageTitle = "مدیریت درخواست های خرید";
-            else
-                ViewBag.PageTitle = "Purchase Management";
+            ViewBag.PageTitle = "مدیریت درخواست های خرید";
 
             ViewBag.Contents = iITCFServ.iUserPurchaseServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
             ComboBinder(request.DeliveryType, request.Status);
-            return View(GetViewName(request.lang, "Index"), request);
+            return View(request);
         }
 
-        public IActionResult CheckRequest(int Id, string lang)
+        public IActionResult CheckRequest(int Id)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
             var theRequest = iITCFServ.iUserPurchaseServ.Find(x => x.Id == Id);
             ViewBag.Content = theRequest;
             ViewBag.User = iITCFServ.iUserModelServ.Find(x => x.Id == theRequest.UserId);
             ViewBag.Profile = iITCFServ.iUserProfileServ.Find(x => x.UserId == theRequest.UserId);
+            ViewBag.Business = iITCFServ.IBusinessServ.Find(x => x.Id == theRequest.Product.BusinessId);
             var request = new PurchaseCheckRequest();
             request.Id = theRequest.Id;
             request.Status = theRequest.Status;
             request.DeliveryType = theRequest.DeliveryType;
             ComboBinder(request.DeliveryType, request.Status);
-            return View(GetViewName(lang, "CheckRequest"), request);
+            return View(request);
         }
 
         [HttpPost]
         public IActionResult CheckRequest(PurchaseCheckRequest request)
         {
-            if (!string.IsNullOrEmpty(request.lang))
-                request.lang = request.lang.ToLower();
-            else
-                request.lang = defaultLang.ShortName.ToLower();
-
             var theRequest = iITCFServ.iUserPurchaseServ.Find(x => x.Id == request.Id);
 
             theRequest.Status = request.Status;
+            theRequest.PrePayment = request.PrePayment;
+            theRequest.UnitAmount = request.UnitAmount;
             theRequest.DeliveryType = request.DeliveryType;
-
+            theRequest.ModifyDate = DateTime.Now;
             iITCFServ.iUserPurchaseServ.SaveChanges();
 
             return Redirect("/Panel/PurchaseManage");
