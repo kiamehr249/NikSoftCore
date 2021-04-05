@@ -50,6 +50,7 @@
                                         </div>
                                     </td>
                                     <td class="product-subtotal">
+                                        <a v-if="showPaymentLink(item.status)" :href="'/Business/PaymentStep/?Id=' + item.id" class="btn btn-warning btn-sm">پرداخت</a>
                                     </td>
                                 </tr>
                             </tbody>

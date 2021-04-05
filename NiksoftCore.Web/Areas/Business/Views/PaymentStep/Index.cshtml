@@ -1,0 +1,150 @@
+﻿@using NiksoftCore.ITCF.Service
+@{
+    ViewData["Title"] = "پیش پرداخت سفارش";
+    Layout = "~/Areas/Business/Views/Shared/_FaLayout.cshtml";
+    var factor = (UserPurchase)ViewBag.Content;
+    var totalAmount = (factor.UnitAmount * factor.Count) + factor.TransportAmount;
+    var profile = (UserProfile)ViewBag.Profile;
+}
+
+<div class="content-wrapper">
+    <section class="content-section">
+        <div class="container">
+            <div class="section-header">
+                <h1>پیش فاکتور سفارش</h1>
+                <span><i></i></span>
+                <p></p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-9 col-content">
+                    <div class="cart-table">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr class="bg-gray">
+                                    <td colspan="5">
+                                        اطلاعات فروشنده
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        فروشنده: مرکز تجارت فکربرتر
+                                    </td>
+                                    <td colspan="2">
+                                        تامین کننده: @factor.Product.Business.CoName
+                                    </td>
+                                    <td colspan="2">
+                                        آدرس: تهران - خیابان خدامی - خیابان آفتاب
+                                    </td>
+                                </tr>
+                                <tr class="bg-gray">
+                                    <td colspan="5">
+                                        اطلاعات خریدار
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        خریدار: @profile.Firstname @profile.Lastname
+                                    </td>
+                                    <td colspan="2">
+                                        آدرس: @profile.Address
+                                    </td>
+                                    <td colspan="2">
+                                        تلفن: @profile.Mobile
+                                    </td>
+                                </tr>
+                                <tr class="bg-gray">
+                                    <td colspan="5">
+                                        اطلاعات محصول
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        محصول: @factor.Product.Title
+                                    </td>
+                                    <td>
+                                        مبلغ پیش پرداخت: @factor.PrePayment.ToString("N0")
+                                    </td>
+                                    <td>
+                                        تعداد: @factor.Count
+                                    </td>
+                                    <td>
+                                        هزینه ارسال: @factor.TransportAmount.ToString("N0")
+                                    </td>
+                                    <td>
+                                        مبلغ کل: @totalAmount.ToString("N0")
+                                    </td>
+                                </tr>
+                                <tr class="bg-gray">
+                                    <td>
+                                        مجموع:
+                                    </td>
+                                    <td>
+                                        @factor.PrePayment.ToString("N0")
+                                    </td>
+                                    <td>
+                                        @factor.Count
+                                    </td>
+                                    <td>
+                                        @factor.TransportAmount.ToString("N0")
+                                    </td>
+                                    <td>
+                                        @totalAmount.ToString("N0")
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h3>مبلغ قابل پرداخت: @factor.PrePayment.ToString("N0")</h3>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="payment-types">
+                            <div class="part-title">
+                                <h4>شیوه های پرداخت</h4>
+                            </div>
+                            <div class="bank-item">
+                                <label for="mellat">
+                                    <input id="mellat" type="radio" name="bank" class="checkbox" />
+                                    <img src="/files/images/mellat.png" />
+                                    <span>پرداخت بانک ملت</span>
+                                </label>
+                            </div>
+                            <div class="bank-item">
+                                <label for="saman">
+                                    <input id="saman" type="radio" name="bank" class="checkbox" />
+                                    <img src="/files/images/saman.png" />
+                                    <span>پرداخت بانک سامان</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-success">پرداخت وجه</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sidebar">
+                    <div class="sidebar">
+                        <div class="row isotope">
+                            <div class="col-md-12 col-sm-6 col-xs-12 isotope-item">
+                                <div class="widget widget_categories">
+                                    <h4 class="widget-title">سایر اطلاعات</h4>
+                                    <ul>
+                                        <li><a href="#">خرید های قبلی</a></li>
+                                        <li><a href="#">پیگیری خرید ها</a></li>
+                                        <li><a href="#">پروفایل</a></li>
+                                        <li><a href="#">تغییر رمز عبور</a></li>
+                                        <li><a href="#">آدرس های من</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

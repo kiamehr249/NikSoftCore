@@ -1,10 +1,17 @@
 ﻿@using NiksoftCore.ITCF.Service
-
+@using Microsoft.AspNetCore.Http
+@{
+    var isAuthenticate = (bool)ViewBag.Logined;
+    string isAuth = isAuthenticate ? "true" : "false";
+}
+<script>
+    var isLogined = @isAuth;
+</script>
 <li id="wbasket" class="cart-btn">
-    <a href="/Business/BasketManage">
+    <a :href="isAuth ? '/Business/BasketManage' : '/Auth/Account/Login'">
         <i class="fa fa-shopping-cart"></i> <span class="cart-btn-count">{{basket.items.length}}</span>
     </a>
-    <div class="cart-items">
+    <div v-if="isAuth" class="cart-items">
         <div class="cart">
             <ul>
                 <li v-for="item in basket.items" class="cart-item">

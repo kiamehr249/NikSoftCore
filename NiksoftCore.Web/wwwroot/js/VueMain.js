@@ -10,10 +10,15 @@ $(document).ready(function () {
 			bUrl2: '/api/base/AccountApi/',
 			basket: {
 				items: []
-            }
+			},
+			isAuth: false
 		},
 		created: function () {
-			this.GetBasket();
+			this.isAuth = isLogined;
+			if (isLogined) {
+				this.GetBasket();
+            }
+			
 		},
 		methods: {
 			GetBasket: function () {
@@ -73,7 +78,16 @@ $(document).ready(function () {
                 bUrl: '/api/PurchaseApi/',
                 bUrl2: '/api/base/AccountApi/',
                 basket: {
-                    items: []
+					items: [],
+					status: {
+						Requested: 0,
+						Confirmed: 1,
+						Rejected: 2,
+						PrePayment: 3,
+						CompletePayemnt: 4,
+						Sending: 5,
+						Delivered: 6
+                    }
                 }
             },
             created: function () {
@@ -109,6 +123,13 @@ $(document).ready(function () {
                                 self.showMessage({ message: apiResults.message, type: 'error' });
                             }
                         });
+				},
+				showPaymentLink: function (status) {
+					if (status == this.basket.status.Confirmed) {
+						return true;
+					}
+
+					return false;
                 }
             }
         }, 1);

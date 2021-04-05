@@ -23,6 +23,7 @@ namespace NiksoftCore.ITCF.Conltroller.Widgets
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            ViewBag.Logined = HttpContext.User.Identity.IsAuthenticated;
             return View();
         }
 

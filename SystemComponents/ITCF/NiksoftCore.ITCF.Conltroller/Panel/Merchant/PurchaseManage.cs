@@ -63,6 +63,13 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Merchant
             request.Id = theRequest.Id;
             request.Status = theRequest.Status;
             request.DeliveryType = theRequest.DeliveryType;
+            request.PrePayment = theRequest.PrePayment;
+            request.UnitAmount = theRequest.UnitAmount;
+            request.Count = theRequest.Count;
+            request.TransportAmount = theRequest.TransportAmount;
+            request.UserId = theRequest.UserId;
+            request.ProductId = theRequest.ProductId;
+
             ComboBinder(request.DeliveryType, request.Status);
             return View(request);
         }
@@ -75,6 +82,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Merchant
             theRequest.Status = request.Status;
             theRequest.PrePayment = request.PrePayment;
             theRequest.UnitAmount = request.UnitAmount;
+            theRequest.TransportAmount = request.TransportAmount;
             theRequest.DeliveryType = request.DeliveryType;
             theRequest.ModifyDate = DateTime.Now;
             iITCFServ.iUserPurchaseServ.SaveChanges();

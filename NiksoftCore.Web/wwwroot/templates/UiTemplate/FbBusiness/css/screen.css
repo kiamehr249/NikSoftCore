@@ -2128,7 +2128,7 @@ ul.page-numbers li .current {
   width: 100%;
   max-width: 575px;
   margin: 0 auto;
-  text-align: justify;
+  text-align: center;
 }
 
 .section-header h3 {
@@ -6891,4 +6891,34 @@ input.form-send {
   top: calc(50% - 15px);
   left: calc(50% - 50px);
   text-align: center;
+}
+
+
+.bg-gray {
+  background: #f2f2f2;
+}
+
+.bank-item {
+  margin-bottom: 10px;
+  display: inline-block;
+  margin-left: 15px;
+}
+
+.bank-item label {
+  display: block;
+  box-shadow: 1px 1px 3px 1px silver;
+  padding: 20px;
+  background: #f4f4f4;
+}
+
+.bank-item input {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+.bank-item img {
+  display: inline-block;
+  height: 50px;
+  margin-left: 15px;
 }
