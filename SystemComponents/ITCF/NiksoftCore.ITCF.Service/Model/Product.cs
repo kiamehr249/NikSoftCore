@@ -13,6 +13,7 @@ namespace NiksoftCore.ITCF.Service
         public string ArDescription { get; set; }
         public string Image { get; set; }
         public string Video { get; set; }
+        public long Price { get; set; }
         public int CategoryId { get; set; }
         public int BusinessId { get; set; }
 
