@@ -1,0 +1,90 @@
+﻿
+@using NiksoftCore.SystemBase.Service
+@model NiksoftCore.ViewModel.ChangePassRequest
+@{
+    ViewData["Title"] = "تغییر رمز عبور";
+    Layout = "~/Areas/Business/Views/Shared/_FaLayout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+}
+
+
+<div id="basketmanage" class="content-wrapper">
+    <section class="content-section">
+        <div class="container">
+            <div class="section-header">
+                <h1>تغییر رمز عبور</h1>
+                <span><i></i></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-9 col-content">
+                    @Html.ValidationSummary()
+                    <form action="/business/UserChangePass" method="post" enctype="multipart/form-data">
+                        <div class="registerdiv">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3">
+                                    <div class="form-group">
+                                        <label for="txtOldPassword" class="control-label">رمز عبور فعلی</label>
+                                        @Html.PasswordFor(m => m.OldPassword, new { placeholder = "رمز عبور فعلی", @class = "form-control", @id = "txtOldPassword" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtNewPassword" class="control-label">رمز عبور جدید</label>
+                                        @Html.PasswordFor(m => m.NewPassword, new { placeholder = "رمز عبور جدید", @class = "form-control", @id = "txtNewPassword" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtConfirmPass" class="control-label">تکرار رمز عبور جدید</label>
+                                        @Html.PasswordFor(m => m.ConfirmPass, new { placeholder = "تکرار رمز عبور جدید", @class = "form-control", @id = "txtConfirmPass" })
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <button type="submit" class="btn btn-success">ذخیره</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-3 col-sidebar">
+                    <div class="sidebar">
+                        @await Component.InvokeAsync("WProfileMenu")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+
+    });
+</script>

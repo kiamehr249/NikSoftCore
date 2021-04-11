@@ -1,64 +1,49 @@
-﻿@using NiksoftCore.ITCF.Service;
-@model NiksoftCore.ITCF.Service.ProductRequest
+﻿@using NiksoftCore.ITCF.Service
+@model NiksoftCore.ITCF.Service.ProductFileRequest
 @{
-    ViewData["Title"] = "ایجاد محصول";
+    ViewData["Title"] = "افزودن فایل";
     Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
-    var business = (Business)ViewBag.Company;
+    var product = (Product)ViewBag.Product;
 }
-
-<h3>@business.CoName</h3>
-
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/CompanyDataManage/Products/?bid=@business.Id" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/CompanyDataManage/ProductFiles/@product.Id" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/CompanyDataManage/CreateProduct" method="post" enctype="multipart/form-data">
+<form action="/Panel/CompanyDataManage/CreateFile" method="post" enctype="multipart/form-data">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
-                    <label for="CatgoryId" class="control-label">دسته بندی</label>
-                    <select class="form-control m-b" asp-for="CategoryId" asp-items="ViewBag.Categories">
-                        <option selected="selected" value="0">انتخاب کنید</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="txtTitle" class="control-label">عنوان</label>
-                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                    <label for="txtFaTitle" class="control-label">عنوان فارسی</label>
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان فارسی", @class = "form-control", @id = "txtFaTitle" })
                 </div>
                 <div class="form-group">
                     <label for="txtEnTitle" class="control-label">عنوان انگلیسی</label>
                     @Html.TextBoxFor(m => m.EnTitle, new { placeholder = "عنوان انگلیسی", @class = "form-control", @id = "txtEnTitle" })
                 </div>
                 <div class="form-group">
-                    <label for="txtArTitle" class="control-label">عنوان عربی</label>
-                    @Html.TextBoxFor(m => m.ArTitle, new { placeholder = "عنوان عربی", @class = "form-control", @id = "txtArTitle" })
+                    <label for="txtFaTitle" class="control-label">عنوان عربی</label>
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان فارسی", @class = "form-control", @id = "txtFaTitle" })
                 </div>
                 <div class="form-group">
-                    <label for="txtPrice" class="control-label">قیمت محصول (ریال)</label>
-                    @Html.TextBoxFor(m => m.Price, new { placeholder = "عنوان عربی", @class = "form-control", @id = "txtPrice" })
+                    <label for="FileData" class="btn btn-info">
+                        انتخاب تصویر
+                        <input asp-for="FileData" type="file" class="d-none" />
+                    </label>
+                    @if (!string.IsNullOrEmpty(Model.Path))
+                    {
+                        <img src="/@Model.Path" style="width: 80px;" />
+                    }
                 </div>
                 <div class="form-group">
-                    <div class="btn-groupx">
-                        <label for="ImageFile" class="btn btn-primary">
-                            انتخاب تصویر
-                            <input asp-for="ImageFile" type="file" class="d-none" />
-                        </label>
-                        <label for="VideoFile" class="btn btn-info">
-                            انتخاب ویدیو
-                            <input asp-for="VideoFile" type="file" class="d-none" />
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="txtDesc" class="control-label">توضیحات</label>
-                    @Html.TextAreaFor(m => m.Description, new { placeholder = "توضیحات", @class = "form-control", @id = "txtDesc", rows = "3" })
+                    <label for="txtFaDesc" class="control-label">توضیحات فارسی</label>
+                    @Html.TextAreaFor(m => m.Description, new { placeholder = "توضیحات فارسی", @class = "form-control", @id = "txtFaDesc", rows = "3" })
                 </div>
                 <div class="form-group">
                     <label for="txtEnDesc" class="control-label">توضیحات انگلیسی</label>
@@ -68,8 +53,8 @@
                     <label for="txtArDesc" class="control-label">توضیحات عربی</label>
                     @Html.TextAreaFor(m => m.ArDescription, new { placeholder = "توضیحات عربی", @class = "form-control", @id = "txtArDesc", rows = "3" })
                 </div>
-                @Html.HiddenFor(m => m.BusinessId)
-                @Html.HiddenFor(m => m.BusinessCatId)
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.ProductId)
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-success">ذخیره</button>
                 </div>

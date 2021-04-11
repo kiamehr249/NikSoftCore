@@ -60,20 +60,7 @@
 
                 <div class="col-md-3 col-sidebar">
                     <div class="sidebar">
-                        <div class="row isotope">
-                            <div class="col-md-12 col-sm-6 col-xs-12 isotope-item">
-                                <div class="widget widget_categories">
-                                    <h4 class="widget-title">سایر اطلاعات</h4>
-                                    <ul>
-                                        <li><a href="#">خرید های قبلی</a></li>
-                                        <li><a href="#">پیگیری خرید ها</a></li>
-                                        <li><a href="#">پروفایل</a></li>
-                                        <li><a href="#">تغییر رمز عبور</a></li>
-                                        <li><a href="#">آدرس های من</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        @await Component.InvokeAsync("WProfileMenu")
                     </div>
                 </div>
             </div>

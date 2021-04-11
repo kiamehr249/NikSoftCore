@@ -26,11 +26,13 @@
         <thead>
             <tr>
                 <th class="text-primary text-center" width="30px">ردیف</th>
-                <th class="text-primary text-center">عنوان</th>
                 <th class="text-primary text-center">تصویر</th>
+                <th class="text-primary text-center">عنوان</th>
+                <th class="text-primary text-center">قیمت</th>
                 <th class="text-primary text-center">ویدیو</th>
                 <th class="text-primary text-center">دسته بندی</th>
                 <th class="text-primary text-center">توضیحات</th>
+                <th class="text-primary text-center">افزودن تصاویر</th>
                 <th class="text-primary text-center" width="150px">عملیات</th>
             </tr>
         </thead>
@@ -40,13 +42,14 @@
                 pageNumber++;
                 <tr>
                     <td>@(pager.StartIndex + pageNumber)</td>
-                    <td>@item.Title</td>
                     <td>
                         @if (!string.IsNullOrEmpty(item.Image))
                         {
                             <img src="/@item.Image" style="max-height: 80px;" />
                         }
                     </td>
+                    <td>@item.Title</td>
+                    <td>@item.Price.ToString("N0")</td>
                     <td>
                         @if (!string.IsNullOrEmpty(item.Video))
                         {
@@ -55,6 +58,11 @@
                     </td>
                     <td>@item.BusinessCategory.Title</td>
                     <td>@item.Description</td>
+                    <td>
+                        <a href="/Panel/CompanyDataManage/ProductFiles?Id=@item.Id" class="btn btn-outline-info btn-sm">
+                            افزودن تصاویر <span class="badge badge-warning">@item.Files.Count</span>
+                        </a>
+                    </td>
                     <td>
                         <div class="btn-group btn-group-sm">
                             <a href="/Panel/CompanyDataManage/EditProduct?Id=@item.Id" class="btn btn-outline-warning btn-sm">

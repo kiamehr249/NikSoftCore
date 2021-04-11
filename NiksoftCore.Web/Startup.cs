@@ -44,6 +44,15 @@ namespace NiksoftCore.Web
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+            opt =>
+            {
+                //configure your other properties
+                opt.LoginPath = "/Auth/Account/Login";
+                opt.AccessDeniedPath = "/Auth/Account/Login";
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -56,11 +65,13 @@ namespace NiksoftCore.Web
 
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenOptions:Key"]));
 
-            services.AddAuthentication().AddCookie(options => {
+            services.AddAuthentication().AddCookie(options =>
+            {
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 options.LoginPath = "/Auth/Account/Login";
-                options.AccessDeniedPath = "/Auth/Account/Forbidden/";
+                options.LogoutPath = "/Auth/Account/Logout";
+                options.AccessDeniedPath = "/Auth/Account/Login";
                 options.SlidingExpiration = true;
             }).AddJwtBearer(options =>
             {

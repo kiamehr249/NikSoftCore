@@ -25,9 +25,9 @@
         <thead>
             <tr>
                 <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">فایل</th>
                 <th class="text-primary text-center">عنوان</th>
                 <th class="text-primary text-center">توضیحات</th>
-                <th class="text-primary text-center">فایل</th>
                 <th class="text-primary text-center" width="150px">عملیات</th>
             </tr>
         </thead>
@@ -37,13 +37,13 @@
                 pageNumber++;
                 <tr>
                     <td>@(pager.StartIndex + pageNumber)</td>
-                    <td>@item.Title</td>
                     <td>
                         @if (!string.IsNullOrEmpty(item.Path))
                         {
                             <img src="/@item.Path" style="max-height: 80px;" />
                         }
                     </td>
+                    <td>@item.Title</td>
                     <td>@item.Description</td>
                     <td>
                         <div class="btn-group btn-group-sm">

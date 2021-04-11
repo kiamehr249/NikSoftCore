@@ -2,33 +2,29 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.ITCF.Service;
-using NiksoftCore.MiddlController.Middles;
-using NiksoftCore.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NiksoftCore.ITCF.Conltroller.General.Business
+namespace NiksoftCore.ITCF.Conltroller.Widgets
 {
-    [Area("Business")]
-    public class BasketManage : NikController
+    public class WProfileMenu : ViewComponent
     {
         private readonly UserManager<DataModel.User> userManager;
-        public IITCFService iITCFServ { get; set; }
+        public IITCFService IITCFServ { get; set; }
 
-        public BasketManage(IConfiguration Configuration, UserManager<DataModel.User> userManager) : base(Configuration)
+        public WProfileMenu(IConfiguration Configuration, UserManager<DataModel.User> userManager)
         {
             this.userManager = userManager;
-            iITCFServ = new ITCFService(Configuration);
+            IITCFServ = new ITCFService(Configuration);
         }
 
-        public IActionResult Index()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             return View();
         }
-
 
     }
 }

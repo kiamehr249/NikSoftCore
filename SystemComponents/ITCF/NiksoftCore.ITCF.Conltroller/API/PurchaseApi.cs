@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace NiksoftCore.ITCF.Conltroller.API
 {
-    [Microsoft.AspNetCore.Mvc.Route("/api/[controller]/[action]")]
+    [Route("/api/[controller]/[action]")]
     public class PurchaseApi : NikApi
     {
         public IConfiguration Configuration { get; }

@@ -19,6 +19,13 @@
     <link rel="stylesheet" type="text/css" href="~/templates/UiTemplate/FbBusiness/rs-plugin/css/navigation.css">
 </head>
 <body>
+    <script type="text/javascript" src="~/js/persian-date.min.js"></script>
+    <script type="text/javascript" src="~/lib/VueJs/vue.js"></script>
+    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/jquery.js"></script>
+    <script type="text/javascript" src="~/js/VueUtilities.js"></script>
+    <script type="text/javascript" src="~/lib/noty/noty.js"></script>
+    <script type="text/javascript" src="~/lib/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="~/js/BaseSystem.js"></script>
     <div id="page">
         <header class="header-v2">
             <div class="top-header">
@@ -50,6 +57,7 @@
                     @await Component.InvokeAsync("WMenus", new { key = "b_menu" })
 
                     <ul class="actions">
+                        @await Component.InvokeAsync("WBasket")
                         <li class="custom-select">
                             <span class="default"><i class="fa fa-globe"></i><span class="content">Fa</span></span>
                             <ul class="select-options dismiss">
@@ -224,8 +232,8 @@
         </footer>
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/jquery.js"></script>
+    @*<script src="https://maps.googleapis.com/maps/api/js"></script>*@
+    <script type="text/javascript" src="~/js/VueMain.js"></script>
     <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/modernizr.js"></script>
     <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/js/nouislider.js"></script>
     <script type="text/javascript" src="~/templates/UiTemplate/FbBusiness/rs-plugin/js/jquery.themepunch.tools.min.js"></script>

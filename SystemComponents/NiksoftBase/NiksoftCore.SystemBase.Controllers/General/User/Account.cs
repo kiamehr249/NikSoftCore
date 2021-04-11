@@ -57,6 +57,16 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
             else
                 lang = defaultLang.ShortName.ToLower();
 
+            if (string.IsNullOrEmpty(request.Firstname))
+            {
+                AddError("نام باید مقدار داشته باشد", "fa");
+            }
+
+            if (string.IsNullOrEmpty(request.Lastname))
+            {
+                AddError("نام خانوادگی باید مقدار داشته باشد", "fa");
+            }
+
             if (string.IsNullOrEmpty(request.Email))
             {
                 if (lang == "fa")
@@ -123,6 +133,13 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                     var result = await userManager.CreateAsync(user, request.Password);
                     if (result.Succeeded)
                     {
+                        var profile = new UserProfile
+                        {
+                            Firstname = request.Firstname,
+                            Lastname = request.Lastname
+                        };
+                        ISystemBaseServ.iUserProfileServ.Add(profile);
+                        await ISystemBaseServ.iUserProfileServ.SaveChangesAsync();
                         return Redirect("/Auth/Account/Login");
                     }
                     else

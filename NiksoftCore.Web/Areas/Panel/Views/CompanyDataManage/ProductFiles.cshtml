@@ -1,24 +1,23 @@
 ﻿@using NiksoftCore.ITCF.Service;
 @{
-    ViewData["Title"] = "مدیریت کسب و کار";
+    ViewData["Title"] = "مدیریت فایل ها";
     Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
-    var contents = (List<NiksoftCore.ITCF.Service.Product>)ViewBag.Contents;
+    var contents = (List<NiksoftCore.ITCF.Service.ProductFile>)ViewBag.Contents;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
     int pageNumber = 0;
-    var business = (Business)ViewBag.Company;
+    var product = (Product)ViewBag.Product;
 }
 
-<h4>@business.CoName</h4>
+<h4>@product.Title</h4>
 
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/AdminBusinessManage/CreateProduct/?bid=@business.Id" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
-        <a href="/Panel/AdminBusinessManage" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/CompanyDataManage/CreateFile/?ProductId=@product.Id" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+        <a href="/Panel/CompanyDataManage/Products/?bid=@product.BusinessId" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>
 </div>
-
 <br />
 
 <div class="table-responsive">
@@ -26,13 +25,9 @@
         <thead>
             <tr>
                 <th class="text-primary text-center" width="30px">ردیف</th>
-                <th class="text-primary text-center">تصویر</th>
+                <th class="text-primary text-center">فایل</th>
                 <th class="text-primary text-center">عنوان</th>
-                <th class="text-primary text-center">قیمت</th>
-                <th class="text-primary text-center">ویدیو</th>
-                <th class="text-primary text-center">دسته بندی</th>
                 <th class="text-primary text-center">توضیحات</th>
-                <th class="text-primary text-center">افزودن تصاویر</th>
                 <th class="text-primary text-center" width="150px">عملیات</th>
             </tr>
         </thead>
@@ -43,32 +38,19 @@
                 <tr>
                     <td>@(pager.StartIndex + pageNumber)</td>
                     <td>
-                        @if (!string.IsNullOrEmpty(item.Image))
+                        @if (!string.IsNullOrEmpty(item.Path))
                         {
-                            <img src="/@item.Image" style="max-height: 80px;" />
+                            <img src="/@item.Path" style="max-height: 80px;" />
                         }
                     </td>
                     <td>@item.Title</td>
-                    <td>@item.Price.ToString("N0")</td>
-                    <td>
-                        @if (!string.IsNullOrEmpty(item.Video))
-                        {
-                            <a href="/@item.Video" class="btn btn-info btn-sm" target="_blank">نمایش ویدیو</a>
-                        }
-                    </td>
-                    <td>@item.BusinessCategory.Title</td>
                     <td>@item.Description</td>
                     <td>
-                        <a href="/Panel/AdminBusinessManage/ProductFiles?Id=@item.Id" class="btn btn-outline-info btn-sm">
-                            افزودن تصاویر <span class="badge badge-warning">@item.Files.Count</span>
-                        </a>
-                    </td>
-                    <td>
                         <div class="btn-group btn-group-sm">
-                            <a href="/Panel/AdminBusinessManage/EditProduct?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                            <a href="/Panel/CompanyDataManage/CreateFile?ProductId=@product.Id&Id=@item.Id" class="btn btn-outline-warning btn-sm">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="/Panel/AdminBusinessManage/RemoveProduct?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                            <a href="/Panel/CompanyDataManage/RemoveFile?Id=@item.Id" class="btn btn-outline-danger btn-sm">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </div>

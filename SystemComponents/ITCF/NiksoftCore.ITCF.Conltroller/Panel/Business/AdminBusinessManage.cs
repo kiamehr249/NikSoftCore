@@ -447,6 +447,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 ArDescription = request.ArDescription,
                 Image = Image,
                 Video = Video,
+                Price = request.Price,
                 CategoryId = request.CategoryId,
                 BusinessId = request.BusinessId
             };
@@ -487,6 +488,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             request.ArDescription = item.ArDescription;
             request.Image = item.Image;
             request.Video = item.Video;
+            request.Price = item.Price;
             request.CategoryId = item.CategoryId;
             request.BusinessId = item.BusinessId;
             request.BusinessCatId = theBusiness.CatgoryId;
@@ -582,6 +584,7 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
                 item.Image = Image;
             if (!string.IsNullOrEmpty(Video))
                 item.Video = Video;
+            item.Price = request.Price;
             await iITCFServ.iProductServ.SaveChangesAsync();
             return Redirect("/Panel/AdminBusinessManage/Products/?bid=" + request.BusinessId);
         }
@@ -733,6 +736,23 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             
             await iITCFServ.iProductFileServ.SaveChangesAsync();
             return Redirect("/Panel/AdminBusinessManage/ProductFiles/?Id=" + request.ProductId);
+        }
+
+        public async Task<IActionResult> RemoveFile(int Id)
+        {
+            var theContent = iITCFServ.iProductFileServ.Find(x => x.Id == Id);
+            if (!string.IsNullOrEmpty(theContent.Path))
+            {
+                NikTools.RemoveFile(new RemoveFileRequest
+                {
+                    RootPath = hosting.ContentRootPath,
+                    FilePath = theContent.Path
+                });
+            }
+
+            iITCFServ.iProductFileServ.Remove(theContent);
+            await iITCFServ.iProductServ.SaveChangesAsync();
+            return Redirect("/Panel/AdminBusinessManage/ProductFiles/?Id=" + theContent.ProductId);
         }
 
         private void DropDownBinder(ProductRequest request)

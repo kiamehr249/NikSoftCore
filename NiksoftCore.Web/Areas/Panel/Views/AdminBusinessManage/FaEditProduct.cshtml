@@ -41,6 +41,10 @@
                     @Html.TextBoxFor(m => m.ArTitle, new { placeholder = "عنوان عربی", @class = "form-control", @id = "txtArTitle" })
                 </div>
                 <div class="form-group">
+                    <label for="txtPrice" class="control-label">قیمت محصول (ریال)</label>
+                    @Html.TextBoxFor(m => m.Price, new { placeholder = "عنوان عربی", @class = "form-control", @id = "txtPrice" })
+                </div>
+                <div class="form-group">
                     <div class="btn-groupx">
                         <label for="ImageFile" class="btn btn-primary">
                             انتخاب تصویر

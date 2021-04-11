@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.DataModel;
 using NiksoftCore.ITCF.Service;
 using NiksoftCore.MiddlController.Middles;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.ITCF.Conltroller.API
@@ -25,6 +28,7 @@ namespace NiksoftCore.ITCF.Conltroller.API
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> SetProductOrder([FromForm] int Id, [FromForm] int Count)
         {
             var theUser = await userManager.GetUserAsync(HttpContext.User);
@@ -36,6 +40,7 @@ namespace NiksoftCore.ITCF.Conltroller.API
                     message = "برای استفاده از این سرویس باید در سامانه وارد شوید"
                 });
             }
+
             if (Id == 0)
             {
                 return Ok(new
@@ -56,7 +61,8 @@ namespace NiksoftCore.ITCF.Conltroller.API
                 });
             }
 
-            iITCFServ.iUserPurchaseServ.Add(new UserPurchase {
+            iITCFServ.iUserPurchaseServ.Add(new UserPurchase
+            {
                 UserId = theUser.Id,
                 ProductId = theProduct.Id,
                 Count = Count,
@@ -74,5 +80,28 @@ namespace NiksoftCore.ITCF.Conltroller.API
             });
         }
 
+        [HttpGet]
+        public IActionResult SearchProduct(string title)
+        {
+            if (string.IsNullOrEmpty(title) || title.Length < 3)
+            {
+                return Ok(new
+                {
+                    status = 500,
+                    message = "خطا در مقادیر ورودی",
+                    data = new List<string>()
+                });
+            }
+
+            var results = iITCFServ.iProductServ.GetPart(x => x.Title.Contains(title) || x.Description.Contains(title), 0, 20).Select(x => new { id = x.Id, text = x.Title }).ToList();
+
+            return Ok(new
+            {
+                status = 200,
+                message = "نتایج جستجو",
+                data = results
+            });
+
+        }
     }
 }

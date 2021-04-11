@@ -13,7 +13,17 @@
     var loginedShow = !User.Identity.IsAuthenticated ? "style='display: none;'" : "";
 }
 
+<style>
+    .select2-container {
+        width: 100% !important;
+    }
 
+    .ajax-ddl {
+        border: 1px solid silver;
+        padding: 4px 8px;
+        border-radius: 5px;
+    }
+</style>
 
 <div class="content-wrapper">
     <section class="content-section">
@@ -102,8 +112,11 @@
                                 <div class="widget widget_search">
                                     <form class="search-form" method="get">
                                         <div class="input-line">
-                                            @Html.TextBoxFor(m => m.Title, new { placeholder = "نام محصول", @class = "form-control" })
-                                            <button class="search-submit"><i class="fa fa-search"></i></button>
+                                            @Html.TextBoxFor(m => m.Title, new { @class = "hidden", id = "txtProdSearch" })
+                                            <div style="margin-left: 50px">
+                                                <select id="productsearch" class="js-data-example-ajax"></select>
+                                            </div>
+                                            <button class="search-submit ajax-ddl"><i class="fa fa-search"></i></button>
                                         </div>
                                     </form>
                                 </div>
@@ -330,6 +343,29 @@
             rootObjects[0].SetBasket(theProduct.id, theProduct.count, afterSetBasket);
         });
 
+
+        $('.js-data-example-ajax').select2({
+            dir: "rtl",
+            ajax: {
+                url: '/api/ProductApi/SearchProduct',
+                dataType: 'json',
+                data: function (params) {
+                    var query = {
+                        title: params.term
+                    }
+                    return query;
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.data
+                    };
+                }
+            }
+        });
+
+        $('#productsearch').on('select2:select', function (e) {
+            $('#txtProdSearch').val(this.innerText);
+        });
 
     });
 

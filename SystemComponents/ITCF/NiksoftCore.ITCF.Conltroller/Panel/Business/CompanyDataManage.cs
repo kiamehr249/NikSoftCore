@@ -1189,9 +1189,14 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             var newItem = new Product
             {
                 Title = request.Title,
+                EnTitle = request.EnTitle,
+                ArTitle = request.ArTitle,
                 Description = request.Description,
+                EnDescription = request.EnDescription,
+                ArDescription = request.ArDescription,
                 Image = Image,
                 Video = Video,
+                Price = request.Price,
                 CategoryId = request.CategoryId,
                 BusinessId = request.BusinessId
             };
@@ -1225,9 +1230,14 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 
             var request = new ProductRequest();
             request.Title = item.Title;
+            request.EnTitle = item.EnTitle;
+            request.ArTitle = item.ArTitle;
             request.Description = item.Description;
+            request.EnDescription = item.EnDescription;
+            request.ArDescription = item.ArDescription;
             request.Image = item.Image;
             request.Video = item.Video;
+            request.Price = item.Price;
             request.CategoryId = item.CategoryId;
             request.BusinessId = item.BusinessId;
             request.BusinessCatId = theBusiness.CatgoryId;
@@ -1314,11 +1324,16 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
 
             item.CategoryId = request.CategoryId;
             item.Title = request.Title;
+            item.EnTitle = request.EnTitle;
+            item.ArTitle = request.ArTitle;
             item.Description = request.Description;
+            item.EnDescription = request.EnDescription;
+            item.ArDescription = request.ArDescription;
             if (!string.IsNullOrEmpty(Image))
                 item.Image = Image;
             if (!string.IsNullOrEmpty(Video))
                 item.Video = Video;
+            item.Price = request.Price;
             await iITCFServ.iProductServ.SaveChangesAsync();
             return Redirect("/Panel/CompanyDataManage/Products/?bid=" + request.BusinessId);
         }
@@ -1348,6 +1363,170 @@ namespace NiksoftCore.ITCF.Conltroller.Panel.Business
             iITCFServ.iProductServ.Remove(theContent);
             await iITCFServ.iProductServ.SaveChangesAsync();
             return Redirect("/Panel/CompanyDataManage/Products/?bid=" + bid);
+        }
+
+
+        public async Task<IActionResult> ProductFiles(int Id, int part)
+        {
+            var theProduct = await iITCFServ.iProductServ.FindAsync(x => x.Id == Id);
+            if (theProduct == null)
+            {
+                return Redirect("/Panel");
+            }
+
+            ViewBag.Product = theProduct;
+
+            ViewBag.PageTitle = "فایل های " + theProduct.Title;
+
+            var total = iITCFServ.iProductFileServ.Count(x => x.ProductId == Id);
+            var pager = new Pagination(total, 20, part);
+            ViewBag.Pager = pager;
+
+            ViewBag.Contents = iITCFServ.iProductFileServ.GetAll(x => x.ProductId == Id).ToList();
+
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateFile(int Id, int ProductId)
+        {
+            var theProduct = await iITCFServ.iProductServ.FindAsync(x => x.Id == ProductId);
+            if (theProduct == null)
+            {
+                return Redirect("/Panel");
+            }
+            ViewBag.Product = theProduct;
+
+            ViewBag.PageTitle = "افزودن تصاویر محصول " + theProduct.Title;
+
+            var request = new ProductFileRequest();
+
+            if (Id > 0)
+            {
+                var thisItem = await iITCFServ.iProductFileServ.FindAsync(x => x.Id == Id);
+                request.Id = thisItem.Id;
+                request.Title = thisItem.Title;
+                request.EnTitle = thisItem.EnTitle;
+                request.ArTitle = thisItem.ArTitle;
+                request.Description = thisItem.Description;
+                request.EnDescription = thisItem.EnDescription;
+                request.ArDescription = thisItem.ArDescription;
+                request.Path = thisItem.Path;
+                request.ProductId = thisItem.ProductId;
+            }
+            else
+            {
+                request.ProductId = ProductId;
+            }
+
+            return View(request);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateFile(ProductFileRequest request)
+        {
+            var theProduct = await iITCFServ.iProductServ.FindAsync(x => x.Id == request.ProductId);
+            if (theProduct == null)
+            {
+                return Redirect("/Panel");
+            }
+            ViewBag.Product = theProduct;
+
+            if (!FormFileCheck(request))
+            {
+                ViewBag.Messages = Messages;
+                return View(request);
+            }
+
+            string Image = string.Empty;
+            if (request.FileData != null && request.FileData.Length > 0)
+            {
+                var SaveImage = await NikTools.SaveFileAsync(new SaveFileRequest
+                {
+                    File = request.FileData,
+                    RootPath = hosting.ContentRootPath,
+                    UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                });
+
+                if (!SaveImage.Success)
+                {
+                    Messages.Add(new NikMessage
+                    {
+                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Type = MessageType.Error,
+                        Language = "Fa"
+                    });
+                    ViewBag.Messages = Messages;
+                    return View(request);
+                }
+
+                Image = SaveImage.FilePath;
+            }
+
+            ProductFile item = new ProductFile();
+
+            if (request.Id > 0)
+            {
+                item = await iITCFServ.iProductFileServ.FindAsync(x => x.Id == request.Id);
+            }
+
+            item.Title = request.Title;
+            item.EnTitle = request.EnTitle;
+            item.ArTitle = request.ArTitle;
+            item.Description = request.Description;
+            item.EnDescription = request.EnDescription;
+            item.ArDescription = request.ArDescription;
+            item.Path = Image;
+            item.ProductId = request.ProductId;
+
+            if (request.Id == 0)
+            {
+                iITCFServ.iProductFileServ.Add(item);
+            }
+
+            await iITCFServ.iProductFileServ.SaveChangesAsync();
+            return Redirect("/Panel/CompanyDataManage/ProductFiles/?Id=" + request.ProductId);
+        }
+
+        public async Task<IActionResult> RemoveFile(int Id)
+        {
+            var theContent = iITCFServ.iProductFileServ.Find(x => x.Id == Id);
+            if (!string.IsNullOrEmpty(theContent.Path))
+            {
+                NikTools.RemoveFile(new RemoveFileRequest
+                {
+                    RootPath = hosting.ContentRootPath,
+                    FilePath = theContent.Path
+                });
+            }
+
+            iITCFServ.iProductFileServ.Remove(theContent);
+            await iITCFServ.iProductServ.SaveChangesAsync();
+            return Redirect("/Panel/CompanyDataManage/ProductFiles/?Id=" + theContent.ProductId);
+        }
+
+        private bool FormFileCheck(ProductFileRequest request)
+        {
+            bool result = true;
+            if (string.IsNullOrEmpty(request.Title))
+            {
+                AddError("عنوان فارسی باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            if (request.FileData == null || request.FileData.Length == 0)
+            {
+                AddError("هیچ فایلی انتخاب نشده است", "fa");
+                result = false;
+            }
+
+            if (request.FileData != null && request.FileData.Length > 512000)
+            {
+                AddError("حجم تصویر نباید بیشتر از 500 KB باشد", "fa");
+                result = false;
+            }
+
+            return result;
         }
 
         private void DropDownBinder(ProductRequest request)
