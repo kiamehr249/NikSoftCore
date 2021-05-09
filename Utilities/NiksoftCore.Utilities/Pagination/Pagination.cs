@@ -9,6 +9,7 @@ namespace NiksoftCore.Utilities
         public int Part { get; set; }
         public int StartIndex { get; set; }
         public int MaxShow { get; set; }
+        public int TotalParts { get; set; }
 
         public Pagination(int totalSize, int pageSize, int part)
         {
@@ -17,6 +18,7 @@ namespace NiksoftCore.Utilities
             Part = part == 0 ? 1 : part;
             StartIndex = GetSkip();
             MaxShow = 10;
+            TotalParts = GetTotalParts();
         }
 
         public int GetSkip()
@@ -47,10 +49,16 @@ namespace NiksoftCore.Utilities
 
         public int GetEndShow()
         {
-            if (Part < MaxShow)
-                return 10;
+            
+            if (Part >= (TotalParts - MaxShow))
+            {
+                return TotalParts;
+            }
             else
+            {
                 return GetStartShow() + MaxShow;
+            }
+
         }
 
         public int GetBackRang()

@@ -42,6 +42,20 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 isSearch = true;
             }
 
+            if (!string.IsNullOrEmpty(request.FirstName))
+            {
+                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Firstname.Contains(request.FirstName)).Select(x => x.UserId);
+                query.Add(x => userIds.Contains(x.Id));
+                isSearch = true;
+            }
+
+            if (!string.IsNullOrEmpty(request.LastName))
+            {
+                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Lastname.Contains(request.LastName)).Select(x => x.UserId);
+                query.Add(x => userIds.Contains(x.Id));
+                isSearch = true;
+            }
+
             ViewBag.Search = isSearch;
 
             var total = ISystemBaseServ.iNikUserServ.Count(query);
@@ -196,20 +210,23 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             ViewBag.Messages = Messages;
             if (size > 0)
             {
-                int cc1 = 0;
-                var imUsers = ISystemBaseServ.iBaseImportServ.GetPart(x => x.NCode != null && x.Email != null, start, size);
-                foreach (var item in imUsers)
+                var readyData = ISystemBaseServ.GetSubmitUsers(start, size);
+
+                foreach (var item in readyData)
                 {
-                    cc1++;
-                    await userManager.CreateAsync(new DataModel.User
+                    ISystemBaseServ.iUserProfileServ.Add(new UserProfile
                     {
-                        UserName = item.Email,
-                        Email = item.Email,
-                        EmailConfirmed = true
-                    }, item.NCode);
+                        Firstname = item.Name,
+                        Address = item.Address,
+                        Tel = item.Phone,
+                        UserId = item.UserId
+                    });
+
                 }
 
-                AddSuccess("تعداد " + cc1 + "با موفقیت انجام شد.", "fa");
+                await ISystemBaseServ.iUserProfileServ.SaveChangesAsync();
+
+                AddSuccess("با موفقیت انجام شد.", "fa");
                 ViewBag.Messages = Messages;
             }
 

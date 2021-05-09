@@ -58,7 +58,11 @@ namespace NiksoftCore.Utilities
 
         public static void RemoveFile(RemoveFileRequest request)
         {
-            File.Delete(request.RootPath + "/wwwroot/" + request.FilePath);
+            if (File.Exists(request.RootPath + "/wwwroot/" + request.FilePath))
+            {
+                File.Delete(request.RootPath + "/wwwroot/" + request.FilePath);
+            }
+            
         }
 
         public static string PersianToEnglish(this string persianStr)

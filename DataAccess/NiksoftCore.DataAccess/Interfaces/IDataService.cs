@@ -39,6 +39,8 @@ namespace NiksoftCore.DataAccess
 
         IList<TResult> GetAll<TResult>(List<Expression<Func<T, bool>>> predicates, Expression<Func<T, TResult>> selectItem);
 
+        IList<TResult> GetAll<TResult>(Expression<Func<T, bool>> predicate, Expression<Func<T, TResult>> selectItem, int startIndex, int size);
+
         List<Expression<Func<T, bool>>> ExpressionMaker();
 
         int ExecSqlCommand(string command);

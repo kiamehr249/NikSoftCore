@@ -75,7 +75,7 @@
 
             }
 
-            @if (pager.GetTotalParts() > pager.MaxShow)
+            @if ((pager.TotalParts - pager.MaxShow) > pager.Part)
             {
                 <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetEndShow()" class="page-link">...</a></li>
             }

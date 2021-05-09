@@ -140,6 +140,11 @@ namespace NiksoftCore.DataAccess
             return query.ToList();
         }
 
+        public virtual IList<TResult> GetAll<TResult>(Expression<Func<T, bool>> predicate, Expression<Func<T, TResult>> selectItem, int startIndex, int size)
+        {
+            return TEntity.Where(predicate).Skip(startIndex).Take(size).Select(selectItem).ToList();
+        }
+
         public virtual IList<TResult> GetAll<TResult>(Expression<Func<T, bool>> predicate, Expression<Func<T, TResult>> selectItem)
         {
             return TEntity.Where(predicate).Select(selectItem).ToList();

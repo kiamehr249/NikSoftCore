@@ -2,15 +2,19 @@
 @{
     ViewData["Title"] = "ورود";
     Layout = "~/Areas/Auth/Views/Shared/_FaLayout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
 
-
+<style>
+    .field-validation-error {
+        color: #b3103d;
+    }
+</style>
 <div class="container">
     <div class="page-title">
         <h1 class="text-center">ورود به سامانه</h1>
     </div>
-    
-    @Html.ValidationSummary()
+
     <form action="/Auth/Account/Login" method="post">
         <div class="logindiv">
             <div class="row">
@@ -38,3 +42,32 @@
         </div>
     </form>
 </div>
+
+<script>
+    $(document).ready(function () {
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+    });
+</script>

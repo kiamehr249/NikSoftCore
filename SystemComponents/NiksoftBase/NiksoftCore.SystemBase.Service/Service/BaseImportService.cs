@@ -1,4 +1,5 @@
 ﻿using NiksoftCore.DataAccess;
+using NiksoftCore.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,5 +26,6 @@ namespace NiksoftCore.SystemBase.Service
             }
             return query.OrderBy(i => i.Id).ThenBy(t => t.Id).Skip(startIndex).Take(pageSize).ToList();
         }
+
     }
 }

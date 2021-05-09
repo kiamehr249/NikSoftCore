@@ -5,8 +5,16 @@
     Layout = "~/Areas/Auth/Views/Shared/_FaLayout.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
+
+<style>
+    .field-validation-error {
+        color: #b3103d;
+    }
+</style>
+
 <div class="page-title">
     <h1 class="text-center">ثبت نام در سامانه</h1>
+    <p>دقت داشته باشید شماره موبایل شما همان نام کاربری شما می باشد</p>
 </div>
 <form action="/Auth/Account/Register" method="post">
     <div class="registerdiv">

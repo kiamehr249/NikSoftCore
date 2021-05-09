@@ -6,6 +6,8 @@ using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.SystemBase.Service;
 using NiksoftCore.Utilities;
 using NiksoftCore.ViewModel.User;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.SystemBase.Controllers.API
@@ -106,5 +108,32 @@ namespace NiksoftCore.SystemBase.Controllers.API
             theUser = await userManager.GetUserAsync(HttpContext.User);
         }
 
+
+        [HttpPost]
+        public IActionResult SearchProfile(string title)
+        {
+
+            if (string.IsNullOrEmpty(title) || title.Length < 4)
+            {
+                return Ok(new
+                {
+                    status = 404,
+                    message = "خطا در مقادیر ورودی",
+                    data = new List<string>()
+                });
+            }
+
+            var theProfiles = iSystemBaseServ.iUserProfileServ.GetAll(x => x.CompanyName.Contains(title), y => new { 
+                y.Id,
+                Title = y.CompanyName
+            }, 0, 10).ToList();
+
+            return Ok(new
+            {
+                status = 200,
+                message = "دریافت اطلاعات",
+                data = theProfiles
+            });
+        }
     }
 }

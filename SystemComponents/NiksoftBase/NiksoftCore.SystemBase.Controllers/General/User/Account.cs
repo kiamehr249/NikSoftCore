@@ -136,7 +136,8 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                         var profile = new UserProfile
                         {
                             Firstname = request.Firstname,
-                            Lastname = request.Lastname
+                            Lastname = request.Lastname,
+                            UserId = user.Id
                         };
                         ISystemBaseServ.iUserProfileServ.Add(profile);
                         await ISystemBaseServ.iUserProfileServ.SaveChangesAsync();
@@ -208,6 +209,22 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                 lang = lang.ToLower();
             else
                 lang = defaultLang.ShortName.ToLower();
+
+            if (string.IsNullOrEmpty(model.Username))
+            {
+                AddError("نام کاربری را وارد کنید", "fa");
+            }
+
+            if (string.IsNullOrEmpty(model.Password))
+            {
+                AddError("رمز عبور را وارد کنید", "fa");
+            }
+
+            if (Messages.Count > 0)
+            {
+                ViewBag.Messages = Messages;
+                return View(GetViewName(lang, "Login"), model);
+            }
 
             model.Username = model.Username.PersianToEnglish();
 

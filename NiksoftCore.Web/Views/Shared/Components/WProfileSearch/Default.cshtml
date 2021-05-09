@@ -1,0 +1,88 @@
+﻿@using NiksoftCore.SystemBase.Service
+@model NiksoftCore.ViewModel.SearchUserRequest
+<style>
+.auto-wrap {
+  position: relative;
+}
+.auto-wrap ul {
+  padding: 8px;
+  list-style: none;
+  background: #fff;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  z-index: 10;
+  box-shadow: 1px 1px 3px 0px silver;
+}
+
+.auto-wrap ul li {
+  padding: 3px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.auto-wrap ul li:hover {
+  background: #333;
+  color: #fff;
+}
+</style>
+<form action="/SearchUser" method="get">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <p>اگر دارای سابقه در شرکت فکر برتر هستید می توانید عنوان شرکت خود را جوستجو کرده و کاربری شرکت خود را فعال نمایید</p>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group auto-wrap">
+                @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان کسب و کار", @class = "form-inp autocomp", @id = "txtTitle", autocomplete = "off" })
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <button type="submit" class="site-button">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#txtTitle').on('keyup', function () {
+            var pri = $($(this).parents('.auto-wrap')[0]);
+            getProfiles(this.value, pri);
+        });
+    });
+
+    function getProfiles(txt, target) {
+        $.post('/api/base/AccountApi/SearchProfile', { title: txt }, function (data, status) {
+            var res = createAutoCom(data.data);
+            $('.auto-c').remove();
+            $('.auto-c li').off('click');
+            target.append(res);
+            bindClickAuto();
+        });
+    }
+
+    function bindClickAuto() {
+        $('.auto-c li').on('click', function () {
+            var pri = $($(this).parents('.auto-wrap')[0]);
+            console.log(pri);
+            pri.find('.autocomp').val($(this).text());
+            $('.auto-c').remove();
+        });
+    }
+
+    function createAutoCom(entryList) {
+        if (entryList == null || entryList == '' || entryList.lenght == 0) {
+            return '';
+        }
+
+        var html = '<ul class="auto-c">'
+        entryList.forEach(function (item, index) {
+            html += ('<li>' + item.title + '</li>');
+        });
+        html += "</ul>";
+        return html;
+    }
+</script>

@@ -1,16 +1,11 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.SystemBase.Service;
 using NiksoftCore.Utilities;
 using NiksoftCore.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.SystemBase.Controllers.Panel.Modules

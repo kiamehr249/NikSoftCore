@@ -1,7 +1,14 @@
-﻿namespace NiksoftCore.SystemBase.Service
+﻿using Microsoft.EntityFrameworkCore;
+using NiksoftCore.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Data;
+
+namespace NiksoftCore.SystemBase.Service
 {
     public interface ISystemBaseService
     {
+        public SystemBaseDbContext dbContext { get; }
         ISystemSettingService iSystemSettingServ { get; set; }
         IPortalLanguageService iPortalLanguageServ { get; set; }
         IPanelMenuService iPanelMenuService { get; set; }
@@ -18,10 +25,12 @@
         INikUserService iNikUserServ { get; set; }
         INikRoleService iNikRoleServ { get; set; }
         IBaseImportService iBaseImportServ { get; set; }
+        List<SpImportData> GetSubmitUsers(int start, int size);
     }
 
     public class SystemBaseService : ISystemBaseService
     {
+        public SystemBaseDbContext dbContext { get; }
         public ISystemSettingService iSystemSettingServ { get; set; }
         public IPortalLanguageService iPortalLanguageServ { get; set; }
         public IPanelMenuService iPanelMenuService { get; set; }
@@ -41,7 +50,8 @@
 
         public SystemBaseService(string connection)
         {
-            ISystemUnitOfWork uow = new SystemBaseDbContext(connection);
+            dbContext = new SystemBaseDbContext(connection);
+            ISystemUnitOfWork uow = dbContext;
             iSystemSettingServ = new SystemSettingService(uow);
             iPortalLanguageServ = new PortalLanguageService(uow);
             iPanelMenuService = new PanelMenuService(uow);
@@ -58,6 +68,38 @@
             iNikUserServ = new NikUserService(uow);
             iNikRoleServ = new NikRoleService(uow);
             iBaseImportServ = new BaseImportService(uow);
+        }
+
+        public List<SpImportData> GetSubmitUsers(int start, int size)
+        {
+            using (var command = dbContext.Database.GetDbConnection().CreateCommand())
+            {
+                var query = String.Format("EXEC Sp_ImportData @Start = {0}, @Size = {1};", start, size);
+                command.CommandText = query;
+                command.CommandType = CommandType.Text;
+
+                dbContext.Database.OpenConnection();
+
+                using (var result = command.ExecuteReader())
+                {
+                    var entities = new List<SpImportData>();
+
+                    while (result.Read())
+                    {
+                        entities.Add(new SpImportData
+                        {
+                            UserId = result.IsDBNull(0) ? 0 : result.GetFieldValue<int>(0),
+                            Email = result.IsDBNull(1) ? "" : result.GetFieldValue<string>(1),
+                            Name = result.IsDBNull(2) ? "" : result.GetFieldValue<string>(2),
+                            Address = result.IsDBNull(3) ? "" : result.GetFieldValue<string>(3),
+                            Phone = result.IsDBNull(4) ? "" : result.GetFieldValue<string>(4)
+                        });
+                    }
+
+                    return entities;
+                }
+            }
+
         }
 
 

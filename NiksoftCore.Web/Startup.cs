@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using NiksoftCore.DataAccess;
 using NiksoftCore.DataModel;
 using NiksoftCore.SystemBase.Service;
+using NiksoftCore.Utilities.Routing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -127,12 +128,18 @@ namespace NiksoftCore.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}").RequireHost("localhost:49602", "fbiic.ir");
 
                 endpoints.MapControllerRoute(
                     name: "areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
+
+                endpoints.MapAreaControllerRoute(
+                    name: "Business",
+                    areaName: "Business",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                ).RequireHost("localhost:49602", "shop.fbiic.ir");
 
                 endpoints.MapRazorPages();
 
