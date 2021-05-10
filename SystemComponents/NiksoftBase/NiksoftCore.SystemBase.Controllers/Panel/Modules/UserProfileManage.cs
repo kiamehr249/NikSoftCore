@@ -28,20 +28,12 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(BaseRequest request)
+        public async Task<IActionResult> Index()
         {
-            if (!string.IsNullOrEmpty(request.lang))
-                request.lang = request.lang.ToLower();
-            else
-                request.lang = defaultLang.ShortName.ToLower();
-
             var theUser = await userManager.GetUserAsync(HttpContext.User);
             var theProfile = await ISystemBaseServ.iUserProfileServ.FindAsync(x => x.UserId == theUser.Id);
 
-            if (request.lang == "fa")
-                ViewBag.PageTitle = "مدیریت پروفایل";
-            else
-                ViewBag.PageTitle = "Profile Management";
+            ViewBag.PageTitle = "مدیریت پروفایل";
 
             var profileRequest = new UserProfileRequest();
 
@@ -64,21 +56,14 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 profileRequest.UserId = theUser.Id;
             }
 
-            return View(GetViewName(request.lang, "Index"), profileRequest);
+            return View(profileRequest);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index([FromQuery] string lang, [FromForm] UserProfileRequest request)
+        public async Task<IActionResult> Index([FromForm] UserProfileRequest request)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
 
-            if (lang == "fa")
-                ViewBag.PageTitle = "ایجاد دسته بندی";
-            else
-                ViewBag.PageTitle = "Create Business Category";
+            ViewBag.PageTitle = "ایجاد دسته بندی";
 
 
             string avatar = string.Empty;
@@ -100,7 +85,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                         Language = "Fa"
                     });
                     ViewBag.Messages = Messages;
-                    return View(GetViewName(lang, "Create"), request);
+                    return View(request);
                 }
 
                 avatar = SaveImage.FilePath;
@@ -118,7 +103,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 var readyProfile = await ISystemBaseServ.iUserProfileServ.FindAsync(x => x.UserId == request.UserId);
                 if (readyProfile != null)
                 {
-                    View(GetViewName(lang, "Index"));
+                    View();
                 }
                 thisItem = new UserProfile();
             }
@@ -148,7 +133,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             await ISystemBaseServ.iUserProfileServ.SaveChangesAsync();
 
 
-            return View(GetViewName(lang, "Index"));
+            return View();
         }
 
 

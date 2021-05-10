@@ -1,22 +1,32 @@
 ﻿
 @model NiksoftCore.ViewModel.RoleRequest
 @{
-    ViewData["Title"] = "Create Role";
+    ViewData["Title"] = "ایجاد نقش";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
 }
+
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/UserRoleManage" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+</div>
+<br />
+
 @Html.ValidationSummary()
 <form action="/Panel/UserRoleManage/Edit" method="post">
     <div class="registerdiv">
         <div class="row">
-            <div class="col-sm-4 offset-md-4">
+            <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
-                    <label for="txtName" class="control-label">Role Title</label>
-                    @Html.TextBoxFor(m => m.Name, new { placeholder = "Title", @class = "form-control", @id = "txtName" })
+                    <label for="txtName" class="control-label">عنوان نقش</label>
+                    @Html.TextBoxFor(m => m.Name, new { placeholder = "عنوان", @class = "form-control", @id = "txtName" })
                     @Html.ValidationMessageFor(m => m.Name)
                 </div>
                 @Html.HiddenFor(x => x.Id, new { value = Model.Id })
                 <div class="form-group text-center">
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success">ذخیره</button>
                 </div>
             </div>
         </div>

@@ -10,7 +10,6 @@ namespace NiksoftCore.SystemBase.Service
     {
         public SystemBaseDbContext dbContext { get; }
         ISystemSettingService iSystemSettingServ { get; set; }
-        IPortalLanguageService iPortalLanguageServ { get; set; }
         IPanelMenuService iPanelMenuService { get; set; }
         IUserProfileService iUserProfileServ { get; set; }
         ICountryService iCountryServ { get; set; }
@@ -24,7 +23,6 @@ namespace NiksoftCore.SystemBase.Service
         IMenuService iMenuServ { get; set; }
         INikUserService iNikUserServ { get; set; }
         INikRoleService iNikRoleServ { get; set; }
-        IBaseImportService iBaseImportServ { get; set; }
         List<SpImportData> GetSubmitUsers(int start, int size);
     }
 
@@ -32,7 +30,6 @@ namespace NiksoftCore.SystemBase.Service
     {
         public SystemBaseDbContext dbContext { get; }
         public ISystemSettingService iSystemSettingServ { get; set; }
-        public IPortalLanguageService iPortalLanguageServ { get; set; }
         public IPanelMenuService iPanelMenuService { get; set; }
         public IUserProfileService iUserProfileServ { get; set; }
         public ICountryService iCountryServ { get; set; }
@@ -46,14 +43,12 @@ namespace NiksoftCore.SystemBase.Service
         public IMenuService iMenuServ { get; set; }
         public INikUserService iNikUserServ { get; set; }
         public INikRoleService iNikRoleServ { get; set; }
-        public IBaseImportService iBaseImportServ { get; set; }
 
         public SystemBaseService(string connection)
         {
             dbContext = new SystemBaseDbContext(connection);
             ISystemUnitOfWork uow = dbContext;
             iSystemSettingServ = new SystemSettingService(uow);
-            iPortalLanguageServ = new PortalLanguageService(uow);
             iPanelMenuService = new PanelMenuService(uow);
             iUserProfileServ = new UserProfileService(uow);
             iCountryServ = new CountryService(uow);
@@ -67,7 +62,6 @@ namespace NiksoftCore.SystemBase.Service
             iMenuServ = new MenuService(uow);
             iNikUserServ = new NikUserService(uow);
             iNikRoleServ = new NikRoleService(uow);
-            iBaseImportServ = new BaseImportService(uow);
         }
 
         public List<SpImportData> GetSubmitUsers(int start, int size)

@@ -16,14 +16,12 @@ namespace NiksoftCore.SystemBase.Controllers.General.Widgets
         public ISystemBaseService iSystemBaseServ { get; set; }
 
         public List<NikMessage> Messages;
-        public PortalLanguage defaultLang;
 
         public WProfileSearch(IConfiguration Configuration)
         {
             Config = Configuration;
             Messages = new List<NikMessage>();
             iSystemBaseServ = new SystemBaseService(Config.GetConnectionString("SystemBase"));
-            defaultLang = iSystemBaseServ.iPortalLanguageServ.Find(x => x.IsDefault);
         }
 
         public async Task<IViewComponentResult> InvokeAsync()

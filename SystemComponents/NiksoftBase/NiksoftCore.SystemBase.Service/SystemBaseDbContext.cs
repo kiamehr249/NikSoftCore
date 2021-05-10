@@ -16,7 +16,6 @@ namespace NiksoftCore.SystemBase.Service
         }
 
         public DbSet<SystemSetting> SystemSettings { get; set; }
-        public DbSet<PortalLanguage> PortalLanguages { get; set; }
         public DbSet<PanelMenu> PanelMenus { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Country> Countries { get; set; }
@@ -30,12 +29,10 @@ namespace NiksoftCore.SystemBase.Service
         public DbSet<Menu> Menus { get; set; }
         public DbSet<NikUser> NikUsers { get; set; }
         public DbSet<NikRole> NikRoles { get; set; }
-        public DbSet<BaseImport> BaseImports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new SystemSettingMap());
-            builder.ApplyConfiguration(new PortalLanguageMap());
             builder.ApplyConfiguration(new PanelMenuMap());
             builder.ApplyConfiguration(new UserProfileMap());
             builder.ApplyConfiguration(new CountryMap());
@@ -49,7 +46,6 @@ namespace NiksoftCore.SystemBase.Service
             builder.ApplyConfiguration(new MenuMap());
             builder.ApplyConfiguration(new NikUserMap());
             builder.ApplyConfiguration(new NikRoleMap());
-            builder.ApplyConfiguration(new BaseImportMap());
         }
     }
 }

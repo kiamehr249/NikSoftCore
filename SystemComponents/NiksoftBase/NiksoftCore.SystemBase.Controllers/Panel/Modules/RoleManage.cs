@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
+using NiksoftCore.Utilities;
 using NiksoftCore.ViewModel;
 using NiksoftCore.ViewModel.User;
 using System.Linq;
@@ -25,54 +26,40 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             this.roleManager = roleManager;
         }
 
-        public IActionResult Index([FromQuery] string lang)
+        public IActionResult Index(BaseRequest request)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
+            ViewBag.PageTitle = "مدیریت نقش ها";
 
-            if (lang == "fa" || defaultLang.ShortName.ToLower() == "fa")
-                ViewBag.PageTitle = "مدیریت نقش ها";
-            else
-                ViewBag.PageTitle = "User role manager";
+            var query = ISystemBaseServ.iNikRoleServ.ExpressionMaker();
+            query.Add(x => true);
+            var total = ISystemBaseServ.iNikRoleServ.Count(query);
+            var pager = new Pagination(total, 20, request.part);
+            ViewBag.Pager = pager;
 
-            ViewBag.Roles = roleManager.Roles.Where(x => true).ToList();
-            return View(GetViewName(lang, "Index"));
+            ViewBag.Roles = ISystemBaseServ.iNikRoleServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            return View();
         }
 
         [HttpGet]
-        public IActionResult Create([FromQuery] string lang)
+        public IActionResult Create()
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
 
-            if (lang == "fa" || defaultLang.ShortName.ToLower() == "fa")
-                ViewBag.PageTitle = "ایجاد نقش";
-            else
-                ViewBag.PageTitle = "Create user role";
+            ViewBag.PageTitle = "ایجاد نقش";
 
             var request = new RoleRequest();
-            return View(GetViewName(lang, "Create"), request);
+            return View(request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] string lang, RoleRequest request)
+        public async Task<IActionResult> Create(RoleRequest request)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-
             if (string.IsNullOrEmpty(request.Name))
-            {
-                if (lang == "fa" || defaultLang.ShortName == "fa")
-                    AddError("نام نقش کاربری باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Role name can not be null", "en");
-
-            }
+                AddError("نام نقش کاربری باید مقدار داشته باشد", "fa");
 
             if (Messages.Any(x => x.Type == MessageType.Error))
             {
                 ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "Create"), request);
+                return View(request);
             }
 
             await roleManager.CreateAsync(new DataModel.Role
@@ -86,10 +73,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
 
         [HttpGet]
-        public IActionResult Edit([FromQuery] string lang, int Id)
+        public IActionResult Edit(int Id)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
 
             var theRole = roleManager.Roles.First(x => x.Id == Id);
             var request = new RoleRequest
@@ -98,27 +83,19 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 Name = theRole.Name,
                 NormalizedName = theRole.NormalizedName
             };
-            return View(GetViewName(lang, "Edit"), request);
+            return View(request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([FromQuery] string lang, RoleRequest request)
+        public async Task<IActionResult> Edit(RoleRequest request)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-
-            if (request.Id < 1)
-            {
-                if (lang == "fa" || defaultLang.ShortName == "fa")
-                    AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید", "fa");
-                else
-                    AddError("Edit feild, please try agan", "en");
-            }
+            if (string.IsNullOrEmpty(request.Name))
+                AddError("نام نقش کاربری باید مقدار داشته باشد", "fa");
 
             if (Messages.Any(x => x.Type == MessageType.Error))
             {
                 ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "Create"), request);
+                return View(request);
             }
 
             var theRole = roleManager.Roles.First(x => x.Id == request.Id);
@@ -134,28 +111,6 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             var theRole = roleManager.Roles.First(x => x.Id == Id);
             await roleManager.DeleteAsync(theRole);
             return Redirect("/Panel/RoleManage");
-        }
-
-
-        private string GetViewName(string queryLang, string baseName)
-        {
-            if (!string.IsNullOrEmpty(queryLang))
-            {
-                if (queryLang.ToLower() == "en")
-                {
-                    return baseName;
-                }
-
-                var defaultView = ISystemBaseServ.iPortalLanguageServ.Find(x => x.ShortName == queryLang);
-                return defaultView.ShortName + baseName;
-            }
-
-            if (defaultLang.ShortName.ToLower() == "en")
-            {
-                return baseName;
-            }
-
-            return defaultLang.ShortName + baseName;
         }
     }
 }

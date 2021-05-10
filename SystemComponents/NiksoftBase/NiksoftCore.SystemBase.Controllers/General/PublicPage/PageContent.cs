@@ -4,11 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.SystemBase.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NiksoftCore.SystemBase.Controllers.General.PublicPage
 {
@@ -23,12 +18,8 @@ namespace NiksoftCore.SystemBase.Controllers.General.PublicPage
             hosting = hostingEnvironment;
         }
 
-        public IActionResult Index(string Id, [FromQuery] string lang)
+        public IActionResult Index(string Id)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
 
             int itemId = 0;
             GeneralContent pageItem;
@@ -45,7 +36,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.PublicPage
             ViewBag.Content = pageItem;
             ViewData["Title"] = pageItem.Title;
 
-            return View(GetViewName(lang, "Index"));
+            return View();
         }
 
 

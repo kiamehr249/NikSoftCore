@@ -12,14 +12,12 @@ namespace NiksoftCore.MiddlController.Middles
         public ISystemBaseService ISystemBaseServ { get; set; }
 
         public List<NikMessage> Messages;
-        public PortalLanguage defaultLang;
 
         public NikController(IConfiguration Configuration)
         {
             Config = Configuration;
             Messages = new List<NikMessage>();
             ISystemBaseServ = new SystemBaseService(Configuration.GetConnectionString("SystemBase"));
-            defaultLang = ISystemBaseServ.iPortalLanguageServ.Find(x => x.IsDefault);
         }
 
         public void AddError(string message, string lang)
@@ -39,21 +37,6 @@ namespace NiksoftCore.MiddlController.Middles
                 Language = lang,
                 Type = MessageType.Success
             });
-        }
-
-        public string GetViewName(string queryLang, string baseName)
-        {
-            if (string.IsNullOrEmpty(queryLang))
-            {
-                queryLang = defaultLang.ShortName;
-            }
-
-            if (queryLang.ToLower() == "en")
-            {
-                return baseName;
-            }
-
-            return defaultLang.ShortName + baseName;
         }
 
 

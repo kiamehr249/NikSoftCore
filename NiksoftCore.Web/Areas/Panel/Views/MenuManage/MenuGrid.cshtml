@@ -1,0 +1,185 @@
+﻿@using NiksoftCore.SystemBase.Service
+@model NiksoftCore.ViewModel.MenuGridRequest
+@{
+    ViewData["Title"] = "مدیریت منوها";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var contents = (List<Menu>)ViewBag.Contents;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    int pageNumber = 0;
+
+    var category = (MenuCategory)ViewBag.Category;
+    var parent = (Menu)ViewBag.Parent;
+    int parenParentId = parent.Parent != null ? parent.Parent.Id : 0;
+
+    var isSearch = (bool)ViewBag.Search;
+    var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
+    var accBtn = isSearch ? "aria-expanded='true'" : "";
+}
+<div class="text-right">
+    <a href="/Panel/MenuManage/CreateMenu?CategoryId=@category.Id&ParentId=@parent.Id" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
+        <i class="fa fa-search"></i>
+    </a>
+    @if (parent.Id > 0)
+    {
+        <a href="/Panel/MenuManage/MenuGrid?CategoryId=@category.Id&ParentId=@parenParentId" class="btn btn-outline-warning btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    }
+    else
+    {
+        <a href="/Panel/MenuManage" class="btn btn-outline-warning btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    }
+
+</div>
+<div id="searchAcc" @Html.Raw(accSearch) aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        <hr />
+        <form method="get">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtTitle" class="control-label">عنوان</label>
+                        @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                    </div>
+                </div>
+                @*<div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="CategoryId" class="control-label">Parent Category</label>
+                            <select class="form-control m-b" asp-for="CategoryId" asp-items="ViewBag.Categories">
+                                <option selected="selected" value="0">select category</option>
+                            </select>
+                        </div>
+                    </div>*@
+                @Html.HiddenFor(m => m.ParentId)
+                @Html.HiddenFor(m => m.CategoryId)
+                <div class="col-sm-3" style="padding-top: 29px;">
+                    <button type="submit" class="btn btn-outline-info">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+</div>
+<br />
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">عنوان</th>
+                <th class="text-primary text-center">تصویر</th>
+                <th class="text-primary text-center">توضیحات</th>
+                <th class="text-primary text-center">آیتم ها</th>
+                <th class="text-primary text-center">وضعیت</th>
+                <th class="text-primary text-center">مرتب سازی</th>
+                <th class="text-primary text-center" width="100px">عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in contents)
+            {
+                pageNumber++;
+                var itemParentId = item.ParentId != null ? item.ParentId : 0;
+                <tr>
+                    <td>@(pager.StartIndex + pageNumber)</td>
+                    <td>@item.Title</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Image))
+                        {
+                            <img src="/@item.Image" style="height: 70px; width: 70px;" />
+                        }
+                    </td>
+                    <td>
+                        @item.Description
+                    </td>
+                    <td>
+                        <a href="/Panel/MenuManage/MenuGrid?CategoryId=@item.CategoryId&ParentId=@item.Id" class="btn btn-outline-info btn-sm">
+                            آیتم ها <span class="badge badge-warning">@item.Childs.Count</span>
+                        </a>
+                    </td>
+                    <td>
+                        @if (item.Enabled)
+                        {
+                            <a href="/Panel/MenuManage/EnableMenu?Id=@item.Id" class="btn btn-outline-success btn-sm">
+                                <i class="fas fa-check"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="/Panel/MenuManage/EnableMenu?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        }
+
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="/Panel/MenuManage/OrderUpMenu?Id=@item.Id" class="btn btn-outline-info btn-sm">
+                                <i class="fas fa-arrow-up"></i>
+                            </a>
+                            <a href="/Panel/MenuManage/OrderDownMenu?Id=@item.Id" class="btn btn-outline-info btn-sm">
+                                <i class="fas fa-arrow-down"></i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="/Panel/MenuManage/CreateMenu?Id=@item.Id&CategoryId=@item.CategoryId&ParentId=@itemParentId" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/Panel/MenuManage/RemoveMenu?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="pager">
+        @if (pager.TotalSize > pager.PageSize)
+        {
+            <ul class="pagination m-b-5">
+                <li class="page-item">
+                    <a class="page-link" href="@Context.Request.Path?part=1" aria-label="Previous">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+
+                @if (pager.GetStartShow() >= pager.MaxShow)
+                {
+                    <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetBackRang()" class="page-link">...</a></li>
+                }
+
+                @for (int i = pager.GetStartShow(); i <= pager.GetEndShow(); i++)
+                {
+                    if (pager.Part == i)
+                    {
+                        <li class="page-item active"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                    }
+
+                }
+
+                @if (pager.GetTotalParts() > pager.MaxShow)
+                {
+                    <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetEndShow()" class="page-link">...</a></li>
+                }
+                <li class="page-item">
+                    <a class="page-link" href="@Context.Request.Path?part=@pager.GetTotalParts()" aria-label="Next">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+        }
+
+    </div>
+</div>

@@ -135,11 +135,11 @@ namespace NiksoftCore.Web
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
 
-                endpoints.MapAreaControllerRoute(
-                    name: "Business",
-                    areaName: "Business",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-                ).RequireHost("localhost:49602", "shop.fbiic.ir");
+                //endpoints.MapAreaControllerRoute(
+                //    name: "Business",
+                //    areaName: "Business",
+                //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                //).RequireHost("localhost:49602", "shop.fbiic.ir");
 
                 endpoints.MapRazorPages();
 

@@ -25,8 +25,4 @@
     <ProjectReference Include="..\NiksoftCore.SystemBase.Service\NiksoftCore.SystemBase.Service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="General\Business\" />
-  </ItemGroup>
-
 </Project>

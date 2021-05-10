@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NiksoftCore.MiddlController.Middles;
-using NiksoftCore.SystemBase.Service;
 using NiksoftCore.ViewModel;
-using System;
 using System.Diagnostics;
 
 namespace NiksoftCore.SystemBase.Controllers.General.Home
@@ -19,9 +17,9 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
             _logger = logger;
         }
 
-        public IActionResult Index([FromQuery] string lang)
+        public IActionResult Index()
         {
-            return View(GetViewName(lang, "Index"));
+            return View();
         }
 
         [Authorize]

@@ -26,36 +26,26 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         }
 
         [HttpGet, AllowAnonymous]
-        public IActionResult Register([FromQuery] string lang)
+        public IActionResult Register()
         {
             if (User.Identity.IsAuthenticated)
             {
                 return Redirect("/Panel");
             }
 
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
             ViewBag.Messages = Messages;
             UserRegisterRequest model = new UserRegisterRequest();
-            return View(GetViewName(lang, "Register"), model);
+            return View(model);
         }
 
 
         [HttpPost, AllowAnonymous]
-        public async Task<IActionResult> Register([FromQuery] string lang, UserRegisterRequest request)
+        public async Task<IActionResult> Register(UserRegisterRequest request)
         {
             if (User.Identity.IsAuthenticated)
             {
                 return Redirect("/Panel");
             }
-
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
 
             if (string.IsNullOrEmpty(request.Firstname))
             {
@@ -69,49 +59,34 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
 
             if (string.IsNullOrEmpty(request.Email))
             {
-                if (lang == "fa")
-                    AddError("آدرس ایمیل باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Email can not be null", "en");
+                AddError("آدرس ایمیل باید مقدار داشته باشد", "fa");
             }
 
             if (string.IsNullOrEmpty(request.PhoneNumber))
             {
-                if (lang == "fa")
-                    AddError("شماره موبایل باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Mobile can not be null", "en");
+                AddError("شماره موبایل باید مقدار داشته باشد", "fa");
             }
 
             if (string.IsNullOrEmpty(request.Password))
             {
-                if (lang == "fa")
-                    AddError("رمز عبور باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Password can not be null", "en");
+                AddError("رمز عبور باید مقدار داشته باشد", "fa");
             }
 
             if (string.IsNullOrEmpty(request.ConfirmPassword))
             {
-                if (lang == "fa")
-                    AddError("تکرار رمز عبور باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Confirm password can not be null", "en");
+                AddError("تکرار رمز عبور باید مقدار داشته باشد", "fa");
             }
 
             if (request.Password != request.ConfirmPassword)
             {
-                if (lang == "fa")
-                    AddError("تکرار رمز عبور با رمز عبور مطابق نیست", "fa");
-                else
-                    AddError("Password and confirm password is not same", "en");
+                AddError("تکرار رمز عبور با رمز عبور مطابق نیست", "fa");
             }
 
             ViewBag.Messages = Messages;
 
             if (Messages.Count(x => x.Type == ViewModel.MessageType.Error) > 0)
             {
-                return View(GetViewName(lang, "Register"), request);
+                return View(request);
             }
 
             request.PhoneNumber = request.PhoneNumber.PersianToEnglish();
@@ -154,61 +129,44 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                             }
                         }
                         ViewBag.Messages = Messages;
-                        return View(GetViewName(lang, "Register"), request);
+                        return View(request);
                     }
                 }
                 else
                 {
-                    if (lang == "fa")
-                    {
-                        AddError("این کاربری در سامانه موجود است", "fa");
-                    }
-                    else
-                    {
-                        AddError("This user already exist", "en");
-                    }
+                    AddError("این کاربری در سامانه موجود است", "fa");
 
                     ViewBag.Messages = Messages;
                     //ModelState.AddModelError("message", "Email already exists.");
-                    return View(GetViewName(lang, "Register"), request);
+                    return View(request);
                 }
             }
-            return View(GetViewName(lang, "Register"), request);
+            return View(request);
 
         }
 
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login([FromQuery] string lang)
+        public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
             {
                 return Redirect("/Panel");
             }
 
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
             LoginRequest model = new LoginRequest();
-            return View(GetViewName(lang, "Login"), model);
+            return View(model);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromQuery] string lang, LoginRequest model)
+        public async Task<IActionResult> Login(LoginRequest model)
         {
             if (User.Identity.IsAuthenticated)
             {
                 return Redirect("/Panel");
             }
-
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
 
             if (string.IsNullOrEmpty(model.Username))
             {
@@ -223,7 +181,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
             if (Messages.Count > 0)
             {
                 ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "Login"), model);
+                return View(model);
             }
 
             model.Username = model.Username.PersianToEnglish();
@@ -233,19 +191,10 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                 var user = await userManager.FindByEmailAsync(model.Username);
                 if (user != null && !user.EmailConfirmed)
                 {
-                    if (lang == "fa")
-                    {
-                        AddError("این نام کابری هنوز تایید نشده است", "fa");
-                        //ModelState.AddModelError("message", "این نام کابری هنوز تایید نشده است");
-                    }
-                    else
-                    {
-                        AddError("Email not confirmed yet", "en");
-                        //ModelState.AddModelError("message", "Email not confirmed yet");
-                    }
+                    AddError("این نام کابری هنوز تایید نشده است", "fa");
 
                     ViewBag.Messages = Messages;
-                    return View(GetViewName(lang, "Login"), model);
+                    return View(model);
 
                 }
 
@@ -256,26 +205,11 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
 
                 if (await userManager.CheckPasswordAsync(user, model.Password) == false)
                 {
-                    if (lang == "fa")
-                    {
-                        AddError("این کاربری نا معتبر است", "fa");
-                        //ModelState.AddModelError("message", "این کاربری نا معتبر است");
-                    }
-                    else
-                    {
-                        AddError("Invalid credentials", "en");
-                        //ModelState.AddModelError("message", "Invalid credentials");
-                    }
+                    AddError("این کاربری نا معتبر است", "fa");
 
                     ViewBag.Messages = Messages;
-                    return View(GetViewName(lang, "Login"), model);
+                    return View(model);
 
-                }
-
-                var hasUserRole = await userManager.IsInRoleAsync(user, "User");
-                if (!hasUserRole)
-                {
-                    await userManager.AddToRoleAsync(user, "User");
                 }
 
                 var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, true);
@@ -295,21 +229,12 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                 }
                 else
                 {
-                    if (lang == "fa")
-                    {
-                        AddError("ورود نا معتبر", "fa");
-                        //ModelState.AddModelError("message", "ورود نا معتبر");
-                    }
-                    else
-                    {
-                        AddError("ورود نا معتبر", "fa");
-                        //ModelState.AddModelError("message", "Invalid login attempt");
-                    }
+                    AddError("ورود نا معتبر", "fa");
                     ViewBag.Messages = Messages;
-                    return View(GetViewName(lang, "Login"), model);
+                    return View(model);
                 }
             }
-            return View(GetViewName(lang, "Login"), model);
+            return View(model);
         }
 
         public async Task<IActionResult> Logout()

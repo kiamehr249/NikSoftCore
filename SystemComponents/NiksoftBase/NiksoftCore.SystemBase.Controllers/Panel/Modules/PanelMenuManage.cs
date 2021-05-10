@@ -20,64 +20,41 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
         }
 
-        public IActionResult Index([FromQuery] string lang, int part)
+        public IActionResult Index(int part)
         {
             var total = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == null);
             var pager = new Pagination(total, 20, part);
             ViewBag.Pager = pager;
 
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
-            if (lang == "fa")
-                ViewBag.PageTitle = "مدیریت منوها";
-            else
-                ViewBag.PageTitle = "Menu Management";
+            ViewBag.PageTitle = "مدیریت منوها";
 
             ViewBag.Contents = ISystemBaseServ.iPanelMenuService.GetPart(x => x.ParentId == null, pager.StartIndex, pager.PageSize).OrderBy(x => x.Ordering).ToList();
 
-            return View(GetViewName(lang, "Index"));
+            return View();
         }
 
         [HttpGet]
-        public IActionResult Create([FromQuery] string lang)
+        public IActionResult Create()
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
-            if (lang == "fa")
-                ViewBag.PageTitle = "ایجاد نقش";
-            else
-                ViewBag.PageTitle = "Create user role";
+            ViewBag.PageTitle = "ایجاد نقش";
 
             var request = new PanelMenu();
-            return View(GetViewName(lang, "Create"), request);
+            return View(request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] string lang, PanelMenu request)
+        public async Task<IActionResult> Create(PanelMenu request)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
 
             if (string.IsNullOrEmpty(request.Title))
             {
-                if (lang == "fa")
-                    AddError("نام باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Title can not be null", "en");
+                AddError("نام باید مقدار داشته باشد", "fa");
             }
 
             if (Messages.Any(x => x.Type == MessageType.Error))
             {
                 ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "Create"), request);
+                return View(request);
             }
 
             request.Enabled = true;
@@ -92,37 +69,24 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
 
         [HttpGet]
-        public IActionResult Edit([FromQuery] string lang, int Id)
+        public IActionResult Edit(int Id)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
             var theMenu = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == Id);
-            return View(GetViewName(lang, "Edit"), theMenu);
+            return View(theMenu);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([FromQuery] string lang, PanelMenu request)
+        public async Task<IActionResult> Edit(PanelMenu request)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
             if (request.Id < 1)
             {
-                if (lang == "fa")
-                    AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید", "fa");
-                else
-                    AddError("Edit feild, please try agan", "en");
+                AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید", "fa");
             }
 
             if (Messages.Any(x => x.Type == MessageType.Error))
             {
                 ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "Create"), request);
+                return View(request);
             }
 
             var theMenu = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == request.Id);
@@ -156,7 +120,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
 
 
-        public async Task<IActionResult> MenuItems([FromQuery] string lang, int part, int ParentId)
+        public async Task<IActionResult> MenuItems(int part, int ParentId)
         {
             var parent = await ISystemBaseServ.iPanelMenuService.FindAsync(x => x.Id == ParentId);
             ViewBag.ParentMenu = parent;
@@ -165,33 +129,17 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             var pager = new Pagination(total, 20, part);
             ViewBag.Pager = pager;
 
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
-            if (lang == "fa")
-                ViewBag.PageTitle = "مدیریت منوهای " + parent.Title;
-            else
-                ViewBag.PageTitle = "Sub Menu " + parent.Title;
+            ViewBag.PageTitle = "مدیریت منوهای " + parent.Title;
 
             ViewBag.Contents = ISystemBaseServ.iPanelMenuService.GetPart(x => x.ParentId == ParentId, pager.StartIndex, pager.PageSize).OrderBy(x => x.Ordering).ToList();
 
-            return View(GetViewName(lang, "MenuItems"));
+            return View();
         }
 
         [HttpGet]
-        public IActionResult CreateItem([FromQuery] string lang, int Id, int ParentId)
+        public IActionResult CreateItem(int Id, int ParentId)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
-            if (lang == "fa")
-                ViewBag.PageTitle = "ایجاد منو";
-            else
-                ViewBag.PageTitle = "Create Menu";
+            ViewBag.PageTitle = "ایجاد منو";
 
             PanelMenu request;
             if (Id > 0)
@@ -204,29 +152,21 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 request.ParentId = ParentId;
             }
 
-            return View(GetViewName(lang, "CreateItem"), request);
+            return View(request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateItem([FromQuery] string lang, PanelMenu request)
+        public async Task<IActionResult> CreateItem(PanelMenu request)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
             if (string.IsNullOrEmpty(request.Title))
             {
-                if (lang == "fa")
-                    AddError("نام باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Title can not be null", "en");
+                AddError("نام باید مقدار داشته باشد", "fa");
             }
 
             if (Messages.Any(x => x.Type == MessageType.Error))
             {
                 ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "Create"), request);
+                return View(request);
             }
 
 

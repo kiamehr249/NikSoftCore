@@ -18,14 +18,12 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Widgets
         private readonly UserManager<DataModel.User> userManager;
 
         public List<NikMessage> Messages;
-        public PortalLanguage defaultLang;
 
         public WUserInfo(IConfiguration Configuration, UserManager<DataModel.User> userManager)
         {
             Config = Configuration;
             Messages = new List<NikMessage>();
             ISystemBaseServ = new SystemBaseService(Config.GetConnectionString("SystemBase"));
-            defaultLang = ISystemBaseServ.iPortalLanguageServ.Find(x => x.IsDefault);
             this.userManager = userManager;
         }
 

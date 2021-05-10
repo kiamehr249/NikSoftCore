@@ -1,8 +1,8 @@
 ﻿
 @model NiksoftCore.SystemBase.Service.PanelMenu
 @{
-    ViewData["Title"] = "Create Menu";
-    Layout = "~/Areas/Panel/Views/Shared/_FaLayout.cshtml";
+    ViewData["Title"] = "ایجاد نقش";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
 }
 <div class="text-right">
     <div class="btn-group">
@@ -18,33 +18,38 @@
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
-                    <label for="txtTitle" class="control-label">Title</label>
-                    @Html.TextBoxFor(m => m.Title, new { placeholder = "Title", @class = "form-control", @id = "txtTitle" })
+                    <label for="txtTitle" class="control-label">عنوان</label>
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
                     @Html.ValidationMessageFor(m => m.Title)
                 </div>
                 <div class="form-group">
-                    <label for="txtLink" class="control-label">Link</label>
-                    @Html.TextBoxFor(m => m.Link, new { placeholder = "Link", @class = "form-control", @id = "txtLink" })
+                    <label for="txtLink" class="control-label">لینک</label>
+                    @Html.TextBoxFor(m => m.Link, new { placeholder = "لینک", @class = "form-control", @id = "txtLink" })
                     @Html.ValidationMessageFor(m => m.Link)
                 </div>
                 <div class="form-group">
-                    <label for="txtIcon" class="control-label">Icon</label>
-                    @Html.TextBoxFor(m => m.Icon, new { placeholder = "Icon", @class = "form-control", @id = "txtIcon" })
+                    <label for="txtIcon" class="control-label">آیکن</label>
+                    @Html.TextBoxFor(m => m.Icon, new { placeholder = "آیکن", @class = "form-control", @id = "txtIcon" })
                     @Html.ValidationMessageFor(m => m.Icon)
                 </div>
                 <div class="form-group">
-                    <label for="txtController" class="control-label">Controller</label>
-                    @Html.TextBoxFor(m => m.Controller, new { placeholder = "Controller", @class = "form-control", @id = "txtController" })
+                    <label for="txtController" class="control-label">نام ماژول</label>
+                    @Html.TextBoxFor(m => m.Controller, new { placeholder = "نام ماژول", @class = "form-control", @id = "txtController" })
                     @Html.ValidationMessageFor(m => m.Controller)
                 </div>
                 <div class="form-group">
-                    <label for="txtDesc" class="control-label">Description</label>
-                    @Html.TextAreaFor(m => m.Description, new { placeholder = "Description", @class = "form-control", @id = "txtDesc", rows = "3" })
+                    <label for="txtController" class="control-label">نفش ها</label>
+                    @Html.TextBoxFor(m => m.Roles, new { placeholder = "Admin", @class = "form-control", @id = "txtController" })
+                    @Html.ValidationMessageFor(m => m.Roles)
+                </div>
+                <div class="form-group">
+                    <label for="txtDesc" class="control-label">توضیحات</label>
+                    @Html.TextAreaFor(m => m.Description, new { placeholder = "توضیح", @class = "form-control", @id = "txtDesc", rows = "3" })
                     @Html.ValidationMessageFor(m => m.Description)
                 </div>
                 @Html.HiddenFor(x => x.Id, new { value = Model.Id })
                 <div class="form-group text-center">
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success">ذخیره</button>
                 </div>
             </div>
         </div>

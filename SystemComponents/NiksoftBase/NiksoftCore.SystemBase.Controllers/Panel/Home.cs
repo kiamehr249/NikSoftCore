@@ -14,13 +14,10 @@ namespace NiksoftCore.SystemBase.Controllers.Panel
         {
         }
 
-        public IActionResult Index([FromQuery] string lang)
+        public IActionResult Index()
         {
-            if (defaultLang.ShortName.ToLower() == "fa")
-                ViewBag.PageTitle = "داشبورد";
-            else
-                ViewBag.PageTitle = "Dashboard";
-            return View(GetViewName(lang, "Index"));
+            ViewBag.PageTitle = "داشبورد";
+            return View();
         }
     }
 }

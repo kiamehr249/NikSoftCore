@@ -2,7 +2,7 @@
 @model NiksoftCore.ViewModel.SearchUserRequest
 @{
     ViewData["Title"] = "جستجوی کاربران کسب و کار";
-    Layout = "~/Views/Shared/_FaLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     var contents = (List<UserProfile>)ViewBag.Contents;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
     int pageNumber = 0;

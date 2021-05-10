@@ -32,10 +32,6 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
         public IActionResult Index(MenuCategoryGridRequest request)
         {
-            if (!string.IsNullOrEmpty(request.lang))
-                request.lang = request.lang.ToLower();
-            else
-                request.lang = defaultLang.ShortName.ToLower();
 
             var query = ISystemBaseServ.iMenuCategoryServ.ExpressionMaker();
 
@@ -54,28 +50,18 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             var pager = new Pagination(total, 20, request.part);
             ViewBag.Pager = pager;
 
-            if (request.lang == "fa")
-                ViewBag.PageTitle = "مدیریت منو ها";
-            else
-                ViewBag.PageTitle = "Menu Management";
+            ViewBag.PageTitle = "مدیریت منو ها";
 
             ViewBag.Contents = ISystemBaseServ.iMenuCategoryServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
 
-            return View(GetViewName(request.lang, "Index"));
+            return View();
         }
 
         [HttpGet]
-        public IActionResult Create([FromQuery] string lang, int Id)
+        public IActionResult Create(int Id)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
 
-            if (lang == "fa")
-                ViewBag.PageTitle = "ایجاد دسته بندی";
-            else
-                ViewBag.PageTitle = "Create Menu Category";
+            ViewBag.PageTitle = "ایجاد دسته بندی";
 
             var request = new MenuCategoryRequest();
 
@@ -91,23 +77,18 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             }
 
 
-            return View(GetViewName(lang, "Create"), request);
+            return View(request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] string lang, [FromForm] MenuCategoryRequest request)
+        public async Task<IActionResult> Create([FromForm] MenuCategoryRequest request)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
 
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
-            if (!CatFormValide(lang, request))
+            if (!CatFormValide(request))
             {
                 ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "Create"), request);
+                return View(request);
             }
 
             string Image = string.Empty;
@@ -129,7 +110,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                         Language = "Fa"
                     });
                     ViewBag.Messages = Messages;
-                    return View(GetViewName(lang, "Create"), request);
+                    return View(request);
                 }
 
                 Image = SaveImage.FilePath;
@@ -200,15 +181,12 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             ViewBag.Categories = new SelectList(categories, "Id", "Title", request?.CategoryId);
         }
 
-        private bool CatFormValide(string lang, MenuCategoryRequest request)
+        private bool CatFormValide(MenuCategoryRequest request)
         {
             bool result = true;
             if (string.IsNullOrEmpty(request.Title))
             {
-                if (lang == "fa")
-                    AddError("عنوان باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Title can not be null", "en");
+                AddError("عنوان باید مقدار داشته باشد", "fa");
                 result = false;
             }
 
@@ -218,11 +196,6 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
         public IActionResult MenuGrid(MenuGridRequest request)
         {
-            if (!string.IsNullOrEmpty(request.lang))
-                request.lang = request.lang.ToLower();
-            else
-                request.lang = defaultLang.ShortName.ToLower();
-
             var category = ISystemBaseServ.iMenuCategoryServ.Find(x => x.Id == request.CategoryId);
             ViewBag.Category = category;
 
@@ -255,23 +228,16 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             var pager = new Pagination(total, 20, request.part);
             ViewBag.Pager = pager;
 
-            if (request.lang == "fa")
-                ViewBag.PageTitle = "مدیریت منو / " + category.Title;
-            else
-                ViewBag.PageTitle = "Menu Management";
+            ViewBag.PageTitle = "مدیریت منو / " + category.Title;
 
             ViewBag.Contents = ISystemBaseServ.iMenuServ.GetPart(query, pager.StartIndex, pager.PageSize, x => x.OrderId, true).ToList();
 
-            return View(GetViewName(request.lang, "MenuGrid"));
+            return View();
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateMenu([FromQuery] string lang, int Id, int ParentId, int CategoryId)
+        public async Task<IActionResult> CreateMenu(int Id, int ParentId, int CategoryId)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
 
             var category = await ISystemBaseServ.iMenuCategoryServ.FindAsync(x => x.Id == CategoryId);
 
@@ -281,10 +247,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 parent = await ISystemBaseServ.iMenuServ.FindAsync(x => x.Id == ParentId);
             }
 
-            if (lang == "fa")
-                ViewBag.PageTitle = category.Title + " / ایجاد آیتم ها / " + parent.Title;
-            else
-                ViewBag.PageTitle = "Create Menu Category";
+            ViewBag.PageTitle = category.Title + " / ایجاد آیتم ها / " + parent.Title;
 
             var request = new MenuRequest();
 
@@ -308,23 +271,18 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             }
 
 
-            return View(GetViewName(lang, "CreateMenu"), request);
+            return View(request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMenu([FromQuery] string lang, [FromForm] MenuRequest request)
+        public async Task<IActionResult> CreateMenu([FromForm] MenuRequest request)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
 
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
-            if (!MenuFormValide(lang, request))
+            if (!MenuFormValide(request))
             {
                 ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "CreateMenu"), request);
+                return View(request);
             }
 
             string Image = string.Empty;
@@ -346,7 +304,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                         Language = "Fa"
                     });
                     ViewBag.Messages = Messages;
-                    return View(GetViewName(lang, "Create"), request);
+                    return View(request);
                 }
 
                 Image = SaveImage.FilePath;
@@ -467,24 +425,18 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             return Redirect("/Panel/MenuManage/MenuGrid?CategoryId=" + theItem.CategoryId + "&ParentId=" + theItem.ParentId);
         }
 
-        private bool MenuFormValide(string lang, MenuRequest request)
+        private bool MenuFormValide(MenuRequest request)
         {
             bool result = true;
             if (string.IsNullOrEmpty(request.Title))
             {
-                if (lang == "fa")
-                    AddError("عنوان باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Title can not be null", "en");
+                AddError("عنوان باید مقدار داشته باشد", "fa");
                 result = false;
             }
 
             if (request.CategoryId == 0)
             {
-                if (lang == "fa")
-                    AddError("دسته بندی باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Category can not be null", "en");
+                AddError("دسته بندی باید مقدار داشته باشد", "fa");
                 result = false;
             }
 

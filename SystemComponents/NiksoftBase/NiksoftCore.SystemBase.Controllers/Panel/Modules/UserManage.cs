@@ -27,11 +27,6 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
         public IActionResult Index(UserGridRequest request)
         {
-            if (!string.IsNullOrEmpty(request.lang))
-                request.lang = request.lang.ToLower();
-            else
-                request.lang = defaultLang.ShortName.ToLower();
-
             var query = ISystemBaseServ.iNikUserServ.ExpressionMaker();
             query.Add(x => true);
 
@@ -63,28 +58,17 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             ViewBag.Pager = pager;
 
 
-            if (request.lang == "fa")
-                ViewBag.PageTitle = "مدیریت دسته بندی ها";
-            else
-                ViewBag.PageTitle = "Business Category Management";
+            ViewBag.PageTitle = "مدیریت دسته بندی ها";
 
             ViewBag.Contents = ISystemBaseServ.iNikUserServ.GetPart(query, pager.StartIndex, pager.PageSize, x => x.Id, true).ToList();
 
-            return View(GetViewName(request.lang, "Index"));
+            return View();
         }
 
         [HttpGet]
-        public IActionResult Create([FromQuery] string lang, int Id)
+        public IActionResult Create(int Id)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
-            if (lang == "fa")
-                ViewBag.PageTitle = "ایجاد دسته بندی";
-            else
-                ViewBag.PageTitle = "Create Business Category";
+            ViewBag.PageTitle = "ایجاد دسته بندی";
 
             var request = new UserRequest();
 
@@ -97,23 +81,18 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 request.PhoneNumber = item.PhoneNumber;
             }
 
-            return View(GetViewName(lang, "Create"), request);
+            return View(request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] string lang, UserRequest request)
+        public async Task<IActionResult> Create(UserRequest request)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
 
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
-            if (!ValidUserForm(lang, request))
+            if (!ValidUserForm(request))
             {
                 ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "Create"), request);
+                return View(request);
             }
 
             DataModel.User item = new DataModel.User();
@@ -151,51 +130,35 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             return Redirect("/Panel/UserManage");
         }
 
-        public bool ValidUserForm(string lang, UserRequest request)
+        public bool ValidUserForm(UserRequest request)
         {
             bool result = true;
             if (string.IsNullOrEmpty(request.UserName))
             {
-                if (lang == "fa")
-                    AddError("نام کاربری باید مقدار داشته باشد", "fa");
-                else
-                    AddError("User name can not be null", "en");
+                AddError("نام کاربری باید مقدار داشته باشد", "fa");
                 result = false;
             }
 
             if (string.IsNullOrEmpty(request.Email))
             {
-                if (lang == "fa")
-                    AddError("آدرس ایمیل باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Email can not be null", "en");
+                AddError("آدرس ایمیل باید مقدار داشته باشد", "fa");
                 result = false;
             }
 
             if (string.IsNullOrEmpty(request.Password))
             {
-                if (lang == "fa")
-                    AddError("رمز عبور باید مقدار داشته باشد", "fa");
-                else
-                    AddError("ٍPassword can not be null", "en");
+                AddError("رمز عبور باید مقدار داشته باشد", "fa");
                 result = false;
             }
             else if (request.Password.Length < 6)
             {
-                if (lang == "fa")
-                    AddError("رمز عبور باید بیشتر از 6 کاراکتر باشد", "fa");
-                else
-                    AddError("Password can not be null", "en");
+                AddError("رمز عبور باید بیشتر از 6 کاراکتر باشد", "fa");
                 result = false;
             }
 
             if (string.IsNullOrEmpty(request.PhoneNumber))
             {
-                if (lang == "fa")
-                    AddError("شماره موبایل باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Phone number can not be null", "en");
-
+                AddError("شماره موبایل باید مقدار داشته باشد", "fa");
                 result = false;
             }
 
@@ -237,21 +200,13 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpGet]
         public async Task<IActionResult> ShowUserRoles(UserRoleRequest request)
         {
-            if (!string.IsNullOrEmpty(request.lang))
-                request.lang = request.lang.ToLower();
-            else
-                request.lang = defaultLang.ShortName.ToLower();
-
             var theUser = await userManager.FindByIdAsync(request.UserId.ToString());
 
             var rolNames = await userManager.GetRolesAsync(theUser);
 
             var userRoles = ISystemBaseServ.iNikRoleServ.GetAll(x => rolNames.Contains(x.Name)).ToList();
 
-            if (request.lang == "fa")
-                ViewBag.PageTitle = "مدیریت نقش ها " + theUser.UserName;
-            else
-                ViewBag.PageTitle = "User Role Management " + theUser.UserName;
+            ViewBag.PageTitle = "مدیریت نقش ها " + theUser.UserName;
 
             var allRoles = roleManager.Roles.Where(x => true).Select(x => new { x.Id, x.Name }).ToList();
 
@@ -259,7 +214,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             ViewBag.Roles = new SelectList(allRoles, "Id", "Name", request?.RoleId);
             ViewBag.Contents = userRoles.ToList();
 
-            return View(GetViewName(request.lang, "ShowUserRoles"));
+            return View();
         }
 
         [HttpPost]

@@ -1,0 +1,83 @@
+﻿
+@using NiksoftCore.SystemBase.Service
+@model NiksoftCore.ViewModel.UserRequest
+@{
+    ViewData["Title"] = "ایجاد کاربر";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+}
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/UserManage" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary()
+<form action="/Panel/UserManage/Create" method="post" enctype="multipart/form-data">
+    <div class="registerdiv">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <div class="form-group">
+                    <label for="txtUserName" class="control-label">نام کاربری</label>
+                    @Html.TextBoxFor(m => m.UserName, new { placeholder = "نام کاربری", @class = "form-control", @id = "txtUserName" })
+                </div>
+                <div class="form-group">
+                    <label for="txtEmail" class="control-label">ایمیل</label>
+                    @Html.TextBoxFor(m => m.Email, new { placeholder = "ایمیل", @class = "form-control", @id = "txtEmail" })
+                </div>
+                <div class="form-group">
+                    <label for="txtPhoneNumber" class="control-label">موبایل</label>
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { placeholder = "موبایل", @class = "form-control", @id = "txtPhoneNumber", @autocomplete = "off" })
+                </div>
+                <div class="form-group">
+                    <label for="txtPassword" class="control-label">رمز عبور</label>
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "رمز عبور", @class = "form-control", @id = "txtPassword", @autocomplete = "off" })
+                </div>
+                <div class="form-group">
+                    <label for="txtConfirmedPassword" class="control-label">تکرار رمز عبور</label>
+                    @Html.PasswordFor(m => m.ConfirmedPassword, new { placeholder = "تکرار رمز عبور", @class = "form-control", @id = "txtConfirmedPassword", @autocomplete = "off" })
+                </div>
+                @Html.HiddenFor(m => m.Id)
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">ذخیره</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+
+    });
+</script>

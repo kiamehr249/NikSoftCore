@@ -183,8 +183,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\NiksoftCore.DataAccess\NiksoftCore.DataAccess.csproj" />
     <ProjectReference Include="..\DataAccess\NiksoftCore.DataModel\NiksoftCore.DataModel.csproj" />
-    <ProjectReference Include="..\SystemComponents\ITCF\NiksoftCore.ITCF.Conltroller\NiksoftCore.ITCF.Conltroller.csproj" />
-    <ProjectReference Include="..\SystemComponents\ITCF\NiksoftCore.ITCF.Service\NiksoftCore.ITCF.Service.csproj" />
     <ProjectReference Include="..\SystemComponents\NiksoftBase\NiksoftCore.SystemBase.Controllers\NiksoftCore.SystemBase.Controllers.csproj" />
     <ProjectReference Include="..\SystemComponents\NiksoftBase\NiksoftCore.SystemBase.Service\NiksoftCore.SystemBase.Service.csproj" />
     <ProjectReference Include="..\Utilities\NiksoftCore.Utilities\NiksoftCore.Utilities.csproj" />

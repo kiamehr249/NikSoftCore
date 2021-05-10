@@ -28,62 +28,39 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             hosting = hostingEnvironment;
         }
 
-        public IActionResult Index([FromQuery] string lang, int part)
+        public IActionResult Index(int part)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
             var total = ISystemBaseServ.iGeneralContentServ.Count(x => true);
             var pager = new Pagination(total, 20, part);
             ViewBag.Pager = pager;
 
-
-
-            if (lang == "fa")
-                ViewBag.PageTitle = "مدیریت دسته بندی ها";
-            else
-                ViewBag.PageTitle = "Business Category Management";
+            ViewBag.PageTitle = "مدیریت دسته بندی ها";
 
             ViewBag.Contents = ISystemBaseServ.iGeneralContentServ.GetPart(x => true, pager.StartIndex, pager.PageSize).ToList();
 
-            return View(GetViewName(lang, "Index"));
+            return View();
         }
 
         [HttpGet]
-        public IActionResult Create([FromQuery] string lang)
+        public IActionResult Create()
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
-            if (lang == "fa")
-                ViewBag.PageTitle = "ایجاد دسته بندی";
-            else
-                ViewBag.PageTitle = "Create Business Category";
+            ViewBag.PageTitle = "ایجاد دسته بندی";
 
             var request = new ContentRequest();
             DropDownBinder(request);
-            return View(GetViewName(lang, "Create"), request);
+            return View(request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] string lang, [FromForm] ContentRequest request)
+        public async Task<IActionResult> Create([FromForm] ContentRequest request)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
 
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
-            if (!FormVlide(lang, request))
+            if (!FormVlide(request))
             {
                 DropDownBinder(request);
                 ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "Create"), request);
+                return View(request);
             }
 
             string Image = string.Empty;
@@ -106,7 +83,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                         Language = "Fa"
                     });
                     ViewBag.Messages = Messages;
-                    return View(GetViewName(lang, "Create"), request);
+                    return View(request);
                 }
 
                 Image = SaveImage.FilePath;
@@ -133,17 +110,9 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         }
 
         [HttpGet]
-        public IActionResult Edit([FromQuery] string lang, int Id)
+        public IActionResult Edit(int Id)
         {
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
-            if (lang == "fa")
-                ViewBag.PageTitle = "بروزرسانی دسته بندی";
-            else
-                ViewBag.PageTitle = "Update Business Category";
+            ViewBag.PageTitle = "بروزرسانی دسته بندی";
 
             var theItem = ISystemBaseServ.iGeneralContentServ.Find(x => x.Id == Id);
             var request = new ContentRequest
@@ -159,32 +128,24 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 CategoryId = theItem.CategoryId
             };
             DropDownBinder(request);
-            return View(GetViewName(lang, "Edit"), request);
+            return View(request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([FromQuery] string lang, [FromForm] ContentRequest request)
+        public async Task<IActionResult> Edit([FromForm] ContentRequest request)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
 
-            if (!string.IsNullOrEmpty(lang))
-                lang = lang.ToLower();
-            else
-                lang = defaultLang.ShortName.ToLower();
-
             if (request.Id < 1)
             {
-                if (lang == "fa")
-                    AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید", "fa");
-                else
-                    AddError("Edit feild, please try agan", "en");
+                AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید", "fa");
             }
 
-            if (!FormVlide(lang, request))
+            if (!FormVlide(request))
             {
                 DropDownBinder(request);
                 ViewBag.Messages = Messages;
-                return View(GetViewName(lang, "Create"), request);
+                return View(request);
             }
 
             string imageEdit = string.Empty;
@@ -207,7 +168,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                         Language = "Fa"
                     });
                     ViewBag.Messages = Messages;
-                    return View(GetViewName(lang, "Create"), request);
+                    return View(request);
                 }
 
                 imageEdit = Image.FilePath;
@@ -264,15 +225,12 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             ViewBag.Categories = new SelectList(categories, "Id", "Title", request?.CategoryId);
         }
 
-        private bool FormVlide(string lang, ContentRequest request)
+        private bool FormVlide(ContentRequest request)
         {
             bool result = true;
             if (string.IsNullOrEmpty(request.Title))
             {
-                if (lang == "fa")
-                    AddError("عنوان باید مقدار داشته باشد", "fa");
-                else
-                    AddError("Title can not be null", "en");
+                AddError("عنوان باید مقدار داشته باشد", "fa");
                 result = false;
             }
 
