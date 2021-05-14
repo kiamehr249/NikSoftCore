@@ -17,8 +17,12 @@ namespace NiksoftCore.ViewModel
         public int UserId { get; set; }
         public IFormFile AvatarFile { get; set; }
         public string Avatar { get; set; }
+        public IFormFile IdCardFile { get; set; }
+        public string IdCardImage { get; set; }
         public IFormFile NCardFile { get; set; }
         public string NCardImage { get; set; }
         public ProfileStatus Status { get; set; }
+        public int ProvinceId { get; set; }
+        public int CityId { get; set; }
     }
 }

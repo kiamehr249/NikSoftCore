@@ -4353,6 +4353,17 @@ body.fixed-left-void {
   padding: 10px 15px 85px 20px;
 }
 
+fieldset {
+  position: relative;
+  border: 1px solid silver;
+  padding: 20px;
+}
+
+legend {
+  width: auto;
+  padding: 10px;
+}
+
 @media (min-width: 768px) {
   .navbar-right .dropdown-menu {
     left: 0;

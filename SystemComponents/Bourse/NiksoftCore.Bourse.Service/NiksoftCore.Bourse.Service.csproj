@@ -15,4 +15,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\DataAccess\NiksoftCore.DataAccess\NiksoftCore.DataAccess.csproj" />
+    <ProjectReference Include="..\..\..\ViewModel\NiksoftCore.ViewModel\NiksoftCore.ViewModel.csproj" />
+  </ItemGroup>
+
 </Project>

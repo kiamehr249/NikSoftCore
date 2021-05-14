@@ -25,7 +25,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
             this.signInManager = signInManager;
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpGet, Authorize]
         public IActionResult Register()
         {
             if (User.Identity.IsAuthenticated)
@@ -39,7 +39,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         }
 
 
-        [HttpPost, AllowAnonymous]
+        [HttpPost, Authorize]
         public async Task<IActionResult> Register(UserRegisterRequest request)
         {
             if (User.Identity.IsAuthenticated)

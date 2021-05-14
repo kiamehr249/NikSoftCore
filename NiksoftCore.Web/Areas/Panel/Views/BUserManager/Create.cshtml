@@ -1,0 +1,190 @@
+﻿
+@using NiksoftCore.Bourse.Service
+@model BourseUserRequest
+@{
+    ViewData["Title"] = "ایجاد کاربر";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+}
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/BUserManager" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary()
+<form action="/Panel/BUserManager/Create" method="post" enctype="multipart/form-data">
+    <div class="registerdiv">
+        <div class="row">
+            <div class="col-sm-8 offset-sm-2">
+                <fieldset>
+                    <legend>حساب کاربری</legend>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtEmail" class="control-label">ایمیل</label>
+                                @Html.TextBoxFor(m => m.Email, new { placeholder = "ایمیل", @class = "form-control emp-check", @id = "txtEmail" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtMobile" class="control-label">موبایل (نام کاربری هم می باشد)</label>
+                                @Html.TextBoxFor(m => m.Mobile, new { placeholder = "موبایل", @class = "form-control emp-check", @id = "txtMobile", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtPassword" class="control-label">رمز عبور</label>
+                                @Html.PasswordFor(m => m.Password, new { placeholder = "رمز عبور", @class = "form-control emp-check", @id = "txtPassword", @autocomplete = "off" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtConfirmedPassword" class="control-label">تکرار رمز عبور</label>
+                                @Html.PasswordFor(m => m.ConfirmedPassword, new { placeholder = "تکرار رمز عبور", @class = "form-control emp-check", @id = "txtConfirmedPassword", @autocomplete = "off" })
+                            </div>
+                            @Html.HiddenFor(m => m.Id)
+                        </div>
+                    </div>      
+                </fieldset>
+                <br />
+                <fieldset>
+                    <legend>اطلاعات فردی</legend>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtFirstname" class="control-label">نام</label>
+                                @Html.TextBoxFor(m => m.Firstname, new { placeholder = "نام کاربری", @class = "form-control emp-check", @id = "txtFirstname" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtLastname" class="control-label">نام خانوادگی</label>
+                                @Html.TextBoxFor(m => m.Lastname, new { placeholder = "نام خانوادگی", @class = "form-control emp-check", @id = "txtLastname" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtBirthDate" class="control-label">تاریخ تولد</label>
+                                @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control datepicker", @id = "txtBirthDate" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtPhoneNumber" class="control-label">تلفن</label>
+                                @Html.TextBoxFor(m => m.Tel, new { placeholder = "تلفن", @class = "form-control", @id = "txtPhoneNumber" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtZipCode" class="control-label">کد پستی</label>
+                                @Html.TextBoxFor(m => m.ZipCode, new { placeholder = "کد پستی", @class = "form-control emp-check", @id = "txtZipCode" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="AvatarFile" class="btn btn-warning">
+                                    تصویر چهره
+                                    <input asp-for="AvatarFile" type="file" class="d-none" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="txtAddress" class="control-label">آدرس</label>
+                                @Html.TextAreaFor(m => m.Address, new { placeholder = "آدرس", @class = "form-control", @id = "txtAddress", rows = "3" })
+                            </div>
+                            @Html.HiddenFor(m => m.ProfileId)
+                        </div>
+                    </div>
+                </fieldset>
+                <br />
+                <fieldset>
+                    <legend>اطلاعات بانکی</legend>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="txtBankName" class="control-label">نام بانک</label>
+                                @Html.TextBoxFor(m => m.BankName, new { placeholder = "بانک", @class = "form-control emp-check", @id = "txtBankName" })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="txtBranchName" class="control-label">نام شعبه</label>
+                                @Html.TextBoxFor(m => m.BranchName, new { placeholder = "نام شعبه", @class = "form-control emp-check", @id = "txtBranchName" })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="txtBranchCode" class="control-label">کد شعبه</label>
+                                @Html.TextBoxFor(m => m.BranchCode, new { placeholder = "کد شعبه", @class = "form-control emp-check", @id = "txtBranchCode" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtPAN" class="control-label">شماره حساب</label>
+                                @Html.TextBoxFor(m => m.PAN, new { placeholder = "شماره حساب", @class = "form-control emp-check", @id = "txtPAN" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtIBAN" class="control-label">شماره شبا</label>
+                                @Html.TextBoxFor(m => m.IBAN, new { placeholder = "IR...", @class = "form-control emp-check", @id = "txtIBAN" })
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <br />
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">ذخیره</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+
+    });
+</script>

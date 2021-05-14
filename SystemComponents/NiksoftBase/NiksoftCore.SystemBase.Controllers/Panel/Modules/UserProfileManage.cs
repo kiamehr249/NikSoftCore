@@ -27,8 +27,14 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             this.hosting = hosting;
         }
 
-        [HttpGet]
         public async Task<IActionResult> Index()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> MyProfile()
         {
             var theUser = await userManager.GetUserAsync(HttpContext.User);
             var theProfile = await ISystemBaseServ.iUserProfileServ.FindAsync(x => x.UserId == theUser.Id);
@@ -60,7 +66,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index([FromForm] UserProfileRequest request)
+        public async Task<IActionResult> MyProfile([FromForm] UserProfileRequest request)
         {
 
             ViewBag.PageTitle = "ایجاد دسته بندی";

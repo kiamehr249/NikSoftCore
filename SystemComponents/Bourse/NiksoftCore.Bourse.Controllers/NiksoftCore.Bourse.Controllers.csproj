@@ -15,6 +15,19 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
+    <PackageReference Include="PersianDateTime.Core" Version="1.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="General\" />
+    <Folder Include="API\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Utilities\NiksoftCore.MiddlController\NiksoftCore.MiddlController.csproj" />
+    <ProjectReference Include="..\..\..\Utilities\NiksoftCore.Utilities\NiksoftCore.Utilities.csproj" />
+    <ProjectReference Include="..\..\..\ViewModel\NiksoftCore.ViewModel\NiksoftCore.ViewModel.csproj" />
+    <ProjectReference Include="..\NiksoftCore.Bourse.Service\NiksoftCore.Bourse.Service.csproj" />
   </ItemGroup>
 
 </Project>

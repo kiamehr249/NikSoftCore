@@ -1,0 +1,89 @@
+﻿@using NiksoftCore.SystemBase.Service;
+@using NiksoftCore.Bourse.Service;
+@model MasterSearch
+@{
+    ViewData["Title"] = "مدیریت سرپرست های شعب";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var contents = (List<BranchMaster>)ViewBag.Contents;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    int pageNumber = 0;
+
+    var isSearch = (bool)ViewBag.Search;
+    var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
+    var accBtn = isSearch ? "aria-expanded='true'" : "";
+}
+<div class="text-right">
+    <a href="/Panel/MasterManage/Create" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
+        <i class="fa fa-search"></i>
+    </a>
+</div>
+<div id="searchAcc" @Html.Raw(accSearch) aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        <hr />
+        <form method="get">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="ParentId" class="control-label">شعبه</label>
+                        <select class="form-control m-b" asp-for="BranchId" asp-items="ViewBag.Branches">
+                            <option selected="selected" value="0">انتخاب کنید</option>
+                        </select>
+                        <span asp-validation-for="BranchId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtFirstname" class="control-label">نام</label>
+                        @Html.TextBoxFor(m => m.Firstname, new { placeholder = "نام", @class = "form-control", @id = "txtFirstname" })
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtLastname" class="control-label">نام خانوادگی</label>
+                        @Html.TextBoxFor(m => m.Lastname, new { placeholder = "نام خانوادگی", @class = "form-control", @id = "txtLastname" })
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding-top: 29px;">
+                    <button type="submit" class="btn btn-outline-info">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+</div>
+<br />
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">نام / نام خانوادگی</th>
+                <th class="text-primary text-center">موبایل</th>
+                <th class="text-primary text-center">شعبه</th>
+                <th class="text-primary text-center" width="100px">عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in contents)
+            {
+                pageNumber++;
+                <tr>
+                    <td>@(pager.StartIndex + pageNumber)</td>
+                    <td>@item.User.UserProfiles.First().Firstname</td>
+                    <td>@item.User.PhoneNumber</td>
+                    <td>@item.Branch.Title</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="/Panel/MasterManage/Remove?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

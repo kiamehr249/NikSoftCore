@@ -16,8 +16,11 @@ namespace NiksoftCore.SystemBase.Service
         public DateTime? BirthDate { get; set; }
         public int UserId { get; set; }
         public string Avatar { get; set; }
-        public ProfileStatus Status { get; set; }
+        public string IdCardImage { get; set; }
         public string NCardImage { get; set; }
+        public ProfileStatus Status { get; set; }
+        public int? ProvinceId { get; set; }
+        public int? CityId { get; set; }
 
         public virtual NikUser User { get; set; } 
     }

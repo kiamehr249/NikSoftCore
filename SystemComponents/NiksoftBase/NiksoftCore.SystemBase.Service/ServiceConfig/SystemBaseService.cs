@@ -8,7 +8,7 @@ namespace NiksoftCore.SystemBase.Service
 {
     public interface ISystemBaseService
     {
-        public SystemBaseDbContext dbContext { get; }
+        SystemBaseDbContext dbContext { get; }
         ISystemSettingService iSystemSettingServ { get; set; }
         IPanelMenuService iPanelMenuService { get; set; }
         IUserProfileService iUserProfileServ { get; set; }

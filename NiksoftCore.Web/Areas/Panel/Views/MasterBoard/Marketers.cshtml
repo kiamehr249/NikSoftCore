@@ -1,0 +1,92 @@
+﻿@using NiksoftCore.SystemBase.Service;
+@using NiksoftCore.Bourse.Service;
+@model MarketerSearch
+@{
+    ViewData["Title"] = "مدیریت بازاریاب ها";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var contents = (List<BranchMarketer>)ViewBag.Contents;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    int pageNumber = 0;
+
+    var isSearch = (bool)ViewBag.Search;
+    var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
+    var accBtn = isSearch ? "aria-expanded='true'" : "";
+}
+<div class="text-right">
+    <a href="/Panel/MasterBoard/AddMarketer/?BranchId=@ViewBag.BranchId" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
+        <i class="fa fa-search"></i>
+    </a>
+    <a href="/Panel/MasterBoard" class="btn btn-outline-primary btn-sm">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+</div>
+<div id="searchAcc" @Html.Raw(accSearch) aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        <hr />
+        <form method="get">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtFirstName" class="control-label">نام</label>
+                        @Html.TextBoxFor(m => m.Firstname, new { placeholder = "نام", @class = "form-control", @id = "txtFirstName" })
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtLastName" class="control-label">نام خانوادگی</label>
+                        @Html.TextBoxFor(m => m.Lastname, new { placeholder = "نام خانوادگی", @class = "form-control", @id = "txtLastName" })
+                    </div>
+                </div>
+                @Html.HiddenFor(m => m.BranchId)
+                <div class="col-sm-3" style="padding-top: 29px;">
+                    <button type="submit" class="btn btn-outline-info">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+</div>
+<br />
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">نام / نام خانوادگی</th>
+                <th class="text-primary text-center" width="120px">قراردادها</th>
+                <th class="text-primary text-center" width="120px">مشاورین</th>
+                <th class="text-primary text-center" width="120px">عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in contents)
+            {
+                pageNumber++;
+                <tr>
+                    <td>@(pager.StartIndex + pageNumber)</td>
+                    <td>@item.User.UserProfiles.First().Firstname @item.User.UserProfiles.First().Lastname</td>
+                    <td>
+                        <a href="/Panel/MasterBoard/" class="btn btn-outline-info btn-sm">
+                            قراردادها
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/Panel/MasterBoard/" class="btn btn-outline-info btn-sm">
+                            مشاورین
+                        </a>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="/Panel/MasterBoard/AddMarketer?BranchId=@item.BranchId&UserId=@item.UserId" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

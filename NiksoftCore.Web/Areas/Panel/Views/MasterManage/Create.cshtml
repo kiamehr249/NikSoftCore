@@ -1,0 +1,75 @@
+﻿@using NiksoftCore.Bourse.Service;
+@model BranchMasterRequest
+@{
+    ViewData["Title"] = "ایجاد بانک";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+}
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/MasterManage" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary()
+<form action="/Panel/MasterManage/Create" method="post">
+    <div class="registerdiv">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <div class="form-group">
+                    <label for="BranchId" class="control-label">شعبه</label>
+                    <select class="form-control m-b" asp-for="BranchId" asp-items="ViewBag.Branches">
+                        <option selected="selected" value="0">انتخاب کنید</option>
+                    </select>
+                    <span asp-validation-for="BranchId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="UserId" class="control-label">کاربر</label>
+                    <select class="form-control m-b" asp-for="UserId" asp-items="ViewBag.Users">
+                        <option selected="selected" value="0">انتخاب کنید</option>
+                    </select>
+                    <span asp-validation-for="BranchId" class="text-danger"></span>
+                </div>
+                @Html.HiddenFor(m => m.Id)
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">ذخیره</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+
+    });
+</script>

@@ -2,7 +2,7 @@
 
 namespace NiksoftCore.Bourse.Service
 {
-    public interface IBourceUnitOfWork : IUnitOfWork
+    public interface IBourseUnitOfWork : IUnitOfWork
     {
     }
 }
