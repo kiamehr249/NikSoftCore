@@ -18,5 +18,22 @@
                     return "نامشخص";
             }
         }
+
+        public static string GetMediaStatus(this MediaStatus status)
+        {
+            switch (status)
+            {
+                case MediaStatus.Save:
+                    return "ثبت شده";
+                case MediaStatus.InProccess:
+                    return "در جریان";
+                case MediaStatus.Accept:
+                    return "تایید شده";
+                case MediaStatus.Ignore:
+                    return "مختومه";
+                default:
+                    return "نامشخص";
+            }
+        }
     }
 }

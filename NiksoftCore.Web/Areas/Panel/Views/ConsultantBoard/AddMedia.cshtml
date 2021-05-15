@@ -1,0 +1,107 @@
+﻿
+@using NiksoftCore.Bourse.Service
+@model MediaRequest
+@{
+    ViewData["Title"] = "ایجاد رسانه جدید";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+}
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/ConsultantBoard" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary()
+<form action="/Panel/ConsultantBoard/AddMedia" method="post" enctype="multipart/form-data">
+    <div class="registerdiv">
+        <div class="row">
+            <div class="col-sm-8 offset-sm-2">
+                <fieldset>
+                    <legend>اطلاعات رسانه</legend>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="BranchId" class="control-label">نوع رسانه</label>
+                                <select class="form-control m-b" asp-for="CategoryId" asp-items="ViewBag.Categories">
+                                    <option selected="selected" value="0">انتخاب کنید</option>
+                                </select>
+                                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtTitle" class="control-label">عنوان</label>
+                                @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control emp-check", @id = "txtTitle" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtSubject" class="control-label">موضوع</label>
+                                @Html.TextBoxFor(m => m.Subject, new { placeholder = "موضوع", @class = "form-control emp-check", @id = "txtSubject" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="txtBaseLink" class="control-label">آدرس اصلی</label>
+                                @Html.TextBoxFor(m => m.BaseLink, new { placeholder = "آدرس اصلی", @class = "form-control emp-check", @id = "txtBaseLink" })
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="txtFullLink" class="control-label">آدرس کامل</label>
+                                @Html.TextBoxFor(m => m.FullLink, new { placeholder = "آدرس کامل", @class = "form-control emp-check", @id = "txtFullLink" })
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.UserId)
+                <br />
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">ذخیره</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+
+    });
+</script>

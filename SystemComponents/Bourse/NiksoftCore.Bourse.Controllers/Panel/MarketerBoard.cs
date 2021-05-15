@@ -25,7 +25,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index(ConsultantSearch request)
+        public async Task<IActionResult> Index(MediaSearch request)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
             var marketerUser = await iBourseServ.iBranchMarketerServ.FindAsync(x => x.UserId == user.Id);
@@ -38,30 +38,28 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
             ViewBag.PageTitle = "مشاوران های " + userProfile.Firstname + " " + userProfile.Lastname;
             
-            var query = iBourseServ.iBranchConsultantServ.ExpressionMaker();
-            query.Add(x => x.BranchId == marketerUser.BranchId && x.MarketerId == user.Id);
-            bool isSearch = false;
+            var query = iBourseServ.iMediaServ.ExpressionMaker();
+            query.Add(x => x.UserId == user.Id);
 
-            if (!string.IsNullOrEmpty(request.Firstname))
+            bool isSearch = false;
+            if (!string.IsNullOrEmpty(request.Title))
             {
-                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Firstname.Contains(request.Firstname), y => new { y.UserId }, 0, 20).Select(x => x.UserId).ToList();
-                query.Add(x => userIds.Contains(x.UserId));
+                query.Add(x => x.Title.Contains(request.Title));
                 isSearch = true;
             }
 
-            if (!string.IsNullOrEmpty(request.Lastname))
+            if (request.CategoryId > 0)
             {
-                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Firstname.Contains(request.Lastname), y => new { y.UserId }, 0, 20).Select(x => x.UserId).ToList();
-                query.Add(x => userIds.Contains(x.UserId));
+                query.Add(x => x.CategoryId == request.CategoryId);
                 isSearch = true;
             }
 
             ViewBag.Search = isSearch;
 
-            var total = iBourseServ.iBranchConsultantServ.Count(query);
+            var total = iBourseServ.iMediaServ.Count(query);
             var pager = new Pagination(total, 20, request.part);
             ViewBag.Pager = pager;
-            ViewBag.Contents = iBourseServ.iBranchConsultantServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            ViewBag.Contents = iBourseServ.iMediaServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
             return View(request);
         }
 

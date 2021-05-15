@@ -1,8 +1,6 @@
-﻿using NiksoftCore.ViewModel;
-
-namespace NiksoftCore.Bourse.Service
+﻿namespace NiksoftCore.Bourse.Service
 {
-    public class Media : LogModel
+    public class MediaRequest
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -14,8 +12,5 @@ namespace NiksoftCore.Bourse.Service
         public MediaStatus Status { get; set; }
         public int CategoryId { get; set; }
         public int UserId { get; set; }
-
-        public virtual BourseUser User { get; set; }
-        public virtual MediaCategory Category { get; set; }
     }
 }

@@ -18,5 +18,6 @@ namespace NiksoftCore.Bourse.Service
         public virtual ICollection<BranchConsultant> BranchConsultants { get; set; }
         public virtual ICollection<BranchUser> BranchUsers { get; set; }
         public virtual ICollection<Contract> Contracts { get; set; }
+        public virtual ICollection<Media> Medias { get; set; }
     }
 }
