@@ -1,49 +1,32 @@
 ﻿@using NiksoftCore.Bourse.Service;
-@model Fee
+@model MediaCategory
 @{
-    ViewData["Title"] = "ایجاد نرخ جدید";
+    ViewData["Title"] = "ایجاددسته دسته جدید";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/FeeManage" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/MediaCategoryManage" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/FeeManage/Create" method="post">
+<form action="/Panel/MediaCategoryManage/Create" method="post">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
                     <label for="txtTitle" class="control-label">عنوان</label>
-                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان شعبه", @class = "form-control", @id = "txtTitle" })
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
                     @Html.ValidationMessageFor(m => m.Title)
                 </div>
                 <div class="form-group">
-                    <label for="ddlType" class="control-label">نوع</label>
-                    <select id="ddlType" class="form-control" name="FeeType">
-                        <option value="1">ثابت</option>
-                        <option value="2">پلکانی</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="txtFromAmount" class="control-label">مبلغ از</label>
-                    @Html.TextBoxFor(m => m.FromAmount, new { placeholder = "0", @class = "form-control", @id = "txtFromAmount" })
-                    @Html.ValidationMessageFor(m => m.FromAmount)
-                </div>
-                <div class="form-group">
-                    <label for="txtToAmount" class="control-label">مبلغ تا</label>
-                    @Html.TextBoxFor(m => m.ToAmount, new { placeholder = "0", @class = "form-control", @id = "txtToAmount" })
-                    @Html.ValidationMessageFor(m => m.ToAmount)
-                </div>
-                <div class="form-group">
-                    <label for="txtAmountPercentage" class="control-label">درصد کارمزد</label>
-                    @Html.TextBoxFor(m => m.AmountPercentage, new { placeholder = "درصد کارمزد", @class = "form-control", @id = "txtAmountPercentage" })
-                    @Html.ValidationMessageFor(m => m.AmountPercentage)
+                    <label for="txtDescription" class="control-label">توضیحات</label>
+                    @Html.TextAreaFor(m => m.Description, new { placeholder = "توضیحات", @class = "form-control", @id = "txtDescription", rows = "3" })
+                    @Html.ValidationMessageFor(m => m.Description)
                 </div>
                 @Html.HiddenFor(m => m.Id)
                 <div class="form-group text-center">

@@ -1,5 +1,6 @@
 ﻿using NiksoftCore.ViewModel;
 using System;
+using System.Collections.Generic;
 
 namespace NiksoftCore.Bourse.Service
 {
@@ -10,5 +11,8 @@ namespace NiksoftCore.Bourse.Service
         public FeeType FeeType { get; set; }
         public long FromAmount { get; set; }
         public long ToAmount { get; set; }
+        public int AmountPercentage { get; set; }
+
+        public virtual ICollection<Contract> Contracts { get; set; }
     }
 }

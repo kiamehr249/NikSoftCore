@@ -1,10 +1,10 @@
 ﻿@using NiksoftCore.SystemBase.Service;
 @using NiksoftCore.Bourse.Service;
-@model MarketerSearch
+@model ConsultantSearch
 @{
-    ViewData["Title"] = "مدیریت بازاریاب ها";
+    ViewData["Title"] = "مدیریت مشاوران";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
-    var contents = (List<BranchMarketer>)ViewBag.Contents;
+    var contents = (List<BranchConsultant>)ViewBag.Contents;
 
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
     int pageNumber = 0;
@@ -14,12 +14,9 @@
     var accBtn = isSearch ? "aria-expanded='true'" : "";
 }
 <div class="text-right">
-    <a href="/Panel/MasterBoard/AddMarketer/?BranchId=@ViewBag.BranchId" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    <a href="/Panel/MarketerBoard/AddConsultant" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
     <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
         <i class="fa fa-search"></i>
-    </a>
-    <a href="/Panel/MasterBoard" class="btn btn-outline-info btn-sm">
-        <i class="fas fa-arrow-left"></i>
     </a>
 </div>
 <div id="searchAcc" @Html.Raw(accSearch) aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -39,7 +36,6 @@
                         @Html.TextBoxFor(m => m.Lastname, new { placeholder = "نام خانوادگی", @class = "form-control", @id = "txtLastName" })
                     </div>
                 </div>
-                @Html.HiddenFor(m => m.BranchId)
                 <div class="col-sm-3" style="padding-top: 29px;">
                     <button type="submit" class="btn btn-outline-info">
                         <i class="fa fa-search"></i>
@@ -58,7 +54,6 @@
                 <th class="text-primary text-center" width="30px">ردیف</th>
                 <th class="text-primary text-center">نام / نام خانوادگی</th>
                 <th class="text-primary text-center" width="120px">قراردادها</th>
-                <th class="text-primary text-center" width="120px">مشاورین</th>
                 <th class="text-primary text-center" width="120px">عملیات</th>
             </tr>
         </thead>
@@ -70,18 +65,13 @@
                     <td>@(pager.StartIndex + pageNumber)</td>
                     <td>@item.User.UserProfiles.First().Firstname @item.User.UserProfiles.First().Lastname</td>
                     <td>
-                        <a href="/Panel/MasterBoard/MarketerContracts/?UserId=@item.UserId&BranchId=@item.BranchId" class="btn btn-outline-info btn-sm">
+                        <a href="/Panel/MarketerBoard/ConsultantContracts/?UserId=@item.UserId" class="btn btn-outline-danger btn-sm">
                             قراردادها
                         </a>
                     </td>
                     <td>
-                        <a href="/Panel/MasterBoard/" class="btn btn-outline-info btn-sm">
-                            مشاورین
-                        </a>
-                    </td>
-                    <td>
                         <div class="btn-group btn-group-sm">
-                            <a href="/Panel/MasterBoard/AddMarketer?BranchId=@item.BranchId&UserId=@item.UserId" class="btn btn-outline-warning btn-sm">
+                            <a href="/Panel/MarketerBoard/AddConsultant?UserId=@item.UserId" class="btn btn-outline-warning btn-sm">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </div>

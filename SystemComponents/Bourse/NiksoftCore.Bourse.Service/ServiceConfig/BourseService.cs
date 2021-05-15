@@ -12,6 +12,9 @@
         IBranchMarketerService iBranchMarketerServ { get; set; }
         IBranchConsultantService iBranchConsultantServ { get; set; }
         IBranchUserService iBranchUserServ { get; set; }
+        IContractService iContractServ { get; set; }
+        IMediaCategoryService iMediaCategoryServ { get; set; }
+        IMediaService iMediaServ { get; set; }
     }
 
     public class BourseService : IBourseService
@@ -26,6 +29,9 @@
         public IBranchMarketerService iBranchMarketerServ { get; set; }
         public IBranchConsultantService iBranchConsultantServ { get; set; }
         public IBranchUserService iBranchUserServ { get; set; }
+        public IContractService iContractServ { get; set; }
+        public IMediaCategoryService iMediaCategoryServ { get; set; }
+        public IMediaService iMediaServ { get; set; }
 
         public BourseService(string connection)
         {
@@ -40,6 +46,9 @@
             iBranchMarketerServ = new BranchMarketerService(uow);
             iBranchConsultantServ = new BranchConsultantService(uow);
             iBranchUserServ = new BranchUserService(uow);
+            iContractServ = new ContractService(uow);
+            iMediaCategoryServ = new MediaCategoryService(uow);
+            iMediaServ = new MediaService(uow);
         }
 
     }

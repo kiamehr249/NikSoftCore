@@ -1,0 +1,169 @@
+﻿@using NiksoftCore.SystemBase.Service;
+@using NiksoftCore.Bourse.Service;
+@model AdminContractSearch
+@{
+    ViewData["Title"] = "مدیریت قراردادها";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var contents = (List<Contract>)ViewBag.Contents;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    int pageNumber = 0;
+
+    var isSearch = (bool)ViewBag.Search;
+    var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
+    var accBtn = isSearch ? "aria-expanded='true'" : "";
+}
+<div class="text-right">
+    <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
+        <i class="fa fa-search"></i>
+    </a>
+</div>
+<div id="searchAcc" @Html.Raw(accSearch) aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        <hr />
+        <form method="get">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="BranchId" class="control-label">شعبه</label>
+                        <select class="form-control m-b" asp-for="BranchId" asp-items="ViewBag.Branches">
+                            <option selected="selected" value="0">انتخاب کنید</option>
+                        </select>
+                        <span asp-validation-for="BranchId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="ddlType" class="control-label">نوع قرارداد</label>
+                        <select id="ddlType" class="form-control" name="ContractType">
+                            <option value="0">همه</option>
+                            <option value="1">بازاریاب شعبه</option>
+                            <option value="2">مشاور بازاریابی</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="ddlType" class="control-label">وضعیت قرارداد</label>
+                        <select id="ddlType" class="form-control" name="Status">
+                            <option value="0">همه</option>
+                            <option value="2">درجریان</option>
+                            <option value="3">تایید شده</option>
+                            <option value="4">مختومه</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="txtTitle" class="control-label">کد قرارداد</label>
+                        @Html.TextBoxFor(m => m.ContractNumber, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtTitle" class="control-label">نام / نام خانوادگی طرف قرارداد</label>
+                        @Html.TextBoxFor(m => m.ContractNumber, new { placeholder = "نام طرف قرارداد", @class = "form-control", @id = "txtTitle" })
+                    </div>
+                </div>
+                <div class="col-sm-1" style="padding-top: 29px;">
+                    <button type="submit" class="btn btn-outline-info">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+</div>
+<br />
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">تاریخ</th>
+                <th class="text-primary text-center">شماره قرارداد</th>
+                <th class="text-primary text-center">طرف قرارداد</th>
+                <th class="text-primary text-center">کد طرف قرارداد</th>
+                <th class="text-primary text-center">نام طرف قرارداد</th>
+                <th class="text-primary text-center">شروع/پایان</th>
+                <th class="text-primary text-center">نوع کارمزد</th>
+                <th class="text-primary text-center">نرخ کارمزد</th>
+                <th class="text-primary text-center">مهلت</th>
+                <th class="text-primary text-center">وضعیت</th>
+                <th class="text-primary text-center" width="100px">عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in contents)
+            {
+                pageNumber++;
+                <tr>
+                    <td>@(pager.StartIndex + pageNumber)</td>
+                    <td>@item.ContractDate.ToPersianDateTime().ToPersianDigitalDateString()</td>
+                    <td>@item.ContractNumber</td>
+                    <td>
+                        @if (item.ContractType == ContractType.Marketer)
+                        {
+                            <span>بازاریاب شعبه</span>
+                        }
+                        else
+                        {
+                            <span>مشاور بازاریابی</span>
+                        }
+                    </td>
+                    <td>@item.UserCode</td>
+                    <td>@item.UserFullName</td>
+                    <td>
+                        <p>شروع: @item.StartDate.ToPersianDateTime().ToPersianDigitalDateString()</p>
+                        <p>پایان: @item.EndDate.ToPersianDateTime().ToPersianDigitalDateString()</p>
+                        
+                    </td>
+                    <td>
+                        @if (item.Fee.FeeType == FeeType.Fixed)
+                        {
+                            <span>ثابت</span>
+                        }
+                        else
+                        {
+                            <span>پلکانی</span>
+                        }
+                    </td>
+                    <td>@item.Fee.AmountPercentage %</td>
+                    <td>@item.Deadline روز</td>
+                    <td>@item.Status.GetContractStatus()</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            @if (item.Status == ContractStatus.InProccess)
+                            {
+                                <a href="/Panel/AdminBoard/Accept/?Id=@item.Id" class="btn btn-outline-success btn-sm">
+                                    تایید
+                                </a>
+                                <a href="/Panel/AdminBoard/Ignore/?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                                    مختومه
+                                </a>
+                            }
+                            @if (item.Status == ContractStatus.Accept)
+                            {
+                                <a href="/Panel/AdminBoard/InProgress/?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                    درجریان
+                                </a>
+                                <a href="/Panel/AdminBoard/Ignore/?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                                    مختومه
+                                </a>
+                            }
+                            @if (item.Status == ContractStatus.Ignore)
+                            {
+                                <a href="/Panel/AdminBoard/Accept/?Id=@item.Id" class="btn btn-outline-success btn-sm">
+                                    تایید
+                                </a>
+                                <a href="/Panel/AdminBoard/InProgress/?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                    درجریان
+                                </a>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

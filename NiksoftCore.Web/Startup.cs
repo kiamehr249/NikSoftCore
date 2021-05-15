@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -128,7 +130,7 @@ namespace NiksoftCore.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}").RequireHost("localhost:49602", "fbiic.ir");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
                     name: "areas",

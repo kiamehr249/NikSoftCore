@@ -14,22 +14,22 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 {
     [Area("Panel")]
     [Authorize(Roles = "NikAdmin,Admin")]
-    public class FeeManage : NikController
+    public class MediaCategoryManage : NikController
     {
         public IBourseService iBourseServ { get; set; }
         private readonly UserManager<DataModel.User> userManager;
 
-        public FeeManage(IConfiguration Configuration, UserManager<DataModel.User> userManager) : base(Configuration)
+        public MediaCategoryManage(IConfiguration Configuration, UserManager<DataModel.User> userManager) : base(Configuration)
         {
             this.iBourseServ = new BourseService(Configuration.GetConnectionString("SystemBase"));
             this.userManager = userManager;
         }
 
-        public IActionResult Index(FeeSearch request)
+        public IActionResult Index(MediaCategorySearch request)
         {
-            ViewBag.PageTitle = "مدیریت نرخ کارمزد";
+            ViewBag.PageTitle = "مدیریت دسته بندی های رسانه";
 
-            var query = iBourseServ.iFeeServ.ExpressionMaker();
+            var query = iBourseServ.iMediaCategoryServ.ExpressionMaker();
             query.Add(x => true);
             bool isSearch = false;
             if (!string.IsNullOrEmpty(request.Title))
@@ -38,19 +38,13 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 isSearch = true;
             }
 
-            if (request.FeeType > 0)
-            {
-                query.Add(x => x.FeeType == (FeeType)request.FeeType);
-                isSearch = true;
-            }
-
             ViewBag.Search = isSearch;
 
-            var total = iBourseServ.iFeeServ.Count(query);
+            var total = iBourseServ.iMediaCategoryServ.Count(query);
             var pager = new Pagination(total, 20, request.part);
             ViewBag.Pager = pager;
 
-            ViewBag.Contents = iBourseServ.iFeeServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            ViewBag.Contents = iBourseServ.iMediaCategoryServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
             return View();
         }
 
@@ -60,16 +54,16 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
             ViewBag.PageTitle = "ایجاد نرخ جدید";
 
-            var request = new Fee();
+            var request = new MediaCategory();
             if (Id > 0)
             {
-                request = iBourseServ.iFeeServ.Find(x => x.Id == Id);
+                request = iBourseServ.iMediaCategoryServ.Find(x => x.Id == Id);
             }
             return View(request);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Fee request)
+        public async Task<IActionResult> Create(MediaCategory request)
         {
             ViewBag.Messages = Messages;
             var user = await userManager.GetUserAsync(HttpContext.User);
@@ -78,60 +72,63 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 return View(request);
             }
 
-            Fee item;
+            MediaCategory item = new MediaCategory();
             if (request.Id > 0)
             {
-                item = iBourseServ.iFeeServ.Find(x => x.Id == request.Id);
+                item = iBourseServ.iMediaCategoryServ.Find(x => x.Id == request.Id);
                 item.EditDate = DateTime.Now;
                 item.EditedBy = user.Id;
             }
             else
             {
-                item = new Fee();
                 item.CreateDate = DateTime.Now;
                 item.CreatedBy = user.Id;
             }
 
             item.Title = request.Title;
-            item.FeeType = request.FeeType;
-            item.FromAmount = request.FromAmount;
-            item.ToAmount = request.ToAmount;
-            item.AmountPercentage = request.AmountPercentage;
+            item.Description = request.Description;
+            item.Enabled = true;
 
             if (request.Id == 0)
             {
-                iBourseServ.iFeeServ.Add(item);
+                iBourseServ.iMediaCategoryServ.Add(item);
             }
 
-            await iBourseServ.iFeeServ.SaveChangesAsync();
+            await iBourseServ.iMediaCategoryServ.SaveChangesAsync();
 
-            return Redirect("/Panel/FeeManage");
+            return Redirect("/Panel/MediaCategoryManage");
 
+        }
+
+        public async Task<IActionResult> Enable(int Id)
+        {
+            var item = await iBourseServ.iMediaCategoryServ.FindAsync(x => x.Id == Id);
+            item.Enabled = !item.Enabled;
+            await iBourseServ.iMediaCategoryServ.SaveChangesAsync();
+            return Redirect("/Panel/MediaCategoryManage");
         }
 
         public async Task<IActionResult> Remove(int Id)
         {
-            var item = await iBourseServ.iFeeServ.FindAsync(x => x.Id == Id);
-            iBourseServ.iFeeServ.Remove(item);
-            await iBourseServ.iFeeServ.SaveChangesAsync();
-            return Redirect("/Panel/FeeManage");
+            var item = await iBourseServ.iMediaCategoryServ.FindAsync(x => x.Id == Id);
+            iBourseServ.iMediaCategoryServ.Remove(item);
+            try
+            {
+                await iBourseServ.iMediaCategoryServ.SaveChangesAsync();
+            }
+            catch 
+            {
+                AddError("به دلیل داشتن محتوا در این دسته بندی امکان حذف وجود ندارد", "fa");
+            }
+            
+            return Redirect("/Panel/MediaCategoryManage");
         }
 
-        private bool ValidForm(Fee request)
+        private bool ValidForm(MediaCategory request)
         {
             if (string.IsNullOrEmpty(request.Title))
             {
                 AddError("عنوان نرخ باید مقدار داشته باشد", "fa");
-            }
-
-            if (request.FromAmount == 0)
-            {
-                AddError("از مبلغ باید مقدار داشته باشد", "fa");
-            }
-
-            if (request.ToAmount == 0)
-            {
-                AddError("تا مبلغ باید مقدار داشته باشد", "fa");
             }
 
             if (Messages.Any(x => x.Type == MessageType.Error))

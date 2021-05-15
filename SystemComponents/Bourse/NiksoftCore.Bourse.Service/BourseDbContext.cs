@@ -24,6 +24,9 @@ namespace NiksoftCore.Bourse.Service
         public DbSet<BranchMarketer> BranchMarketers { get; set; }
         public DbSet<BranchConsultant> BranchConsultants { get; set; }
         public DbSet<BranchUser> BranchUsers { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<MediaCategory> MediaCategories { get; set; }
+        public DbSet<Media> Medias { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -36,6 +39,9 @@ namespace NiksoftCore.Bourse.Service
             builder.ApplyConfiguration(new BranchMarketerMap());
             builder.ApplyConfiguration(new BranchConsultantMap());
             builder.ApplyConfiguration(new BranchUserMap());
+            builder.ApplyConfiguration(new ContractMap());
+            builder.ApplyConfiguration(new MediaCategoryMap());
+            builder.ApplyConfiguration(new MediaMap());
         }
     }
 }

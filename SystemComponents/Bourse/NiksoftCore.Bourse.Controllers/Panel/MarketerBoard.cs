@@ -7,82 +7,77 @@ using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.Utilities;
 using NiksoftCore.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.Bourse.Controllers.Panel
 {
     [Area("Panel")]
-    [Authorize(Roles = "NikAdmin")]
-    public class BUserManager : NikController
+    [Authorize(Roles = "NikAdmin,Admin,Marketer")]
+    public class MarketerBoard : NikController
     {
-        private readonly UserManager<DataModel.User> userManager;
-        private readonly RoleManager<DataModel.Role> roleManager;
         public IBourseService iBourseServ { get; set; }
+        private readonly UserManager<DataModel.User> userManager;
 
-        public BUserManager(IConfiguration Configuration,
-            UserManager<DataModel.User> userManager,
-            RoleManager<DataModel.Role> roleManager) : base(Configuration)
+        public MarketerBoard(IConfiguration Configuration, UserManager<DataModel.User> userManager) : base(Configuration)
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
             this.iBourseServ = new BourseService(Configuration.GetConnectionString("SystemBase"));
+            this.userManager = userManager;
         }
 
-        public IActionResult Index(UserGridRequest request)
+        public async Task<IActionResult> Index(ConsultantSearch request)
         {
-            var query = ISystemBaseServ.iNikUserServ.ExpressionMaker();
-            query.Add(x => true);
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            var marketerUser = await iBourseServ.iBranchMarketerServ.FindAsync(x => x.UserId == user.Id);
+            if (marketerUser == null)
+            {
+                return Redirect("/Panel");
+            }
 
+            var userProfile = ISystemBaseServ.iUserProfileServ.Find(x => x.UserId == user.Id);
+
+            ViewBag.PageTitle = "مشاوران های " + userProfile.Firstname + " " + userProfile.Lastname;
+            
+            var query = iBourseServ.iBranchConsultantServ.ExpressionMaker();
+            query.Add(x => x.BranchId == marketerUser.BranchId && x.MarketerId == user.Id);
             bool isSearch = false;
-            if (!string.IsNullOrEmpty(request.UserName))
+
+            if (!string.IsNullOrEmpty(request.Firstname))
             {
-                query.Add(x => x.UserName.Contains(request.UserName));
+                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Firstname.Contains(request.Firstname), y => new { y.UserId }, 0, 20).Select(x => x.UserId).ToList();
+                query.Add(x => userIds.Contains(x.UserId));
                 isSearch = true;
             }
 
-            if (!string.IsNullOrEmpty(request.FirstName))
+            if (!string.IsNullOrEmpty(request.Lastname))
             {
-                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Firstname.Contains(request.FirstName)).Select(x => x.UserId);
-                query.Add(x => userIds.Contains(x.Id));
-                isSearch = true;
-            }
-
-            if (!string.IsNullOrEmpty(request.LastName))
-            {
-                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Lastname.Contains(request.LastName)).Select(x => x.UserId);
-                query.Add(x => userIds.Contains(x.Id));
+                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Firstname.Contains(request.Lastname), y => new { y.UserId }, 0, 20).Select(x => x.UserId).ToList();
+                query.Add(x => userIds.Contains(x.UserId));
                 isSearch = true;
             }
 
             ViewBag.Search = isSearch;
 
-            var total = ISystemBaseServ.iNikUserServ.Count(query);
+            var total = iBourseServ.iBranchConsultantServ.Count(query);
             var pager = new Pagination(total, 20, request.part);
             ViewBag.Pager = pager;
-
-
-            ViewBag.PageTitle = "مدیریت کاربران";
-
-            ViewBag.Contents = ISystemBaseServ.iNikUserServ.GetPart(query, pager.StartIndex, pager.PageSize, x => x.Id, true).ToList();
-
-            return View();
+            ViewBag.Contents = iBourseServ.iBranchConsultantServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            return View(request);
         }
 
         [HttpGet]
-        public IActionResult Create(int Id)
+        public async Task<IActionResult> AddConsultant(int UserId)
         {
-            ViewBag.PageTitle = "ایجاد کاربر";
+            ViewBag.PageTitle = "ایجاد بازاریاب";
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            var marketerUser = await iBourseServ.iBranchMarketerServ.FindAsync(x => x.UserId == user.Id);
 
             var request = new BourseUserRequest();
-
-            if (Id > 0)
+            request.BranchId = marketerUser.BranchId;
+            if (UserId > 0)
             {
-                var theUser = ISystemBaseServ.iNikUserServ.Find(x => x.Id == Id);
+                var theUser = ISystemBaseServ.iNikUserServ.Find(x => x.Id == UserId);
                 request.Id = theUser.Id;
-                request.Mobile = theUser.UserName;
                 request.Email = theUser.Email;
                 request.Mobile = theUser.PhoneNumber;
 
@@ -121,7 +116,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BourseUserRequest request)
+        public async Task<IActionResult> AddConsultant(BourseUserRequest request)
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
 
@@ -148,6 +143,16 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 item.EmailConfirmed = true;
                 item.PhoneNumberConfirmed = true;
                 await userManager.CreateAsync(item, request.Password);
+
+                iBourseServ.iBranchUserServ.Add(new BranchUser
+                {
+                    UserId = item.Id,
+                    BranchId = request.BranchId,
+                    UserType = BranchUserType.Consultant
+                });
+                await iBourseServ.iBranchUserServ.SaveChangesAsync();
+
+                await userManager.AddToRoleAsync(item, "Consultant");
             }
             else
             {
@@ -168,7 +173,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             profile.Address = request.Address;
             profile.ZipCode = request.ZipCode;
             profile.BirthDate = PersianDateTime.Parse(request.BirthDate).ToDateTime();
-            //profile.Avatar = request.Avatar;
             //profile.IdCardImage = request.IdCardImage;
             //profile.NCardImage = request.NCardImage;
             profile.ProvinceId = request.ProvinceId == 0 ? null : request.ProvinceId;
@@ -196,7 +200,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             bank.BankName = request.BankName;
             bank.BranchName = request.BranchName;
             bank.BranchCode = request.BranchCode;
-            
+
 
             if (request.BankId == 0)
             {
@@ -208,23 +212,23 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
             await iBourseServ.iUserBankAccountServ.SaveChangesAsync();
 
-            return Redirect("/Panel/BUserManager");
-
-        }
-
-        public async Task<IActionResult> Remove(int Id)
-        {
-            var user = await userManager.FindByIdAsync(Id.ToString());
-            try
+            if (request.Id == 0)
             {
-                await userManager.DeleteAsync(user);
-            }
-            catch
-            {
+                iBourseServ.iBranchConsultantServ.Add(new BranchConsultant
+                {
+                    UserId = item.Id,
+                    BranchId = request.BranchId,
+                    MarketerId = user.Id,
+                    CreateDate = DateTime.Now,
+                    CreatedBy = user.Id
+                });
 
+                await iBourseServ.iBranchConsultantServ.SaveChangesAsync();
             }
-            
-            return Redirect("/Panel/BUserManager");
+
+
+            return Redirect("/Panel/MarketerBoard");
+
         }
 
         public bool ValidUserForm(BourseUserRequest request)
@@ -239,6 +243,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                     result = false;
                 }
             }
+
 
             if (string.IsNullOrEmpty(request.Mobile))
             {
@@ -327,6 +332,155 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             return result;
         }
 
+
+        public async Task<IActionResult> ConsultantContracts(MarketerContractSearch request)
+        {
+            var theConsult = await ISystemBaseServ.iUserProfileServ.FindAsync(x => x.UserId == request.UserId);
+            ViewBag.PageTitle = "قرارداد های " + theConsult.Firstname + " " + theConsult.Lastname;
+
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            var marketerUser = await iBourseServ.iBranchMarketerServ.FindAsync(x => x.UserId == user.Id);
+
+            var isOwnUser = await iBourseServ.iBranchConsultantServ.FindAsync(x => x.UserId == request.UserId && x.MarketerId == user.Id);
+            if (isOwnUser == null)
+            {
+                return Redirect("/Panel/MarketerBoard");
+            }
+
+            var query = iBourseServ.iContractServ.ExpressionMaker();
+            query.Add(x => x.BranchId == marketerUser.BranchId && x.UserId == request.UserId);
+
+            bool isSearch = false;
+            ViewBag.Search = isSearch;
+
+            var total = iBourseServ.iContractServ.Count(query);
+            var pager = new Pagination(total, 20, request.part);
+            ViewBag.Pager = pager;
+            ViewBag.BranchId = request.BranchId;
+            ViewBag.Contents = iBourseServ.iContractServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+
+            return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddContract(int Id, int UserId)
+        {
+            ViewBag.PageTitle = "ایجاد قرارداد";
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            var marketerUser = await iBourseServ.iBranchMarketerServ.FindAsync(x => x.UserId == user.Id);
+
+            var theProfile = await ISystemBaseServ.iUserProfileServ.FindAsync(x => x.UserId == UserId);
+            var request = new ContractRequest();
+
+            if (Id > 0)
+            {
+                var contract = iBourseServ.iContractServ.Find(x => x.Id == Id);
+                request.Id = contract.Id;
+                request.ContractNumber = contract.ContractNumber;
+                request.ContractType = contract.ContractType;
+                request.UserCode = contract.UserCode;
+                request.StartDate = contract.StartDate.ToPersianDateTime().ToPersianDigitalDateString();
+                request.EndDate = contract.EndDate.ToPersianDateTime().ToPersianDigitalDateString();
+                request.FeeId = contract.FeeId;
+                request.Deadline = contract.Deadline;
+                request.Status = contract.Status;
+                request.ContractDate = contract.ContractDate.ToPersianDateTime().ToPersianDigitalDateString();
+            }
+
+            request.UserId = UserId;
+            request.UserFullName = theProfile.Firstname + " " + theProfile.Lastname;
+            request.BranchId = marketerUser.BranchId;
+
+            return View(request);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddContract(ContractRequest request)
+        {
+            ViewBag.Messages = Messages;
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
+            if (!ValidContractForm(request))
+            {
+                ViewBag.Messages = Messages;
+                return View(request);
+            }
+
+            Contract item = new Contract();
+            if (request.Id > 0)
+            {
+                item = iBourseServ.iContractServ.Find(x => x.Id == request.Id);
+            }
+
+
+            item.ContractNumber = request.ContractNumber;
+            item.ContractType = ContractType.Marketer;
+            item.UserId = request.UserId;
+            item.UserCode = request.UserCode;
+            item.UserFullName = request.UserFullName;
+            item.StartDate = PersianDateTime.Parse(request.StartDate).ToDateTime();
+            item.EndDate = PersianDateTime.Parse(request.EndDate).ToDateTime();
+            item.FeeId = request.FeeId;
+            item.Deadline = request.Deadline;
+            item.Status = ContractStatus.InProccess;
+            item.ContractDate = PersianDateTime.Parse(request.ContractDate).ToDateTime();
+            item.BranchId = request.BranchId;
+
+
+            if (request.Id == 0)
+            {
+                item.CreateDate = DateTime.Now;
+                item.CreatedBy = user.Id;
+                iBourseServ.iContractServ.Add(item);
+            }
+
+            await iBourseServ.iContractServ.SaveChangesAsync();
+
+            return Redirect("/Panel/MarketerBoard/ConsultantContracts/?UserId=" + request.UserId);
+
+        }
+
+        public bool ValidContractForm(ContractRequest request)
+        {
+            bool result = true;
+            if (string.IsNullOrEmpty(request.ContractNumber))
+            {
+                AddError("شماره قرارداد باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            if (string.IsNullOrEmpty(request.UserCode))
+            {
+                AddError("کد طرف قرارداد باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            if (string.IsNullOrEmpty(request.StartDate))
+            {
+                AddError("تاریخ شروع قرارداد باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            if (string.IsNullOrEmpty(request.EndDate))
+            {
+                AddError("تاریخ پایان قرارداد باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            if (string.IsNullOrEmpty(request.EndDate))
+            {
+                AddError("تاریخ قرارداد باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            if (request.FeeId == 0)
+            {
+                AddError("کارمزد باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            return result;
+        }
 
     }
 }

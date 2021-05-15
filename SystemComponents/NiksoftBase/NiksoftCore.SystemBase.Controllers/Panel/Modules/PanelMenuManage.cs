@@ -169,14 +169,27 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 return View(request);
             }
 
+            PanelMenu item = new PanelMenu();
+            if (request.Id > 0)
+            {
+                item = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == request.Id);
+            }
+
+            item.Title = request.Title;
+            item.Link = request.Link;
+            item.Icon = request.Icon;
+            item.Controller = request.Controller;
+            item.Roles = request.Roles;
+            item.Description = request.Description;
+            item.ParentId = request.ParentId;
 
             if (request.Id == 0)
             {
-                request.Enabled = true;
-                request.Ordering = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == null) + 1;
-                ISystemBaseServ.iPanelMenuService.Add(request);
+                item.Enabled = true;
+                item.Ordering = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == null) + 1;
+                ISystemBaseServ.iPanelMenuService.Add(item);
             }
-            
+
             await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
 
             return Redirect("/Panel/PanelMenuManage/MenuItems?ParentId=" + request.ParentId);
