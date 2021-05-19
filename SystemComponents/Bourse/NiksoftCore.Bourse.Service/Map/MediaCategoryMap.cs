@@ -9,6 +9,10 @@ namespace NiksoftCore.Bourse.Service
         {
             builder.HasKey(x => x.Id);
             builder.ToTable("B_MediaCategories");
+
+            builder.HasOne(x => x.Parent)
+                .WithMany(x => x.Childs)
+                .HasForeignKey(x => x.ParentId);
         }
     }
 }

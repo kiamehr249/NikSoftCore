@@ -17,6 +17,10 @@ namespace NiksoftCore.Bourse.Service
             builder.HasOne(x => x.Category)
                 .WithMany(x => x.Medias)
                 .HasForeignKey(x => x.CategoryId).IsRequired(true);
+
+            builder.HasOne(x => x.Branch)
+                .WithMany(x => x.Medias)
+                .HasForeignKey(x => x.BranchId).IsRequired(true);
         }
     }
 }

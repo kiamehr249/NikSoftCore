@@ -10,7 +10,7 @@ namespace NiksoftCore.Bourse.Service
         public int MarketerId { get; set; }
 
         public virtual BourseUser User { get; set; }
-        //public virtual BourseUser Marketer { get; set; }
+        public virtual BourseUser Marketer { get; set; }
         public virtual Branch Branch { get; set; }
     }
 }

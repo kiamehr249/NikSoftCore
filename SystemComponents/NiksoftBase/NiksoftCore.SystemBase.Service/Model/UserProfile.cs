@@ -9,6 +9,7 @@ namespace NiksoftCore.SystemBase.Service
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string CompanyName { get; set; }
+        public string NCode { get; set; }
         public string Mobile { get; set; }
         public string Tel { get; set; }
         public string Address { get; set; }
@@ -21,6 +22,7 @@ namespace NiksoftCore.SystemBase.Service
         public ProfileStatus Status { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
+        public int? Gender { get; set; }
 
         public virtual NikUser User { get; set; } 
     }

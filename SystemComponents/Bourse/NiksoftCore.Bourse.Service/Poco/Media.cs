@@ -14,8 +14,10 @@ namespace NiksoftCore.Bourse.Service
         public MediaStatus Status { get; set; }
         public int CategoryId { get; set; }
         public int UserId { get; set; }
+        public int BranchId { get; set; }
 
         public virtual BourseUser User { get; set; }
         public virtual MediaCategory Category { get; set; }
+        public virtual Branch Branch { get; set; }
     }
 }
