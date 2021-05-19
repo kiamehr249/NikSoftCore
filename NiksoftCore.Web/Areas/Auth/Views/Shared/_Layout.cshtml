@@ -4,11 +4,12 @@
 <head>
     <title>@ViewData["Title"]</title>
     <meta charset="UTF-8">
-    <meta name="description" content="سامانه بازاریابی">
-    <meta name="keywords" content="تجارت">
+    <meta name="description" content="سامانه خدمات بازاریابی">
+    <meta name="keywords" content="خدمات بازاریابی">
+    <meta content="خدمات بازاریابی" name="author" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="~/templates/UiTemplate/NikFace/rtl/images/fav.png" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/files/icons/fav.png" rel="shortcut icon" type="image/x-icon" />
 
     <link rel="stylesheet" href="~/templates/UiTemplate/NikFace/rtl/css/bootstrap.rtl.full.min.css" />
     <link href="~/lib/noty/noty.css" rel="stylesheet">
@@ -30,35 +31,35 @@
     <script src="~/js/BaseSystem.js"></script>
 
     @*<div class="loader-wrapper">
-            <img src="~/templates/UiTemplate/NikFace/rtl/images/logo-1-1.png" alt="">
+            <img src="~/files/icons/logo1.png" alt="">
             <div class="loader"></div>
         </div>*@
 
-    <nav class="subpage-nav">
-        <div class="row">
-            @await Component.InvokeAsync("WMenus", new { key = "main" })
-        </div>
-    </nav>
-
-
-    <div class="container content">
-        @RenderBody()
-    </div>
-
-
-    <footer>
-        <div class="container">
-            <div class="social">
-                <a href="#">facebook </a>
-                <a href="#">twitter </a>
-                <a href="#">instagram </a>
-                <a href="#">google plus </a>
-                <a href="#">behance </a>
-                <a href="#">dribbble  </a>
+    @*<nav class="subpage-nav">
+            <div class="row">
+                @await Component.InvokeAsync("WMenus", new { key = "main" })
             </div>
-            <p>تمامی حقوق اثر متعلق به بازاریابی می باشد.</p>
-        </div>
-    </footer>
+        </nav>*@
+
+    @RenderBody()
+    @*<div class="container content">
+
+    </div>*@
+
+
+    @*<footer>
+            <div class="container">
+                <div class="social">
+                    <a href="#">facebook </a>
+                    <a href="#">twitter </a>
+                    <a href="#">instagram </a>
+                    <a href="#">google plus </a>
+                    <a href="#">behance </a>
+                    <a href="#">dribbble  </a>
+                </div>
+                <p>تمامی حقوق اثر متعلق به سامانه خدمات بازاریابی می باشد.</p>
+            </div>
+        </footer>*@
 
     <script src="~/templates/UiTemplate/NikFace/rtl/js/bootstrap.min.js"></script>
     <script src="~/templates/UiTemplate/NikFace/rtl/js/wow.min.js"></script>

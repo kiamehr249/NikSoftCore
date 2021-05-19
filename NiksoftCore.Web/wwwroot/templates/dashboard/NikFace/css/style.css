@@ -3497,8 +3497,9 @@ File: Menu
 }
 
 .logo span, .logo-sm span {
-  color: #04a2b3;
-  font-family: 'Crete Round', serif;
+  color: #f2a208;
+  /*! font-family: 'Crete Round', serif; */
+  padding-right: 5px;
 }
 
 .logo-sm {
@@ -3827,7 +3828,7 @@ body.fixed-left .side-menu.left {
 }
 
 #sidebar-menu ul ul li.active a {
-  color: #04a2b3;
+  color: #ec9e07;
 }
 
 #sidebar-menu ul ul a {
@@ -3837,7 +3838,7 @@ body.fixed-left .side-menu.left {
 }
 
 #sidebar-menu ul ul a:hover {
-  color: #2a323c;
+  color: #FFA800;
 }
 
 #sidebar-menu ul ul a i {
@@ -3859,7 +3860,7 @@ body.fixed-left .side-menu.left {
 }
 
 #sidebar-menu > ul > li > a:hover {
-  background-color: #f2f2f2;
+  background-color: #FFA8008A;
   text-decoration: none;
 }
 
@@ -3897,12 +3898,12 @@ body.fixed-left .side-menu.left {
 }
 
 #sidebar-menu > ul > li > a.active {
-  color: #ffffff !important;
-  background-color: #04a2b3 !important;
+  color: #fff !important;
+  background-color: #F2A208 !important;
 }
 
 #sidebar-menu > ul > li > a.active i {
-  color: #ffffff;
+  color: #fff;
 }
 
 #sidebar-menu > ul > li > a.active .badge-primary {
@@ -3910,7 +3911,8 @@ body.fixed-left .side-menu.left {
 }
 
 .subdrop {
-  background: #f2f2f2 !important;
+  background: #FDDC9C !important;
+  color: #333 !important;
 }
 
 .menu-title {
@@ -4245,7 +4247,7 @@ body.fixed-left .side-menu.left {
 
 .page-header-title .page-title {
   margin-bottom: 12px;
-  color: #ffffff;
+  color: #ffa800;
   font-size: 22px;
 }
 

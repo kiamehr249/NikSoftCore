@@ -183,6 +183,7 @@ nav ul li a:hover{
 .logo{
     float: left;
     position: relative;
+    padding: 10px;
 }
 
  .responsive{
@@ -266,7 +267,7 @@ input:-webkit-autofill {
    font-weight: bold;
    letter-spacing: -1px;
    margin-bottom: 30px;
-   border-bottom: 2px solid #d9d9d9;
+   border-bottom: 2px solid #FFA800;
    padding-bottom: 10px;
    display: inline-block;
 }
@@ -1247,7 +1248,7 @@ a.site-button{
 
 
 .loader-wrapper img {
-  width: 200px;
+  width: 120px;
   position: absolute;
   top: calc(50% - 145px);
   left: calc(50% - 100px);
@@ -1439,7 +1440,7 @@ a.site-button{
 }
 
 .logo img {
-  max-height: 65px;
+  max-height: 50px;
   position: absolute;
   top: -15px;
   left: 0;
@@ -1480,3 +1481,98 @@ a.site-button{
   font-weight: 400;
   margin-bottom: 5px;
 }
+
+
+
+
+
+
+
+
+.bg-brand {
+  background: linear-gradient(to bottom, #c6840d, #bf831a, #d59e3e, #ffd283);
+  position: fixed;
+  width: 100%;
+  left: 0;
+  height: 100%;
+  padding: 80px 0;
+}
+.login-container {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #dae3f2;
+  box-shadow: 4px 7px 5px 3px #604009;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.login-form {
+  padding: 15px 15px 15px 0;
+}
+
+.login-logo {
+  text-align: center;
+}
+
+.login-logo img {
+  max-height: 100px;
+}
+
+.login-title h4 {
+  font-size: 20px;
+  text-align: center;
+  font-weight: 400;
+}
+
+.login-title {
+  padding: 15px 0 15px 0;
+  border-top: 1px solid silver;
+  margin-top: 15px;
+}
+
+.form-round input[type="text"], .form-round input[type="password"] {
+  border-radius: 30px;
+  height: 40px;
+}
+
+.checkbox label {
+  font-size: 15px;
+  font-weight: 300;
+  vertical-align: middle;
+}
+
+.checkbox input {
+  vertical-align: middle;
+}
+
+.form-round .btn {
+  border-radius: 30px;
+  height: 40px;
+}
+
+.login-container .btn {
+  background: #e6990c;
+  color: #333;
+}
+
+.login-img {
+  height: 395.8px;
+  background-image: url('/files/images/login.jpeg');
+  background-size: cover;
+  background-position: 50%;
+}
+
+@media only screen and (max-width: 767px) {
+  .login-form {
+    padding: 15px;
+  }
+  .login-img {
+    display: none;
+  }
+}
+
+@media only screen and (max-height: 600px) {
+  .bg-brand {
+    position: relative;
+  }
+}
+
