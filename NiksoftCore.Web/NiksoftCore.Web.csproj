@@ -178,6 +178,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Contracts" Version="5.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Private.ServiceModel" Version="4.8.1" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.8.1" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.8.1" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1" />
+    <PackageReference Include="System.ServiceModel.Security" Version="4.8.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -192,10 +197,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\files\business\" />
     <Folder Include="wwwroot\files\base\" />
+    <Folder Include="wwwroot\files\Marketer\" />
     <Folder Include="wwwroot\lib\noty\" />
     <Folder Include="wwwroot\templates\UiTemplate\NikFace\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="HadafAuthentication">
+      <HintPath>..\Lib\HadafAuthentication.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -12,5 +12,6 @@
         public MediaStatus Status { get; set; }
         public int CategoryId { get; set; }
         public int UserId { get; set; }
+        public int BranchId { get; set; }
     }
 }

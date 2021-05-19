@@ -1,10 +1,11 @@
 ﻿@using NiksoftCore.SystemBase.Service;
 @using NiksoftCore.Bourse.Service;
-@model BranchSearch
+@model ConsultantSearch
 @{
-    ViewData["Title"] = "مدیریت شعب";
+    ViewData["Title"] = "مشاورین";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
-    var contents = (List<Branch>)ViewBag.Contents;
+    var contents = (List<BranchConsultant>)ViewBag.Contents;
+
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
     int pageNumber = 0;
 
@@ -13,7 +14,6 @@
     var accBtn = isSearch ? "aria-expanded='true'" : "";
 }
 <div class="text-right">
-    <a href="/Panel/BranchManage/Create" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
     <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
         <i class="fa fa-search"></i>
     </a>
@@ -25,16 +25,26 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="txtTitle" class="control-label">عنوان</label>
-                        @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                        <label for="BranchId" class="control-label">شعبه</label>
+                        <select class="form-control m-b" asp-for="BranchId" asp-items="ViewBag.Branches">
+                            <option selected="selected" value="0">انتخاب کنید</option>
+                        </select>
+                        <span asp-validation-for="BranchId" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="txtCode" class="control-label">کد شعبه</label>
-                        @Html.TextBoxFor(m => m.Code, new { placeholder = "کد شعبه", @class = "form-control", @id = "txtCode" })
+                        <label for="txtFirstName" class="control-label">نام</label>
+                        @Html.TextBoxFor(m => m.Firstname, new { placeholder = "نام", @class = "form-control", @id = "txtFirstName" })
                     </div>
                 </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtLastName" class="control-label">نام خانوادگی</label>
+                        @Html.TextBoxFor(m => m.Lastname, new { placeholder = "نام خانوادگی", @class = "form-control", @id = "txtLastName" })
+                    </div>
+                </div>
+                @Html.HiddenFor(m => m.BranchId)
                 <div class="col-sm-3" style="padding-top: 29px;">
                     <button type="submit" class="btn btn-outline-info">
                         <i class="fa fa-search"></i>
@@ -51,9 +61,10 @@
         <thead>
             <tr>
                 <th class="text-primary text-center" width="30px">ردیف</th>
-                <th class="text-primary text-center">عنوان</th>
-                <th class="text-primary text-center">کد شعبه</th>
-                <th class="text-primary text-center" width="100px">عملیات</th>
+                <th class="text-primary text-center">نام / نام خانوادگی</th>
+                <th class="text-primary text-center">موبایل</th>
+                <th class="text-primary text-center">کد ملی</th>
+                <th class="text-primary text-center">بازاریاب شعبه</th>
             </tr>
         </thead>
         <tbody>
@@ -62,17 +73,15 @@
                 pageNumber++;
                 <tr>
                     <td>@(pager.StartIndex + pageNumber)</td>
-                    <td>@item.Title</td>
-                    <td>@item.Code</td>
+                    <td>@item.User.UserProfiles.First().Firstname @item.User.UserProfiles.First().Lastname</td>
                     <td>
-                        <div class="btn-group btn-group-sm">
-                            <a href="/Panel/BranchManage/Create?Id=@item.Id" class="btn btn-outline-warning btn-sm">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="/Panel/BranchManage/Remove?Id=@item.Id" class="btn btn-outline-danger btn-sm">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        </div>
+                        @item.User.PhoneNumber
+                    </td>
+                    <td>
+                        @item.User.UserName
+                    </td>
+                    <td>
+                        @item.Marketer.UserProfiles.First().Firstname @item.Marketer.UserProfiles.First().Lastname
                     </td>
                 </tr>
             }

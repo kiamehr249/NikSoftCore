@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.SystemBase.Service;
 using NiksoftCore.Utilities;
 using NiksoftCore.ViewModel;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
@@ -27,19 +29,20 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             this.hosting = hosting;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            return View();
-        }
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View();
+        //}
 
 
         [HttpGet]
         public async Task<IActionResult> MyProfile()
         {
+            ViewBag.Messages = Messages;
             var theUser = await userManager.GetUserAsync(HttpContext.User);
             var theProfile = await ISystemBaseServ.iUserProfileServ.FindAsync(x => x.UserId == theUser.Id);
 
-            ViewBag.PageTitle = "مدیریت پروفایل";
+            ViewBag.PageTitle = "اطلاعات کاربری";
 
             var profileRequest = new UserProfileRequest();
 
@@ -48,28 +51,33 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 profileRequest.Id = theProfile.Id;
                 profileRequest.Firstname = theProfile.Firstname;
                 profileRequest.Lastname = theProfile.Lastname;
+                profileRequest.NCode = theProfile.NCode;
                 profileRequest.Mobile = theProfile.Mobile;
                 profileRequest.Tel = theProfile.Tel;
                 profileRequest.Address = theProfile.Address;
                 profileRequest.ZipCode = theProfile.ZipCode;
-                profileRequest.BirthDate = theProfile.BirthDate;
+                profileRequest.BirthDate = theProfile.BirthDate != null ? theProfile.BirthDate.Value.ToPersianDateTime().ToPersianDigitalDateString() : "";
                 profileRequest.UserId = theProfile.UserId;
                 profileRequest.Avatar = theProfile.Avatar;
+                profileRequest.NCardImage = theProfile.NCardImage;
+                profileRequest.IdCardImage = theProfile.IdCardImage;
+                profileRequest.ProvinceId = theProfile.ProvinceId ?? 0;
+                profileRequest.CityId = theProfile.CityId ?? 0;
+                profileRequest.Gender = theProfile.Gender ?? 0;
             }
             else
             {
                 profileRequest.Mobile = theUser.PhoneNumber;
                 profileRequest.UserId = theUser.Id;
             }
-
+            DropDownBinder(profileRequest.ProvinceId, profileRequest.Gender);
             return View(profileRequest);
         }
 
         [HttpPost]
-        public async Task<IActionResult> MyProfile([FromForm] UserProfileRequest request)
+        public async Task<IActionResult> MyProfile(UserProfileRequest request)
         {
-
-            ViewBag.PageTitle = "ایجاد دسته بندی";
+            ViewBag.PageTitle = "اطلاعات کاربری";
 
 
             string avatar = string.Empty;
@@ -84,13 +92,9 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
                 if (!SaveImage.Success)
                 {
-                    Messages.Add(new NikMessage
-                    {
-                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
-                        Type = MessageType.Error,
-                        Language = "Fa"
-                    });
+                    AddError("آپلود فایل انجام نشد مجدد تلاش کنید");
                     ViewBag.Messages = Messages;
+                    DropDownBinder(request.ProvinceId, request.Gender);
                     return View(request);
                 }
 
@@ -115,33 +119,54 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             }
 
 
-
-
             thisItem.Firstname = request.Firstname;
             thisItem.Lastname = request.Lastname;
+            thisItem.NCode = request.NCode;
             thisItem.Mobile = request.Mobile;
             thisItem.Tel = request.Tel;
             thisItem.Address = request.Address;
             thisItem.ZipCode = request.ZipCode;
-            thisItem.BirthDate = request.BirthDate;
+            thisItem.BirthDate = !string.IsNullOrEmpty(request.BirthDate) ? PersianDateTime.Parse(request.BirthDate).ToDateTime() : null;
             thisItem.UserId = request.UserId;
-            if (!string.IsNullOrEmpty(avatar))
-            {
-                thisItem.Avatar = avatar;
-            }
+            thisItem.CityId = request.CityId > 0 ? request.CityId : null;
+            thisItem.ProvinceId = request.ProvinceId > 0 ? request.ProvinceId : null;
+            thisItem.Gender = request.Gender > 0 ? request.Gender : null;
 
+            if (!string.IsNullOrEmpty(avatar))
+                thisItem.Avatar = avatar;
 
             if (request.Id == 0)
             {
+                thisItem.Status = ProfileStatus.Save;
                 ISystemBaseServ.iUserProfileServ.Add(thisItem);
             }
 
             await ISystemBaseServ.iUserProfileServ.SaveChangesAsync();
 
+            DropDownBinder(request.ProvinceId, request.Gender);
 
-            return View();
+            AddSuccess("اطلاعات با موفقیت ثبت شد");
+            ViewBag.Messages = Messages;
+
+            return View(request);
         }
 
+        private void DropDownBinder(int provinceId, int genderId)
+        {
+            var provinces = ISystemBaseServ.iProvinceServ.GetAll(x => true);
+            ViewBag.Provinces = new SelectList(provinces, "Id", "Title", provinceId);
 
+            List<ListItemModel> genders = new List<ListItemModel>();
+            genders.Add(new ListItemModel { 
+                Id = 1,
+                Title = "مرد"
+            });
+            genders.Add(new ListItemModel
+            {
+                Id = 2,
+                Title = "زن"
+            });
+            ViewBag.Genders = new SelectList(genders, "Id", "Title", genderId);
+        }
     }
 }

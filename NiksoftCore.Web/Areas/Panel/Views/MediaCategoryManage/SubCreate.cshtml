@@ -7,14 +7,14 @@
 }
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/MediaCategoryManage" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/MediaCategoryManage/SubCategories/?ParentId=@Model.ParentId" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/MediaCategoryManage/Create" method="post">
+<form action="/Panel/MediaCategoryManage/SubCreate" method="post">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
@@ -29,6 +29,7 @@
                     @Html.ValidationMessageFor(m => m.Description)
                 </div>
                 @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.ParentId)
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-success">ذخیره</button>
                 </div>

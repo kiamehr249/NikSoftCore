@@ -10,6 +10,8 @@ using NiksoftCore.ViewModel.User;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using HadafAuthentication;
+using HadafServices;
 
 namespace NiksoftCore.SystemBase.Controllers.General.User
 {
@@ -154,6 +156,15 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
             {
                 return Redirect("/Panel");
             }
+
+
+
+            //onlinesabad.hadaf.HadafServices hadafonlineservice = new onlinesabad.hadaf.HadafServices();
+            //string Token = HadafReference.GetToken();
+
+            //var authKey = new AuthenticationKey();
+            //ViewBag.Key = authKey.GenerateKey("2300924757", "09120438779", "asdasdasdasdasd", "تست");
+
 
             LoginRequest model = new LoginRequest();
             return View(model);

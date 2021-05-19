@@ -73,14 +73,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             return View(request);
         }
 
-
-        private void BranchBinder(int branchId)
-        {
-            var branches = iBourseServ.iBranchServ.GetAll(x => true, y => new { y.Id, y.Title });
-            ViewBag.Branches = new SelectList(branches, "Id", "Title", branchId);
-        }
-
-
         public async Task<IActionResult> Accept(int Id)
         {
             var item = await iBourseServ.iContractServ.FindAsync(x => x.Id == Id);
@@ -103,6 +95,170 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             item.Status = ContractStatus.InProccess;
             await iBourseServ.iContractServ.SaveChangesAsync();
             return Redirect("/Panel/AdminBoard");
+        }
+
+
+        public async Task<IActionResult> MediaManage(AdminMediaSearch request)
+        {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
+            ViewBag.PageTitle = "مدیریت رسانه ها";
+
+            var query = iBourseServ.iMediaServ.ExpressionMaker();
+            query.Add(x => true);
+            bool isSearch = false;
+
+            if (request.Status > 0)
+            {
+                query.Add(x => x.Status == (MediaStatus)request.Status);
+                isSearch = true;
+            }
+
+            if (request.BranchId > 0)
+            {
+                query.Add(x => x.BranchId == request.BranchId);
+                isSearch = true;
+            }
+
+            if (!string.IsNullOrEmpty(request.Title))
+            {
+                query.Add(x => x.Title.Contains(request.Title));
+                isSearch = true;
+            }
+
+            if (request.CategoryId > 0)
+            {
+                query.Add(x => x.CategoryId == request.CategoryId);
+                isSearch = true;
+            }
+
+            ViewBag.Search = isSearch;
+
+            var total = iBourseServ.iMediaServ.Count(query);
+            var pager = new Pagination(total, 20, request.part);
+            ViewBag.Pager = pager;
+            ViewBag.Contents = iBourseServ.iMediaServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            CategoryBinder(request.CategoryId);
+            BranchBinder(request.BranchId);
+            return View(request);
+        }
+
+
+        private void CategoryBinder(int CategoryId)
+        {
+            var categories = iBourseServ.iMediaCategoryServ.GetAll(x => true, y => new { y.Id, y.Title });
+            ViewBag.Categories = new SelectList(categories, "Id", "Title", CategoryId);
+        }
+
+        private void BranchBinder(int branchId)
+        {
+            var branches = iBourseServ.iBranchServ.GetAll(x => true, y => new { y.Id, y.Title });
+            ViewBag.Branches = new SelectList(branches, "Id", "Title", branchId);
+        }
+
+        public async Task<IActionResult> AcceptMedia(int Id)
+        {
+            var item = await iBourseServ.iMediaServ.FindAsync(x => x.Id == Id);
+            item.Status = MediaStatus.Accept;
+            await iBourseServ.iMediaServ.SaveChangesAsync();
+            return Redirect("/Panel/AdminBoard/MediaManage");
+        }
+
+        public async Task<IActionResult> IgnoreMedia(int Id)
+        {
+            var item = await iBourseServ.iMediaServ.FindAsync(x => x.Id == Id);
+            item.Status = MediaStatus.Ignore;
+            await iBourseServ.iMediaServ.SaveChangesAsync();
+            return Redirect("/Panel/AdminBoard/MediaManage");
+        }
+
+        public async Task<IActionResult> InProgressMedia(int Id)
+        {
+            var item = await iBourseServ.iMediaServ.FindAsync(x => x.Id == Id);
+            item.Status = MediaStatus.InProccess;
+            await iBourseServ.iMediaServ.SaveChangesAsync();
+            return Redirect("/Panel/AdminBoard/MediaManage");
+        }
+
+
+        public async Task<IActionResult> Marketers(MarketerSearch request)
+        {
+            ViewBag.PageTitle = "بازاریاب ها";
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
+            var query = iBourseServ.iBranchMarketerServ.ExpressionMaker();
+            query.Add(x => true);
+            bool isSearch = false;
+
+            if (!string.IsNullOrEmpty(request.Firstname))
+            {
+                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Firstname.Contains(request.Firstname), y => new { y.UserId }, 0, 20).Select(x => x.UserId).ToList();
+                query.Add(x => userIds.Contains(x.UserId));
+                isSearch = true;
+            }
+
+            if (!string.IsNullOrEmpty(request.Lastname))
+            {
+                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Lastname.Contains(request.Lastname), y => new { y.UserId }, 0, 20).Select(x => x.UserId).ToList();
+                query.Add(x => userIds.Contains(x.UserId));
+                isSearch = true;
+            }
+
+            if (request.BranchId > 0)
+            {
+                query.Add(x => x.BranchId == request.BranchId);
+                isSearch = true;
+            }
+
+            ViewBag.Search = isSearch;
+
+            var total = iBourseServ.iBranchMarketerServ.Count(query);
+            var pager = new Pagination(total, 20, request.part);
+            ViewBag.Pager = pager;
+            ViewBag.Contents = iBourseServ.iBranchMarketerServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+
+            BranchBinder(request.BranchId);
+            return View(request);
+        }
+
+        public async Task<IActionResult> Consultants(ConsultantSearch request)
+        {
+            ViewBag.PageTitle = "مشاورین";
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
+            var query = iBourseServ.iBranchConsultantServ.ExpressionMaker();
+            query.Add(x => true);
+            bool isSearch = false;
+
+            if (!string.IsNullOrEmpty(request.Firstname))
+            {
+                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Firstname.Contains(request.Firstname), y => new { y.UserId }, 0, 20).Select(x => x.UserId).ToList();
+                query.Add(x => userIds.Contains(x.UserId));
+                isSearch = true;
+            }
+
+            if (!string.IsNullOrEmpty(request.Lastname))
+            {
+                var userIds = ISystemBaseServ.iUserProfileServ.GetAll(x => x.Lastname.Contains(request.Lastname), y => new { y.UserId }, 0, 20).Select(x => x.UserId).ToList();
+                query.Add(x => userIds.Contains(x.UserId));
+                isSearch = true;
+            }
+
+            if (request.BranchId > 0)
+            {
+                query.Add(x => x.BranchId == request.BranchId);
+                isSearch = true;
+            }
+
+            ViewBag.Search = isSearch;
+
+            var total = iBourseServ.iBranchConsultantServ.Count(query);
+            var pager = new Pagination(total, 20, request.part);
+            ViewBag.Pager = pager;
+            ViewBag.Contents = iBourseServ.iBranchConsultantServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+
+            BranchBinder(request.BranchId);
+            return View(request);
         }
 
     }

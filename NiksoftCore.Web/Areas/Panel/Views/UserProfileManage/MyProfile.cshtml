@@ -14,8 +14,7 @@
     </div>
 </div>
 <br />
-@Html.ValidationSummary()
-<form action="/Panel/UserProfileManage" method="post" enctype="multipart/form-data">
+<form action="/Panel/UserProfileManage/MyProfile" method="post" enctype="multipart/form-data">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
@@ -26,6 +25,20 @@
                 <div class="form-group">
                     <label for="txtLastname" class="control-label">نام خانوادگی</label>
                     @Html.TextBoxFor(m => m.Lastname, new { placeholder = "نام خانوادگی", @class = "form-control", @id = "txtLastname" })
+                </div>
+                <div class="form-group">
+                    <label for="txtLastname" class="control-label">کد ملی/شناسه ملی</label>
+                    @Html.TextBoxFor(m => m.NCode, new { placeholder = "کد ملی", @class = "form-control", @id = "txtLastname" })
+                </div>
+                <div class="form-group">
+                    <label for="Gender" class="control-label">جنسیت</label>
+                    <select class="form-control m-b" asp-for="Gender" asp-items="ViewBag.Genders">
+                        <option selected="selected" value="0">انتخاب کنید</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="txtBirthDate" class="control-label">تاریخ تولد</label>
+                    @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control datepicker", @id = "txtBirthDate" })
                 </div>
                 <div class="form-group">
                     <label for="txtMobile" class="control-label">موبایل</label>
@@ -46,12 +59,26 @@
                     </label>
                 </div>
                 <div class="form-group">
+                    <label for="ProvinceId" class="control-label">استان</label>
+                    <select class="form-control m-b" asp-for="ProvinceId" asp-items="ViewBag.Provinces">
+                        <option selected="selected" value="0">انتخاب کنید</option>
+                    </select>
+                    <span asp-validation-for="ProvinceId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="ddlCity" class="control-label">شهر</label>
+                    <select class="form-control m-b" id="ddlCity" name="CityId">
+                        <option selected="selected" value="0">انتخاب کنید</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="txtPhoneNumber" class="control-label">آدرس</label>
                     @Html.TextAreaFor(m => m.Address, new { placeholder = "آدرس", @class = "form-control", @id = "txtPhoneNumber", rows = "3" })
                 </div>
 
                 @Html.HiddenFor(m => m.Id)
                 @Html.HiddenFor(m => m.UserId)
+                @Html.HiddenFor(m => m.Status)
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-success">ذخیره</button>
                 </div>
@@ -62,8 +89,24 @@
 
 
 <script>
+    var ddls = {
+        country: 0,
+        province: 0,
+        city: 0
+    }
 
     $(document).ready(function () {
+
+        $('#ProvinceId').change(function () {
+            getCity(this.value);
+        });
+
+        ddls.province = @Model.ProvinceId;
+        ddls.city = @Model.CityId;
+
+        if (ddls.province > 0) {
+            getCity(ddls.province);
+        }
 
         @if (Messages != null)
         {
@@ -92,4 +135,27 @@
 
 
     });
+
+    function getCity(pId) {
+        callApi({
+            url: '/api/base/AddressApi/GetCity',
+            data: { provinceId: pId },
+            success: function (response) {
+                if (response.status == 200) {
+                    dropdownBinder({
+                        ddl: '#ddlCity',
+                        data: response.data
+                    });
+
+                    if (ddls.city > 0) {
+                        setItemDropdown({
+                            ddl: '#ddlCity',
+                            value: ddls.city
+                        });
+                    }
+                }
+            }
+        });
+    }
+
 </script>

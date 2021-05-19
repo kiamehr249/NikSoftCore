@@ -47,6 +47,7 @@
                 <th class="text-primary text-center" width="30px">ردیف</th>
                 <th class="text-primary text-center">عنوان</th>
                 <th class="text-primary text-center">توضیحات</th>
+                <th class="text-primary text-center" width="140px">آیتم ها</th>
                 <th class="text-primary text-center">وضعیت</th>
                 <th class="text-primary text-center" width="100px">عملیات</th>
             </tr>
@@ -60,6 +61,9 @@
                     <td>@item.Title</td>
                     <td>
                         @item.Description
+                    </td>
+                    <td>
+                        <a href="/Panel/MediaCategoryManage/SubCategories/?ParentId=@item.Id" class="btn btn-outline-info btn-sm">آیتم ها <span class="badge badge-warning">@item.Childs.Count</span></a>
                     </td>
                     <td>
                         @if (item.Enabled)

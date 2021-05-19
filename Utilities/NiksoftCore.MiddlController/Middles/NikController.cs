@@ -20,7 +20,7 @@ namespace NiksoftCore.MiddlController.Middles
             ISystemBaseServ = new SystemBaseService(Configuration.GetConnectionString("SystemBase"));
         }
 
-        public void AddError(string message, string lang)
+        public void AddError(string message, string lang = "fa")
         {
             Messages.Add(new NikMessage { 
                 Message = message,
@@ -29,7 +29,7 @@ namespace NiksoftCore.MiddlController.Middles
             });
         }
 
-        public void AddSuccess(string message, string lang)
+        public void AddSuccess(string message, string lang = "fa")
         {
             Messages.Add(new NikMessage
             {

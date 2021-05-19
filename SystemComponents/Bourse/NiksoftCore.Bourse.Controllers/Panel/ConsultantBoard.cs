@@ -72,7 +72,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
         {
             ViewBag.PageTitle = "ایجاد رسانه";
             var user = await userManager.GetUserAsync(HttpContext.User);
-
+            var consUser = await iBourseServ.iBranchConsultantServ.FindAsync(x => x.UserId == user.Id);
             var theProfile = await ISystemBaseServ.iUserProfileServ.FindAsync(x => x.UserId == user.Id);
 
             var request = new MediaRequest();
@@ -92,6 +92,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             }
 
             request.UserId = user.Id;
+            request.BranchId = consUser.BranchId;
             ComboBinder(request.CategoryId);
             return View(request);
         }
@@ -129,6 +130,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 item.UserId = user.Id;
                 item.CreateDate = DateTime.Now;
                 item.CreatedBy = user.Id;
+                item.BranchId = request.BranchId;
                 iBourseServ.iMediaServ.Add(item);
             }
 

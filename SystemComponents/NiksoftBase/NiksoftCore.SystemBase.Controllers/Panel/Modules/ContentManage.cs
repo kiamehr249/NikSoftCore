@@ -70,7 +70,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 {
                     File = request.ImageFile,
                     RootPath = hosting.ContentRootPath,
-                    UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                    UnitPath = Config.GetSection("FileRoot:MarketerFiles").Value
                 });
 
                 if (!SaveImage.Success)

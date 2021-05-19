@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace NiksoftCore.Bourse.Controllers.Panel
 {
     [Area("Panel")]
-    [Authorize(Roles = "NikAdmin")]
+    [Authorize(Roles = "NikAdmin,Admin")]
     public class MasterManage : NikController
     {
         public IBourseService iBourseServ { get; set; }
