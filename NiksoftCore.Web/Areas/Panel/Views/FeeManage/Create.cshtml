@@ -1,5 +1,5 @@
 ﻿@using NiksoftCore.Bourse.Service;
-@model Fee
+@model FeeRequest
 @{
     ViewData["Title"] = "ایجاد نرخ جدید";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
@@ -24,18 +24,17 @@
                     @Html.ValidationMessageFor(m => m.Title)
                 </div>
                 <div class="form-group">
-                    <label for="ddlType" class="control-label">نوع</label>
-                    <select id="ddlType" class="form-control" name="FeeType">
-                        <option value="1">ثابت</option>
-                        <option value="2">پلکانی</option>
+                    <label for="FeeType" class="control-label">نوع کارمزد</label>
+                    <select class="form-control m-b" asp-for="FeeType" asp-items="ViewBag.FeeTypes">
+                        <option selected="selected" value="0">انتخاب کنید</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group staires" style="display: none;">
                     <label for="txtFromAmount" class="control-label">مبلغ از</label>
                     @Html.TextBoxFor(m => m.FromAmount, new { placeholder = "0", @class = "form-control", @id = "txtFromAmount" })
                     @Html.ValidationMessageFor(m => m.FromAmount)
                 </div>
-                <div class="form-group">
+                <div class="form-group staires" style="display: none;">
                     <label for="txtToAmount" class="control-label">مبلغ تا</label>
                     @Html.TextBoxFor(m => m.ToAmount, new { placeholder = "0", @class = "form-control", @id = "txtToAmount" })
                     @Html.ValidationMessageFor(m => m.ToAmount)
@@ -55,8 +54,13 @@
 </form>
 
 <script>
-
     $(document).ready(function () {
+
+        @if (Model.FeeType == 2) {
+            <text>
+            $('.staires').show();
+            </text>
+        }
 
         @if (Messages != null)
         {
@@ -83,6 +87,14 @@
             }
         }
 
-
+        $('#FeeType').on('change', function () {
+            if (this.value == 1) {
+                console.log('hid');
+                $('.staires').hide();
+            } else {
+                console.log('show');
+                $('.staires').show();
+            }
+        });
     });
 </script>

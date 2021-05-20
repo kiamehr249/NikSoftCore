@@ -7,28 +7,26 @@
 }
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/MasterManage" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/MasterSetupManage" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/MasterManage/Create" method="post">
+<form action="/Panel/MasterSetupManage/Create" method="post">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
                     <label for="BranchId" class="control-label">شعبه</label>
                     <select class="form-control m-b" asp-for="BranchId" asp-items="ViewBag.Branches">
-                        <option selected="selected" value="0">انتخاب کنید</option>
                     </select>
                     <span asp-validation-for="BranchId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label for="UserId" class="control-label">کاربر</label>
                     <select class="form-control m-b" asp-for="UserId" asp-items="ViewBag.Users">
-                        <option selected="selected" value="0">انتخاب کنید</option>
                     </select>
                     <span asp-validation-for="BranchId" class="text-danger"></span>
                 </div>

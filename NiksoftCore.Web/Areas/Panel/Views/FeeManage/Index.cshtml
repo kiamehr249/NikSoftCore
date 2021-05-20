@@ -57,8 +57,8 @@
                 <th class="text-primary text-center" width="30px">ردیف</th>
                 <th class="text-primary text-center">عنوان</th>
                 <th class="text-primary text-center">نوع</th>
-                <th class="text-primary text-center">مبلغ از</th>
-                <th class="text-primary text-center">مبلغ تا</th>
+                <th class="text-primary text-center">بازه مبلغ</th>
+                <th class="text-primary text-center">درصد</th>
                 <th class="text-primary text-center" width="100px">عملیات</th>
             </tr>
         </thead>
@@ -79,8 +79,17 @@
                             <span>پلکانی</span>
                         }
                     </td>
-                    <td>@item.FromAmount.ToString("N0")</td>
-                    <td>@item.ToAmount.ToString("N0")</td>
+                    <td>
+                        @if (item.FeeType == FeeType.Stairs)
+                        {
+                        <span>از @item.FromAmount.ToString("N0") تا @item.ToAmount.ToString("N0")</span>
+                        } 
+                        else
+                        {
+                            <span>-</span>
+                        }
+                    </td>
+                    <td>@item.AmountPercentage %</td>
                     <td>
                         <div class="btn-group btn-group-sm">
                             <a href="/Panel/FeeManage/Create?Id=@item.Id" class="btn btn-outline-warning btn-sm">

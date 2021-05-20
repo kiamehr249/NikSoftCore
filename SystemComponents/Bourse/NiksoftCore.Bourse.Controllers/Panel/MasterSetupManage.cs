@@ -15,12 +15,12 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 {
     [Area("Panel")]
     [Authorize(Roles = "NikAdmin,Admin")]
-    public class MasterManage : NikController
+    public class MasterSetupManage : NikController
     {
         public IBourseService iBourseServ { get; set; }
         private readonly UserManager<DataModel.User> userManager;
 
-        public MasterManage(IConfiguration Configuration, UserManager<DataModel.User> userManager) : base(Configuration)
+        public MasterSetupManage(IConfiguration Configuration, UserManager<DataModel.User> userManager) : base(Configuration)
         {
             this.iBourseServ = new BourseService(Configuration.GetConnectionString("SystemBase"));
             this.userManager = userManager;
@@ -66,17 +66,16 @@ namespace NiksoftCore.Bourse.Controllers.Panel
         }
 
         [HttpGet]
-        public IActionResult Create(int Id)
+        public async Task<IActionResult> Create(int Id)
         {
-
             ViewBag.PageTitle = "انتصاب سرپرست";
 
             var request = new BranchMasterRequest();
             if (Id > 0)
             {
-                var item = iBourseServ.iBranchMasterServ.Find(x => x.Id == Id);
+                var item = await iBourseServ.iBranchMasterServ.FindAsync(x => x.Id == Id);
                 request.Id = item.Id;
-                request.UserId = item.Id;
+                request.UserId = item.UserId;
                 request.BranchId = item.BranchId;
             }
 
@@ -136,7 +135,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 await userManager.AddToRoleAsync(masterUser, "Master");
             }
 
-            return Redirect("/Panel/MasterManage");
+            return Redirect("/Panel/MasterSetupManage");
 
         }
 
@@ -149,7 +148,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
             iBourseServ.iBranchMasterServ.Remove(item);
             await iBourseServ.iBranchMasterServ.SaveChangesAsync();
-            return Redirect("/Panel/MasterManage");
+            return Redirect("/Panel/MasterSetupManage");
         }
 
         private bool ValidForm(BranchMasterRequest request)
@@ -176,12 +175,14 @@ namespace NiksoftCore.Bourse.Controllers.Panel
         private void BranchBinder(int branchId)
         {
             var branches = iBourseServ.iBranchServ.GetAll(x => true, y => new { y.Id, y.Title });
+            branches.Insert(0, new { Id = 0, Title = "انتخاب کنید" });
             ViewBag.Branches = new SelectList(branches, "Id", "Title", branchId);
         }
 
         private void UserBinder(int userId)
         {
             var users = iBourseServ.iUserProfileServ.GetAll(x => true, y => new { y.Id, Title = y.Firstname + " " + y.Lastname });
+            users.Insert(0, new { Id = 0, Title = "انتخاب کنید" });
             ViewBag.Users = new SelectList(users, "Id", "Title", userId);
         }
 

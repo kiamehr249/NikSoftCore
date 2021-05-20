@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NiksoftCore.Bourse.Controllers": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
