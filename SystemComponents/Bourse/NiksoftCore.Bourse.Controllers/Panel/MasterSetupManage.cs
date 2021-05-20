@@ -28,7 +28,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
         public IActionResult Index(MasterSearch request)
         {
-            ViewBag.PageTitle = "مدیریت سرپست های شعب";
+            ViewBag.PageTitle = "سرپرست های شعب";
 
             var query = iBourseServ.iBranchMasterServ.ExpressionMaker();
             query.Add(x => true);
