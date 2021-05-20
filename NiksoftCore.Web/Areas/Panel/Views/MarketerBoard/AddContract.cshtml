@@ -29,10 +29,9 @@
                     @Html.ValidationMessageFor(m => m.ContractNumber)
                 </div>
                 <div class="form-group">
-                    <label for="ddlType" class="control-label">نوع کارمزد</label>
-                    <select id="ddlType" class="form-control" name="FeeType">
-                        <option value="1">ثابت</option>
-                        <option value="2">پلکانی</option>
+                    <label for="FeeType" class="control-label">نوع کارمزد</label>
+                    <select class="form-control m-b" asp-for="FeeType" asp-items="ViewBag.FeeTypes">
+                        <option selected="selected" value="0">انتخاب کنید</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -74,12 +73,19 @@
 </form>
 
 <script>
-    @Html.Raw("var feeId = " + Model.FeeId +";");
+    var ddls = {
+        feeId: @Model.FeeId,
+        feeType: @Model.FeeType
+    }
+
     $(document).ready(function () {
-        ddlBinder(1);
-        $('#ddlType').on('change', function () {
-            ddlBinder(this.value);
+        $('#FeeType').on('change', function () {
+            getFees(this.value);
         });
+
+        if (ddls.feeType > 0) {
+            getFees(ddls.feeType);
+        }
 
 
         @if (Messages != null)
@@ -117,13 +123,25 @@
         });
     }
 
-    function createOptions(entry, id, ctrl) {
-        $(ctrl).html('');
-        var ops = '<option value="0">انتخاب کنید</option>';
-        entry.forEach(function (item, index) {
-            ops += '<option value="' + item.id + '">'+ item.title +'</option>'
+    function getFees(tp) {
+        callApi({
+            url: '/api/BourseApi/GetFees',
+            data: { type: tp },
+            success: function (response) {
+                if (response.status == 200) {
+                    dropdownBinder({
+                        ddl: '#ddlFee',
+                        data: response.data
+                    });
+
+                    if (ddls.feeType > 0) {
+                        setItemDropdown({
+                            ddl: '#ddlFee',
+                            value: ddls.feeId
+                        });
+                    }
+                }
+            }
         });
-        $(ctrl).html(ops);
-        $(ctrl).val(id);
     }
 </script>

@@ -10,6 +10,7 @@
         public string UserFullName { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+        public int FeeType { get; set; }
         public int FeeId { get; set; }
         public int Deadline { get; set; }
         public ContractStatus Status { get; set; }

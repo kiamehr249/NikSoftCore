@@ -485,6 +485,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 request.StartDate = contract.StartDate.ToPersianDateTime().ToPersianDigitalDateString();
                 request.EndDate = contract.EndDate.ToPersianDateTime().ToPersianDigitalDateString();
                 request.FeeId = contract.FeeId;
+                request.FeeType = (int)contract.Fee.FeeType;
                 request.Deadline = contract.Deadline;
                 request.Status = contract.Status;
                 request.ContractDate = contract.ContractDate.ToPersianDateTime().ToPersianDigitalDateString();
@@ -493,7 +494,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             request.UserId = UserId;
             request.UserFullName = theProfile.Firstname + " " + theProfile.Lastname;
             request.BranchId = marketerUser.BranchId;
-
+            FeeTypeBinder(request.FeeType);
             return View(request);
         }
 
@@ -506,6 +507,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             if (!ValidContractForm(request))
             {
                 ViewBag.Messages = Messages;
+                FeeTypeBinder(request.FeeType);
                 return View(request);
             }
 
@@ -602,6 +604,22 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 Title = "زن"
             });
             ViewBag.Genders = new SelectList(genders, "Id", "Title", genderId);
+        }
+
+        private void FeeTypeBinder(int feeType)
+        {
+            List<ListItemModel> feeTypes = new List<ListItemModel>();
+            feeTypes.Add(new ListItemModel
+            {
+                Id = 1,
+                Title = "ثابت"
+            });
+            feeTypes.Add(new ListItemModel
+            {
+                Id = 2,
+                Title = "پلکانی"
+            });
+            ViewBag.FeeTypes = new SelectList(feeTypes, "Id", "Title", feeType);
         }
     }
 }

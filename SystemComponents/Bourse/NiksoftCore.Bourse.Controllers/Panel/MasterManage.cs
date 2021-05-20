@@ -62,14 +62,14 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
             ViewBag.Contents = iBourseServ.iBranchMasterServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
             BranchBinder(request.BranchId);
-            return View();
+            return View(request);
         }
 
         [HttpGet]
         public IActionResult Create(int Id)
         {
 
-            ViewBag.PageTitle = "نصب سرپرست جدید";
+            ViewBag.PageTitle = "انتصاب سرپرست";
 
             var request = new BranchMasterRequest();
             if (Id > 0)
