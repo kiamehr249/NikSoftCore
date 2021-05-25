@@ -13,6 +13,6 @@ namespace NiksoftCore.Bourse.Service
         public long ToAmount { get; set; }
         public int AmountPercentage { get; set; }
 
-        public virtual ICollection<Contract> Contracts { get; set; }
+        public virtual ICollection<ContractFee> ContractFees { get; set; }
     }
 }

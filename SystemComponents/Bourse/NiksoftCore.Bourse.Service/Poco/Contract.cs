@@ -1,5 +1,6 @@
 ﻿using NiksoftCore.ViewModel;
 using System;
+using System.Collections.Generic;
 
 namespace NiksoftCore.Bourse.Service
 {
@@ -13,15 +14,15 @@ namespace NiksoftCore.Bourse.Service
         public string UserFullName { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int FeeId { get; set; }
         public int Deadline { get; set; }
         public ContractStatus Status { get; set; }
         public DateTime ContractDate { get; set; }
         public int BranchId { get; set; }
 
         public virtual BourseUser User { get; set; }
-        public virtual Fee Fee { get; set; }
         public virtual Branch Branch { get; set; }
+
+        public virtual ICollection<ContractFee> ContractFees { get; set; }
 
     }
 }
