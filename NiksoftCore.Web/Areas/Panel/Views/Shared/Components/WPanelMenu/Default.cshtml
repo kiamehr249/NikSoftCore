@@ -16,7 +16,7 @@
                     </span>
                 </a>
                 <ul class="list-unstyled">
-                    @foreach (var subitem in item.Childs)
+                    @foreach (var subitem in item.Childs.OrderBy(x => x.Ordering))
                     {
                         <li><a href="@subitem.Link">@subitem.Title</a></li>
                     }

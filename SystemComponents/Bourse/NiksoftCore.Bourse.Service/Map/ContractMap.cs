@@ -14,10 +14,6 @@ namespace NiksoftCore.Bourse.Service
                 .WithMany(x => x.Contracts)
                 .HasForeignKey(x => x.UserId).IsRequired(true);
 
-            builder.HasOne(x => x.Fee)
-                .WithMany(x => x.Contracts)
-                .HasForeignKey(x => x.FeeId).IsRequired(true);
-
             builder.HasOne(x => x.Branch)
                 .WithMany(x => x.Contracts)
                 .HasForeignKey(x => x.BranchId).IsRequired(true);

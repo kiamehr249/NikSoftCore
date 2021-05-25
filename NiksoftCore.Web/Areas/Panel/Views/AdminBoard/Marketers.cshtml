@@ -61,7 +61,11 @@
         <thead>
             <tr>
                 <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">شعبه</th>
+                <th class="text-primary text-center">سرپرستی منطقه ای شعب</th>
+                <th class="text-primary text-center">کد</th>
                 <th class="text-primary text-center">نام / نام خانوادگی</th>
+                <th class="text-primary text-center">نقش</th>
                 <th class="text-primary text-center">موبایل</th>
                 <th class="text-primary text-center">کد ملی</th>
             </tr>
@@ -72,7 +76,13 @@
                 pageNumber++;
                 <tr>
                     <td>@(pager.StartIndex + pageNumber)</td>
+                    <td>@item.Branch.Title</td>
+                    <td>@item.Branch.BranchMasters.First().User.UserProfiles.First().Firstname @item.Branch.BranchMasters.First().User.UserProfiles.First().Lastname</td>
+                    <td>
+                        
+                    </td>
                     <td>@item.User.UserProfiles.First().Firstname @item.User.UserProfiles.First().Lastname</td>
+                    <td>بازاریاب شعبه</td>
                     <td>
                         @item.User.PhoneNumber
                     </td>

@@ -56,7 +56,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             ViewBag.Search = isSearch;
 
             var total = iBourseServ.iBranchMasterServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
 
             ViewBag.Contents = iBourseServ.iBranchMasterServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
@@ -90,7 +90,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             ViewBag.Search = isSearch;
 
             var total = iBourseServ.iBranchMarketerServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
             ViewBag.BranchId = request.BranchId;
             ViewBag.Contents = iBourseServ.iBranchMarketerServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
@@ -452,6 +452,12 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 result = false;
             }
 
+            if (string.IsNullOrEmpty(request.BirthDate))
+            {
+                AddError("تاریخ تولد باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
 
             return result;
         }
@@ -469,7 +475,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             ViewBag.Search = isSearch;
 
             var total = iBourseServ.iContractServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
             ViewBag.BranchId = request.BranchId;
             ViewBag.Contents = iBourseServ.iContractServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
@@ -495,8 +501,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 request.UserCode = contract.UserCode;
                 request.StartDate = contract.StartDate.ToPersianDateTime().ToPersianDigitalDateString();
                 request.EndDate = contract.EndDate.ToPersianDateTime().ToPersianDigitalDateString();
-                request.FeeId = contract.FeeId;
-                request.FeeType = (int)contract.Fee.FeeType;
                 request.Deadline = contract.Deadline;
                 request.Status = contract.Status;
                 request.ContractDate = contract.ContractDate.ToPersianDateTime().ToPersianDigitalDateString();
@@ -505,7 +509,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             request.UserId = UserId;
             request.UserFullName = theProfile.Firstname + " " + theProfile.Lastname;
             request.BranchId = BranchId;
-            FeeTypeBinder(request.FeeType);
             return View(request);
         }
 
@@ -518,7 +521,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             if (!ValidContractForm(request))
             {
                 ViewBag.Messages = Messages;
-                FeeTypeBinder(request.FeeType);
                 return View(request);
             }
 
@@ -536,7 +538,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             item.UserFullName = request.UserFullName;
             item.StartDate = PersianDateTime.Parse(request.StartDate).ToDateTime();
             item.EndDate = PersianDateTime.Parse(request.EndDate).ToDateTime();
-            item.FeeId = request.FeeId;
             item.Deadline = request.Deadline;
             item.Status = ContractStatus.InProccess;
             item.ContractDate = PersianDateTime.Parse(request.ContractDate).ToDateTime();
@@ -586,6 +587,112 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             if (string.IsNullOrEmpty(request.EndDate))
             {
                 AddError("تاریخ قرارداد باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            //if (request.FeeId == 0)
+            //{
+            //    AddError("کارمزد باید مقدار داشته باشد", "fa");
+            //    result = false;
+            //}
+
+            return result;
+        }
+
+        public async Task<IActionResult> ContractFees(ContractFeeSearch request)
+        {
+            var theContract = await iBourseServ.iContractServ.FindAsync(x => x.Id == request.ContractId);
+            ViewBag.PageTitle = "نرخ های قرارداد " + theContract.ContractNumber;
+
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
+            var query = iBourseServ.iContractFeeServ.ExpressionMaker();
+            query.Add(x => x.ContractId == request.ContractId);
+
+            bool isSearch = false;
+            ViewBag.Search = isSearch;
+
+            var total = iBourseServ.iContractFeeServ.Count(query);
+            var pager = new Pagination(total, 10, request.part);
+            request.UserId = theContract.UserId;
+            request.BranchId = theContract.BranchId;
+            ViewBag.Pager = pager;
+            ViewBag.Contents = iBourseServ.iContractFeeServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddFee(int ContractId, int Id)
+        {
+            var theContract = await iBourseServ.iContractServ.FindAsync(x => x.Id == ContractId);
+            ViewBag.PageTitle = "افزودن نرخ به قرارداد " + theContract.ContractNumber;
+
+            var request = new ContractFeeRequest();
+
+            if (Id > 0)
+            {
+                var confee = iBourseServ.iContractFeeServ.Find(x => x.Id == Id);
+                request.Id = confee.Id;
+                request.FeeId = confee.FeeId;
+                request.FeeType = (int)confee.Fee.FeeType;
+            }
+
+            request.ContractId = ContractId;
+            FeeTypeBinder(request.FeeType);
+            return View(request);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddFee(ContractFeeRequest request)
+        {
+            var theContract = await iBourseServ.iContractServ.FindAsync(x => x.Id == request.ContractId);
+            ViewBag.PageTitle = "افزودن نرخ به قرارداد " + theContract.ContractNumber;
+            ViewBag.Messages = Messages;
+
+            if (!FeeFormValid(request))
+            {
+                ViewBag.Messages = Messages;
+                FeeTypeBinder(request.FeeType);
+                return View(request);
+            }
+
+            ContractFee item = new ContractFee();
+            if (request.Id > 0)
+            {
+                item = iBourseServ.iContractFeeServ.Find(x => x.Id == request.Id);
+            }
+
+            item.FeeId = request.FeeId;
+
+            if (request.Id == 0)
+            {
+                item.ContractId = request.ContractId;
+                iBourseServ.iContractFeeServ.Add(item);
+            }
+
+            await iBourseServ.iContractFeeServ.SaveChangesAsync();
+
+            return Redirect("/Panel/MasterBoard/ContractFees/?ContractId=" + request.ContractId);
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveFee(int Id)
+        {
+            var confee = await iBourseServ.iContractFeeServ.FindAsync(x => x.Id == Id);
+            int contractid = confee.ContractId;
+            iBourseServ.iContractFeeServ.Remove(confee);
+            await iBourseServ.iContractFeeServ.SaveChangesAsync();
+            return Redirect("/Panel/MasterBoard/ContractFees/?ContractId=" + contractid);
+        }
+
+        private bool FeeFormValid(ContractFeeRequest request)
+        {
+            bool result = true;
+
+            if (request.FeeType == 0)
+            {
+                AddError("نوع کارمزد باید مقدار داشته باشد", "fa");
                 result = false;
             }
 
@@ -649,7 +756,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             ViewBag.Search = isSearch;
 
             var total = iBourseServ.iBranchConsultantServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
             ViewBag.Contents = iBourseServ.iBranchConsultantServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
 

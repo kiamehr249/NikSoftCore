@@ -87,10 +87,25 @@
                 </div>
             </div>
 
-            <footer class="footer">
+            @*<footer class="footer">
                 تمامی حقوق اثر متعلق به سامانه خدمات بازاریابی می باشد.
-            </footer>
-
+            </footer>*@
+            <button id="btndelmodal" type="button" class="d-none" data-toggle="modal" data-target="#deletemodal"></button>
+            <div id="deletemodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title m-0" id="mySmallModalLabel">آیا از حذف آیتم اطمینان دارید؟</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal" aria-hidden="true">لغو</button>
+                                <a id="dodelbtn" href="#" class="btn btn-success btn-sm">انجام</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -110,6 +125,18 @@
     <script src="~/templates/dashboard/NikFace/pages/dashborad.js"></script>
     <script src="~/templates/dashboard/NikFace/js/app.js"></script>
     <script src="~/js/panel-configs.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('table a.btn-outline-danger i.fa-trash-alt').length > 0) {
+                $('table a.btn-outline-danger').on('click', function () {
+                    var url = $(this).attr('href');
+                    $('#dodelbtn').attr('href', url);
+                    $('#btndelmodal').click();
+                    return false;
+                });
+            }
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 
 </body>

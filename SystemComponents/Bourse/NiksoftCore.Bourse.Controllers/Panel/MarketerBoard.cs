@@ -66,7 +66,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             ViewBag.Search = isSearch;
 
             var total = iBourseServ.iBranchConsultantServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
             ViewBag.Contents = iBourseServ.iBranchConsultantServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
             return View(request);
@@ -431,6 +431,11 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 result = false;
             }
 
+            if (string.IsNullOrEmpty(request.BirthDate))
+            {
+                AddError("تاریخ تولد باید مقدار داشته باشد", "fa");
+                result = false;
+            }
 
             return result;
         }
@@ -457,7 +462,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             ViewBag.Search = isSearch;
 
             var total = iBourseServ.iContractServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
             ViewBag.BranchId = request.BranchId;
             ViewBag.Contents = iBourseServ.iContractServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
@@ -484,8 +489,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 request.UserCode = contract.UserCode;
                 request.StartDate = contract.StartDate.ToPersianDateTime().ToPersianDigitalDateString();
                 request.EndDate = contract.EndDate.ToPersianDateTime().ToPersianDigitalDateString();
-                request.FeeId = contract.FeeId;
-                request.FeeType = (int)contract.Fee.FeeType;
                 request.Deadline = contract.Deadline;
                 request.Status = contract.Status;
                 request.ContractDate = contract.ContractDate.ToPersianDateTime().ToPersianDigitalDateString();
@@ -494,7 +497,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             request.UserId = UserId;
             request.UserFullName = theProfile.Firstname + " " + theProfile.Lastname;
             request.BranchId = marketerUser.BranchId;
-            FeeTypeBinder(request.FeeType);
             return View(request);
         }
 
@@ -507,7 +509,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             if (!ValidContractForm(request))
             {
                 ViewBag.Messages = Messages;
-                FeeTypeBinder(request.FeeType);
                 return View(request);
             }
 
@@ -525,7 +526,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             item.UserFullName = request.UserFullName;
             item.StartDate = PersianDateTime.Parse(request.StartDate).ToDateTime();
             item.EndDate = PersianDateTime.Parse(request.EndDate).ToDateTime();
-            item.FeeId = request.FeeId;
             item.Deadline = request.Deadline;
             item.Status = ContractStatus.InProccess;
             item.ContractDate = PersianDateTime.Parse(request.ContractDate).ToDateTime();
@@ -575,12 +575,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             if (string.IsNullOrEmpty(request.EndDate))
             {
                 AddError("تاریخ قرارداد باید مقدار داشته باشد", "fa");
-                result = false;
-            }
-
-            if (request.FeeId == 0)
-            {
-                AddError("کارمزد باید مقدار داشته باشد", "fa");
                 result = false;
             }
 

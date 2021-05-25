@@ -1498,7 +1498,7 @@ a.site-button{
   padding: 80px 0;
 }
 .login-container {
-  max-width: 700px;
+  max-width: 80%;
   margin: 0 auto;
   background: #dae3f2;
   box-shadow: 4px 7px 5px 3px #604009;

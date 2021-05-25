@@ -28,7 +28,10 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
             ViewBag.PageTitle = "مدیریت منوها";
 
-            ViewBag.Contents = ISystemBaseServ.iPanelMenuService.GetPart(x => x.ParentId == null, pager.StartIndex, pager.PageSize).OrderBy(x => x.Ordering).ToList();
+            var query = ISystemBaseServ.iPanelMenuService.ExpressionMaker();
+            query.Add(x => x.ParentId == null && x.Enabled);
+
+            ViewBag.Contents = ISystemBaseServ.iPanelMenuService.GetPartOptional(query, pager.StartIndex, pager.PageSize).OrderBy(x => x.Ordering).ToList();
 
             return View();
         }
@@ -186,7 +189,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             if (request.Id == 0)
             {
                 item.Enabled = true;
-                item.Ordering = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == null) + 1;
+                item.Ordering = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == request.ParentId) + 1;
                 ISystemBaseServ.iPanelMenuService.Add(item);
             }
 
@@ -211,6 +214,71 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             theMenu.Enabled = !theMenu.Enabled;
             await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
             return Redirect("/Panel/PanelMenuManage/MenuItems?ParentId=" + theMenu.ParentId);
+        }
+
+        public async Task<IActionResult> OrderDownMenu(int Id)
+        {
+            var theItem = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == Id);
+            var itemsCount = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == theItem.ParentId);
+            if (theItem.Ordering == itemsCount)
+            {
+                if (theItem.ParentId == null)
+                {
+                    return Redirect("/Panel/PanelMenuManage");
+                }
+                else
+                {
+                    return Redirect("/Panel/PanelMenuManage/MenuItems/?ParentId=" + theItem.ParentId);
+                }
+                
+            }
+
+            var upItem = ISystemBaseServ.iPanelMenuService.Find(x => x.ParentId == theItem.ParentId && x.Ordering == (theItem.Ordering + 1));
+
+            theItem.Ordering = theItem.Ordering + 1;
+            upItem.Ordering = upItem.Ordering - 1;
+
+            await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
+
+            if (theItem.ParentId == null)
+            {
+                return Redirect("/Panel/PanelMenuManage");
+            }
+            else
+            {
+                return Redirect("/Panel/PanelMenuManage/MenuItems/?ParentId=" + theItem.ParentId);
+            }
+        }
+
+        public async Task<IActionResult> OrderUpMenu(int Id)
+        {
+            var theItem = ISystemBaseServ.iPanelMenuService.Find(x => x.Id == Id);
+            if (theItem.Ordering == 1)
+            {
+                if (theItem.ParentId == null)
+                {
+                    return Redirect("/Panel/PanelMenuManage");
+                }
+                else
+                {
+                    return Redirect("/Panel/PanelMenuManage/MenuItems/?ParentId=" + theItem.ParentId);
+                }
+            }
+
+            var downItem = ISystemBaseServ.iPanelMenuService.Find(x => x.ParentId == theItem.ParentId && x.Ordering == (theItem.Ordering - 1));
+
+            theItem.Ordering = theItem.Ordering - 1;
+            downItem.Ordering = downItem.Ordering + 1;
+
+            await ISystemBaseServ.iPanelMenuService.SaveChangesAsync();
+            if (theItem.ParentId == null)
+            {
+                return Redirect("/Panel/PanelMenuManage");
+            }
+            else
+            {
+                return Redirect("/Panel/PanelMenuManage/MenuItems/?ParentId=" + theItem.ParentId);
+            }
         }
 
     }

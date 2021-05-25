@@ -1,10 +1,10 @@
 ﻿@using NiksoftCore.SystemBase.Service;
 @using NiksoftCore.Bourse.Service;
-@model MarketerContractSearch
+@model ContractFeeSearch
 @{
-    ViewData["Title"] = "مدیریت قرارداد";
+    ViewData["Title"] = "نرخ های قرارداد";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
-    var contents = (List<Contract>)ViewBag.Contents;
+    var contents = (List<ContractFee>)ViewBag.Contents;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
     int pageNumber = 0;
 
@@ -13,8 +13,8 @@
     var accBtn = isSearch ? "aria-expanded='true'" : "";
 }
 <div class="text-right">
-    <a href="/Panel/MarketerBoard/AddContract/?UserId=@Model.UserId" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
-    <a href="/Panel/MarketerBoard" class="btn btn-outline-info btn-sm">
+    <a href="/Panel/MasterBoard/AddFee/?ContractId=@Model.ContractId" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    <a href="/Panel/MasterBoard/MarketerContracts/?UserId=@Model.UserId&BranchId=@Model.BranchId" class="btn btn-outline-info btn-sm">
         <i class="fas fa-arrow-left"></i>
     </a>
 </div>
@@ -24,17 +24,11 @@
         <thead>
             <tr>
                 <th class="text-primary text-center" width="30px">ردیف</th>
-                <th class="text-primary text-center">تاریخ</th>
-                <th class="text-primary text-center">شماره قرارداد</th>
-                <th class="text-primary text-center">طرف قرارداد</th>
-                <th class="text-primary text-center">کد طرف قرارداد</th>
-                <th class="text-primary text-center">نام طرف قرارداد</th>
-                <th class="text-primary text-center">تاریخ شروع</th>
-                <th class="text-primary text-center">تاریخ پایان</th>
-                <th class="text-primary text-center">نوع کارمزد</th>
-                <th class="text-primary text-center">نرخ کارمزد</th>
-                <th class="text-primary text-center">مهلت</th>
-                <th class="text-primary text-center">وضعیت</th>
+                <th class="text-primary text-center">نوع نرخ</th>
+                <th class="text-primary text-center">عنوان</th>
+                <th class="text-primary text-center">مبلغ از</th>
+                <th class="text-primary text-center">مبلغ تا</th>
+                <th class="text-primary text-center">درصد</th>
                 <th class="text-primary text-center" width="100px">عملیات</th>
             </tr>
         </thead>
@@ -44,30 +38,30 @@
                 pageNumber++;
                 <tr>
                     <td>@(pager.StartIndex + pageNumber)</td>
-                    <td>@item.ContractDate.ToPersianDateTime().ToPersianDigitalDateString()</td>
-                    <td>@item.ContractNumber</td>
                     <td>
-                        @if (item.ContractType == ContractType.Marketer)
+                        @if (item.Fee.FeeType == FeeType.Fixed)
                         {
-                            <span>بازاریاب شعبه</span>
+                            <span>ثابت</span>
                         }
                         else
                         {
-                            <span>مشاور بازاریابی</span>
+                            <span>پلکانی</span>
                         }
                     </td>
-                    <td>@item.UserCode</td>
-                    <td>@item.UserFullName</td>
-                    <td>@item.StartDate.ToPersianDateTime().ToPersianDigitalDateString()</td>
-                    <td>@item.EndDate.ToPersianDateTime().ToPersianDigitalDateString()</td>
-                    <td>@item.Deadline روز</td>
-                    <td>@item.Status.GetContractStatus()</td>
+                    <td>@item.Fee.Title</td>
+                    <td>
+                        @item.Fee.FromAmount.ToString("N0")
+                    </td>
+                    <td>
+                        @item.Fee.ToAmount.ToString("N0")
+                    </td>
+                    <td>@item.Fee.AmountPercentage</td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                            <a href="/Panel/MarketerBoard/AddContract/?Id=@item.Id&UserId=@item.UserId" class="btn btn-outline-warning btn-sm">
+                            <a href="/Panel/MasterBoard/AddFee/?ContractId=@item.ContractId&Id=@item.Id" class="btn btn-outline-warning btn-sm">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="/Panel/MasterBoard/Remove?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                            <a href="/Panel/MasterBoard/RemoveFee/?Id=@item.Id" class="btn btn-outline-danger btn-sm">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </div>

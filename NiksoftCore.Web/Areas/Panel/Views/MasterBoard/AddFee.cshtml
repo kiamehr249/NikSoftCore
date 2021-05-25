@@ -1,34 +1,24 @@
 ﻿@using NiksoftCore.Bourse.Service;
-@model ContractRequest
+@model ContractFeeRequest
 @{
-    ViewData["Title"] = "ایجاد قرارداد";
+    ViewData["Title"] = "افزود نرخ به قرارداد";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/MarketerBoard" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/MasterBoard/ContractFees/?ContractId=@Model.ContractId" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>
 </div>
 <br />
 @Html.ValidationSummary()
-<form action="/Panel/MarketerBoard/AddContract" method="post" enctype="multipart/form-data">
+<form action="/Panel/MasterBoard/AddFee" method="post">
     <div class="registerdiv">
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
-                    <label for="txtUserFullName" class="control-label">نام طرف قرارداد</label>
-                    @Html.TextBoxFor(m => m.UserFullName, new { placeholder = "نام", @class = "form-control", @id = "txtUserFullName" })
-                    @Html.ValidationMessageFor(m => m.UserFullName)
-                </div>
-                <div class="form-group">
-                    <label for="txtContractNumber" class="control-label">شماره قرارداد</label>
-                    @Html.TextBoxFor(m => m.ContractNumber, new { placeholder = "شماره قرارداد", @class = "form-control", @id = "txtContractNumber" })
-                    @Html.ValidationMessageFor(m => m.ContractNumber)
-                </div>
-                @*<div class="form-group">
                     <label for="FeeType" class="control-label">نوع کارمزد</label>
                     <select class="form-control m-b" asp-for="FeeType" asp-items="ViewBag.FeeTypes">
                         <option selected="selected" value="0">انتخاب کنید</option>
@@ -38,32 +28,9 @@
                     <label for="ddlFee" class="control-label">کارمزد</label>
                     <select id="ddlFee" class="form-control m-b" name="FeeId">
                     </select>
-                </div>*@
-                <div class="form-group">
-                    <label for="txtUserCode" class="control-label">کد طرف قرارداد</label>
-                    @Html.TextBoxFor(m => m.UserCode, new { placeholder = "0", @class = "form-control", @id = "txtUserCode" })
-                    @Html.ValidationMessageFor(m => m.UserCode)
-                </div>
-                <div class="form-group">
-                    <label for="txtContractDate" class="control-label">تاریخ قرارداد</label>
-                    @Html.TextBoxFor(m => m.ContractDate, new { @class = "form-control datepicker", @id = "txtContractDate" })
-                </div>
-                <div class="form-group">
-                    <label for="txtStartDate" class="control-label">تاریخ شروع</label>
-                    @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control datepicker", @id = "txtStartDate" })
-                </div>
-                <div class="form-group">
-                    <label for="txtEndDate" class="control-label">تاریخ پایان</label>
-                    @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control datepicker", @id = "txtEndDate" })
-                </div>
-                <div class="form-group">
-                    <label for="txtDeadline" class="control-label">(روز) مهلت</label>
-                    @Html.TextBoxFor(m => m.Deadline, new { placeholder = "0", @class = "form-control", @id = "txtDeadline" })
-                    @Html.ValidationMessageFor(m => m.Deadline)
                 </div>
                 @Html.HiddenFor(m => m.Id)
-                @Html.HiddenFor(m => m.BranchId)
-                @Html.HiddenFor(m => m.UserId)
+                @Html.HiddenFor(m => m.ContractId)
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-success">ذخیره</button>
                 </div>
@@ -72,7 +39,7 @@
     </div>
 </form>
 
-@*<script>
+<script>
     var ddls = {
         feeId: @Model.FeeId,
         feeType: @Model.FeeType
@@ -144,4 +111,4 @@
             }
         });
     }
-</script>*@
+</script>

@@ -53,6 +53,7 @@
             <tr>
                 <th class="text-primary text-center" width="30px">ردیف</th>
                 <th class="text-primary text-center">نام / نام خانوادگی</th>
+                <th class="text-primary text-center">شماره موبایل</th>
                 <th class="text-primary text-center" width="120px">قراردادها</th>
                 <th class="text-primary text-center" width="120px">عملیات</th>
             </tr>
@@ -64,6 +65,7 @@
                 <tr>
                     <td>@(pager.StartIndex + pageNumber)</td>
                     <td>@item.User.UserProfiles.First().Firstname @item.User.UserProfiles.First().Lastname</td>
+                    <td>@item.User.PhoneNumber</td>
                     <td>
                         <a href="/Panel/MarketerBoard/ConsultantContracts/?UserId=@item.UserId" class="btn btn-outline-danger btn-sm">
                             قراردادها

@@ -31,10 +31,9 @@
                 <th class="text-primary text-center">نام طرف قرارداد</th>
                 <th class="text-primary text-center">تاریخ شروع</th>
                 <th class="text-primary text-center">تاریخ پایان</th>
-                <th class="text-primary text-center">نوع کارمزد</th>
-                <th class="text-primary text-center">نرخ کارمزد</th>
                 <th class="text-primary text-center">مهلت</th>
                 <th class="text-primary text-center">وضعیت</th>
+                <th class="text-primary text-center">نرخ ها</th>
                 <th class="text-primary text-center" width="100px">عملیات</th>
             </tr>
         </thead>
@@ -60,19 +59,11 @@
                     <td>@item.UserFullName</td>
                     <td>@item.StartDate.ToPersianDateTime().ToPersianDigitalDateString()</td>
                     <td>@item.EndDate.ToPersianDateTime().ToPersianDigitalDateString()</td>
-                    <td>
-                        @if (item.Fee.FeeType == FeeType.Fixed)
-                        {
-                            <span>ثابت</span>
-                        }
-                        else
-                        {
-                            <span>پلکانی</span>
-                        }
-                    </td>
-                    <td>@item.Fee.AmountPercentage %</td>
                     <td>@item.Deadline روز</td>
                     <td>@item.Status.GetContractStatus()</td>
+                    <td>
+                        <a href="/Panel/MasterBoard/ContractFees/?ContractId=@item.Id" class="btn btn-outline-info btn-sm">نرخ‌ها <span class="badge badge-info">@item.ContractFees.Count</span></a>
+                    </td>
                     <td>
                         <div class="btn-group btn-group-sm">
                             <a href="/Panel/MasterBoard/AddContract/?Id=@item.Id&UserId=@item.UserId&BranchId=@item.BranchId" class="btn btn-outline-warning btn-sm">

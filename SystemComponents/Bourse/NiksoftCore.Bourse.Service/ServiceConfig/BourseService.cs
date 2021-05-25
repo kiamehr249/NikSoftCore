@@ -15,6 +15,7 @@
         IContractService iContractServ { get; set; }
         IMediaCategoryService iMediaCategoryServ { get; set; }
         IMediaService iMediaServ { get; set; }
+        IContractFeeService iContractFeeServ { get; set; }
     }
 
     public class BourseService : IBourseService
@@ -32,6 +33,7 @@
         public IContractService iContractServ { get; set; }
         public IMediaCategoryService iMediaCategoryServ { get; set; }
         public IMediaService iMediaServ { get; set; }
+        public IContractFeeService iContractFeeServ { get; set; }
 
         public BourseService(string connection)
         {
@@ -49,6 +51,7 @@
             iContractServ = new ContractService(uow);
             iMediaCategoryServ = new MediaCategoryService(uow);
             iMediaServ = new MediaService(uow);
+            iContractFeeServ = new ContractFeeService(uow);
         }
 
     }

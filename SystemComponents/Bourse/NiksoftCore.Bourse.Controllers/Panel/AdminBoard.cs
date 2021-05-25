@@ -261,5 +261,12 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             return View(request);
         }
 
+        public string GetBranchMaster(int branchId)
+        {
+            var bMaster = iBourseServ.iBranchMasterServ.Find(x => x.BranchId == branchId);
+            var profile = iBourseServ.iUserProfileServ.Find(x => x.UserId == bMaster.UserId);
+            return profile.Firstname + " " + profile.Lastname;
+        }
+
     }
 }

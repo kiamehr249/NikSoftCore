@@ -65,7 +65,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             ViewBag.Search = isSearch;
 
             var total = ISystemBaseServ.iNikUserServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
 
 
@@ -422,6 +422,12 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             if (string.IsNullOrEmpty(request.IBAN))
             {
                 AddError("شماره شبا باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            if (string.IsNullOrEmpty(request.BirthDate))
+            {
+                AddError("تاریخ تولد باید مقدار داشته باشد", "fa");
                 result = false;
             }
 

@@ -50,7 +50,7 @@ namespace NiksoftCore.Bourse.Controllers.API
             var fees = iBourseServ.iFeeServ.GetAll(x => x.FeeType == feeType, y => new {
                 y.Id,
                 Title = y.Title + " از " + y.FromAmount + " تا " + y.ToAmount
-            }, 0, 10).ToList();
+            }).ToList();
 
             return Ok(new
             {

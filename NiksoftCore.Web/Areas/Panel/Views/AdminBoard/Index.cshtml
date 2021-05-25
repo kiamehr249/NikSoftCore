@@ -119,7 +119,7 @@
                         
                     </td>
                     <td>
-                        @if (item.Fee.FeeType == FeeType.Fixed)
+                        @if (item.ContractFees.Last().Fee.FeeType == FeeType.Fixed)
                         {
                             <span>ثابت</span>
                         }
@@ -128,7 +128,7 @@
                             <span>پلکانی</span>
                         }
                     </td>
-                    <td>@item.Fee.AmountPercentage %</td>
+                    <td>@item.ContractFees.Last().Fee.AmountPercentage %</td>
                     <td>@item.Deadline روز</td>
                     <td>@item.Status.GetContractStatus()</td>
                     <td>

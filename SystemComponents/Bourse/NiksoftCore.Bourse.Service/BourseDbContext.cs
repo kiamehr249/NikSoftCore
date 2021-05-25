@@ -27,6 +27,7 @@ namespace NiksoftCore.Bourse.Service
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<MediaCategory> MediaCategories { get; set; }
         public DbSet<Media> Medias { get; set; }
+        public DbSet<ContractFee> ContractFees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,6 +43,7 @@ namespace NiksoftCore.Bourse.Service
             builder.ApplyConfiguration(new ContractMap());
             builder.ApplyConfiguration(new MediaCategoryMap());
             builder.ApplyConfiguration(new MediaMap());
+            builder.ApplyConfiguration(new ContractFeeMap());
         }
     }
 }

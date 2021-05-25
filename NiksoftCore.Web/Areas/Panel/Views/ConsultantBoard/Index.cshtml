@@ -12,6 +12,15 @@
     var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
     var accBtn = isSearch ? "aria-expanded='true'" : "";
 }
+<style>
+    .copy-input {
+        height: 0;
+        width: 0;
+        padding: 0 !important;
+        border: none !important;
+    }
+</style>
+
 <div class="text-right">
     <a href="/Panel/ConsultantBoard/AddMedia" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
     <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
@@ -76,7 +85,8 @@
                     </td>
                     <td>@item.FullLink</td>
                     <td>
-
+                        <button type="button" class="btn btn-outline-info btn-sm copy-link" data-input="#ci_@item.Id">کپی لینک</button>
+                        <input id="ci_@item.Id" class="copy-input" type="text" value="http://171.22.25.82/@item.GeneratedLink" />
                     </td>
                     <td>@item.Status.GetMediaStatus()</td>
                     <td>
@@ -136,3 +146,18 @@
     }
 
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.copy-link').on('click', function () {
+            var input = $($(this).data('input'))[0];
+            input.select();
+            input.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            showMessage({
+                text: 'کپی لینک انجام شد',
+                type: 'success'
+            });
+        });
+    });
+</script>

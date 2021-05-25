@@ -8,6 +8,8 @@ namespace NiksoftCore.SystemBase.Service
         public int Id { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        public string UserCode { get; set; }
+        public string AuthId { get; set; }
         public string CompanyName { get; set; }
         public string NCode { get; set; }
         public string Mobile { get; set; }
