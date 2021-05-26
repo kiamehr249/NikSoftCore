@@ -15,6 +15,7 @@ namespace NiksoftCore.Bourse.Service
         public int CategoryId { get; set; }
         public int UserId { get; set; }
         public int BranchId { get; set; }
+        public bool Ownership { get; set; }
 
         public virtual BourseUser User { get; set; }
         public virtual MediaCategory Category { get; set; }
