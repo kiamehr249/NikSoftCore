@@ -94,6 +94,33 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             ViewBag.Pager = pager;
             ViewBag.BranchId = request.BranchId;
             ViewBag.Contents = iBourseServ.iBranchMarketerServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+
+            if (request.IsOk == 1)
+            {
+                AddSuccess("حذف انجام شد.");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 2)
+            {
+                AddError("به دلیل داشتن قرارداد حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 3)
+            {
+                AddError("به دلیل داشتن رسانه حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 4)
+            {
+                AddError("به دلیل سرپرستی شعبه حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 2)
+            {
+                AddError("به دلیل داشتن مشاور بازاریاب حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
+
             return View(request);
         }
 
@@ -122,13 +149,14 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                     request.Tel = theProfile.Tel;
                     request.Address = theProfile.Address;
                     request.ZipCode = theProfile.ZipCode;
-                    request.BirthDate = theProfile.BirthDate != null ? theProfile.BirthDate.Value.ToPersianDateTime().ToPersianDigitalDateString() : "";
+                    request.BirthDate = theProfile.BirthDate != null ? theProfile.BirthDate.Value.ToPersianDateTime().ToString(PersianDateTimeFormat.Date) : "";
                     request.Avatar = theProfile.Avatar;
                     request.IdCardImage = theProfile.IdCardImage;
                     request.NCardImage = theProfile.NCardImage;
                     request.ProvinceId = theProfile.ProvinceId ?? 0;
                     request.CityId = theProfile.CityId ?? 0;
                     request.Gender = theProfile.Gender ?? 0;
+                    request.ProfileType = theProfile.ProfileType;
                 }
 
                 var theBank = iBourseServ.iUserBankAccountServ.Find(x => x.UserId == theUser.Id);
@@ -142,7 +170,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                     request.BranchCode = theBank.BranchCode;
                 }
             }
-            DropDownBinder(request.ProvinceId, request.Gender);
+            DropDownBinder(request.ProvinceId, request.Gender, request.ProfileType);
             return View(request);
         }
 
@@ -154,7 +182,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             if (!ValidUserForm(request))
             {
                 ViewBag.Messages = Messages;
-                DropDownBinder(request.ProvinceId, request.Gender);
+                DropDownBinder(request.ProvinceId, request.Gender, request.ProfileType);
                 return View(request);
             }
 
@@ -174,7 +202,19 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             {
                 item.EmailConfirmed = true;
                 item.PhoneNumberConfirmed = true;
-                await userManager.CreateAsync(item, request.Password);
+                var userResult = await userManager.CreateAsync(item, request.Password);
+
+                if (!userResult.Succeeded)
+                {
+                    foreach (var error in userResult.Errors)
+                    {
+                        AddError(error.Description);
+                    }
+
+                    ViewBag.Messages = Messages;
+                    DropDownBinder(request.ProvinceId, request.Gender, request.ProfileType);
+                    return View(request);
+                }
 
                 iBourseServ.iBranchUserServ.Add(new BranchUser
                 {
@@ -217,7 +257,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 {
                     AddError("آپلود فایل انجام نشد مجدد تلاش کنید");
                     ViewBag.Messages = Messages;
-                    DropDownBinder(request.ProvinceId, request.Gender);
+                    DropDownBinder(request.ProvinceId, request.Gender, request.ProfileType);
                     return View(request);
                 }
 
@@ -238,7 +278,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 {
                     AddError("آپلود فایل انجام نشد مجدد تلاش کنید");
                     ViewBag.Messages = Messages;
-                    DropDownBinder(request.ProvinceId, request.Gender);
+                    DropDownBinder(request.ProvinceId, request.Gender, request.ProfileType);
                     return View(request);
                 }
 
@@ -259,7 +299,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 {
                     AddError("آپلود فایل انجام نشد مجدد تلاش کنید");
                     ViewBag.Messages = Messages;
-                    DropDownBinder(request.ProvinceId, request.Gender);
+                    DropDownBinder(request.ProvinceId, request.Gender, request.ProfileType);
                     return View(request);
                 }
                 IdCardImage = SaveImage.FilePath;
@@ -283,6 +323,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             profile.ProvinceId = request.ProvinceId == 0 ? null : request.ProvinceId;
             profile.CityId = request.CityId == 0 ? null : request.CityId;
             profile.Gender = request.Gender == 0 ? null : request.Gender;
+            profile.ProfileType = request.ProfileType;
 
             if (request.ProfileId == 0)
             {
@@ -462,9 +503,84 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             return result;
         }
 
+        public async Task<IActionResult> RemoveMarketer(int Id)
+        {
+            var theMarketer = await iBourseServ.iBranchMarketerServ.FindAsync(x => x.Id == Id);
+            var user = await userManager.FindByIdAsync(theMarketer.UserId.ToString());
+
+            var contCount = iBourseServ.iContractServ.Count(x => x.UserId == user.Id);
+            var mediaCount = iBourseServ.iMediaServ.Count(x => x.UserId == user.Id);
+            var masterCount = iBourseServ.iBranchMasterServ.Count(x => x.UserId == user.Id);
+            var consCount = iBourseServ.iBranchConsultantServ.Count(x => x.MarketerId == user.Id);
+
+            if (contCount > 0)
+            {
+                return Redirect("/Panel/MasterBoard/Marketers/?IsOk=2&BranchId=" + theMarketer.BranchId);
+            }
+            else if (mediaCount > 0)
+            {
+                return Redirect("/Panel/MasterBoard/Marketers/?IsOk=3&BranchId=" + theMarketer.BranchId);
+            }
+            else if (masterCount > 0)
+            {
+                return Redirect("/Panel/MasterBoard/Marketers/?IsOk=4&BranchId=" + theMarketer.BranchId);
+            }
+            else if (consCount > 0)
+            {
+                return Redirect("/Panel/MasterBoard/Marketers/?IsOk=5&BranchId=" + theMarketer.BranchId);
+            }
+
+            try
+            {
+                var profile = await iBourseServ.iUserProfileServ.FindAsync(x => x.UserId == user.Id);
+                if (profile != null)
+                {
+                    iBourseServ.iUserProfileServ.Remove(profile);
+                    await iBourseServ.iUserProfileServ.SaveChangesAsync();
+                }
+
+                var bankInfo = await iBourseServ.iUserBankAccountServ.FindAsync(x => x.UserId == user.Id);
+                if (bankInfo != null)
+                {
+                    iBourseServ.iUserBankAccountServ.Remove(bankInfo);
+                    await iBourseServ.iUserBankAccountServ.SaveChangesAsync();
+                }
+
+                var branchUser = await iBourseServ.iBranchUserServ.FindAsync(x => x.UserId == user.Id);
+                if (branchUser != null)
+                {
+                    iBourseServ.iBranchUserServ.Remove(branchUser);
+                    await iBourseServ.iBranchUserServ.SaveChangesAsync();
+                }
+
+                var marketerUser = await iBourseServ.iBranchMarketerServ.FindAsync(x => x.UserId == user.Id);
+                if (marketerUser != null)
+                {
+                    iBourseServ.iBranchMarketerServ.Remove(marketerUser);
+                    await iBourseServ.iBranchMarketerServ.SaveChangesAsync();
+                }
+
+                var consultUser = await iBourseServ.iBranchConsultantServ.FindAsync(x => x.UserId == user.Id);
+                if (consultUser != null)
+                {
+                    iBourseServ.iBranchConsultantServ.Remove(consultUser);
+                    await iBourseServ.iBranchConsultantServ.SaveChangesAsync();
+                }
+
+                await userManager.DeleteAsync(user);
+            }
+            catch
+            {
+                return Redirect("/Panel/MasterBoard/Marketers/?IsOk=2&BranchId=" + theMarketer.BranchId);
+            }
+
+            return Redirect("/Panel/MasterBoard/Marketers/?IsOk=1&BranchId=" + theMarketer.BranchId);
+        }
+
 
         public async Task<IActionResult> MarketerContracts(MarketerContractSearch request)
         {
+            ViewBag.Messages = Messages;
             var theMarketer = await ISystemBaseServ.iUserProfileServ.FindAsync(x => x.UserId == request.UserId);
             ViewBag.PageTitle = "قرارداد های " + theMarketer.Firstname + " " + theMarketer.Lastname;
             var user = await userManager.GetUserAsync(HttpContext.User);
@@ -479,6 +595,17 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             ViewBag.Pager = pager;
             ViewBag.BranchId = request.BranchId;
             ViewBag.Contents = iBourseServ.iContractServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+
+            if (request.IsOk == 1)
+            {
+                AddSuccess("حذف انجام شد.");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 2)
+            {
+                AddError("به دلیل داشتن محتوا حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
 
             return View(request);
         }
@@ -539,7 +666,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             item.StartDate = PersianDateTime.Parse(request.StartDate).ToDateTime();
             item.EndDate = PersianDateTime.Parse(request.EndDate).ToDateTime();
             item.Deadline = request.Deadline;
-            item.Status = ContractStatus.InProccess;
+            item.Status = ContractStatus.Save;
             item.ContractDate = PersianDateTime.Parse(request.ContractDate).ToDateTime();
             item.BranchId = request.BranchId;
 
@@ -597,6 +724,21 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             //}
 
             return result;
+        }
+
+        public async Task<IActionResult> RemoveContract(int Id)
+        {
+            var contract = await iBourseServ.iContractServ.FindAsync(x => x.Id == Id);
+            int IsOk = 2;
+            if (contract.ContractFees.Count == 0)
+            {
+                iBourseServ.iContractServ.Remove(contract);
+                await iBourseServ.iContractServ.SaveChangesAsync();
+                IsOk = 1;
+            }
+            int branchId = contract.BranchId;
+            int userId = contract.UserId;
+            return Redirect("/Panel/MasterBoard/MarketerContracts/?BranchId=" + branchId + "&UserId=" + userId + "&IsOk=" + IsOk);
         }
 
         public async Task<IActionResult> ContractFees(ContractFeeSearch request)
@@ -705,7 +847,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             return result;
         }
 
-        private void DropDownBinder(int provinceId, int genderId)
+        private void DropDownBinder(int provinceId, int genderId, int profiletypeId)
         {
             var provinces = ISystemBaseServ.iProvinceServ.GetAll(x => true);
             ViewBag.Provinces = new SelectList(provinces, "Id", "Title", provinceId);
@@ -722,6 +864,19 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 Title = "زن"
             });
             ViewBag.Genders = new SelectList(genders, "Id", "Title", genderId);
+
+            List<ListItemModel> profileTypes = new List<ListItemModel>();
+            profileTypes.Add(new ListItemModel
+            {
+                Id = 1,
+                Title = "بازاریاب شعبه"
+            });
+            profileTypes.Add(new ListItemModel
+            {
+                Id = 2,
+                Title = "کارمند شرکت"
+            });
+            ViewBag.ProfileTypes = new SelectList(profileTypes, "Id", "Title", profiletypeId);
         }
 
         public async Task<IActionResult> Consultants(ConsultantSearch request)
@@ -766,7 +921,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
         private void BranchBinder(int branchId, List<int> branchIds)
         {
-            
+
             var branches = iBourseServ.iBranchServ.GetAll(x => branchIds.Contains(x.Id), y => new { y.Id, y.Title });
             ViewBag.Branches = new SelectList(branches, "Id", "Title", branchId);
         }

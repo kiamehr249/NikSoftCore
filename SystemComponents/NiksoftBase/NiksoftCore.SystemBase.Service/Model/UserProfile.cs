@@ -25,6 +25,7 @@ namespace NiksoftCore.SystemBase.Service
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
         public int? Gender { get; set; }
+        public int ProfileType { get; set; }
 
         public virtual NikUser User { get; set; } 
     }

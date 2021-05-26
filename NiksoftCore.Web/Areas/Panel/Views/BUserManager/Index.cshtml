@@ -10,6 +10,8 @@
     var isSearch = (bool)ViewBag.Search;
     var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
     var accBtn = isSearch ? "aria-expanded='true'" : "";
+
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
 <div class="text-right">
     <a href="/Panel/BUserManager/Create" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
@@ -138,3 +140,35 @@
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+
+    });
+</script>

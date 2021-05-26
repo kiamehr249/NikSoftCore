@@ -1,0 +1,100 @@
+﻿@using NiksoftCore.Bourse.Service;
+@model SettingRequest
+@{
+    ViewData["Title"] = "ایجاد متن قرارداد";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+}
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/SettingManage" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary()
+<form action="/Panel/SettingManage/Create" method="post">
+    <div class="registerdiv">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <div class="form-group">
+                    <label for="txtTitle" class="control-label">عنوان</label>
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                    @Html.ValidationMessageFor(m => m.Title)
+                </div>
+                <div class="form-group">
+                    <label for="txtKeyName" class="control-label">کلید</label>
+                    @Html.TextBoxFor(m => m.KeyName, new { placeholder = "کلید", @class = "form-control", @id = "txtKeyName" })
+                    @Html.ValidationMessageFor(m => m.KeyName)
+                </div>
+                <div class="form-group">
+                    <label for="txtReferenceCode" class="control-label">کد مرجع</label>
+                    @Html.TextBoxFor(m => m.ReferenceCode, new { placeholder = "کد مرجع", @class = "form-control", @id = "txtReferenceCode" })
+                    @Html.ValidationMessageFor(m => m.ReferenceCode)
+                </div>
+                <div class="form-group">
+                    <label for="ParentId" class="control-label">دسته بالاتر</label>
+                    <select class="form-control m-b" asp-for="ParentId" asp-items="ViewBag.Parents">
+                        <option selected="selected" value="0">انتخاب کنید</option>
+                    </select>
+                    @Html.ValidationMessageFor(m => m.ParentId)
+                </div>
+                <div class="form-group">
+                    <label for="txtMinVal" class="control-label">حداقل</label>
+                    @Html.TextBoxFor(m => m.MinVal, new { placeholder = "حداقل", @class = "form-control", @id = "txtMinVal" })
+                    @Html.ValidationMessageFor(m => m.MinVal)
+                </div>
+                <div class="form-group">
+                    <label for="txtMaxVal" class="control-label">حداکثر</label>
+                    @Html.TextBoxFor(m => m.MaxVal, new { placeholder = "حداکثر", @class = "form-control", @id = "txtMaxVal" })
+                    @Html.ValidationMessageFor(m => m.MaxVal)
+                </div>
+                <div class="form-group">
+                    <label for="txtMessage" class="control-label">متن پیام</label>
+                    @Html.TextAreaFor(m => m.Message, new { placeholder = "متن پیام", @class = "form-control", @id = "txtMessage", rows = "3" })
+                    @Html.ValidationMessageFor(m => m.Message)
+                </div>
+                <div class="form-group">
+                    <label for="txtBodyText" class="control-label">متن</label>
+                    @Html.TextAreaFor(m => m.FullText, new { @class = "form-control text-editor", @id = "txtBodyText", rows = "8" })
+                    @Html.ValidationMessageFor(m => m.FullText)
+                </div>
+                @Html.HiddenFor(m => m.Id)
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">ذخیره</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+    });
+</script>

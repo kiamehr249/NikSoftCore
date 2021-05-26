@@ -60,7 +60,7 @@
                 <th class="text-primary text-center">نام کاربری</th>
                 <th class="text-primary text-center">ایمیل</th>
                 <th class="text-primary text-center">موبایل</th>
-                <th class="text-primary text-center" width="100px">سایر</th>
+                <th class="text-primary text-center" width="170px">سایر</th>
                 <th class="text-primary text-center" width="100px">عملیات</th>
             </tr>
         </thead>
@@ -84,9 +84,14 @@
                         @item.PhoneNumber
                     </td>
                     <td>
-                        <a href="/Panel/UserManage/ShowUserRoles?UserId=@item.Id" class="btn btn-outline-info btn-sm" target="_blank">
-                            نقش ها
-                        </a>
+                        <div class="btn-group-vertical btn-group-sm">
+                            <a href="/Panel/UserManage/LoginWithUser/?UserId=@item.Id" class="btn btn-outline-primary btn-sm">
+                                ورود با کاربر
+                            </a>
+                            <a href="/Panel/UserManage/ShowUserRoles?UserId=@item.Id" class="btn btn-outline-info btn-sm" target="_blank">
+                                نقش ها
+                            </a>
+                        </div>
                     </td>
                     <td>
                         <div class="btn-group btn-group-sm">

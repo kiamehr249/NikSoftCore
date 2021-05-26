@@ -76,16 +76,23 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="txtMobile" class="control-label">موبایل</label>
                                 @Html.TextBoxFor(m => m.Mobile, new { placeholder = "موبایل", @class = "form-control emp-check", @id = "txtMobile", @autocomplete = "off" })
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="txtTel" class="control-label">تلفن</label>
                                 @Html.TextBoxFor(m => m.Tel, new { placeholder = "تلفن", @class = "form-control", @id = "txtTel" })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="ProfileType" class="control-label">نوع</label>
+                                <select class="form-control m-b" asp-for="ProfileType" asp-items="ViewBag.ProfileTypes">
+                                </select>
                             </div>
                         </div>
                     </div>

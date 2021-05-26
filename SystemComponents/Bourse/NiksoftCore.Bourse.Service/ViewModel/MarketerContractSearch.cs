@@ -6,5 +6,6 @@ namespace NiksoftCore.Bourse.Service
     {
         public int BranchId { get; set; }
         public int UserId { get; set; }
+        public int IsOk { get; set; }
     }
 }

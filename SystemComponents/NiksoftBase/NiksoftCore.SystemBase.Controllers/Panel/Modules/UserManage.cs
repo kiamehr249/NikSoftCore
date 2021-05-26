@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -12,17 +13,21 @@ using System.Threading.Tasks;
 namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 {
     [Area("Panel")]
+    [Authorize(Roles = "NikAdmin")]
     public class UserManage : NikController
     {
         private readonly UserManager<DataModel.User> userManager;
         private readonly RoleManager<DataModel.Role> roleManager;
+        private readonly SignInManager<DataModel.User> signInManager;
 
         public UserManage(IConfiguration Configuration,
+            SignInManager<DataModel.User> signInManager, 
             UserManager<DataModel.User> userManager,
             RoleManager<DataModel.Role> roleManager) : base(Configuration)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.signInManager = signInManager;
         }
 
         public IActionResult Index(UserGridRequest request)
@@ -235,6 +240,14 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             return Redirect("/Panel/UserManage/ShowUserRoles?UserId=" + request.UserId);
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> LoginWithUser(int UserId)
+        {
+            var theUser = await userManager.FindByIdAsync(UserId.ToString());
+            await signInManager.SignInAsync(theUser, true);
+            return Redirect("/Panel");
+        }
 
     }
 }

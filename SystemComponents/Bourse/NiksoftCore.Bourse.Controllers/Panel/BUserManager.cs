@@ -68,10 +68,34 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
 
-
             ViewBag.PageTitle = "مدیریت کاربران";
-
             ViewBag.Contents = ISystemBaseServ.iNikUserServ.GetPart(query, pager.StartIndex, pager.PageSize, x => x.Id, true).ToList();
+
+            if (request.IsOk == 1)
+            {
+                AddSuccess("حذف انجام شد.");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 2)
+            {
+                AddError("به دلیل داشتن قرارداد حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 3)
+            {
+                AddError("به دلیل داشتن رسانه حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 4)
+            {
+                AddError("به دلیل سرپرستی شعبه حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 2)
+            {
+                AddError("به دلیل داشتن مشاور بازاریاب حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
 
             return View();
         }
@@ -100,7 +124,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                     request.Tel = theProfile.Tel;
                     request.Address = theProfile.Address;
                     request.ZipCode = theProfile.ZipCode;
-                    request.BirthDate = theProfile.BirthDate != null ? theProfile.BirthDate.Value.ToPersianDateTime().ToPersianDigitalDateString() : "";
+                    request.BirthDate = theProfile.BirthDate != null ? theProfile.BirthDate.Value.ToPersianDateTime().ToString(PersianDateTimeFormat.Date) : "";
                     request.Avatar = theProfile.Avatar;
                     request.IdCardImage = theProfile.IdCardImage;
                     request.NCardImage = theProfile.NCardImage;
@@ -153,7 +177,19 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             {
                 item.EmailConfirmed = true;
                 item.PhoneNumberConfirmed = true;
-                await userManager.CreateAsync(item, request.Password);
+                var userResult = await userManager.CreateAsync(item, request.Password);
+
+                if (!userResult.Succeeded)
+                {
+                    foreach (var error in userResult.Errors)
+                    {
+                        AddError(error.Description);
+                    }
+
+                    ViewBag.Messages = Messages;
+                    DropDownBinder(request.ProvinceId, request.Gender);
+                    return View(request);
+                }
             }
             else
             {
@@ -296,16 +332,72 @@ namespace NiksoftCore.Bourse.Controllers.Panel
         public async Task<IActionResult> Remove(int Id)
         {
             var user = await userManager.FindByIdAsync(Id.ToString());
+            var contCount = iBourseServ.iContractServ.Count(x => x.UserId == user.Id);
+            var mediaCount = iBourseServ.iMediaServ.Count(x => x.UserId == user.Id);
+            var masterCount = iBourseServ.iBranchMasterServ.Count(x => x.UserId == user.Id);
+            var consCount = iBourseServ.iBranchConsultantServ.Count(x => x.MarketerId == user.Id);
+            
+            if (contCount > 0)
+            {
+                return Redirect("/Panel/BUserManager/?IsOk=2");
+            }
+            else if (mediaCount > 0)
+            {
+                return Redirect("/Panel/BUserManager/?IsOk=3");
+            }
+            else if (masterCount > 0)
+            {
+                return Redirect("/Panel/BUserManager/?IsOk=4");
+            }
+            else if (consCount > 0)
+            {
+                return Redirect("/Panel/BUserManager/?IsOk=5");
+            }
+
             try
             {
+                var profile = await iBourseServ.iUserProfileServ.FindAsync(x => x.UserId == user.Id);
+                if (profile != null) {
+                    iBourseServ.iUserProfileServ.Remove(profile);
+                    await iBourseServ.iUserProfileServ.SaveChangesAsync();
+                }
+
+                var bankInfo = await iBourseServ.iUserBankAccountServ.FindAsync(x => x.UserId == user.Id);
+                if (bankInfo != null)
+                {
+                    iBourseServ.iUserBankAccountServ.Remove(bankInfo);
+                    await iBourseServ.iUserBankAccountServ.SaveChangesAsync();
+                }
+
+                var branchUser = await iBourseServ.iBranchUserServ.FindAsync(x => x.UserId == user.Id);
+                if (branchUser != null)
+                {
+                    iBourseServ.iBranchUserServ.Remove(branchUser);
+                    await iBourseServ.iBranchUserServ.SaveChangesAsync();
+                }
+
+                var marketerUser = await iBourseServ.iBranchMarketerServ.FindAsync(x => x.UserId == user.Id);
+                if (marketerUser != null)
+                {
+                    iBourseServ.iBranchMarketerServ.Remove(marketerUser);
+                    await iBourseServ.iBranchMarketerServ.SaveChangesAsync();
+                }
+
+                var consultUser = await iBourseServ.iBranchConsultantServ.FindAsync(x => x.UserId == user.Id);
+                if (consultUser != null)
+                {
+                    iBourseServ.iBranchConsultantServ.Remove(consultUser);
+                    await iBourseServ.iBranchConsultantServ.SaveChangesAsync();
+                }
+
                 await userManager.DeleteAsync(user);
             }
             catch
             {
-
+                return Redirect("/Panel/BUserManager/?IsOk=2");
             }
 
-            return Redirect("/Panel/BUserManager");
+            return Redirect("/Panel/BUserManager/?IsOk=1");
         }
 
         public bool ValidUserForm(BourseUserRequest request)

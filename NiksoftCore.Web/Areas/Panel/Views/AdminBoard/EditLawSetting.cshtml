@@ -1,0 +1,61 @@
+﻿@using NiksoftCore.Bourse.Service;
+@model SettingRequest
+@{
+    ViewData["Title"] = "ایجاد متن قرارداد";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+}
+
+@Html.ValidationSummary()
+<form action="/Panel/AdminBoard/EditLawSetting" method="post">
+    <div class="registerdiv">
+        <div class="row">
+            <div class="col-sm-10 offset-sm-1">
+                <div class="form-group">
+                    <label for="txtTitle" class="control-label">عنوان</label>
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                    @Html.ValidationMessageFor(m => m.Title)
+                </div>
+                <div class="form-group">
+                    <label for="txtBodyText" class="control-label">متن</label>
+                    @Html.TextAreaFor(m => m.FullText, new { @class = "form-control text-editor", @id = "txtBodyText", rows = "8" })
+                    @Html.ValidationMessageFor(m => m.FullText)
+                </div>
+                @Html.HiddenFor(m => m.Id)
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">ذخیره</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+    });
+</script>

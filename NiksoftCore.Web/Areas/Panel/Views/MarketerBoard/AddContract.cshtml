@@ -7,7 +7,7 @@
 }
 <div class="text-right">
     <div class="btn-group">
-        <a href="/Panel/MarketerBoard" class="btn btn-outline-info btn-sm">
+        <a href="/Panel/MarketerBoard/ConsultantContracts/?UserId=@Model.UserId" class="btn btn-outline-info btn-sm">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>
@@ -28,17 +28,6 @@
                     @Html.TextBoxFor(m => m.ContractNumber, new { placeholder = "شماره قرارداد", @class = "form-control", @id = "txtContractNumber" })
                     @Html.ValidationMessageFor(m => m.ContractNumber)
                 </div>
-                @*<div class="form-group">
-                    <label for="FeeType" class="control-label">نوع کارمزد</label>
-                    <select class="form-control m-b" asp-for="FeeType" asp-items="ViewBag.FeeTypes">
-                        <option selected="selected" value="0">انتخاب کنید</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="ddlFee" class="control-label">کارمزد</label>
-                    <select id="ddlFee" class="form-control m-b" name="FeeId">
-                    </select>
-                </div>*@
                 <div class="form-group">
                     <label for="txtUserCode" class="control-label">کد طرف قرارداد</label>
                     @Html.TextBoxFor(m => m.UserCode, new { placeholder = "0", @class = "form-control", @id = "txtUserCode" })
@@ -72,22 +61,8 @@
     </div>
 </form>
 
-@*<script>
-    var ddls = {
-        feeId: @Model.FeeId,
-        feeType: @Model.FeeType
-    }
-
+<script>
     $(document).ready(function () {
-        $('#FeeType').on('change', function () {
-            getFees(this.value);
-        });
-
-        if (ddls.feeType > 0) {
-            getFees(ddls.feeType);
-        }
-
-
         @if (Messages != null)
         {
             @foreach (var item in Messages)
@@ -115,33 +90,4 @@
 
 
     });
-
-
-    function ddlBinder(tp) {
-        $.post('/api/BourseApi/GetFees', { type: tp }, function (data) {
-            createOptions(data.data, feeId,'#ddlFee');
-        });
-    }
-
-    function getFees(tp) {
-        callApi({
-            url: '/api/BourseApi/GetFees',
-            data: { type: tp },
-            success: function (response) {
-                if (response.status == 200) {
-                    dropdownBinder({
-                        ddl: '#ddlFee',
-                        data: response.data
-                    });
-
-                    if (ddls.feeType > 0) {
-                        setItemDropdown({
-                            ddl: '#ddlFee',
-                            value: ddls.feeId
-                        });
-                    }
-                }
-            }
-        });
-    }
-</script>*@
+</script>

@@ -86,10 +86,9 @@
                 <th class="text-primary text-center">کد طرف قرارداد</th>
                 <th class="text-primary text-center">نام طرف قرارداد</th>
                 <th class="text-primary text-center">شروع/پایان</th>
-                <th class="text-primary text-center">نوع کارمزد</th>
-                <th class="text-primary text-center">نرخ کارمزد</th>
                 <th class="text-primary text-center">مهلت</th>
                 <th class="text-primary text-center">وضعیت</th>
+                <th class="text-primary text-center">کارمزد</th>
                 <th class="text-primary text-center" width="100px">عملیات</th>
             </tr>
         </thead>
@@ -116,23 +115,25 @@
                     <td>
                         <p>شروع: @item.StartDate.ToPersianDateTime().ToPersianDigitalDateString()</p>
                         <p>پایان: @item.EndDate.ToPersianDateTime().ToPersianDigitalDateString()</p>
-                        
+
                     </td>
-                    <td>
-                        @if (item.ContractFees.Last().Fee.FeeType == FeeType.Fixed)
-                        {
-                            <span>ثابت</span>
-                        }
-                        else
-                        {
-                            <span>پلکانی</span>
-                        }
-                    </td>
-                    <td>@item.ContractFees.Last().Fee.AmountPercentage %</td>
                     <td>@item.Deadline روز</td>
                     <td>@item.Status.GetContractStatus()</td>
                     <td>
-                        <div class="btn-group btn-group-sm">
+                        @foreach (var confee in item.ContractFees)
+                        {
+                            if (confee.Fee.FeeType == FeeType.Fixed)
+                            {
+                                <p>نرخ ثابت @confee.Fee.AmountPercentage %</p>
+                            }
+                            else
+                            {
+                                <p>نرخ پلکانی مبلغ از @confee.Fee.FromAmount.ToString("N0") مبلغ تا @confee.Fee.ToAmount.ToString("N0") </p>
+                            }
+                        }
+                    </td>
+                    <td>
+                        <div class="btn-group-vertical btn-group-sm">
                             @if (item.Status == ContractStatus.InProccess)
                             {
                                 <a href="/Panel/AdminBoard/Accept/?Id=@item.Id" class="btn btn-outline-success btn-sm">

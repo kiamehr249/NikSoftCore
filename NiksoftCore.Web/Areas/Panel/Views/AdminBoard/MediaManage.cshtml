@@ -73,12 +73,13 @@
         <thead>
             <tr>
                 <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">مشاور بازاریابی</th>
                 <th class="text-primary text-center">عنوان</th>
                 <th class="text-primary text-center">موضوع</th>
                 <th class="text-primary text-center">آدرس اصلی</th>
                 <th class="text-primary text-center">آدرس کامل</th>
-                <th class="text-primary text-center">کپی لینک</th>
                 <th class="text-primary text-center">وضعیت</th>
+                <th class="text-primary text-center">احراز مالکیت</th>
                 <th class="text-primary text-center" width="100px">عملیات</th>
             </tr>
         </thead>
@@ -95,11 +96,23 @@
                         @item.BaseLink
                     </td>
                     <td>@item.FullLink</td>
-                    <td>
-                    </td>
                     <td>@item.Status.GetMediaStatus()</td>
                     <td>
-                        <div class="btn-group btn-group-sm">
+                        @if (item.Ownership)
+                        {
+                            <a href="/Panel/AdminBoard/OwnerState/?Id=@item.Id" class="btn btn-outline-success btn-sm">
+                               <i class="fas fa-check"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="/Panel/AdminBoard/OwnerState/?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        <div class="btn-group-vertical btn-group-sm">
                             @if (item.Status == MediaStatus.InProccess)
                             {
                                 <a href="/Panel/AdminBoard/AcceptMedia/?Id=@item.Id" class="btn btn-outline-success btn-sm">

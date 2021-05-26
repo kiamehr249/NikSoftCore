@@ -33,6 +33,7 @@ namespace NiksoftCore.Bourse.Service
         public int ProvinceId { get; set; }
         public int CityId { get; set; }
         public int Gender { get; set; }
+        public int ProfileType { get; set; }
 
         public int BankId { get; set; }
         public string PAN { get; set; }

@@ -69,6 +69,33 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
             ViewBag.Contents = iBourseServ.iBranchConsultantServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+
+            if (request.IsOk == 1)
+            {
+                AddSuccess("حذف انجام شد.");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 2)
+            {
+                AddError("به دلیل داشتن قرارداد حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 3)
+            {
+                AddError("به دلیل داشتن رسانه حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 4)
+            {
+                AddError("به دلیل سرپرستی شعبه حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 2)
+            {
+                AddError("به دلیل داشتن مشاور بازاریاب حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
+
             return View(request);
         }
 
@@ -98,7 +125,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                     request.Tel = theProfile.Tel;
                     request.Address = theProfile.Address;
                     request.ZipCode = theProfile.ZipCode;
-                    request.BirthDate = theProfile.BirthDate.Value.ToPersianDateTime().ToPersianDigitalDateString();
+                    request.BirthDate = theProfile.BirthDate.Value.ToPersianDateTime().ToString(PersianDateTimeFormat.Date);
                     request.Avatar = theProfile.Avatar;
                     request.IdCardImage = theProfile.IdCardImage;
                     request.NCardImage = theProfile.NCardImage;
@@ -440,6 +467,80 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             return result;
         }
 
+        public async Task<IActionResult> RemoveConsultant(int Id)
+        {
+            var theConsultant = await iBourseServ.iBranchConsultantServ.FindAsync(x => x.Id == Id);
+            var user = await userManager.FindByIdAsync(theConsultant.UserId.ToString());
+
+            var contCount = iBourseServ.iContractServ.Count(x => x.UserId == user.Id);
+            var mediaCount = iBourseServ.iMediaServ.Count(x => x.UserId == user.Id);
+            var masterCount = iBourseServ.iBranchMasterServ.Count(x => x.UserId == user.Id);
+            var consCount = iBourseServ.iBranchConsultantServ.Count(x => x.MarketerId == user.Id);
+
+            if (contCount > 0)
+            {
+                return Redirect("/Panel/MarketerBoard?IsOk=2");
+            }
+            else if (mediaCount > 0)
+            {
+                return Redirect("/Panel/MarketerBoard?IsOk=3");
+            }
+            else if (masterCount > 0)
+            {
+                return Redirect("/Panel/MarketerBoard?IsOk=4");
+            }
+            else if (consCount > 0)
+            {
+                return Redirect("/Panel/MarketerBoard?IsOk=5");
+            }
+
+            try
+            {
+                var profile = await iBourseServ.iUserProfileServ.FindAsync(x => x.UserId == user.Id);
+                if (profile != null)
+                {
+                    iBourseServ.iUserProfileServ.Remove(profile);
+                    await iBourseServ.iUserProfileServ.SaveChangesAsync();
+                }
+
+                var bankInfo = await iBourseServ.iUserBankAccountServ.FindAsync(x => x.UserId == user.Id);
+                if (bankInfo != null)
+                {
+                    iBourseServ.iUserBankAccountServ.Remove(bankInfo);
+                    await iBourseServ.iUserBankAccountServ.SaveChangesAsync();
+                }
+
+                var branchUser = await iBourseServ.iBranchUserServ.FindAsync(x => x.UserId == user.Id);
+                if (branchUser != null)
+                {
+                    iBourseServ.iBranchUserServ.Remove(branchUser);
+                    await iBourseServ.iBranchUserServ.SaveChangesAsync();
+                }
+
+                var marketerUser = await iBourseServ.iBranchMarketerServ.FindAsync(x => x.UserId == user.Id);
+                if (marketerUser != null)
+                {
+                    iBourseServ.iBranchMarketerServ.Remove(marketerUser);
+                    await iBourseServ.iBranchMarketerServ.SaveChangesAsync();
+                }
+
+                var consultUser = await iBourseServ.iBranchConsultantServ.FindAsync(x => x.UserId == user.Id);
+                if (consultUser != null)
+                {
+                    iBourseServ.iBranchConsultantServ.Remove(consultUser);
+                    await iBourseServ.iBranchConsultantServ.SaveChangesAsync();
+                }
+
+                await userManager.DeleteAsync(user);
+            }
+            catch
+            {
+                return Redirect("/Panel/MarketerBoard?IsOk=2");
+            }
+
+            return Redirect("/Panel/MarketerBoard?IsOk=1");
+        }
+
 
         public async Task<IActionResult> ConsultantContracts(MarketerContractSearch request)
         {
@@ -466,6 +567,17 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             ViewBag.Pager = pager;
             ViewBag.BranchId = request.BranchId;
             ViewBag.Contents = iBourseServ.iContractServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+
+            if (request.IsOk == 1)
+            {
+                AddSuccess("حذف انجام شد.");
+                ViewBag.Messages = Messages;
+            }
+            else if (request.IsOk == 2)
+            {
+                AddError("به دلیل داشتن محتوا حذف انجام نشد");
+                ViewBag.Messages = Messages;
+            }
 
             return View(request);
         }
@@ -527,7 +639,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             item.StartDate = PersianDateTime.Parse(request.StartDate).ToDateTime();
             item.EndDate = PersianDateTime.Parse(request.EndDate).ToDateTime();
             item.Deadline = request.Deadline;
-            item.Status = ContractStatus.InProccess;
+            item.Status = ContractStatus.Save;
             item.ContractDate = PersianDateTime.Parse(request.ContractDate).ToDateTime();
             item.BranchId = request.BranchId;
 
@@ -581,6 +693,21 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             return result;
         }
 
+        public async Task<IActionResult> RemoveContract(int Id)
+        {
+            var contract = await iBourseServ.iContractServ.FindAsync(x => x.Id == Id);
+            int IsOk = 2;
+            if (contract.ContractFees.Count == 0)
+            {
+                iBourseServ.iContractServ.Remove(contract);
+                await iBourseServ.iContractServ.SaveChangesAsync();
+                IsOk = 1;
+            }
+            int branchId = contract.BranchId;
+            int userId = contract.UserId;
+            return Redirect("/Panel/MarketerBoard/ConsultantContracts/?UserId=" + userId + "&IsOk=" + IsOk);
+        }
+
         private void DropDownBinder(int provinceId, int genderId)
         {
             var provinces = ISystemBaseServ.iProvinceServ.GetAll(x => true);
@@ -615,5 +742,157 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             });
             ViewBag.FeeTypes = new SelectList(feeTypes, "Id", "Title", feeType);
         }
+
+
+        public async Task<IActionResult> MyContracts(BaseRequest request)
+        {
+            ViewBag.PageTitle = "قرارداد های من";
+
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            var marketerUser = await iBourseServ.iBranchMarketerServ.FindAsync(x => x.UserId == user.Id);
+
+            var query = iBourseServ.iContractServ.ExpressionMaker();
+            query.Add(x => x.BranchId == marketerUser.BranchId && x.UserId == user.Id);
+
+            bool isSearch = false;
+            ViewBag.Search = isSearch;
+
+            var total = iBourseServ.iContractServ.Count(query);
+            var pager = new Pagination(total, 10, request.part);
+            ViewBag.Pager = pager;
+            ViewBag.Contents = iBourseServ.iContractServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            BindContract();
+            return View(request);
+        }
+
+        public async Task<IActionResult> AcceptMyContract(int Id)
+        {
+            var contract = await iBourseServ.iContractServ.FindAsync(x => x.Id == Id);
+            if (contract.Status == ContractStatus.Save)
+            {
+                contract.Status = ContractStatus.InProccess;
+            }
+            else if(contract.Status == ContractStatus.InProccess)
+            {
+                contract.Status = ContractStatus.Save;
+            }
+            
+            await iBourseServ.iContractServ.SaveChangesAsync();
+            return Redirect("/Panel/MarketerBoard/MyContracts");
+        }
+
+        private void BindContract()
+        {
+            var year = new PersianDateTime(DateTime.Now).Year;
+            ViewBag.ConLetter = iBourseServ.iContractLetterServ.Find(x => x.Year == year && x.ContractType == ContractType.Marketer).FullText;
+        }
+
+
+        public async Task<IActionResult> ContractFees(ContractFeeSearch request)
+        {
+            var theContract = await iBourseServ.iContractServ.FindAsync(x => x.Id == request.ContractId);
+            ViewBag.PageTitle = "نرخ های قرارداد " + theContract.ContractNumber;
+
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
+            var query = iBourseServ.iContractFeeServ.ExpressionMaker();
+            query.Add(x => x.ContractId == request.ContractId);
+
+            bool isSearch = false;
+            ViewBag.Search = isSearch;
+
+            var total = iBourseServ.iContractFeeServ.Count(query);
+            var pager = new Pagination(total, 10, request.part);
+            request.UserId = theContract.UserId;
+            request.BranchId = theContract.BranchId;
+            ViewBag.Pager = pager;
+            ViewBag.Contents = iBourseServ.iContractFeeServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddFee(int ContractId, int Id)
+        {
+            var theContract = await iBourseServ.iContractServ.FindAsync(x => x.Id == ContractId);
+            ViewBag.PageTitle = "افزودن نرخ به قرارداد " + theContract.ContractNumber;
+
+            var request = new ContractFeeRequest();
+
+            if (Id > 0)
+            {
+                var confee = iBourseServ.iContractFeeServ.Find(x => x.Id == Id);
+                request.Id = confee.Id;
+                request.FeeId = confee.FeeId;
+                request.FeeType = (int)confee.Fee.FeeType;
+            }
+
+            request.ContractId = ContractId;
+            FeeTypeBinder(request.FeeType);
+            return View(request);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddFee(ContractFeeRequest request)
+        {
+            var theContract = await iBourseServ.iContractServ.FindAsync(x => x.Id == request.ContractId);
+            ViewBag.PageTitle = "افزودن نرخ به قرارداد " + theContract.ContractNumber;
+            ViewBag.Messages = Messages;
+
+            if (!FeeFormValid(request))
+            {
+                ViewBag.Messages = Messages;
+                FeeTypeBinder(request.FeeType);
+                return View(request);
+            }
+
+            ContractFee item = new ContractFee();
+            if (request.Id > 0)
+            {
+                item = iBourseServ.iContractFeeServ.Find(x => x.Id == request.Id);
+            }
+
+            item.FeeId = request.FeeId;
+
+            if (request.Id == 0)
+            {
+                item.ContractId = request.ContractId;
+                iBourseServ.iContractFeeServ.Add(item);
+            }
+
+            await iBourseServ.iContractFeeServ.SaveChangesAsync();
+
+            return Redirect("/Panel/MarketerBoard/ContractFees/?ContractId=" + request.ContractId);
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveFee(int Id)
+        {
+            var confee = await iBourseServ.iContractFeeServ.FindAsync(x => x.Id == Id);
+            int contractid = confee.ContractId;
+            iBourseServ.iContractFeeServ.Remove(confee);
+            await iBourseServ.iContractFeeServ.SaveChangesAsync();
+            return Redirect("/Panel/MarketerBoard/ContractFees/?ContractId=" + contractid);
+        }
+
+        private bool FeeFormValid(ContractFeeRequest request)
+        {
+            bool result = true;
+
+            if (request.FeeType == 0)
+            {
+                AddError("نوع کارمزد باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            if (request.FeeId == 0)
+            {
+                AddError("کارمزد باید مقدار داشته باشد", "fa");
+                result = false;
+            }
+
+            return result;
+        }
+
     }
 }

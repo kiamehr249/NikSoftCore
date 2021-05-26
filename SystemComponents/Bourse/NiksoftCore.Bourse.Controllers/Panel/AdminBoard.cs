@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using NiksoftCore.Bourse.Service;
 using NiksoftCore.MiddlController.Middles;
 using NiksoftCore.Utilities;
+using NiksoftCore.ViewModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -143,6 +144,14 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             return View(request);
         }
 
+        public async Task<IActionResult> OwnerState(int Id)
+        {
+            var item = await iBourseServ.iMediaServ.FindAsync(x => x.Id == Id);
+            item.Ownership = !item.Ownership;
+            await iBourseServ.iMediaServ.SaveChangesAsync();
+            return Redirect("/Panel/AdminBoard/MediaManage");
+        }
+
 
         private void CategoryBinder(int CategoryId)
         {
@@ -266,6 +275,72 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             var bMaster = iBourseServ.iBranchMasterServ.Find(x => x.BranchId == branchId);
             var profile = iBourseServ.iUserProfileServ.Find(x => x.UserId == bMaster.UserId);
             return profile.Firstname + " " + profile.Lastname;
+        }
+
+
+        [HttpGet]
+        public IActionResult EditLawSetting()
+        {
+            ViewBag.PageTitle = "قوانین و مقررات";
+
+            var request = new SettingRequest();
+            var item = iBourseServ.iSettingServ.Find(x => x.KeyName == "marketerlaw");
+            if (item == null)
+            {
+                return Redirect("/Panel");
+            }
+
+            request.Id = item.Id;
+            request.Title = item.Title;
+            request.FullText = item.FullText;
+            request.KeyName = item.KeyName;
+            request.MaxVal = item.MaxVal;
+            request.MinVal = item.MinVal;
+            request.ReferenceCode = item.ReferenceCode;
+            request.Message = item.Message;
+            request.ParentId = item.ParentId == null ? 0 : item.ParentId.Value;
+            return View(request);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditLawSetting(SettingRequest request)
+        {
+            ViewBag.Messages = Messages;
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            if (!ValidLawForm(request))
+            {
+                return View(request);
+            }
+
+            var item = iBourseServ.iSettingServ.Find(x => x.Id == request.Id);
+
+            item.Title = request.Title;
+            item.FullText = request.FullText;
+
+            await iBourseServ.iSettingServ.SaveChangesAsync();
+            AddSuccess("ذخیره تغییرات با موفقیت انجام شد");
+            return View(request);
+        }
+
+        private bool ValidLawForm(SettingRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Title))
+            {
+                AddError("عنوان باید مقدار داشته باشد", "fa");
+            }
+
+            if (string.IsNullOrEmpty(request.FullText))
+            {
+                AddError("متن باید مقدار داشته باشد", "fa");
+            }
+
+            if (Messages.Any(x => x.Type == MessageType.Error))
+            {
+                return false;
+            }
+
+            return true;
+
         }
 
     }

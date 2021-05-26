@@ -89,6 +89,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 //request.ClickCount = item.ClickCount;
                 //request.Status = item.Status;
                 request.CategoryId = item.CategoryId;
+                request.Ownership = item.Ownership;
             }
 
             request.UserId = user.Id;
@@ -131,6 +132,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                 item.CreateDate = DateTime.Now;
                 item.CreatedBy = user.Id;
                 item.BranchId = request.BranchId;
+                item.Ownership = false;
                 iBourseServ.iMediaServ.Add(item);
             }
 
@@ -190,6 +192,49 @@ namespace NiksoftCore.Bourse.Controllers.Panel
         {
             var categories = iBourseServ.iMediaCategoryServ.GetAll(x => true, y => new { y.Id, y.Title });
             ViewBag.Categories = new SelectList(categories, "Id", "Title", CategoryId);
+        }
+
+        public async Task<IActionResult> MyContracts(BaseRequest request)
+        {
+            ViewBag.PageTitle = "قرارداد های من";
+
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            var consUser = await iBourseServ.iBranchConsultantServ.FindAsync(x => x.UserId == user.Id);
+
+            var query = iBourseServ.iContractServ.ExpressionMaker();
+            query.Add(x => x.BranchId == consUser.BranchId && x.UserId == user.Id);
+
+            bool isSearch = false;
+            ViewBag.Search = isSearch;
+
+            var total = iBourseServ.iContractServ.Count(query);
+            var pager = new Pagination(total, 10, request.part);
+            ViewBag.Pager = pager;
+            ViewBag.Contents = iBourseServ.iContractServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            BindContract();
+            return View(request);
+        }
+
+        public async Task<IActionResult> AcceptMyContract(int Id)
+        {
+            var contract = await iBourseServ.iContractServ.FindAsync(x => x.Id == Id);
+            if (contract.Status == ContractStatus.Save)
+            {
+                contract.Status = ContractStatus.InProccess;
+            }
+            else if (contract.Status == ContractStatus.InProccess)
+            {
+                contract.Status = ContractStatus.Save;
+            }
+
+            await iBourseServ.iContractServ.SaveChangesAsync();
+            return Redirect("/Panel/ConsultantBoard/MyContracts");
+        }
+
+        private void BindContract()
+        {
+            var year = new PersianDateTime(DateTime.Now).Year;
+            ViewBag.ConLetter = iBourseServ.iContractLetterServ.Find(x => x.Enabled && x.Year == year && x.ContractType == ContractType.Consultant).FullText;
         }
 
     }
