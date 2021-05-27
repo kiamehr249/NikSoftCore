@@ -192,10 +192,23 @@
             console.log(apiResult.data);
             var data = apiResult.data;
             var text = $('#contracttext').html();
-            text = text.replace('ufullname', data.ufullname).replace('uncode', data.uncode).replace('uaddress', data.uaddress)
-                .replace('umobile', data.umobile).replace('ucity', data.ucity).replace('branchcode', data.branchcode)
-                .replace('branchname', data.branchname).replace('deadline', data.deadline).replace('upan', data.upan)
-                .replace('ubankname', data.ubankname).replace('condate', data.condate).replace('constart', data.constart).replace('conend', data.conend);
+
+            text = completeReplace(text, 'firstperson', data.firstperson);
+            text = completeReplace(text, 'ufullname', data.ufullname);
+            text = completeReplace(text, 'uncode', data.uncode);
+            text = completeReplace(text, 'uaddress', data.uaddress);
+            text = completeReplace(text, 'umobile', data.umobile);
+            text = completeReplace(text, 'utel', data.utel);
+            text = completeReplace(text, 'ucity', data.ucity);
+            text = completeReplace(text, 'branchcode', data.branchcode);
+            text = completeReplace(text, 'branchname', data.branchname);
+            text = completeReplace(text, 'deadline', data.deadline);
+            text = completeReplace(text, 'upan', data.upan);
+            text = completeReplace(text, 'ubankname', data.ubankname);
+            text = completeReplace(text, 'condate', data.condate);
+            text = completeReplace(text, 'constart', data.constart);
+            text = completeReplace(text, 'conend', data.conend);
+
             $('#contracttext').html(text);
         })
     }

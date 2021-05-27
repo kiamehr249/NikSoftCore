@@ -7,6 +7,7 @@ namespace NiksoftCore.Bourse.Service
     public class Contract : LogModel
     {
         public int Id { get; set; }
+        public string FirstPerson { get; set; }
         public string ContractNumber { get; set; }
         public ContractType ContractType { get; set; }
         public int UserId { get; set; }

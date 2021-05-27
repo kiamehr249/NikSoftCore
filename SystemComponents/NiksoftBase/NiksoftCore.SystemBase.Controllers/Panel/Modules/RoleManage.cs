@@ -33,7 +33,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             var query = ISystemBaseServ.iNikRoleServ.ExpressionMaker();
             query.Add(x => true);
             var total = ISystemBaseServ.iNikRoleServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
 
             ViewBag.Roles = ISystemBaseServ.iNikRoleServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();

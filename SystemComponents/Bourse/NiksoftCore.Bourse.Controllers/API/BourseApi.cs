@@ -80,14 +80,15 @@ namespace NiksoftCore.Bourse.Controllers.API
             var City = await iSystemBaseServ.iCityServ.FindAsync(x => x.Id == theProfile.CityId);
             var bankAccount = await iBourseServ.iUserBankAccountServ.FindAsync(x => x.UserId == theProfile.UserId);
 
-
             return Ok(new
             {
                 status = 200,
                 message = "دریافت اطلاعات",
                 data = new {
+                    firstperson = theContract.FirstPerson,
                     ufullname = theProfile.Firstname + " " + theProfile.Lastname,
                     umobile = theProfile.Mobile,
+                    utel = theProfile.Tel,
                     uncode = theProfile.NCode,
                     uaddress = theProfile.Address,
                     ucity = City.Title,
@@ -95,7 +96,7 @@ namespace NiksoftCore.Bourse.Controllers.API
                     branchname = theContract.Branch.Title,
                     deadline = theContract.Deadline,
                     upan = bankAccount.PAN,
-                    uubankname = bankAccount.BankName,
+                    ubankname = bankAccount.BankName,
                     condate = theContract.ContractDate.ToPersianDateTime().ToString(PersianDateTimeFormat.Date),
                     constart = theContract.StartDate.ToPersianDateTime().ToString(PersianDateTimeFormat.Date),
                     conend = theContract.EndDate.ToPersianDateTime().ToString(PersianDateTimeFormat.Date),

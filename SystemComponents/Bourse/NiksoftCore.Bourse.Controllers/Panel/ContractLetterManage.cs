@@ -186,11 +186,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
         private void ComboBinder(int coType, int year)
         {
             List<ListItemModel> cTypes = new List<ListItemModel>();
-            cTypes.Add(new ListItemModel
-            {
-                Id = 0,
-                Title = "انتخاب کنید"
-            });
 
             cTypes.Add(new ListItemModel
             {
@@ -209,12 +204,6 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
             var start = pdate.Year - 5;
             var end = pdate.Year + 5;
-
-            years.Add(new ListItemModel
-            {
-                Id = 0,
-                Title = "انتخاب کنید"
-            });
 
             for (var i = start; i <= end; i++)
             {

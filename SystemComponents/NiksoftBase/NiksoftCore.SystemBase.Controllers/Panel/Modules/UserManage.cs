@@ -59,7 +59,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             ViewBag.Search = isSearch;
 
             var total = ISystemBaseServ.iNikUserServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
 
 

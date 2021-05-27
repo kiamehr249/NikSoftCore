@@ -31,7 +31,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         public IActionResult Index(int part)
         {
             var total = ISystemBaseServ.iGeneralContentServ.Count(x => true);
-            var pager = new Pagination(total, 20, part);
+            var pager = new Pagination(total, 10, part);
             ViewBag.Pager = pager;
 
             ViewBag.PageTitle = "مدیریت دسته بندی ها";

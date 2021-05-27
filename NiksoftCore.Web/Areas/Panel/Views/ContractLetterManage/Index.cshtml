@@ -33,6 +33,7 @@
                     <div class="form-group">
                         <label for="ddlType" class="control-label">نوع قرارداد</label>
                         <select asp-for="ContractType" class="form-control" asp-items="ViewBag.ContractTypes">
+                            <option selected="selected" value="0">انتخاب کنید</option>
                         </select>
                     </div>
                 </div>
@@ -40,6 +41,7 @@
                     <div class="form-group">
                         <label for="ddlType" class="control-label">سال</label>
                         <select asp-for="Year" class="form-control" asp-items="ViewBag.Years">
+                            <option selected="selected" value="0">انتخاب کنید</option>
                         </select>
                     </div>
                 </div>

@@ -623,6 +623,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             {
                 var contract = iBourseServ.iContractServ.Find(x => x.Id == Id);
                 request.Id = contract.Id;
+                request.FirstPerson = contract.FirstPerson;
                 request.ContractNumber = contract.ContractNumber;
                 request.ContractType = contract.ContractType;
                 request.UserCode = contract.UserCode;
@@ -644,6 +645,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
         {
             ViewBag.Messages = Messages;
             var user = await userManager.GetUserAsync(HttpContext.User);
+            var firstProfile = await ISystemBaseServ.iUserProfileServ.FindAsync(x => x.UserId == user.Id);
 
             if (!ValidContractForm(request))
             {
@@ -673,6 +675,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
             if (request.Id == 0)
             {
+                item.FirstPerson = firstProfile.Firstname + " " + firstProfile.Lastname;
                 item.CreateDate = DateTime.Now;
                 item.CreatedBy = user.Id;
                 iBourseServ.iContractServ.Add(item);

@@ -47,7 +47,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             ViewBag.Search = isSearch;
 
             var total = ISystemBaseServ.iMenuCategoryServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
 
             ViewBag.PageTitle = "مدیریت منو ها";
@@ -225,7 +225,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 query.Add(x => x.ParentId == null);
 
             var total = ISystemBaseServ.iMenuServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
 
             ViewBag.PageTitle = "مدیریت منو / " + category.Title;

@@ -3,6 +3,7 @@
     public class ContractRequest
     {
         public int Id { get; set; }
+        public string FirstPerson { get; set; }
         public string ContractNumber { get; set; }
         public ContractType ContractType { get; set; }
         public int UserId { get; set; }

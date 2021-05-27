@@ -26,7 +26,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.News
             query.Add(x => x.ContentCategory.KeyValue == "m_part5");
 
             var total = ISystemBaseServ.iGeneralContentServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
 
             ViewBag.Contents = ISystemBaseServ.iGeneralContentServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();

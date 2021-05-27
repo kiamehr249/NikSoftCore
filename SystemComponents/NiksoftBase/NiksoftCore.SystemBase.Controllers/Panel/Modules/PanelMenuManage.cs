@@ -23,7 +23,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         public IActionResult Index(int part)
         {
             var total = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == null);
-            var pager = new Pagination(total, 20, part);
+            var pager = new Pagination(total, 10, part);
             ViewBag.Pager = pager;
 
             ViewBag.PageTitle = "مدیریت منوها";
@@ -129,7 +129,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             ViewBag.ParentMenu = parent;
 
             var total = ISystemBaseServ.iPanelMenuService.Count(x => x.ParentId == ParentId);
-            var pager = new Pagination(total, 20, part);
+            var pager = new Pagination(total, 10, part);
             ViewBag.Pager = pager;
 
             ViewBag.PageTitle = "مدیریت منوهای " + parent.Title;

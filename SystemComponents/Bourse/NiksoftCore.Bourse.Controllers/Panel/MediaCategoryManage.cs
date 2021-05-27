@@ -132,7 +132,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             ViewBag.Search = isSearch;
 
             var total = iBourseServ.iMediaCategoryServ.Count(query);
-            var pager = new Pagination(total, 20, request.part);
+            var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
 
             ViewBag.Contents = iBourseServ.iMediaCategoryServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();

@@ -33,7 +33,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             query.Add(x => true);
 
             var total = ISystemBaseServ.iContentCategoryServ.Count(query);
-            var pager = new Pagination(total, 20, part);
+            var pager = new Pagination(total, 10, part);
             ViewBag.Pager = pager;
 
             ViewBag.PageTitle = "مدیریت دسته بندی ها";
