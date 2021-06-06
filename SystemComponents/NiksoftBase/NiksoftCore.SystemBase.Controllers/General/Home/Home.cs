@@ -19,7 +19,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.Home
 
         public IActionResult Index()
         {
-            return Redirect("/Auth/Account/Login");
+            return View();
         }
 
         [Authorize]
