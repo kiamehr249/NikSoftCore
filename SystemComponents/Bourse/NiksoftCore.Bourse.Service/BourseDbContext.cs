@@ -30,6 +30,8 @@ namespace NiksoftCore.Bourse.Service
         public DbSet<ContractFee> ContractFees { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<ContractLetter> ContractLetters { get; set; }
+        public DbSet<BaseTransaction> BaseTransactions { get; set; }
+        public DbSet<PaymentReceipt> PaymentReceipts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -48,6 +50,8 @@ namespace NiksoftCore.Bourse.Service
             builder.ApplyConfiguration(new ContractFeeMap());
             builder.ApplyConfiguration(new SettingMap());
             builder.ApplyConfiguration(new ContractLetterMap());
+            builder.ApplyConfiguration(new BaseTransactionMap());
+            builder.ApplyConfiguration(new PaymentReceiptMap());
         }
     }
 }

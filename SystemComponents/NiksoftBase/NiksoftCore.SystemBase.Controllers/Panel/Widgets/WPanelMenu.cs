@@ -32,6 +32,8 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Widgets
                 var thisUser = await userManager.GetUserAsync(HttpContext.User);
                 var userRoles = await userManager.GetRolesAsync(thisUser);
 
+                ViewBag.Roles = userRoles.ToList();
+
                 var menus = ISystemBaseServ.iPanelMenuService.GetPart(x => x.Enabled && x.ParentId == null, 0, 50).OrderBy(x => x.Ordering).ToList();
                 List<PanelMenu> permits = new List<PanelMenu>();
                 foreach (var menu in menus)

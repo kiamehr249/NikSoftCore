@@ -1,0 +1,156 @@
+﻿@using NiksoftCore.SystemBase.Service;
+@using NiksoftCore.Bourse.Service;
+@model ReceiptSearch
+@{
+    ViewData["Title"] = "مدیریت سند مالی";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var contents = (List<PaymentReceipt>)ViewBag.Contents;
+    var transaction = (BaseTransaction)ViewBag.Transaction;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    int pageNumber = 0;
+
+    var isSearch = (bool)ViewBag.Search;
+    var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
+    var accBtn = isSearch ? "aria-expanded='true'" : "";
+
+    var remaindAmount = transaction.ConsultantWage - transaction.PaymentAmount;
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-warning text-center">دوره</th>
+                <th class="text-warning text-center">کد شعبه</th>
+                <th class="text-warning text-center">نام شعبه</th>
+                <th class="text-warning text-center">شماره قرارداد مشتری</th>
+                <th class="text-warning text-center">کد مشتری</th>
+                <th class="text-warning text-center">نام مشتری</th>
+                <th class="text-warning text-center">مبلغ آورده مشتری</th>
+                <th class="text-warning text-center">کارمزد مشتری</th>
+                <th class="text-warning text-center">کد بازاریاب شعبه</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@transaction.Period</td>
+                <td>@transaction.BranchCode</td>
+                <td>@transaction.BranchName</td>
+                <td>@transaction.ContactNo</td>
+                <td>@transaction.UserCode</td>
+                <td>@transaction.FullName</td>
+                <td>@transaction.InputAmount.ToString("N0")</td>
+                <td>@transaction.WageAmount.ToString("N0")</td>
+                <td>@transaction.MarketerCode</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-warning text-center">نام بازاریاب شعبه</th>
+                <th class="text-warning text-center">کارمزد بازاریاب شعبه</th>
+                <th class="text-warning text-center">هزینه بازاریاب شعبه</th>
+                <th class="text-warning text-center">بیمه</th>
+                <th class="text-warning text-center">مالیات</th>
+                <th class="text-warning text-center">کد مشاور بازاریابی</th>
+                <th class="text-warning text-center">نام مشاور بازاریابی</th>
+                <th class="text-warning text-center">کارمزد مشاور بازاریابی</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@transaction.MarketerName</td>
+                <td>@transaction.MarketerWage.ToString("N0")</td>
+                <td>@transaction.MarketerCost.ToString("N0")</td>
+                <td>@transaction.InsuranceAmount.ToString("N0")</td>
+                <td>@transaction.TaxAmount.ToString("N0")</td>
+                <td>@transaction.ConsultantCode</td>
+                <td>@transaction.ConsultantName</td>
+                <td>@transaction.ConsultantWage.ToString("N0")</td>
+            </tr>
+            <tr>
+                <td colspan="4">مجموع پرداختی: <b>@transaction.PaymentAmount.ToString("N0")</b></td>
+                <td colspan="4">مانده حساب: <b>@remaindAmount.ToString("N0")</b></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="text-right">
+    <a href="/Panel/FinancialBoard/CreateReceipt/?TransactionId=@transaction.Id" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
+        <i class="fa fa-search"></i>
+    </a>
+    <a href="/Panel/FinancialBoard" class="btn btn-outline-info btn-sm">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+</div>
+<div id="searchAcc" @Html.Raw(accSearch) aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        <hr />
+        <form method="get">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="txtConsultantCode" class="control-label">شماره سند</label>
+                        @Html.TextBoxFor(m => m.Number, new { placeholder = "شماره سند", @class = "form-control", @id = "txtConsultantCode" })
+                    </div>
+                </div>
+                <div class="col-sm-1" style="padding-top: 29px;">
+                    <button type="submit" class="btn btn-outline-info">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+</div>
+<br />
+
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">شماره سند</th>
+                <th class="text-primary text-center">تاریخ</th>
+                <th class="text-primary text-center">مبلغ پرداختی(ریال)</th>
+                <th class="text-primary text-center">کد مشاور بازاریابی</th>
+                <th class="text-primary text-center">نام مشاور بازاریابی</th>
+                <th class="text-primary text-center">شماره حساب</th>
+                <th class="text-primary text-center">توضیحات</th>
+                <th class="text-primary text-center">وضعیت</th>
+                <th class="text-primary text-center" width="130px">عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in contents)
+            {
+                pageNumber++;
+                <tr>
+                    <td>@(pager.StartIndex + pageNumber)</td>
+                    <td>@item.Number</td>
+                    <td>@item.ReceiptDate.ToPersianDateTime().ToString(PersianDateTimeFormat.Date)</td>
+                    <td>@item.PaymentAmount.ToString("N0")</td>
+                    <td>@item.User.UserProfiles.First().UserCode</td>
+                    <td>@item.User.UserProfiles.First().Firstname @item.User.UserProfiles.First().Lastname</td>
+                    <td>@item.User.BankAccounts.First().PAN</td>
+                    <td>@item.Description</td>
+                    <td>@item.Status.ReceiptStatusName()</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="/Panel/FinancialBoard/CreateReceipt/?TransactionId=@transaction.Id&Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/Panel/FinancialBoard/RemoveReceipt/?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

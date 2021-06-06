@@ -1,0 +1,155 @@
+﻿@using NiksoftCore.Bourse.Service;
+@model ReceiptRequest
+@{
+    ViewData["Title"] = "ایجاد سند";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+    var transaction = (BaseTransaction)ViewBag.Transaction;
+    var remaindAmount = transaction.ConsultantWage - transaction.PaymentAmount;
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-warning text-center">دوره</th>
+                <th class="text-warning text-center">کد شعبه</th>
+                <th class="text-warning text-center">نام شعبه</th>
+                <th class="text-warning text-center">شماره قرارداد مشتری</th>
+                <th class="text-warning text-center">کد مشتری</th>
+                <th class="text-warning text-center">نام مشتری</th>
+                <th class="text-warning text-center">مبلغ آورده مشتری</th>
+                <th class="text-warning text-center">کارمزد مشتری</th>
+                <th class="text-warning text-center">کد بازاریاب شعبه</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@transaction.Period</td>
+                <td>@transaction.BranchCode</td>
+                <td>@transaction.BranchName</td>
+                <td>@transaction.ContactNo</td>
+                <td>@transaction.UserCode</td>
+                <td>@transaction.FullName</td>
+                <td>@transaction.InputAmount.ToString("N0")</td>
+                <td>@transaction.WageAmount.ToString("N0")</td>
+                <td>@transaction.MarketerCode</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-warning text-center">نام بازاریاب شعبه</th>
+                <th class="text-warning text-center">کارمزد بازاریاب شعبه</th>
+                <th class="text-warning text-center">هزینه بازاریاب شعبه</th>
+                <th class="text-warning text-center">بیمه</th>
+                <th class="text-warning text-center">مالیات</th>
+                <th class="text-warning text-center">کد مشاور بازاریابی</th>
+                <th class="text-warning text-center">نام مشاور بازاریابی</th>
+                <th class="text-warning text-center">کارمزد مشاور بازاریابی</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@transaction.MarketerName</td>
+                <td>@transaction.MarketerWage.ToString("N0")</td>
+                <td>@transaction.MarketerCost.ToString("N0")</td>
+                <td>@transaction.InsuranceAmount.ToString("N0")</td>
+                <td>@transaction.TaxAmount.ToString("N0")</td>
+                <td>@transaction.ConsultantCode</td>
+                <td>@transaction.ConsultantName</td>
+                <td>@transaction.ConsultantWage.ToString("N0")</td>
+            </tr>
+            <tr>
+                <td colspan="4">مجموع پرداختی: <b>@transaction.PaymentAmount.ToString("N0")</b></td>
+                <td colspan="4">مانده حساب: <b>@remaindAmount.ToString("N0")</b></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/FinancialBoard/Receipts/?TransactionId=@transaction.Id" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary()
+<form action="/Panel/FinancialBoard/CreateReceipt" method="post">
+    <div class="registerdiv">
+        <div class="row">
+            <div class="col-sm-10 offset-sm-1">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="txtNumber" class="control-label">شماره سند</label>
+                            @Html.TextBoxFor(m => m.Number, new { placeholder = "شماره سند", @class = "form-control", @id = "txtNumber" })
+                            @Html.ValidationMessageFor(m => m.Number)
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="txtReceiptDate" class="control-label">تاریخ سند</label>
+                            @Html.TextBoxFor(m => m.ReceiptDate, new { @class = "form-control datepicker", @id = "txtReceiptDate" })
+                            @Html.ValidationMessageFor(m => m.ReceiptDate)
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtPaymentAmount" class="control-label">مبلغ پرداختی</label>
+                            @Html.TextBoxFor(m => m.PaymentAmount, new { placeholder = "مبلغ پرداختی", @class = "form-control", @id = "txtPaymentAmount" })
+                            @Html.ValidationMessageFor(m => m.PaymentAmount)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="txtDescription" class="control-label">توضیحات</label>
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @id = "txtDescription", rows = "3" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.Period)
+                @Html.HiddenFor(m => m.PAN)
+                @Html.HiddenFor(m => m.UserId)
+                @Html.HiddenFor(m => m.TransactionId)
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">ذخیره</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+    });
+</script>

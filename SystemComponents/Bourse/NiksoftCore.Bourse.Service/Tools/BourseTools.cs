@@ -50,5 +50,18 @@
                     return "نامشخص";
             }
         }
+
+        public static string ReceiptStatusName(this ReceiptStatus type)
+        {
+            switch (type)
+            {
+                case ReceiptStatus.Save:
+                    return "ثبت اولیه";
+                case ReceiptStatus.Accept:
+                    return "تاید سند";
+                default:
+                    return "نامشخص";
+            }
+        }
     }
 }

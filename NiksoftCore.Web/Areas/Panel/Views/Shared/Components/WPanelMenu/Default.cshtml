@@ -1,6 +1,7 @@
 ﻿@using NiksoftCore.SystemBase.Service
 @{
     var menus = (List<PanelMenu>)ViewBag.Menus;
+    var roles = (List<string>)ViewBag.Roles;
 }
 <ul>
     @foreach (var item in menus)
@@ -18,7 +19,30 @@
                 <ul class="list-unstyled">
                     @foreach (var subitem in item.Childs.OrderBy(x => x.Ordering))
                     {
-                        <li><a href="@subitem.Link">@subitem.Title</a></li>
+                        @*<li><a href="@subitem.Link">@subitem.Title</a></li>*@
+
+                        if (string.IsNullOrEmpty(subitem.Roles))
+                        {
+                            <li><a href="@subitem.Link">@subitem.Title</a></li>
+                        }
+                        else
+                        {
+                            bool allow = false;
+                            foreach (var role in roles)
+                            {
+                                if (subitem.Roles.Contains(role))
+                                {
+                                    allow = true;
+                                    break;
+                                }
+                            }
+
+                            if (allow)
+                            {
+                                <li><a href="@subitem.Link">@subitem.Title</a></li>
+                            }
+
+                        }
                     }
                 </ul>
             </li>

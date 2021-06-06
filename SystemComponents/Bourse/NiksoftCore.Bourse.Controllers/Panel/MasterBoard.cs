@@ -144,6 +144,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
                     request.ProfileId = theProfile.Id;
                     request.Firstname = theProfile.Firstname;
                     request.Lastname = theProfile.Lastname;
+                    request.UserCode = theProfile.UserCode;
                     request.NCode = theProfile.NCode;
                     request.Mobile = theProfile.Mobile;
                     request.Tel = theProfile.Tel;
@@ -307,6 +308,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
             profile.Firstname = request.Firstname;
             profile.Lastname = request.Lastname;
+            profile.UserCode = request.UserCode;
             profile.NCode = request.NCode;
             profile.CompanyName = request.CompanyName;
             profile.Mobile = request.Mobile;

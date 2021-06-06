@@ -83,7 +83,7 @@
                     <td>
                     </td>
                     <td>@item.User.UserProfiles.First().Firstname @item.User.UserProfiles.First().Lastname</td>
-                    <td>بازاریاب شعبه</td>
+                    <td>@item.User.UserProfiles.First().ProfileType.GetProfileTypeName()</td>
                     <td>
                         @item.User.PhoneNumber
                     </td>

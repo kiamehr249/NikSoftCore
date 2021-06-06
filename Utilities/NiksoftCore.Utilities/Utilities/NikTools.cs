@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace NiksoftCore.Utilities
@@ -107,6 +108,22 @@ namespace NiksoftCore.Utilities
                             .First()
                             .GetCustomAttribute<DisplayAttribute>()
                             .GetName();
+        }
+
+        public static string RandomString(int size, string key = "", bool lowerCase = false)
+        {
+            Random _random = new Random();
+            var builder = new StringBuilder(size); 
+            char offset = lowerCase ? 'a' : 'A';
+            const int lettersOffset = 26; // A...Z or a..z: length=26  
+            
+            for (var i = 0; i < size; i++)
+            {
+                var @char = (char)_random.Next(offset, offset + lettersOffset);
+                builder.Append(@char);
+            }
+            builder.Append(key);
+            return lowerCase ? builder.ToString().ToLower() : builder.ToString();
         }
     }
 }

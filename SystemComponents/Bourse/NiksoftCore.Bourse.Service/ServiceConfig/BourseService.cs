@@ -1,4 +1,9 @@
-﻿namespace NiksoftCore.Bourse.Service
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Data;
+
+namespace NiksoftCore.Bourse.Service
 {
     public interface IBourseService
     {
@@ -18,6 +23,10 @@
         IContractFeeService iContractFeeServ { get; set; }
         ISettingService iSettingServ { get; set; }
         IContractLetterService iContractLetterServ { get; set; }
+        IBaseTransactionService iBaseTransactionServ { get; set; }
+        IPaymentReceiptService iPaymentReceiptServ { get; set; }
+
+        List<ConsultantReport> GetConsultantReport(string Code, int Start, int End);
 
     }
 
@@ -39,6 +48,8 @@
         public IContractFeeService iContractFeeServ { get; set; }
         public ISettingService iSettingServ { get; set; }
         public IContractLetterService iContractLetterServ { get; set; }
+        public IBaseTransactionService iBaseTransactionServ { get; set; }
+        public IPaymentReceiptService iPaymentReceiptServ { get; set; }
 
         public BourseService(string connection)
         {
@@ -59,6 +70,43 @@
             iContractFeeServ = new ContractFeeService(uow);
             iSettingServ = new SettingService(uow);
             iContractLetterServ = new ContractLetterService(uow);
+            iBaseTransactionServ = new BaseTransactionService(uow);
+            iPaymentReceiptServ = new PaymentReceiptService(uow);
+        }
+
+        public List<ConsultantReport> GetConsultantReport(string Code, int Start, int End)
+        {
+            using (var command = dbContext.Database.GetDbConnection().CreateCommand())
+            {
+                var query = String.Format("EXEC Sp_GetConsultantReport @MarketerCode = {0}, @StartPeriod = {1}, @EndPereiod = {2};", Code, Start, End);
+                command.CommandText = query;
+                command.CommandType = CommandType.Text;
+
+                dbContext.Database.OpenConnection();
+
+                using (var result = command.ExecuteReader())
+                {
+                    var entities = new List<ConsultantReport>();
+
+                    while (result.Read())
+                    {
+                        entities.Add(new ConsultantReport
+                        {
+                            Period = result.IsDBNull(0) ? 0 : result.GetFieldValue<int>(0),
+                            MarketerCode = result.IsDBNull(1) ? "" : result.GetFieldValue<string>(1),
+                            MarketerName = result.IsDBNull(2) ? "" : result.GetFieldValue<string>(2),
+                            ConsultantCode = result.IsDBNull(3) ? "" : result.GetFieldValue<string>(3),
+                            ConsultantName = result.IsDBNull(4) ? "" : result.GetFieldValue<string>(4),
+                            CustomerCount = result.IsDBNull(5) ? 0 : result.GetFieldValue<int>(5),
+                            TotalInputAmount = result.IsDBNull(6) ? 0 : result.GetFieldValue<double>(6),
+                            TotalConsultantWage = result.IsDBNull(7) ? 0 : result.GetFieldValue<double>(7),
+                        });
+                    }
+
+                    return entities;
+                }
+            }
+
         }
 
     }

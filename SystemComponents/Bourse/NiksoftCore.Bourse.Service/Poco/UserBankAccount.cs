@@ -12,6 +12,6 @@ namespace NiksoftCore.Bourse.Service
         public string BranchCode { get; set; }
         public int UserId { get; set; }
         
-
+        public virtual BourseUser User { get; set; }
     }
 }

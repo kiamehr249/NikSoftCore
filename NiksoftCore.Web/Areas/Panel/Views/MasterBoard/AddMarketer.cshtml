@@ -97,13 +97,19 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="txtUserCode" class="control-label">کد بازاریابی</label>
+                                @Html.TextBoxFor(m => m.UserCode, new { placeholder = "کد بازاریابی", @class = "form-control emp-check", @id = "txtUserCode" })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="txtBirthDate" class="control-label">تاریخ تولد</label>
                                 @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control datepicker", @id = "txtBirthDate" })
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="txtZipCode" class="control-label">کد پستی</label>
                                 @Html.TextBoxFor(m => m.ZipCode, new { placeholder = "کد پستی", @class = "form-control emp-check", @id = "txtZipCode" })

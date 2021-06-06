@@ -1,0 +1,108 @@
+﻿@using NiksoftCore.SystemBase.Service;
+@using NiksoftCore.Bourse.Service;
+@model FinancialSearch
+@{
+    ViewData["Title"] = "مدیریت مالی";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var contents = (List<BaseTransaction>)ViewBag.Contents;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    int pageNumber = 0;
+
+    var isSearch = (bool)ViewBag.Search;
+    var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
+    var accBtn = isSearch ? "aria-expanded='true'" : "";
+}
+<div class="text-right">
+    <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
+        <i class="fa fa-search"></i>
+    </a>
+</div>
+<div id="searchAcc" @Html.Raw(accSearch) aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        <hr />
+        <form method="get">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="BranchId" class="control-label">شعبه</label>
+                        <select class="form-control m-b" asp-for="BranchCode" asp-items="ViewBag.Branches">
+                            <option selected="selected" value="0">انتخاب کنید</option>
+                        </select>
+                        <span asp-validation-for="BranchCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="txtPeriod" class="control-label">دوره</label>
+                        @Html.TextBoxFor(m => m.Period, new { placeholder = "دوره", @class = "form-control", @id = "txtPeriod" })
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="txtConsultantCode" class="control-label">کد مشاور بازاریاب</label>
+                        @Html.TextBoxFor(m => m.ConsultantCode, new { placeholder = "بازاریاب شعبه", @class = "form-control", @id = "txtConsultantCode" })
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtConsultantName" class="control-label">نام مشاور بازاریاب</label>
+                        @Html.TextBoxFor(m => m.ConsultantName, new { placeholder = "مشاور بازاریاب", @class = "form-control", @id = "txtConsultantName" })
+                    </div>
+                </div>
+                <div class="col-sm-1" style="padding-top: 29px;">
+                    <button type="submit" class="btn btn-outline-info">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+</div>
+<br />
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">دوره</th>
+                <th class="text-primary text-center">کد شعبه</th>
+                <th class="text-primary text-center">نام شعبه</th>
+                <th class="text-primary text-center">کد مشاور بازاریابی</th>
+                <th class="text-primary text-center">نام مشاور بازاریابی</th>
+                <th class="text-primary text-center">مبلغ کارمزد(ریال)</th>
+                <th class="text-primary text-center">مبلغ پرداختی(ریال)</th>
+                <th class="text-primary text-center">مانده حساب</th>
+                <th class="text-primary text-center" width="130px">عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in contents)
+            {
+                pageNumber++;
+                var balance = item.ConsultantWage - item.PaymentAmount;
+            <tr>
+                <td>@(pager.StartIndex + pageNumber)</td>
+                <td>@item.Period</td>
+                <td>@item.BranchCode</td>
+                <td>@item.BranchName</td>
+                <td>@item.ConsultantCode</td>
+                <td>@item.ConsultantName</td>
+                <td>@item.ConsultantWage.ToString("N0")</td>
+                <td>@item.PaymentAmount.ToString("N0")</td>
+                <td>@balance.ToString("N0")</td>
+                <td>
+                    @if (balance > 0)
+                    {
+                        <div class="btn-group-vertical btn-group-sm">
+                            <a href="/Panel/FinancialBoard/Receipts/?TransactionId=@item.Id" class="btn btn-outline-info btn-sm">
+                                ثبت سند <span class="badge badge-warning">@item.PaymentReceipts.Count</span>
+                            </a>
+                        </div>
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
