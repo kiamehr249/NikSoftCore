@@ -46,6 +46,8 @@
                     return "بازاریاب شعبه";
                 case 2:
                     return "کارمند شرکت";
+                case 3:
+                    return "مبلغ شعبه";
                 default:
                     return "نامشخص";
             }
@@ -59,6 +61,23 @@
                     return "ثبت اولیه";
                 case ReceiptStatus.Accept:
                     return "تاید سند";
+                default:
+                    return "نامشخص";
+            }
+        }
+
+        public static string ContractTypeName(this ContractType type)
+        {
+            switch (type)
+            {
+                case ContractType.Marketer:
+                    return "بازاریاب شعبه";
+                case ContractType.Consultant:
+                    return "مشاور بازاریابی";
+                case ContractType.AdLeader:
+                    return "مبلغ";
+                case ContractType.Advertiser:
+                    return "مبلغین";
                 default:
                     return "نامشخص";
             }

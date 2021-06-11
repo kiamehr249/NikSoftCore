@@ -32,6 +32,9 @@ namespace NiksoftCore.Bourse.Service
         public DbSet<ContractLetter> ContractLetters { get; set; }
         public DbSet<BaseTransaction> BaseTransactions { get; set; }
         public DbSet<PaymentReceipt> PaymentReceipts { get; set; }
+        public DbSet<BranchArea> BranchAreas { get; set; }
+        public DbSet<BranchAdLeader> BranchAdLeaders { get; set; }
+        public DbSet<BranchAdvertiser> BranchAdvertisers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -52,6 +55,9 @@ namespace NiksoftCore.Bourse.Service
             builder.ApplyConfiguration(new ContractLetterMap());
             builder.ApplyConfiguration(new BaseTransactionMap());
             builder.ApplyConfiguration(new PaymentReceiptMap());
+            builder.ApplyConfiguration(new BranchAreaMap());
+            builder.ApplyConfiguration(new BranchAdLeaderMap());
+            builder.ApplyConfiguration(new BranchAdvertiserMap());
         }
     }
 }

@@ -25,6 +25,9 @@ namespace NiksoftCore.Bourse.Service
         IContractLetterService iContractLetterServ { get; set; }
         IBaseTransactionService iBaseTransactionServ { get; set; }
         IPaymentReceiptService iPaymentReceiptServ { get; set; }
+        IBranchAreaService iBranchAreaServ { get; set; }
+        IBranchAdLeaderService iBranchAdLeaderServ { get; set; }
+        IBranchAdvertiserService iBranchAdvertiserServ { get; set; }
 
         List<ConsultantReport> GetConsultantReport(string Code, int Start, int End);
 
@@ -50,6 +53,9 @@ namespace NiksoftCore.Bourse.Service
         public IContractLetterService iContractLetterServ { get; set; }
         public IBaseTransactionService iBaseTransactionServ { get; set; }
         public IPaymentReceiptService iPaymentReceiptServ { get; set; }
+        public IBranchAreaService iBranchAreaServ { get; set; }
+        public IBranchAdLeaderService iBranchAdLeaderServ { get; set; }
+        public IBranchAdvertiserService iBranchAdvertiserServ { get; set; }
 
         public BourseService(string connection)
         {
@@ -72,6 +78,9 @@ namespace NiksoftCore.Bourse.Service
             iContractLetterServ = new ContractLetterService(uow);
             iBaseTransactionServ = new BaseTransactionService(uow);
             iPaymentReceiptServ = new PaymentReceiptService(uow);
+            iBranchAreaServ = new BranchAreaService(uow);
+            iBranchAdLeaderServ = new BranchAdLeaderService(uow);
+            iBranchAdvertiserServ = new BranchAdvertiserService(uow);
         }
 
         public List<ConsultantReport> GetConsultantReport(string Code, int Start, int End)

@@ -9,6 +9,10 @@ namespace NiksoftCore.Bourse.Service
         {
             builder.HasKey(x => x.Id);
             builder.ToTable("B_Branchs");
+
+            builder.HasOne(x => x.BranchArea)
+                .WithMany(x => x.Branches)
+                .HasForeignKey(x => x.AreaId).IsRequired(true);
         }
     }
 }

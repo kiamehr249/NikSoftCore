@@ -8,12 +8,16 @@ namespace NiksoftCore.Bourse.Service
         public int Id { get; set; }
         public string Title { get; set; }
         public string Code { get; set; }
+        public int AreaId { get; set; }
 
+        public virtual BranchArea BranchArea { get; set; }
         public virtual ICollection<BranchMaster> BranchMasters { get; set; }
         public virtual ICollection<BranchMarketer> BranchMarketers { get; set; }
         public virtual ICollection<BranchConsultant> BranchConsultants { get; set; }
         public virtual ICollection<BranchUser> BranchUsers { get; set; }
         public virtual ICollection<Contract> Contracts { get; set; }
         public virtual ICollection<Media> Medias { get; set; }
+        public virtual ICollection<BranchAdLeader> BranchAdLeaders { get; set; }
+        public virtual ICollection<BranchAdvertiser> BranchAdvertisers { get; set; }
     }
 }
