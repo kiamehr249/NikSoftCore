@@ -105,3 +105,45 @@
         </tbody>
     </table>
 </div>
+
+<div class="pager">
+    @if (pager.TotalSize > pager.PageSize)
+    {
+        <ul class="pagination m-b-5">
+            <li class="page-item">
+                <a class="page-link" href="@Context.Request.Path?part=1" aria-label="Previous">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            @if (pager.GetStartShow() >= pager.MaxShow)
+            {
+                <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetBackRang()" class="page-link">...</a></li>
+            }
+
+            @for (int i = pager.GetStartShow(); i <= pager.GetEndShow(); i++)
+            {
+                if (pager.Part == i)
+                {
+                    <li class="page-item active"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                }
+
+            }
+
+            @if ((pager.TotalParts - pager.MaxShow) > pager.Part)
+            {
+                <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetEndShow()" class="page-link">...</a></li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="@Context.Request.Path?part=@pager.GetTotalParts()" aria-label="Next">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+    }
+
+</div>

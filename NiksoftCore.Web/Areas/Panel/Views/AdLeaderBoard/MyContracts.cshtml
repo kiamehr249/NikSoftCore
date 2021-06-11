@@ -1,0 +1,208 @@
+﻿@using NiksoftCore.SystemBase.Service;
+@using NiksoftCore.Bourse.Service;
+@model BaseRequest
+@{
+    ViewData["Title"] = "مدیریت قرارداد";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var contents = (List<Contract>)ViewBag.Contents;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    int pageNumber = 0;
+
+    var isSearch = (bool)ViewBag.Search;
+    var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
+    var accBtn = isSearch ? "aria-expanded='true'" : "";
+}
+
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">تاریخ</th>
+                <th class="text-primary text-center">شماره قرارداد</th>
+                <th class="text-primary text-center">طرف قرارداد</th>
+                <th class="text-primary text-center">کد طرف قرارداد</th>
+                <th class="text-primary text-center">نام طرف قرارداد</th>
+                <th class="text-primary text-center">تاریخ</th>
+                <th class="text-primary text-center">کارمزد</th>
+                <th class="text-primary text-center">مهلت</th>
+                <th class="text-primary text-center">وضعیت</th>
+                <th class="text-primary text-center" width="100px">عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in contents)
+            {
+                pageNumber++;
+                <tr>
+                    <td>@(pager.StartIndex + pageNumber)</td>
+                    <td>@item.ContractDate.ToPersianDateTime().ToPersianDigitalDateString()</td>
+                    <td>@item.ContractNumber</td>
+                    <td>
+                        @item.ContractType.ContractTypeName()
+                    </td>
+                    <td>@item.UserCode</td>
+                    <td>@item.UserFullName</td>
+                    <td>
+                        <p>شروع: @item.StartDate.ToPersianDateTime().ToPersianDigitalDateString()</p>
+                        <p>پایان: @item.EndDate.ToPersianDateTime().ToPersianDigitalDateString()</p>
+
+                    </td>
+                    <td>
+                        @foreach (var confee in item.ContractFees)
+                        {
+                            if (confee.Fee.FeeType == FeeType.Fixed)
+                            {
+                                <p>نرخ ثابت @confee.Fee.AmountPercentage %</p>
+                            }
+                            else
+                            {
+                                <p>نرخ پلکانی مبلغ از @confee.Fee.FromAmount.ToString("N0") مبلغ تا @confee.Fee.ToAmount.ToString("N0") @confee.Fee.AmountPercentage درصد </p>
+                            }
+                        }
+                    </td>
+                    <td>@item.Deadline روز</td>
+                    <td>@item.Status.GetContractStatus()</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+
+                            @if (item.Status == ContractStatus.InProccess)
+                            {
+                                <a href="/Panel/AdLeaderBoard/AcceptMyContract/?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                    بازگشت
+                                </a>
+                            }
+                            else if (item.Status == ContractStatus.Save)
+                            {
+                                <a href="/Panel/AdLeaderBoard/AcceptMyContract/?Id=@item.Id" class="btn btn-outline-success btn-sm btnconf" data-id="@item.Id" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                    تایید
+                                </a>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="contractmodal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title m-0" id="myLargeModalLabel">متن قرارداد</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="contracttext" class="text-bar">
+                    @Html.Raw(ViewBag.ConLetter)
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="checkbox checkbox-primary">
+                        <input id="chacceptlaw" type="checkbox">
+                        <label for="chacceptlaw">
+                            <a href="#" target="_blank">قوانین و مقررات</a> را مطالعه کرده و قبول دارم
+                        </label>
+                    </div>
+                </div>
+                <div class="btn-bar text-center">
+                    <button type="button" class="btn btn-outline-warning" data-dismiss="modal" aria-hidden="true">لغو</button>
+                    <a id="acceptcontract" href="#" class="btn btn-outline-success">
+                        تایید
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pager">
+    @if (pager.TotalSize > pager.PageSize)
+    {
+        <ul class="pagination m-b-5">
+            <li class="page-item">
+                <a class="page-link" href="@Context.Request.Path?part=1" aria-label="Previous">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            @if (pager.GetStartShow() >= pager.MaxShow)
+            {
+                <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetBackRang()" class="page-link">...</a></li>
+            }
+
+            @for (int i = pager.GetStartShow(); i <= pager.GetEndShow(); i++)
+            {
+                if (pager.Part == i)
+                {
+                    <li class="page-item active"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                }
+
+            }
+
+            @if ((pager.TotalParts - pager.MaxShow) > pager.Part)
+            {
+                <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetEndShow()" class="page-link">...</a></li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="@Context.Request.Path?part=@pager.GetTotalParts()" aria-label="Next">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+    }
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.btnconf').on('click', function () {
+            var cid = $(this).data('id');
+            $('#acceptcontract').attr('href', $(this).attr('href'));
+            getWords(cid);
+        });
+
+        $('#acceptcontract').on('click', function () {
+            if (!$('#chacceptlaw').prop("checked")) {
+                showMessage({
+                    text: 'ابتدا باید قوانین و مقررات قبول داشته باشد',
+                    type: 'error'
+                });
+                return false;
+            }
+
+            return true;
+        });
+
+    });
+
+    function getWords(cid) {
+        $.post('/api/BourseApi/GetContractWords', { itemId: cid }, function (apiResult, status) {
+            console.log(apiResult.data);
+            var data = apiResult.data;
+            var text = $('#contracttext').html();
+
+            text = completeReplace(text, 'firstperson', data.firstperson);
+            text = completeReplace(text, 'ufullname', data.ufullname);
+            text = completeReplace(text, 'uncode', data.uncode);
+            text = completeReplace(text, 'uaddress', data.uaddress);
+            text = completeReplace(text, 'umobile', data.umobile);
+            text = completeReplace(text, 'utel', data.utel);
+            text = completeReplace(text, 'ucity', data.ucity);
+            text = completeReplace(text, 'branchcode', data.branchcode);
+            text = completeReplace(text, 'branchname', data.branchname);
+            text = completeReplace(text, 'deadline', data.deadline);
+            text = completeReplace(text, 'upan', data.upan);
+            text = completeReplace(text, 'ubankname', data.ubankname);
+            text = completeReplace(text, 'condate', data.condate);
+            text = completeReplace(text, 'constart', data.constart);
+            text = completeReplace(text, 'conend', data.conend);
+
+            $('#contracttext').html(text);
+        })
+    }
+</script>

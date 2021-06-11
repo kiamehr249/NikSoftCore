@@ -92,7 +92,9 @@
 
     function getFees(tp) {
         callApi({
+            type: "POST",
             url: '/api/BourseApi/GetFees',
+            contentType: "application/json;charset=utf-8",
             data: { type: tp },
             success: function (response) {
                 if (response.status == 200) {

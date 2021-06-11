@@ -63,6 +63,7 @@
                 <th class="text-primary text-center" width="30px">ردیف</th>
                 <th class="text-primary text-center">شعبه</th>
                 <th class="text-primary text-center">کد شعبه</th>
+                <th class="text-primary text-center">منطقه</th>
                 <th class="text-primary text-center">سرپرستی شعبه</th>
                 <th class="text-primary text-center">کد</th>
                 <th class="text-primary text-center">نام / نام خانوادگی</th>
@@ -79,6 +80,7 @@
                     <td>@(pager.StartIndex + pageNumber)</td>
                     <td>@item.Branch.Title</td>
                     <td>@item.Branch.Code</td>
+                    <td>@item.Branch.BranchArea.Title</td>
                     <td>@item.Branch.BranchMasters.First().User.UserProfiles.First().Firstname @item.Branch.BranchMasters.First().User.UserProfiles.First().Lastname</td>
                     <td>
                     </td>

@@ -46,9 +46,14 @@ namespace NiksoftCore.Bourse.Controllers.API
                 });
             }
 
-            var feeType = (FeeType)type;
+            var query = iBourseServ.iFeeServ.ExpressionMaker();
+            if (type > 0)
+            {
+                var feeType = (FeeType)type;
+                query.Add(x => x.FeeType == feeType);
+            }
 
-            var fees = iBourseServ.iFeeServ.GetAll(x => x.FeeType == feeType, y => new {
+            var fees = iBourseServ.iFeeServ.GetAll(query, y => new {
                 y.Id,
                 Title = y.Title + " از " + y.FromAmount + " تا " + y.ToAmount
             }).ToList();

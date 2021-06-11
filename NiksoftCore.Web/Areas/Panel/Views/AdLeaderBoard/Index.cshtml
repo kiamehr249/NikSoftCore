@@ -1,0 +1,170 @@
+﻿@using NiksoftCore.SystemBase.Service;
+@using NiksoftCore.Bourse.Service;
+@model ConsultantSearch
+@{
+    ViewData["Title"] = "مدیریت مبلغین";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var contents = (List<BranchAdvertiser>)ViewBag.Contents;
+
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    int pageNumber = 0;
+
+    var isSearch = (bool)ViewBag.Search;
+    var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
+    var accBtn = isSearch ? "aria-expanded='true'" : "";
+
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+}
+<div class="text-right">
+    <a href="/Panel/AdLeaderBoard/AddAdvertiser" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
+        <i class="fa fa-search"></i>
+    </a>
+</div>
+<div id="searchAcc" @Html.Raw(accSearch) aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        <hr />
+        <form method="get">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtFirstName" class="control-label">نام</label>
+                        @Html.TextBoxFor(m => m.Firstname, new { placeholder = "نام", @class = "form-control", @id = "txtFirstName" })
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtLastName" class="control-label">نام خانوادگی</label>
+                        @Html.TextBoxFor(m => m.Lastname, new { placeholder = "نام خانوادگی", @class = "form-control", @id = "txtLastName" })
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding-top: 29px;">
+                    <button type="submit" class="btn btn-outline-info">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+</div>
+<br />
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-primary text-center" width="30px">ردیف</th>
+                <th class="text-primary text-center">شعبه</th>
+                <th class="text-primary text-center">کد شعبه</th>
+                <th class="text-primary text-center">نام / نام خانوادگی</th>
+                <th class="text-primary text-center">کد ملی</th>
+                <th class="text-primary text-center">شماره موبایل</th>
+                <th class="text-primary text-center" width="120px">قراردادها</th>
+                <th class="text-primary text-center" width="120px">عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in contents)
+            {
+                pageNumber++;
+                <tr>
+                    <td>@(pager.StartIndex + pageNumber)</td>
+                    <td>@item.Branch.Title</td>
+                    <td>@item.Branch.Code</td>
+                    <td>@item.User.UserProfiles.First().Firstname @item.User.UserProfiles.First().Lastname</td>
+                    <td>@item.User.UserName</td>
+                    <td>@item.User.PhoneNumber</td>
+                    <td>
+                        <a href="/Panel/AdLeaderBoard/Contracts/?UserId=@item.UserId" class="btn btn-outline-info btn-sm">
+                            قراردادها <span class="badge badge-info">@item.User.Contracts.Where(x => x.ContractType == ContractType.Advertiser).Count()</span>
+                        </a>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="/Panel/AdLeaderBoard/AddAdvertiser/?UserId=@item.UserId" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/Panel/AdLeaderBoard/RemoveAdvertiser/?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="pager">
+    @if (pager.TotalSize > pager.PageSize)
+    {
+        <ul class="pagination m-b-5">
+            <li class="page-item">
+                <a class="page-link" href="@Context.Request.Path?part=1" aria-label="Previous">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            @if (pager.GetStartShow() >= pager.MaxShow)
+            {
+                <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetBackRang()" class="page-link">...</a></li>
+            }
+
+            @for (int i = pager.GetStartShow(); i <= pager.GetEndShow(); i++)
+            {
+                if (pager.Part == i)
+                {
+                    <li class="page-item active"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                }
+
+            }
+
+            @if ((pager.TotalParts - pager.MaxShow) > pager.Part)
+            {
+                <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetEndShow()" class="page-link">...</a></li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="@Context.Request.Path?part=@pager.GetTotalParts()" aria-label="Next">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+    }
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+
+    });
+</script>

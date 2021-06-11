@@ -14,10 +14,20 @@
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
 <div class="text-right">
-    <a href="/Panel/MasterBoard/AddContract/?UserId=@Model.UserId&BranchId=@Model.BranchId" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
-    <a href="/Panel/MasterBoard/Marketers/?BranchId=@Model.BranchId" class="btn btn-outline-info btn-sm">
-        <i class="fas fa-arrow-left"></i>
-    </a>
+    <a href="/Panel/MasterBoard/AddContract/?Type=@Model.Type&UserId=@Model.UserId&BranchId=@Model.BranchId" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    @if (Model.Type == 1)
+    {
+        <a href="/Panel/MasterBoard/Marketers/?BranchId=@Model.BranchId" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    }
+    else
+    {
+        <a href="/Panel/MasterBoard/AdLeaders/?BranchId=@Model.BranchId" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    }
+
 </div>
 <br />
 <div class="table-responsive">
@@ -47,14 +57,7 @@
                     <td>@item.ContractDate.ToPersianDateTime().ToPersianDigitalDateString()</td>
                     <td>@item.ContractNumber</td>
                     <td>
-                        @if (item.ContractType == ContractType.Marketer)
-                        {
-                            <span>بازاریاب شعبه</span>
-                        }
-                        else
-                        {
-                            <span>مشاور بازاریابی</span>
-                        }
+                        @item.ContractType.ContractTypeName()
                     </td>
                     <td>@item.UserCode</td>
                     <td>@item.UserFullName</td>
