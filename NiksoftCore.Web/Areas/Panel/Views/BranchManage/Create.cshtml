@@ -19,6 +19,12 @@
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
+                    <label for="AreaId" class="control-label">منطقه</label>
+                    <select class="form-control m-b" asp-for="AreaId" asp-items="ViewBag.Areas">
+                        <option selected="selected" value="0">انتخاب کنید</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="txtTitle" class="control-label">عنوان شعبه</label>
                     @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان شعبه", @class = "form-control", @id = "txtTitle" })
                     @Html.ValidationMessageFor(m => m.Title)

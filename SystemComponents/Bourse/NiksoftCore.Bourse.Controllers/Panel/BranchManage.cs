@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using NiksoftCore.Bourse.Service;
 using NiksoftCore.MiddlController.Middles;
@@ -65,6 +66,8 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             {
                 request = iBourseServ.iBranchServ.Find(x => x.Id == Id);
             }
+
+            ComboBinder(request.AreaId);
             return View(request);
         }
 
@@ -75,6 +78,8 @@ namespace NiksoftCore.Bourse.Controllers.Panel
             var user = await userManager.GetUserAsync(HttpContext.User);
             if (!ValidForm(request))
             {
+                ViewBag.Messages = Messages;
+                ComboBinder(request.AreaId);
                 return View(request);
             }
 
@@ -94,6 +99,7 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
             item.Title = request.Title;
             item.Code = request.Code;
+            item.AreaId = request.AreaId;
 
             if (request.Id == 0)
             {
@@ -133,6 +139,12 @@ namespace NiksoftCore.Bourse.Controllers.Panel
 
             return true;
 
+        }
+
+        private void ComboBinder(int areaId)
+        {
+            var areas = iBourseServ.iBranchAreaServ.GetAll(x => x.Enabled, y => new { y.Id, y.Title }).ToList();
+            ViewBag.Areas = new SelectList(areas, "Id", "Title", areaId);
         }
 
     }
