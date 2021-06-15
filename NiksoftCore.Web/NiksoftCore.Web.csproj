@@ -208,6 +208,7 @@
     <Folder Include="wwwroot\files\base\" />
     <Folder Include="wwwroot\files\Marketer\" />
     <Folder Include="wwwroot\lib\noty\" />
+    <Folder Include="wwwroot\templates\UiTemplate\DashboardFace\" />
     <Folder Include="wwwroot\templates\UiTemplate\NikFace\" />
   </ItemGroup>
 

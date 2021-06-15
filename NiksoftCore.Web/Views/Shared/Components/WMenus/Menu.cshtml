@@ -3,21 +3,49 @@
     var content = (MenuCategory)ViewBag.Contents;
 }
 
-<div class="container">
-    <div class="logo">
+
+<nav id="primary-navigation" class="site-navigation primary-navigation" role="navigation">
+    <button class="menu-toggle dl-trigger">
+        Primary Menu<span class="menu-line-1"></span><span class="menu-line-2"></span><span class="menu-line-3"></span>
+    </button>
+    <ul id="primary-menu" class="nav-menu dl-menu styled no-responsive">
         @if (content != null)
         {
-            <img src="~/@content.Image" alt="">
-        }
-    </div>
-    <div class="responsive"><i data-icon="m" class="icon"></i></div>
-    <ul class="nav-menu">
-        @if (content != null)
-        {
-            @foreach (var item in content.Menus.Where(x => x.Enabled).OrderBy(x => x.OrderId).ToList())
+            @foreach (var item in content.Menus.Where(x => x.Enabled && x.ParentId == null).OrderBy(x => x.OrderId).ToList())
             {
-                <li><a href="@item.Link" class="smoothScroll">@item.Title</a></li>
+                if (item.Childs.Count > 0)
+                {
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-parent menu-item-2248 megamenu-first-element">
+                        <a href="@item.Link">@item.Title</a>
+                        <ul class="sub-menu dl-submenu styled ">
+                            @foreach (var sub in item.Childs)
+                            {
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2243 megamenu-first-element">
+                                    <a href="@sub.Link">@sub.Title</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-310 megamenu-enable megamenu-style-default megamenu-first-element">
+                        <a href="@item.Link">@item.Title</a>
+                    </li>
+                }
             }
         }
+        <li id="menu-item-1795" class="demo-link menu-item menu-item-type-custom menu-item-object-custom menu-item-1795 megamenu-first-element">
+            <a href="/Auth/Account/Login">login</a>
+        </li>
+        <li class="menu-item menu-item-search">
+            <a href="#"></a>
+            <div class="minisearch">
+                <form role="search" id="menu-searchform" class="sf" action="https://codex-themes.com/themes/cryption/" method="GET">
+                    <input id="searchform-input" class="sf-input" type="text" placeholder="Search..." name="s"><span class="sf-submit-icon"></span>
+                    <input id="searchform-submit" class="sf-submit" type="submit" value="">
+                </form>
+            </div>
+        </li>
     </ul>
-</div>
+</nav>
