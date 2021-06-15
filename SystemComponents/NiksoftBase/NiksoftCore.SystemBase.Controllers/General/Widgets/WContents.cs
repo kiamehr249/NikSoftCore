@@ -22,7 +22,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.Widgets
             iSystemBaseServ = new SystemBaseService(Config.GetConnectionString("SystemBase"));
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string key, int size = 8)
+        public async Task<IViewComponentResult> InvokeAsync(string key, int size = 8, string viewName = "Default")
         {
             var theCategory = await iSystemBaseServ.iContentCategoryServ.FindAsync(x => x.KeyValue == key);
             List<string> KeyValues;
@@ -32,7 +32,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.Widgets
             {
                 categories = iSystemBaseServ.iContentCategoryServ.GetAll(x => x.Parent.KeyValue == key);
                 KeyValues = categories.Select(x => x.KeyValue).ToList();
-                contents = iSystemBaseServ.iGeneralContentServ.GetAll(x => KeyValues.Contains(x.ContentCategory.KeyValue));
+                contents = iSystemBaseServ.iGeneralContentServ.GetPart(x => KeyValues.Contains(x.ContentCategory.KeyValue), 0, size);
                 ViewBag.Categories = categories;
             }
             else
@@ -40,7 +40,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.Widgets
                 contents = iSystemBaseServ.iGeneralContentServ.GetPart(x => x.ContentCategory.KeyValue == key, 0, size, x => x.Id , true);
             }
             ViewBag.Contents = contents;
-            return View();
+            return View(viewName);
         }
 
     }

@@ -26,12 +26,21 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
             this.signInManager = signInManager;
         }
 
-        [HttpGet, Authorize]
-        public IActionResult Register()
+        [HttpGet]
+        public async Task<IActionResult> Register()
         {
             if (User.Identity.IsAuthenticated)
             {
-                return Redirect("/Panel");
+                var theUser = await userManager.GetUserAsync(HttpContext.User);
+                if (User.IsInRole("Admin"))
+                {
+                    return Redirect("/Panel");
+                }
+                else
+                {
+                    return Redirect("/Dashboard");
+                }
+
             }
 
             ViewBag.Messages = Messages;
@@ -40,47 +49,55 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         }
 
 
-        [HttpPost, Authorize]
+        [HttpPost]
         public async Task<IActionResult> Register(UserRegisterRequest request)
         {
             if (User.Identity.IsAuthenticated)
             {
-                return Redirect("/Panel");
+                if (User.IsInRole("NikAdmin") || User.IsInRole("Admin"))
+                {
+                    return Redirect("/Panel");
+                }
+                else
+                {
+                    return Redirect("/Dashboard");
+                }
+
             }
 
             if (string.IsNullOrEmpty(request.Firstname))
             {
-                AddError("نام باید مقدار داشته باشد", "fa");
+                AddError("The name must have a value", "fa");
             }
 
             if (string.IsNullOrEmpty(request.Lastname))
             {
-                AddError("نام خانوادگی باید مقدار داشته باشد", "fa");
+                AddError("Last name must have a value", "fa");
             }
 
             if (string.IsNullOrEmpty(request.Email))
             {
-                AddError("آدرس ایمیل باید مقدار داشته باشد", "fa");
+                AddError("Email address must have a value", "fa");
             }
 
             if (string.IsNullOrEmpty(request.PhoneNumber))
             {
-                AddError("شماره موبایل باید مقدار داشته باشد", "fa");
+                AddError("The mobile number must have a value", "fa");
             }
 
             if (string.IsNullOrEmpty(request.Password))
             {
-                AddError("رمز عبور باید مقدار داشته باشد", "fa");
+                AddError("Password must have a value ", "fa");
             }
 
             if (string.IsNullOrEmpty(request.ConfirmPassword))
             {
-                AddError("تکرار رمز عبور باید مقدار داشته باشد", "fa");
+                AddError("Repeat password must have a value", "fa");
             }
 
             if (request.Password != request.ConfirmPassword)
             {
-                AddError("تکرار رمز عبور با رمز عبور مطابق نیست", "fa");
+                AddError("Repeat password does not match password", "fa");
             }
 
             ViewBag.Messages = Messages;
@@ -149,11 +166,18 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
             {
-                return Redirect("/Panel");
+                if (User.IsInRole("NikAdmin") || User.IsInRole("Admin"))
+                {
+                    return Redirect("/Panel");
+                }
+                else
+                {
+                    return Redirect("/Dashboard");
+                }
             }
 
             LoginRequest model = new LoginRequest();
@@ -166,17 +190,24 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         {
             if (User.Identity.IsAuthenticated)
             {
-                return Redirect("/Panel");
+                if (User.IsInRole("NikAdmin") || User.IsInRole("Admin"))
+                {
+                    return Redirect("/Panel");
+                }
+                else
+                {
+                    return Redirect("/Dashboard");
+                }
             }
 
             if (string.IsNullOrEmpty(model.Username))
             {
-                AddError("نام کاربری را وارد کنید", "fa");
+                AddError("Enter the username", "fa");
             }
 
             if (string.IsNullOrEmpty(model.Password))
             {
-                AddError("رمز عبور را وارد کنید", "fa");
+                AddError("Enter your password", "fa");
             }
 
             if (Messages.Count > 0)
@@ -192,7 +223,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                 var user = await userManager.FindByEmailAsync(model.Username);
                 if (user != null && !user.EmailConfirmed)
                 {
-                    AddError("این نام کابری هنوز تایید نشده است", "fa");
+                    AddError("This username has not been verified yet", "fa");
 
                     ViewBag.Messages = Messages;
                     return View(model);
@@ -206,24 +237,28 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
 
                 if (await userManager.CheckPasswordAsync(user, model.Password) == false)
                 {
-                    AddError("نام کاربری یا رمز عبور را اشتباه وارد کرده‌اید", "fa");
+                    AddError("You entered the wrong username or password", "fa");
 
                     ViewBag.Messages = Messages;
                     return View(model);
 
                 }
-                
+
 
                 var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, true);
 
                 if (result.Succeeded)
                 {
-                    if (user.AccountType == AccountType.Merchant)
+                    var IsNik = await userManager.IsInRoleAsync(user, "NikAdmin");
+                    var IsAdmin = await userManager.IsInRoleAsync(user, "Admin");
+                    if (IsNik || IsAdmin)
                     {
-                        return Redirect("/Home/Profile");
+                        return Redirect("/Panel");
                     }
-
-                    return Redirect("/Panel");
+                    else
+                    {
+                        return Redirect("/Dashboard");
+                    }
                 }
                 else if (result.IsLockedOut)
                 {
@@ -231,7 +266,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
                 }
                 else
                 {
-                    AddError("ورود نا معتبر", "fa");
+                    AddError("Invalid login", "fa");
                     ViewBag.Messages = Messages;
                     return View(model);
                 }

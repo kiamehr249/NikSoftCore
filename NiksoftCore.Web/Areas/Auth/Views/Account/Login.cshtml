@@ -10,51 +10,39 @@
         color: #b3103d;
     }
 </style>
-<div class="bg-brand">
-    <div class="container">
-        <div class="login-container">
+<br />
+<div class="container">
+    <div class="page-title">
+        <h1 class="text-center">Sign In</h1>
+    </div>
+
+    <form action="/Auth/Account/Login" method="post">
+        <div class="logindiv">
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="login-form form-round">
-                        <div class="login-form-header">
-                            <div class="login-logo">
-                                <img src="https://codex-themes.com/themes/cryption/wp-content/uploads/sites/9/ct-logos/logo_8b9ab77e92066b3f3ae49839c835f242_1x.png" />
-                            </div>
-                            <div class="login-title">
-                                <h4>Global Crypto Login</h4>
-                            </div>
-                        </div>
-                        <div class="login-form-body">
-                            <form action="/Auth/Account/Login" method="post">
-                                <div class="form-group">
-                                    @Html.TextBoxFor(m => m.Username, new { placeholder = "User Name", @class = "form-control", @id = "TxtUsername" })
-                                    @Html.ValidationMessageFor(m => m.Username)
-                                </div>
-                                <div class="form-group">
-                                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @class = "form-control", @id = "TxtPassword" })
-                                    @Html.ValidationMessageFor(m => m.Password)
-                                </div>
-                                <div class="checkbox">
-                                    <label for="chbOtp">
-                                        <input type="checkbox" id="chbOtp" />
-                                        Login with SMS
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-dark btn-full btn-br-0">Sign In</button>
-                                </div>
-                            </form>
-                        </div>
+                <div class="col-sm-4 col-sm-offset-4">
+                    <div class="form-group">
+                        <label for="TxtUsername" class="control-label">Email or phone</label>
+                        @Html.TextBoxFor(m => m.Username, new { placeholder = "Username", @class = "form-control", @id = "TxtUsername" })
+                        @Html.ValidationMessageFor(m => m.Username)
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="login-img"></div>
+
+                    <div class="form-group">
+                        <label for="TxtPassword" class="control-label">Password</label>
+                        @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @class = "form-control", @id = "TxtPassword" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-dark btn-full btn-br-0">Sign In</button>
+                    </div>
+                    <p>
+                        <a href="/Auth/Account/Register" class="">Create new account</a>
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
-
 
 <script>
     $(document).ready(function () {
