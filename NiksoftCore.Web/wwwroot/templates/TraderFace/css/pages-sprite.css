@@ -3515,7 +3515,7 @@ body.search .breadcrumbs span.current:before {
 #site-header .site-title {
 	display: table-cell;
 	vertical-align: middle;
-	padding: 22px 0
+	padding: 0 0;
 }
 
 #page.vertical-header #site-header .site-title {
@@ -4858,7 +4858,7 @@ body.admin-bar #page.vertical-header #site-header-wrapper {
 }
 
 #footer-socials a:hover i {
-	color: #0df0a3
+	color: #e30613;
 }
 
 .footer-socials-item a:after {
@@ -10641,7 +10641,7 @@ body.search .page-title-block .highlight {
 
 .pricing-table-style-1 .pricing-cost,
 .pricing-table-style-1 .time {
-	color: #171717
+	color: #fff;
 }
 
 .pricing-table-style-1 .highlighted .pricing-price-title-wrapper .pricing-price-title {
@@ -13276,7 +13276,7 @@ li.clearfix.ct-pp-posts:last-child {
 
 #colophon .widget_recent_entries .post-date,
 #colophon .ct-pp-posts-text .ct-pp-posts-date {
-	color: #0acc95 !important
+	color: #e30613 !important;
 }
 
 .widget_media_image a {
@@ -14386,7 +14386,7 @@ li.clearfix.ct-pp-posts:last-child {
 	text-decoration: none;
 	padding: 0;
 	font-size: 0;
-	background: #18d685;
+	background: #e30613;
 	border-radius: 50%;
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%
@@ -14394,7 +14394,7 @@ li.clearfix.ct-pp-posts:last-child {
 
 #primary-menu.no-responsive>li.demo-link a:hover,
 #primary-menu.no-responsive>li.login-link a:hover {
-	background: #00c2ba
+	background: #f7646d;
 }
 
 #primary-menu.no-responsive>li.demo-link a:before,
@@ -16463,7 +16463,7 @@ body .wpb_gmaps_widget .wpb_wrapper {
 }
 
 .widget .ct-contacts-item a:hover {
-	color: #0acc95 !important;
+	color: #e85a62 !important;
 	text-decoration: underline
 }
 
@@ -16476,7 +16476,7 @@ body .wpb_gmaps_widget .wpb_wrapper {
 	font-size: 16px;
 	text-align: center;
 	margin-top: -1px;
-	color: #0acc95 !important
+	color: #e30613 !important;
 }
 
 .widget .ct-contacts-item.ct-contacts-address:before {
@@ -16655,7 +16655,7 @@ body .wpb_gmaps_widget .wpb_wrapper {
 }
 
 #primary-menu.no-responsive>li.menu-item-search>a:hover:before {
-	color: #18d685
+	color: #e30613;
 }
 
 .primary-navigation.responsive .minisearch,
@@ -16677,7 +16677,7 @@ body .wpb_gmaps_widget .wpb_wrapper {
 
 .primary-navigation.responsive .minisearch .sf-submit-icon:before,
 .minisearch .sf-submit-icon:before {
-	color: #18d685 !important
+	color: #e30613 !important;
 }
 
 .primary-navigation.responsive .minisearch .sf-input,
@@ -17935,12 +17935,12 @@ div.wpcf7-mail-sent-ok {
 	-webkit-border-radius: 35px;
 	-moz-border-radius: 35px;
 	background-color: #00d58b;
-	background: linear-gradient(to right, rgba(18, 178, 165, 1) 0%, rgba(4, 221, 138, 1) 100%)
+	background: linear-gradient(to right, rgb(227, 6, 19) 0%, rgb(249, 96, 105) 100%);
 }
 
 .mailchimp-form .submit-button-inline-label button:hover {
 	background-color: #00bbb3;
-	background: linear-gradient(to left, rgba(18, 178, 165, 1) 0%, rgba(4, 221, 138, 1) 100%)
+	background: linear-gradient(to left, rgb(227, 6, 19) 0%, rgb(255, 139, 146) 100%);
 }
 
 .mc4wp-form-fields {
@@ -18025,7 +18025,7 @@ div.wpcf7-mail-sent-ok {
 #colophon .mc4wp-form-fields .button input {
 	height: 40px !important;
 	line-height: 38px !important;
-	background: linear-gradient(to right, rgba(18, 178, 165, 1) 0%, rgba(4, 221, 138, 1) 100%)
+	background: linear-gradient(to right, rgb(251, 104, 113) 0%, rgb(227, 6, 19) 100%);
 }
 
 .mc4wp-form-fields .button input:hover {
@@ -21518,7 +21518,7 @@ body .quickfinder-item .quickfinder-item-connector,
 }
 
 #primary-menu.no-responsive>li:hover>a {
-	color: #00c38c
+	color: #e30613;
 }
 
 #primary-menu.no-responsive>li.menu-item-current>a,
@@ -21680,7 +21680,7 @@ body,
 .comment-text p,
 .ct-team-style-2 .team-person-box-right .team-person-position,
 .ct-team-style-2 .team-person-socials i.socials-item-icon {
-	color: #697671
+	color: #373737;
 }
 
 h1,
@@ -21788,7 +21788,7 @@ a.reverse-link-color:hover,
 .post-author-posts-link:after,
 .post-related-posts h3:after,
 .post-related-posts-block .related-element-info-conteiner a:hover {
-	color: #0df0a3
+	color: #e30613;
 }
 
 .post-meta-author-link,
@@ -22129,7 +22129,7 @@ body #colophon .tagcloud a:hover,
 #colophon .ct-latest-news-title span,
 #colophon .ct-pp-posts-date,
 #colophon .ct-contacts a:before {
-	color: #0acc95
+	color: #e30613;
 }
 
 #colophon .widget a:active {
@@ -44290,7 +44290,7 @@ body .mejs-container {
 	transition: opacity 0.5s 0.2s;
 	background: -moz-linear-gradient(left, rgba(18, 178, 165, 0.8) 0%, rgba(4, 221, 138, 0.8) 100%) !important;
 	background: -webkit-linear-gradient(left, rgba(18, 178, 165, 0.8) 0%, rgba(4, 221, 138, 0.8) 100%) !important;
-	background: linear-gradient(to right, rgba(18, 178, 165, 0.8) 0%, rgba(4, 221, 138, 0.8) 100%) !important;
+	background: linear-gradient(to right, rgba(172, 6, 15, 0.64) 0%, rgba(255, 17, 31, 0.73) 100%) !important;
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#12b2a5', endColorstr='#04dd8a', GradientType=1) !important
 }
 
@@ -45318,7 +45318,7 @@ div.blog article a.self_video:before,
 div.blog article a.default:before,
 .widget .ct-pp-posts a:before,
 .widget .ct-latest-news-image a:before {
-	background-color: rgba(9, 201, 136, 0.8)
+	background-color: rgba(227, 6, 19, 0.36);
 }
 
 .ct-gallery .ct-gallery-thumbs-carousel-wrap .ct-gallery-item a:before {
