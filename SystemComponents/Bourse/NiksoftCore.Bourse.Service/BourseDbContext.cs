@@ -35,6 +35,10 @@ namespace NiksoftCore.Bourse.Service
         public DbSet<BranchArea> BranchAreas { get; set; }
         public DbSet<BranchAdLeader> BranchAdLeaders { get; set; }
         public DbSet<BranchAdvertiser> BranchAdvertisers { get; set; }
+        public DbSet<TicketCategory> TicketCategories { get; set; }
+        public DbSet<TicketPriority> TicketPriorities { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketAnswer> TicketAnswers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -58,6 +62,10 @@ namespace NiksoftCore.Bourse.Service
             builder.ApplyConfiguration(new BranchAreaMap());
             builder.ApplyConfiguration(new BranchAdLeaderMap());
             builder.ApplyConfiguration(new BranchAdvertiserMap());
+            builder.ApplyConfiguration(new TicketCategoryMap());
+            builder.ApplyConfiguration(new TicketPriorityMap());
+            builder.ApplyConfiguration(new TicketMap());
+            builder.ApplyConfiguration(new TicketAnswerMap());
         }
     }
 }

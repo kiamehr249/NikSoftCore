@@ -28,6 +28,10 @@ namespace NiksoftCore.Bourse.Service
         IBranchAreaService iBranchAreaServ { get; set; }
         IBranchAdLeaderService iBranchAdLeaderServ { get; set; }
         IBranchAdvertiserService iBranchAdvertiserServ { get; set; }
+        ITicketCategoryService iTicketCategoryServ { get; set; }
+        ITicketPriorityService iTicketPriorityServ { get; set; }
+        ITicketService iTicketServ { get; set; }
+        ITicketAnswerService iTicketAnswerServ { get; set; }
 
         List<ConsultantReport> GetConsultantReport(string Code, int Start, int End);
 
@@ -56,6 +60,10 @@ namespace NiksoftCore.Bourse.Service
         public IBranchAreaService iBranchAreaServ { get; set; }
         public IBranchAdLeaderService iBranchAdLeaderServ { get; set; }
         public IBranchAdvertiserService iBranchAdvertiserServ { get; set; }
+        public ITicketCategoryService iTicketCategoryServ { get; set; }
+        public ITicketPriorityService iTicketPriorityServ { get; set; }
+        public ITicketService iTicketServ { get; set; }
+        public ITicketAnswerService iTicketAnswerServ { get; set; }
 
         public BourseService(string connection)
         {
@@ -81,6 +89,10 @@ namespace NiksoftCore.Bourse.Service
             iBranchAreaServ = new BranchAreaService(uow);
             iBranchAdLeaderServ = new BranchAdLeaderService(uow);
             iBranchAdvertiserServ = new BranchAdvertiserService(uow);
+            iTicketCategoryServ = new TicketCategoryService(uow);
+            iTicketPriorityServ = new TicketPriorityService(uow);
+            iTicketServ = new TicketService(uow);
+            iTicketAnswerServ = new TicketAnswerService(uow);
         }
 
         public List<ConsultantReport> GetConsultantReport(string Code, int Start, int End)

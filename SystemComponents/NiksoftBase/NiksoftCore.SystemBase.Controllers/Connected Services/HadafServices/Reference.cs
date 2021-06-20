@@ -21,6 +21,21 @@ namespace HadafServices
         
         [System.ServiceModel.OperationContractAttribute(Action="http://hadaf.onlinesabad.ir/Authenticate", ReplyAction="*")]
         System.Threading.Tasks.Task<HadafServices.AuthenticateResponse> AuthenticateAsync(HadafServices.AuthenticateRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://hadaf.onlinesabad.ir/SMSAuthenticate", ReplyAction="*")]
+        System.Threading.Tasks.Task<HadafServices.SMSAuthenticateResponse> SMSAuthenticateAsync(HadafServices.SMSAuthenticateRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://hadaf.onlinesabad.ir/RegisterUser", ReplyAction="*")]
+        System.Threading.Tasks.Task<HadafServices.RegisterUserResponse> RegisterUserAsync(HadafServices.RegisterUserRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://hadaf.onlinesabad.ir/ActiveUser", ReplyAction="*")]
+        System.Threading.Tasks.Task<HadafServices.ActiveUserResponse> ActiveUserAsync(HadafServices.ActiveUserRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://hadaf.onlinesabad.ir/GetSMSPWD", ReplyAction="*")]
+        System.Threading.Tasks.Task<HadafServices.GetSMSPWDResponse> GetSMSPWDAsync(HadafServices.GetSMSPWDRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://hadaf.onlinesabad.ir/SendSMS", ReplyAction="*")]
+        System.Threading.Tasks.Task<HadafServices.SendSMSResponse> SendSMSAsync(HadafServices.SendSMSRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -175,6 +190,446 @@ namespace HadafServices
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SMSAuthenticateRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SMSAuthenticate", Namespace="http://hadaf.onlinesabad.ir/", Order=0)]
+        public HadafServices.SMSAuthenticateRequestBody Body;
+        
+        public SMSAuthenticateRequest()
+        {
+        }
+        
+        public SMSAuthenticateRequest(HadafServices.SMSAuthenticateRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://hadaf.onlinesabad.ir/")]
+    public partial class SMSAuthenticateRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string Key;
+        
+        public SMSAuthenticateRequestBody()
+        {
+        }
+        
+        public SMSAuthenticateRequestBody(string Key)
+        {
+            this.Key = Key;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SMSAuthenticateResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SMSAuthenticateResponse", Namespace="http://hadaf.onlinesabad.ir/", Order=0)]
+        public HadafServices.SMSAuthenticateResponseBody Body;
+        
+        public SMSAuthenticateResponse()
+        {
+        }
+        
+        public SMSAuthenticateResponse(HadafServices.SMSAuthenticateResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://hadaf.onlinesabad.ir/")]
+    public partial class SMSAuthenticateResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string SMSAuthenticateResult;
+        
+        public SMSAuthenticateResponseBody()
+        {
+        }
+        
+        public SMSAuthenticateResponseBody(string SMSAuthenticateResult)
+        {
+            this.SMSAuthenticateResult = SMSAuthenticateResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class RegisterUserRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="RegisterUser", Namespace="http://hadaf.onlinesabad.ir/", Order=0)]
+        public HadafServices.RegisterUserRequestBody Body;
+        
+        public RegisterUserRequest()
+        {
+        }
+        
+        public RegisterUserRequest(HadafServices.RegisterUserRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://hadaf.onlinesabad.ir/")]
+    public partial class RegisterUserRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string Key;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string PublicCode;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string FirstName;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string LastName;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        public string Gender;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
+        public string MobileNumber;
+        
+        public RegisterUserRequestBody()
+        {
+        }
+        
+        public RegisterUserRequestBody(string Key, string PublicCode, string FirstName, string LastName, string Gender, string MobileNumber)
+        {
+            this.Key = Key;
+            this.PublicCode = PublicCode;
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+            this.Gender = Gender;
+            this.MobileNumber = MobileNumber;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class RegisterUserResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="RegisterUserResponse", Namespace="http://hadaf.onlinesabad.ir/", Order=0)]
+        public HadafServices.RegisterUserResponseBody Body;
+        
+        public RegisterUserResponse()
+        {
+        }
+        
+        public RegisterUserResponse(HadafServices.RegisterUserResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://hadaf.onlinesabad.ir/")]
+    public partial class RegisterUserResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string RegisterUserResult;
+        
+        public RegisterUserResponseBody()
+        {
+        }
+        
+        public RegisterUserResponseBody(string RegisterUserResult)
+        {
+            this.RegisterUserResult = RegisterUserResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ActiveUserRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ActiveUser", Namespace="http://hadaf.onlinesabad.ir/", Order=0)]
+        public HadafServices.ActiveUserRequestBody Body;
+        
+        public ActiveUserRequest()
+        {
+        }
+        
+        public ActiveUserRequest(HadafServices.ActiveUserRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://hadaf.onlinesabad.ir/")]
+    public partial class ActiveUserRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string Key;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string PublicCode;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string ValidationCode;
+        
+        public ActiveUserRequestBody()
+        {
+        }
+        
+        public ActiveUserRequestBody(string Key, string PublicCode, string ValidationCode)
+        {
+            this.Key = Key;
+            this.PublicCode = PublicCode;
+            this.ValidationCode = ValidationCode;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ActiveUserResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ActiveUserResponse", Namespace="http://hadaf.onlinesabad.ir/", Order=0)]
+        public HadafServices.ActiveUserResponseBody Body;
+        
+        public ActiveUserResponse()
+        {
+        }
+        
+        public ActiveUserResponse(HadafServices.ActiveUserResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://hadaf.onlinesabad.ir/")]
+    public partial class ActiveUserResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string ActiveUserResult;
+        
+        public ActiveUserResponseBody()
+        {
+        }
+        
+        public ActiveUserResponseBody(string ActiveUserResult)
+        {
+            this.ActiveUserResult = ActiveUserResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetSMSPWDRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetSMSPWD", Namespace="http://hadaf.onlinesabad.ir/", Order=0)]
+        public HadafServices.GetSMSPWDRequestBody Body;
+        
+        public GetSMSPWDRequest()
+        {
+        }
+        
+        public GetSMSPWDRequest(HadafServices.GetSMSPWDRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://hadaf.onlinesabad.ir/")]
+    public partial class GetSMSPWDRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string Key;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string UserName;
+        
+        public GetSMSPWDRequestBody()
+        {
+        }
+        
+        public GetSMSPWDRequestBody(string Key, string UserName)
+        {
+            this.Key = Key;
+            this.UserName = UserName;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetSMSPWDResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetSMSPWDResponse", Namespace="http://hadaf.onlinesabad.ir/", Order=0)]
+        public HadafServices.GetSMSPWDResponseBody Body;
+        
+        public GetSMSPWDResponse()
+        {
+        }
+        
+        public GetSMSPWDResponse(HadafServices.GetSMSPWDResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://hadaf.onlinesabad.ir/")]
+    public partial class GetSMSPWDResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string GetSMSPWDResult;
+        
+        public GetSMSPWDResponseBody()
+        {
+        }
+        
+        public GetSMSPWDResponseBody(string GetSMSPWDResult)
+        {
+            this.GetSMSPWDResult = GetSMSPWDResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SendSMSRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SendSMS", Namespace="http://hadaf.onlinesabad.ir/", Order=0)]
+        public HadafServices.SendSMSRequestBody Body;
+        
+        public SendSMSRequest()
+        {
+        }
+        
+        public SendSMSRequest(HadafServices.SendSMSRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://hadaf.onlinesabad.ir/")]
+    public partial class SendSMSRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string Key;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string UserName;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string MessageText;
+        
+        public SendSMSRequestBody()
+        {
+        }
+        
+        public SendSMSRequestBody(string Key, string UserName, string MessageText)
+        {
+            this.Key = Key;
+            this.UserName = UserName;
+            this.MessageText = MessageText;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SendSMSResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SendSMSResponse", Namespace="http://hadaf.onlinesabad.ir/", Order=0)]
+        public HadafServices.SendSMSResponseBody Body;
+        
+        public SendSMSResponse()
+        {
+        }
+        
+        public SendSMSResponse(HadafServices.SendSMSResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://hadaf.onlinesabad.ir/")]
+    public partial class SendSMSResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string SendSMSResult;
+        
+        public SendSMSResponseBody()
+        {
+        }
+        
+        public SendSMSResponseBody(string SendSMSResult)
+        {
+            this.SendSMSResult = SendSMSResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     public interface HadafServicesSoapChannel : HadafServices.HadafServicesSoap, System.ServiceModel.IClientChannel
     {
@@ -243,6 +698,86 @@ namespace HadafServices
             inValue.Body = new HadafServices.AuthenticateRequestBody();
             inValue.Body.Key = Key;
             return ((HadafServices.HadafServicesSoap)(this)).AuthenticateAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<HadafServices.SMSAuthenticateResponse> HadafServices.HadafServicesSoap.SMSAuthenticateAsync(HadafServices.SMSAuthenticateRequest request)
+        {
+            return base.Channel.SMSAuthenticateAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<HadafServices.SMSAuthenticateResponse> SMSAuthenticateAsync(string Key)
+        {
+            HadafServices.SMSAuthenticateRequest inValue = new HadafServices.SMSAuthenticateRequest();
+            inValue.Body = new HadafServices.SMSAuthenticateRequestBody();
+            inValue.Body.Key = Key;
+            return ((HadafServices.HadafServicesSoap)(this)).SMSAuthenticateAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<HadafServices.RegisterUserResponse> HadafServices.HadafServicesSoap.RegisterUserAsync(HadafServices.RegisterUserRequest request)
+        {
+            return base.Channel.RegisterUserAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<HadafServices.RegisterUserResponse> RegisterUserAsync(string Key, string PublicCode, string FirstName, string LastName, string Gender, string MobileNumber)
+        {
+            HadafServices.RegisterUserRequest inValue = new HadafServices.RegisterUserRequest();
+            inValue.Body = new HadafServices.RegisterUserRequestBody();
+            inValue.Body.Key = Key;
+            inValue.Body.PublicCode = PublicCode;
+            inValue.Body.FirstName = FirstName;
+            inValue.Body.LastName = LastName;
+            inValue.Body.Gender = Gender;
+            inValue.Body.MobileNumber = MobileNumber;
+            return ((HadafServices.HadafServicesSoap)(this)).RegisterUserAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<HadafServices.ActiveUserResponse> HadafServices.HadafServicesSoap.ActiveUserAsync(HadafServices.ActiveUserRequest request)
+        {
+            return base.Channel.ActiveUserAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<HadafServices.ActiveUserResponse> ActiveUserAsync(string Key, string PublicCode, string ValidationCode)
+        {
+            HadafServices.ActiveUserRequest inValue = new HadafServices.ActiveUserRequest();
+            inValue.Body = new HadafServices.ActiveUserRequestBody();
+            inValue.Body.Key = Key;
+            inValue.Body.PublicCode = PublicCode;
+            inValue.Body.ValidationCode = ValidationCode;
+            return ((HadafServices.HadafServicesSoap)(this)).ActiveUserAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<HadafServices.GetSMSPWDResponse> HadafServices.HadafServicesSoap.GetSMSPWDAsync(HadafServices.GetSMSPWDRequest request)
+        {
+            return base.Channel.GetSMSPWDAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<HadafServices.GetSMSPWDResponse> GetSMSPWDAsync(string Key, string UserName)
+        {
+            HadafServices.GetSMSPWDRequest inValue = new HadafServices.GetSMSPWDRequest();
+            inValue.Body = new HadafServices.GetSMSPWDRequestBody();
+            inValue.Body.Key = Key;
+            inValue.Body.UserName = UserName;
+            return ((HadafServices.HadafServicesSoap)(this)).GetSMSPWDAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<HadafServices.SendSMSResponse> HadafServices.HadafServicesSoap.SendSMSAsync(HadafServices.SendSMSRequest request)
+        {
+            return base.Channel.SendSMSAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<HadafServices.SendSMSResponse> SendSMSAsync(string Key, string UserName, string MessageText)
+        {
+            HadafServices.SendSMSRequest inValue = new HadafServices.SendSMSRequest();
+            inValue.Body = new HadafServices.SendSMSRequestBody();
+            inValue.Body.Key = Key;
+            inValue.Body.UserName = UserName;
+            inValue.Body.MessageText = MessageText;
+            return ((HadafServices.HadafServicesSoap)(this)).SendSMSAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

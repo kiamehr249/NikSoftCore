@@ -25,5 +25,8 @@ namespace NiksoftCore.Bourse.Service
         public virtual ICollection<BranchAdLeader> BranchAdLeaders { get; set; }
         public virtual ICollection<BranchAdvertiser> BranchAdvertisers { get; set; }
         public virtual ICollection<BranchAdvertiser> BAdrLeaders { get; set; }
+        public virtual ICollection<Ticket> Tickets { get; set; }
+        public virtual ICollection<Ticket> TicketTargets { get; set; }
+        public virtual ICollection<TicketAnswer> TicketAnswers { get; set; }
     }
 }
