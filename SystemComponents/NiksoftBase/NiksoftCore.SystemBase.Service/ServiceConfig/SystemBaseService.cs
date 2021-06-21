@@ -24,6 +24,8 @@ namespace NiksoftCore.SystemBase.Service
         INikUserService iNikUserServ { get; set; }
         INikRoleService iNikRoleServ { get; set; }
         List<SpImportData> GetSubmitUsers(int start, int size);
+
+        IHadafAuthService iHadafAuthServ { get; set; }
     }
 
     public class SystemBaseService : ISystemBaseService
@@ -43,6 +45,7 @@ namespace NiksoftCore.SystemBase.Service
         public IMenuService iMenuServ { get; set; }
         public INikUserService iNikUserServ { get; set; }
         public INikRoleService iNikRoleServ { get; set; }
+        public IHadafAuthService iHadafAuthServ { get; set; }
 
         public SystemBaseService(string connection)
         {
@@ -62,6 +65,7 @@ namespace NiksoftCore.SystemBase.Service
             iMenuServ = new MenuService(uow);
             iNikUserServ = new NikUserService(uow);
             iNikRoleServ = new NikRoleService(uow);
+            iHadafAuthServ = new HadafAuthService();
         }
 
         public List<SpImportData> GetSubmitUsers(int start, int size)

@@ -1,0 +1,260 @@
+﻿@using NiksoftCore.SystemBase.Service;
+@using NiksoftCore.Bourse.Service;
+@model MyTicketSearch
+@{
+    ViewData["Title"] = "تیکت های من";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var contents = (List<Ticket>)ViewBag.Contents;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    int pageNumber = 0;
+
+    var isSearch = (bool)ViewBag.Search;
+    var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
+    var accBtn = isSearch ? "aria-expanded='true'" : "";
+}
+<div class="text-right">
+    <a href="/Panel/TicketManager/CreateTicket" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
+        <i class="fa fa-search"></i>
+    </a>
+</div>
+<div id="searchAcc" @Html.Raw(accSearch) aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        <hr />
+        <form method="get">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtTitle" class="control-label">عنوان</label>
+                        @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="CategoryId" class="control-label">دسته بندی</label>
+                        <select class="form-control m-b" asp-for="CategoryId" asp-items="ViewBag.Categories">
+                            <option selected="selected" value="0">انتخاب کنید</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="PriorityId" class="control-label">اولویت</label>
+                        <select class="form-control m-b" asp-for="PriorityId" asp-items="ViewBag.Priorities">
+                            <option selected="selected" value="0">انتخاب کنید</option>
+                        </select>
+                        <span asp-validation-for="PriorityId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding-top: 29px;">
+                    <button type="submit" class="btn btn-outline-info">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+</div>
+<br />
+<div class="chat-wrap">
+    @{
+        int icounter = 0;
+    }
+    @foreach (var item in contents)
+    {
+        icounter++;
+        <div class="card mb-3">
+            @if (icounter == 1)
+            {
+                <div class="card-header" id="head_@item.Id">
+                    <div class="btn btn-link" data-toggle="collapse" data-target="#collapse_@item.Id" aria-expanded="true" aria-controls="#collapse_@item.Id" style="width: 100%; text-decoration: none;">
+                        <div class="row">
+                            <div class="col-sm-6 text-left">
+                                <span>@item.Title</span>
+                            </div>
+                            <div class="col-sm-2">
+                                <span style="width: 20px; height: 20px; display: inline-block; background: @Html.Raw(item.Priority.HexCode); vertical-align: middle;"></span>
+                                <span>اولویت @item.Priority.Title</span>
+                            </div>
+                            <div class="col-sm-2">
+                                @if (item.Status == TicketStatus.Answered)
+                                {
+                                    <span class="badge badge-warning">@item.Status.TicketStatusName() @item.TicketAnswers.Count</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">@item.Status.TicketStatusName()</span>
+                                }
+
+                            </div>
+                            @if (item.Status == TicketStatus.Registered)
+                            {
+                                <div class="col-sm-2 text-right">
+                                    <a href="/Panel/TicketManager/CreateTicket/?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="/Panel/TicketManager/RemoveTicket/?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                var avatar = item.User.UserProfiles.First().Avatar;
+                if (string.IsNullOrEmpty(avatar))
+                {
+                    avatar = "templates/dashboard/NikFace/images/iuser.png";
+                }
+                <div id="collapse_@item.Id" class="collapse show" aria-labelledby="head_@item.Id" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="user-info">
+                            <img src="/@avatar" style="width: 60px; border-radius: 50%;" />
+                            <h4>@item.User.UserProfiles.First().Firstname @item.User.UserProfiles.First().Lastname</h4>
+                            <p>@item.CreateDate.ToPersianDateTimeString()</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="full-text">
+                                    @Html.Raw(item.FullText)
+                                </div>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        @foreach (var answ in item.TicketAnswers)
+                        {
+                            <div class="user-info text-right">
+                                <h4>@answ.User.UserProfiles.First().Firstname @answ.User.UserProfiles.First().Lastname</h4>
+                                <p>@answ.CreateDate.Value.ToPersianDateTimeString()</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-10">
+                                    <div class="answer-text">
+                                        @Html.Raw(answ.FullText)
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card-header" id="head_@item.Id">
+                    <div class="btn btn-link" data-toggle="collapse" data-target="#collapse_@item.Id" aria-controls="#collapse_@item.Id" style="width: 100%;">
+                        <div class="row">
+                            <div class="col-sm-6 text-left">
+                                <span>@item.Title</span>
+                            </div>
+                            <div class="col-sm-2">
+                                <span style="width: 20px; height: 20px; display: inline-block; background: @Html.Raw(item.Priority.HexCode); vertical-align: middle;"></span>
+                                <span>اولویت @item.Priority.Title</span>
+                            </div>
+                            <div class="col-sm-2">
+                                @if (item.Status == TicketStatus.Answered)
+                                {
+                                    <span class="badge badge-warning">@item.Status.TicketStatusName() @item.TicketAnswers.Count</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">@item.Status.TicketStatusName()</span>
+                                }
+
+                            </div>
+                            @if (item.Status == TicketStatus.Registered)
+                            {
+                                <div class="col-sm-2 text-right">
+                                    <a href="/Panel/TicketManager/CreateTicket/?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="/Panel/TicketManager/RemoveTicket/?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div id="collapse_@item.Id" class="collapse" aria-labelledby="head_@item.Id" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="user-info">
+                            <img src="/@item.User.UserProfiles.First().Avatar" />
+                            <h4>@item.User.UserProfiles.First().Firstname @item.User.UserProfiles.First().Lastname</h4>
+                            <p>@item.CreateDate.ToPersianDateTimeString()</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="full-text">
+                                    @Html.Raw(item.FullText)
+                                </div>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        @foreach (var answ in item.TicketAnswers)
+                        {
+                            <div class="user-info text-right">
+                                <h4>@answ.User.UserProfiles.First().Firstname @answ.User.UserProfiles.First().Lastname</h4>
+                                <p>@answ.CreateDate.Value.ToPersianDateTimeString()</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-10">
+                                    <div class="answer-text">
+                                        @Html.Raw(answ.FullText)
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+</div>
+
+<div class="pager">
+    @if (pager.TotalSize > pager.PageSize)
+    {
+        <ul class="pagination m-b-5">
+            <li class="page-item">
+                <a class="page-link" href="@Context.Request.Path?part=1" aria-label="Previous">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            @if (pager.GetStartShow() >= pager.MaxShow)
+            {
+                <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetBackRang()" class="page-link">...</a></li>
+            }
+
+            @for (int i = pager.GetStartShow(); i <= pager.GetEndShow(); i++)
+            {
+                if (pager.Part == i)
+                {
+                    <li class="page-item active"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                }
+
+            }
+
+            @if ((pager.TotalParts - pager.MaxShow) > pager.Part)
+            {
+                <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetEndShow()" class="page-link">...</a></li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="@Context.Request.Path?part=@pager.GetTotalParts()" aria-label="Next">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+    }
+
+</div>

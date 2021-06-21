@@ -4370,6 +4370,26 @@ legend {
 .modal-body {
 }
 
+.full-text {
+  padding: 15px;
+  border: 1px solid #7d7d7d;
+  border-radius: 10px;
+  border-top-right-radius: 0;
+  background: #a0d2a0;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.answer-text {
+  padding: 15px;
+  border: 1px solid #7d7d7d;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  background: #d9d9d9;
+  margin-bottom: 15px;
+  color: #333;
+}
+
 @media (min-width: 768px) {
   .navbar-right .dropdown-menu {
     left: 0;

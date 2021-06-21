@@ -82,5 +82,22 @@
                     return "نامشخص";
             }
         }
+
+        public static string TicketStatusName(this TicketStatus type)
+        {
+            switch (type)
+            {
+                case TicketStatus.Registered:
+                    return "در انتظار پاسخ";
+                case TicketStatus.Answered:
+                    return "پاسخ داده شده";
+                case TicketStatus.Rejected:
+                    return "عدم پاسخ";
+                case TicketStatus.Seen:
+                    return "درحال بررسی";
+                default:
+                    return "نامشخص";
+            }
+        }
     }
 }

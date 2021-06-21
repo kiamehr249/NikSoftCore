@@ -214,18 +214,19 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
 
                 }
 
-                //var isAdmin = await userManager.IsInRoleAsync(user, "NikAdmin");
-                //if (!isAdmin)
-                //{
-                //    var authExt = await CheckAuthService(user.UserName, user.PhoneNumber);
-                //    if (authExt == "false")
-                //    {
-                //        AddError("کاربری شما نا معتبر است.", "fa");
-                //        ViewBag.Messages = Messages;
-                //        return View(model);
-                //    }
-                //}
-                
+                var isAdmin = await userManager.IsInRoleAsync(user, "NikAdmin");
+                if (!isAdmin)
+                {
+                    var authExt = await ISystemBaseServ.iHadafAuthServ.CheckAuthService(user.UserName, user.PhoneNumber);
+
+                    if (!authExt)
+                    {
+                        AddError("کاربری شما نا معتبر است.", "fa");
+                        ViewBag.Messages = Messages;
+                        return View(model);
+                    }
+                }
+
 
                 var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, true);
 
@@ -259,15 +260,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.User
         }
 
 
-        private async Task<string> CheckAuthService(string NCode, string Mobile, string Comment = "")
-        {
-            HadafServicesSoapClient service = new HadafServicesSoapClient(HadafServicesSoapClient.EndpointConfiguration.HadafServicesSoap);
-            var token = await service.GetTokenAsync();
-            var authKey = new AuthenticationKey();
-            var key = authKey.GenerateKey(NCode, Mobile, token.Body.GetTokenResult, Comment);
-            var authRes = await service.AuthenticateAsync(key);
-            return authRes.Body.AuthenticateResult;
-        }
+        
 
     }
 }

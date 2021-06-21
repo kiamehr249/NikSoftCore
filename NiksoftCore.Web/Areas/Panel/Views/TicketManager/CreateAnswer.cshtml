@@ -1,0 +1,127 @@
+﻿@using NiksoftCore.Bourse.Service;
+@model TicketAnswerRequest
+@{
+    ViewData["Title"] = "پاسخ به تیکت";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+    var theTicket = (Ticket)ViewBag.Ticket;
+}
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/TicketManager/Tickets" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+</div>
+<br />
+<div class="card mb-3">
+    <div class="card-header" id="header">
+        <div class="btn btn-link" data-toggle="collapse" data-target="#collapse_@theTicket.Id" aria-expanded="true" aria-controls="#collapse_@theTicket.Id" style="width: 100%; text-decoration: none;">
+            <div class="row">
+                <div class="col-sm-6 text-left">
+                    <span>@theTicket.Title</span>
+                </div>
+                <div class="col-sm-3">
+                    <span style="width: 20px; height: 20px; display: inline-block; background: @Html.Raw(theTicket.Priority.HexCode); vertical-align: middle;"></span>
+                    <span>اولویت @theTicket.Priority.Title</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{ 
+        var avatar = theTicket.User.UserProfiles.First().Avatar;
+        if (string.IsNullOrEmpty(avatar))
+        {
+            avatar = "templates/dashboard/NikFace/images/iuser.png";
+        }
+    }
+    
+    <div id="collapse_@theTicket.Id" class="collapse show" aria-labelledby="head_@theTicket.Id" data-parent="#accordion">
+        <div class="card-body">
+            <div class="user-info">
+                <img src="/@avatar" style="width: 60px; border-radius: 50%;" />
+                <h4>@theTicket.User.UserProfiles.First().Firstname @theTicket.User.UserProfiles.First().Lastname</h4>
+                <p>@theTicket.CreateDate.ToPersianDateTimeString()</p>
+            </div>
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="full-text">
+                        @Html.Raw(theTicket.FullText)
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+            @foreach (var answ in theTicket.TicketAnswers)
+            {
+                <div class="user-info text-right">
+                    <h4>@answ.User.UserProfiles.First().Firstname @answ.User.UserProfiles.First().Lastname</h4>
+                    <p>@answ.CreateDate.Value.ToPersianDateTimeString()</p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <div class="answer-text">
+                            @Html.Raw(answ.FullText)
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary()
+<form action="/Panel/TicketManager/CreateAnswer/?TicketId=@Model.TicketId" method="post">
+    <div class="registerdiv">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="txtTitle" class="control-label">عنوان</label>
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                    @Html.ValidationMessageFor(m => m.Title)
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="txtFullText" class="control-label">متن اصلی</label>
+                    @Html.TextAreaFor(m => m.FullText, new { @class = "form-control text-editor", @id = "txtFullText", rows = "3" })
+                </div>
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.TicketId)
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-success">ذخیره</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+    });
+</script>
