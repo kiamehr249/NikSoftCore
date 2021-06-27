@@ -3,16 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="خدمات بازاریابی" name="description" />
-    <meta content="خدمات بازاریابی" name="author" />
+    <meta content="Swiss Trader" name="description" />
+    <meta content="Swiss Trader" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <title>@ViewBag.Title</title>
 
-    <link href="~/files/icons/fav.png" rel="shortcut icon" type="image/x-icon" />
+    <link href="/files/images/fav.png" rel="shortcut icon" type="image/x-icon" />
 
     <link rel="stylesheet" href="~/templates/dashboard/NikFace/plugins/morris/morris.css">
-    <link href="~/templates/dashboard/NikFace/css/rtl/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/templates/dashboard/NikFace/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/lib/noty/noty.css" rel="stylesheet">
     <link href="~/lib/noty/themes/sunset.css" rel="stylesheet">
     <link href="~/templates/dashboard/NikFace/plugins/fontawesome/css/fontawesome.min.css" rel="stylesheet" type="text/css">
@@ -22,7 +22,7 @@
     <link href="~/lib/datepicker/persian-datepicker.css" rel="stylesheet" type="text/css">
     <link href="~/templates/dashboard/NikFace/css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body class="rtl-body fixed-left">
+<body class="ltr-body fixed-left">
     <script src="~/templates/dashboard/NikFace/js/jquery.min.js"></script>
     <script src="~/lib/datepicker/persian-datepicker.js"></script>
     <script src="~/lib/noty/noty.js" type="text/javascript"></script>
@@ -30,10 +30,10 @@
     <script src="~/js/BaseSystem.js"></script>
     <div id="wrapper">
         <div class="topbar">
-            <div class="topbar-right">
+            <div class="topbar-left">
                 <div class="text-center">
-                    <a href="/Panel" class="logo"><img src="~/files/icons/logo1.png" alt="logo-img"><span>خدمات بازاریابی</span></a>
-                    <a href="/Panel" class="logo-sm"><img src="~/files/icons/logo1.png" alt="logo-img"></a>
+                    <a href="/Panel" class="logo"><img src="/files/images/st-logo.png" alt="logo-img"><span>Swiss Trader</span></a>
+                    <a href="/Panel" class="logo-sm"><img src="/files/images/st-logo.png" alt="logo-img"></a>
                 </div>
             </div>
             <nav class="navbar navbar-default" role="navigation">
@@ -46,7 +46,7 @@
                         </li>
                         <li class="hide-phone app-search float-left d-none">
                             <form role="search" class="navbar-form">
-                                <input type="text" placeholder="جستجو..." class="form-control search-bar">
+                                <input type="text" placeholder="search..." class="form-control search-bar">
                                 <a href="#" class="btn-search"><i class="fa fa-search"></i></a>
                             </form>
                         </li>
@@ -57,12 +57,12 @@
             </nav>
         </div>
 
-        <div class="right side-menu">
+        <div class="left side-menu">
             <div class="sidebar-inner slimscrollleft">
                 <div id="sidebar-menu">
                     <ul>
                         <li>
-                            <a href="/Panel" class="waves-effect"><i class="mdi mdi-home"></i><span> داشبورد </span></a>
+                            <a href="/Panel" class="waves-effect"><i class="mdi mdi-home"></i><span> Dashboard </span></a>
                         </li>
                     </ul>
                     @await Component.InvokeAsync("WPanelMenu")
@@ -95,12 +95,12 @@
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title m-0" id="mySmallModalLabel">آیا از حذف آیتم اطمینان دارید؟</h4>
+                            <h4 class="modal-title m-0" id="mySmallModalLabel">Are you sure you want to delete the item?</h4>
                         </div>
                         <div class="modal-body">
                             <div class="text-center">
-                                <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal" aria-hidden="true">لغو</button>
-                                <a id="dodelbtn" href="#" class="btn btn-success btn-sm">انجام</a>
+                                <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal" aria-hidden="true">No</button>
+                                <a id="dodelbtn" href="#" class="btn btn-success btn-sm">Yes</a>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,148 @@
+﻿@using NiksoftCore.FormBuilder.Service
+@model FormDataRequest
+@{
+    var theForm = (Form)ViewBag.Form;
+    var answers = (List<FormAnswer>)ViewBag.Answers;
+    string ansObj = (string)ViewBag.AnsObj;
+    ViewData["Title"] = theForm.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+
+}
+
+<style>
+    .field-validation-error {
+        color: #b3103d;
+    }
+</style>
+<br />
+<div class="container">
+    <div class="page-title">
+        <h1 class="text-center">@theForm.Title</h1>
+        <p class="text-center">@theForm.Description</p>
+    </div>
+
+    <div class="nik-form">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                @foreach (var item in answers)
+                {
+                    <div class="form-group">
+                        @if (item.ControlType == 1)
+                        {
+                            <label for="txt_@item.Id">@item.Title</label>
+                            <input id="txt_@item.Id" type="text" class="form-control" />
+                        }
+                        else if (item.ControlType == 2)
+                        {
+                            <label for="txt_@item.Id">@item.Title</label>
+                            <textarea id="txt_@item.Id" type="text" class="form-control" rows="3"></textarea>
+                        }
+                        else if (item.ControlType == 3)
+                        {
+                            <label for="txt_@item.Id">@item.Title</label>
+                            <textarea id="txt_@item.Id" type="text" class="form-control text-editor" rows="3"></textarea>
+                        }
+                        else if (item.ControlType == 4)
+                        {
+                            <label for="chb_@item.Id">
+                                <input type="checkbox" class="checkbox" />
+                                @item.Title
+                            </label>
+                        }
+                        else if (item.ControlType == 5)
+                        {
+                            <label for="txt_@item.Id">@item.Title</label>
+                            <select id="ddl_@item.Id" class="form-control">
+                                @foreach (var citem in item.Items)
+                                {
+                                    if (citem.Selected)
+                                    {
+                                        <option value="@citem.ItemValue" selected>@citem.ItemText</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@citem.ItemValue">@citem.ItemText</option>
+                                    }
+
+                                }
+                            </select>
+                        }
+                        else if (item.ControlType == 6)
+                        {
+                            <label>@item.Title</label>
+                            @foreach (var citem in item.Items)
+                            {
+                                if (citem.Selected)
+                                {
+                                    <div class="radio">
+                                        <label><input type="radio" name="rad_@item.Id" checked> @citem.ItemText</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="radio">
+                                        <label><input type="radio" name="rad_@item.Id"> @citem.ItemText</label>
+                                    </div>
+                                }
+
+                            }
+
+                        }
+                        else if (item.ControlType == 7)
+                        {
+                            <label class="btn btn-outline-dark" for="fu_@item.Id">
+                                <input id="fu_@item.Id" type="file" style="display: none;" />
+                                @item.Title
+                            </label>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <form action="/DynamicForms/?FormId=@theForm.Id" method="post">
+        <div class="logindiv">
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <div class="form-group text-center">
+                        @Html.HiddenFor(m => m.AnswerObject, new { @id = "hfObject" })
+                        @Html.HiddenFor(m => m.FormId)
+                        @Html.HiddenFor(m => m.Id)
+                        <button type="submit" class="btn btn-dark btn-full btn-br-0">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<br />
+<script>
+    $(document).ready(function () {
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+    });
+</script>

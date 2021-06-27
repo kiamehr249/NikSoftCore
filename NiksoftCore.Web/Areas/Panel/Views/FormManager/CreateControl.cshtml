@@ -1,0 +1,100 @@
+﻿
+@model NiksoftCore.FormBuilder.Service.ControlRequest
+@{
+    ViewData["Title"] = "Create Form";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+}
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/FormManager/Controls/?FormId=@Model.FormId" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary()
+<form action="/Panel/FormManager/CreateControl/?FormId=@Model.FormId" method="post" enctype="multipart/form-data">
+    <div class="registerdiv">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <div class="form-group">
+                    <label for="txtTitle" class="control-label">Title</label>
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "Title", @class = "form-control", @id = "txtTitle" })
+                </div>
+                <div class="form-group">
+                    <label for="ControlType" class="control-label">Control Type</label>
+                    <select class="form-control m-b" asp-for="ControlType" asp-items="ViewBag.ControlTypes">
+                        <option selected="selected" value="0">select type</option>
+                    </select>
+                    <span asp-validation-for="ControlType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="txtMaxValue" class="control-label">Max Value</label>
+                    @Html.TextBoxFor(m => m.MaxValue, new { placeholder = "Max Value", @class = "form-control", @id = "txtMaxValue" })
+                </div>
+                <div class="form-group">
+                    <label for="txtMaxMessage" class="control-label">Max Value Error Message</label>
+                    @Html.TextBoxFor(m => m.MaxMessage, new { placeholder = "Message", @class = "form-control", @id = "txtMaxMessage" })
+                </div>
+                <div class="form-group">
+                    <label for="txtMinValue" class="control-label">Min Value</label>
+                    @Html.TextBoxFor(m => m.MinValue, new { placeholder = "Max Value", @class = "form-control", @id = "txtMinValue" })
+                </div>
+                <div class="form-group">
+                    <label for="txtMinMessage" class="control-label">Min Value Error Message</label>
+                    @Html.TextBoxFor(m => m.MinMessage, new { placeholder = "Message", @class = "form-control", @id = "txtMinMessage" })
+                </div>
+                <div class="form-group">
+                    <label for="chbIsRequired" class="control-label">
+                        @Html.CheckBoxFor(m => m.IsRequired, new { @id = "chbIsRequired" })
+                        Is The item required?
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="txtEmptyMessage" class="control-label">Empty Message</label>
+                    @Html.TextBoxFor(m => m.EmptyMessage, new { placeholder = "Message", @class = "form-control", @id = "txtEmptyMessage" })
+                </div>
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.FormId)
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+
+    });
+</script>

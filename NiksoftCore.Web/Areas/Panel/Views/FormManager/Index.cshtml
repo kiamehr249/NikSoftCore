@@ -1,0 +1,142 @@
+﻿@using NiksoftCore.FormBuilder.Service
+@model FormSearch
+@{
+    ViewData["Title"] = "Forms Management";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var contents = (List<Form>)ViewBag.Contents;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+    int pageNumber = 0;
+
+    var isSearch = (bool)ViewBag.Search;
+    var accSearch = isSearch ? "class='accordion-collapse collapse show'" : "class='accordion-collapse collapse'";
+    var accBtn = isSearch ? "aria-expanded='true'" : "";
+}
+<div class="text-right">
+    <a href="/Panel/FormManager/Create" class="btn btn-outline-success btn-sm"><i class="fa fa-plus"></i></a>
+    <a href="#searchAcc" data-toggle="collapse" class="btn btn-outline-info btn-sm" @Html.Raw(accBtn)>
+        <i class="fa fa-search"></i>
+    </a>
+</div>
+<div id="searchAcc" @Html.Raw(accSearch) aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        <hr />
+        <form method="get">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txtTitle" class="control-label">Title</label>
+                        @Html.TextBoxFor(m => m.Title, new { placeholder = "Title", @class = "form-control", @id = "txtTitle" })
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding-top: 29px;">
+                    <button type="submit" class="btn btn-outline-info">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+</div>
+<br />
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-primary text-center" width="30px">#</th>
+                <th class="text-primary text-center">Title</th>
+                <th class="text-primary text-center">Description</th>
+                <th class="text-primary text-center">Message</th>
+                <th class="text-primary text-center">Login Required</th>
+                <th class="text-primary text-center">Form Controls</th>
+                <th class="text-primary text-center" width="100px">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in contents)
+            {
+                pageNumber++;
+                <tr>
+                    <td>@(pager.StartIndex + pageNumber)</td>
+                    <td>@item.Title</td>
+                    <td>
+                        @item.Description
+                    </td>
+                    <td>
+                        @item.Message
+                    </td>
+                    <td>
+                        @if (item.LoginRequired)
+                        {
+                            <a href="/Panel/FormManager/LoginRequired/?Id=@item.Id" class="btn btn-outline-success btn-sm">
+                                <i class="fas fa-check"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="/Panel/FormManager/LoginRequired/?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        <a href="/Panel/FormManager/Controls/?FormId=@item.Id" class="btn btn-outline-info btn-sm">
+                            Items <span class="badge badge-warning">@item.FormControls.Count</span>
+                        </a>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="/Panel/FormManager/Create/?Id=@item.Id" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/Panel/FormManager/Remove/?Id=@item.Id" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="pager">
+        @if (pager.TotalSize > pager.PageSize)
+        {
+            <ul class="pagination m-b-5">
+                <li class="page-item">
+                    <a class="page-link" href="@Context.Request.Path?part=1" aria-label="Previous">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+
+                @if (pager.GetStartShow() >= pager.MaxShow)
+                {
+                    <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetBackRang()" class="page-link">...</a></li>
+                }
+
+                @for (int i = pager.GetStartShow(); i <= pager.GetEndShow(); i++)
+                {
+                    if (pager.Part == i)
+                    {
+                        <li class="page-item active"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                    }
+
+                }
+
+                @if ((pager.TotalParts - pager.MaxShow) > pager.Part)
+                {
+                    <li class="page-item"><a href="@Context.Request.Path?part=@pager.GetEndShow()" class="page-link">...</a></li>
+                }
+                <li class="page-item">
+                    <a class="page-link" href="@Context.Request.Path?part=@pager.GetTotalParts()" aria-label="Next">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+        }
+
+    </div>
+</div>

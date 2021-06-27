@@ -7,19 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="images/favicon.ico">
+    <link rel="icon" href="/templates/UiTemplate/DashboardFace/images/favicon.ico">
 
-    <title>Crypto Admin - Dashboard</title>
+    <title>@ViewBag.Title</title>
 
-    <link rel="stylesheet" href="assets/vendor_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/templates/UiTemplate/DashboardFace/assets/vendor_components/bootstrap/dist/css/bootstrap.css">
 
-    <link href="lib/3/plugins/export/export.css" rel="stylesheet" type="text/css" />
+    <link href="/templates/UiTemplate/DashboardFace/lib/3/plugins/export/export.css" rel="stylesheet" type="text/css" />
 
-    <link rel="stylesheet" href="css/bootstrap-extend.css">
+    <link rel="stylesheet" href="/templates/UiTemplate/DashboardFace/css/bootstrap-extend.css">
 
-    <link rel="stylesheet" href="css/master_style.css">
+    <link rel="stylesheet" href="/templates/UiTemplate/DashboardFace/css/master_style.css">
 
-    <link rel="stylesheet" href="css/skins/_all-skins.css">
+    <link rel="stylesheet" href="/templates/UiTemplate/DashboardFace/css/skins/_all-skins.css">
 
 
 </head>
@@ -28,14 +28,14 @@
     <div class="wrapper">
 
         <header class="main-header">
-            <a href="index.html" class="logo">
+            <a href="/Dashboard" class="logo">
                 <b class="logo-mini">
-                    <span class="light-logo"><img src="images/logo-light.png" alt="logo"></span>
-                    <span class="dark-logo"><img src="images/logo-dark.png" alt="logo"></span>
+                    <span class="light-logo"><img src="/templates/UiTemplate/DashboardFace/images/logo-light.png" alt="logo"></span>
+                    <span class="dark-logo"><img src="/templates/UiTemplate/DashboardFace/images/logo-dark.png" alt="logo"></span>
                 </b>
                 <span class="logo-lg">
-                    <img src="images/logo-light-text.png" alt="logo" class="light-logo">
-                    <img src="images/logo-dark-text.png" alt="logo" class="dark-logo">
+                    <img src="/templates/UiTemplate/DashboardFace/images/logo-light-text.png" alt="logo" class="light-logo">
+                    <img src="/templates/UiTemplate/DashboardFace/images/logo-dark-text.png" alt="logo" class="dark-logo">
                 </span>
             </a>
             <nav class="navbar navbar-static-top">
@@ -64,7 +64,7 @@
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="images/user2-160x160.jpg" class="rounded-circle" alt="User Image">
+                                                    <img src="/templates/UiTemplate/DashboardFace/images/user2-160x160.jpg" class="rounded-circle" alt="User Image">
                                                 </div>
                                                 <div class="mail-contnet">
                                                     <h4>
@@ -78,7 +78,7 @@
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="images/user3-128x128.jpg" class="rounded-circle" alt="User Image">
+                                                    <img src="/templates/UiTemplate/DashboardFace/images/user3-128x128.jpg" class="rounded-circle" alt="User Image">
                                                 </div>
                                                 <div class="mail-contnet">
                                                     <h4>
@@ -92,7 +92,7 @@
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="images/user4-128x128.jpg" class="rounded-circle" alt="User Image">
+                                                    <img src="/templates/UiTemplate/DashboardFace/images/user4-128x128.jpg" class="rounded-circle" alt="User Image">
                                                 </div>
                                                 <div class="mail-contnet">
                                                     <h4>
@@ -106,7 +106,7 @@
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="images/user3-128x128.jpg" class="rounded-circle" alt="User Image">
+                                                    <img src="/templates/UiTemplate/DashboardFace/images/user3-128x128.jpg" class="rounded-circle" alt="User Image">
                                                 </div>
                                                 <div class="mail-contnet">
                                                     <h4>
@@ -120,7 +120,7 @@
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="images/user4-128x128.jpg" class="rounded-circle" alt="User Image">
+                                                    <img src="/templates/UiTemplate/DashboardFace/images/user4-128x128.jpg" class="rounded-circle" alt="User Image">
                                                 </div>
                                                 <div class="mail-contnet">
                                                     <h4>
@@ -300,12 +300,12 @@
                         <!-- User Account -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="images/user5-128x128.jpg" class="user-image rounded-circle" alt="User Image">
+                                <img src="/templates/UiTemplate/DashboardFace/images/user5-128x128.jpg" class="user-image rounded-circle" alt="User Image">
                             </a>
                             <ul class="dropdown-menu scale-up">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img src="images/user5-128x128.jpg" class="float-left rounded-circle" alt="User Image">
+                                    <img src="/templates/UiTemplate/DashboardFace/images/user5-128x128.jpg" class="float-left rounded-circle" alt="User Image">
 
                                     <p>
                                         Romi Roy
@@ -331,7 +331,7 @@
                                         </div>
                                         <div role="separator" class="divider col-12"></div>
                                         <div class="col-12 text-left">
-                                            <a href="#"><i class="fa fa-power-off"></i> Logout</a>
+                                            <a href="/Auth/Account/Logout"><i class="fa fa-power-off"></i> Logout</a>
                                         </div>
                                     </div>
                                     <!-- /.row -->
@@ -360,26 +360,31 @@
                         </a>
                     </div>
                     <div class="image">
-                        <img src="images/user2-160x160.jpg" class="rounded-circle" alt="User Image">
+                        <img src="/templates/UiTemplate/DashboardFace/images/user2-160x160.jpg" class="rounded-circle" alt="User Image">
                     </div>
                     <div class="info">
                         <p>Admin Template</p>
                         <a href="#" class="link" data-toggle="tooltip" title="" data-original-title="Settings"><i class="ion ion-gear-b"></i></a>
                         <a href="#" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i class="ion ion-android-mail"></i></a>
-                        <a href="#" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i class="ion ion-power"></i></a>
+                        <a href="/Auth/Account/Logout" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i class="ion ion-power"></i></a>
                     </div>
                 </div>
                 <!-- sidebar menu -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="nav-devider"></li>
                     <li class="header nav-small-cap">PERSONAL</li>
-                    <li class="active">
-                        <a href="index.html">
+                    <li class="treeview active">
+                        <a href="#">
                             <i class="icon-home"></i> <span>Dashboard</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-right pull-right"></i>
                             </span>
                         </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/">Crypto</a></li>
+                            <li><a href="/">Forex</a></li>
+                            <li><a href="/">Stock</a></li>
+                        </ul>
                     </li>
                     <li class="treeview">
                         <a href="#">
@@ -390,1073 +395,110 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="pages/reports/transactions.html">Transactions</a></li>
-                            <li><a href="pages/reports/top-gainers-losers.html">Top Gainers/Losers</a></li>
-                            <li><a href="pages/reports/market-capitalizations.html">Market Capitalizations</a></li>
-                            <li><a href="pages/reports/crypto-stats.html">Crypto Stats</a></li>
+                            <li><a href="/">Crypto Stats</a></li>
+                            <li><a href="/">Forex Stats</a></li>
+                            <li><a href="/">Stock Stats</a></li>
+                            <li><a href="/">Transactions</a></li>
+                            <li><a href="/">Trade Summary</a></li>
+                            <li><a href="/">MarketCap</a></li>
+                            <li><a href="/">ICO List</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="icon-compass"></i>
-                            <span>Initial Coin Offering</span>
+                            <span>Trader Package</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-right pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="pages/ico/ico-distribution-countdown.html">Countdown</a></li>
-                            <li><a href="pages/ico/ico-roadmap-timeline.html">Roadmap/Timeline</a></li>
-                            <li><a href="pages/ico/ico-progress.html">Progress Bar</a></li>
-                            <li><a href="pages/ico/ico-details.html">Details</a></li>
-                            <li><a href="pages/ico/ico-listing.html">ICO Listing</a></li>
-                            <li><a href="pages/ico/ico-filter.html">ICO Listing - Filters</a></li>
+                            <li><a href="/">Crypto Trader</a></li>
+                            <li><a href="/">Forex Trader</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="pages/currency-ex/exchange.html">
-                            <i class="icon-refresh"></i> <span>Currency Exchange</span>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="icon-refresh"></i>
+                            <span>Affiliate Program</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-right pull-right"></i>
                             </span>
                         </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/">Affiliate Link</a></li>
+                            <li><a href="/">Affiliate Summary</a></li>
+                        </ul>
                     </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="icon-people"></i>
-                            <span>Members</span>
+                            <span>My Account</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-right pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="pages/members/members.html">Members Grid</a></li>
-                            <li><a href="pages/members/members-list.html">Members List</a></li>
-                            <li><a href="pages/members/member-profile.html">Member Profile</a></li>
+                            <li><a href="/">Profile</a></li>
+                            <li><a href="/">Wallet</a></li>
+                            <li><a href="/">Invoice List</a></li>
+                            <li><a href="/">Member KYC</a></li>
+                            <li><a href="/">Ledger</a></li>
+                            <li><a href="/">Accounts</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="icon-equalizer"></i>
-                            <span>Tickers</span>
+                            <span>Members Manage</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-right pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="pages/tickers/tickers.html">Ticker</a></li>
-                            <li><a href="pages/tickers/crypto-live-pricing.html">Live Crypto Prices</a></li>
+                            <li><a href="/">Member List</a></li>
+                            <li><a href="/">Member Profile</a></li>
+                            <li><a href="/">Member KYC</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="icon-wallet"></i>
-                            <span>Transactions</span>
+                            <span>Membership</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-right pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="pages/transactions/tables-transactions.html">Transactions Tables</a></li>
-                            <li><a href="pages/transactions/transaction-search.html">Transactions Search</a></li>
-                            <li><a href="pages/transactions/transaction-details.html">Single Transaction</a></li>
-                            <li><a href="pages/transactions/counter-transactions.html">Transactions Counter</a></li>
+                            <li><a href="/">Login / Sign in</a></li>
+                            <li><a href="/">Register / Signup</a></li>
+                            <li><a href="/">Success / Confirm</a></li>
+                            <li><a href="/">Forgot Password</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="icon-graph"></i>
-                            <span>Charts</span>
+                            <span>Contact</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-right pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="pages/charts/chartjs.html">ChartJS</a></li>
-                            <li><a href="pages/charts/flot.html">Flot</a></li>
-                            <li><a href="pages/charts/inline.html">Inline charts</a></li>
-                            <li><a href="pages/charts/morris.html">Morris</a></li>
-                            <li><a href="pages/charts/peity.html">Peity</a></li>
-                            <li><a href="pages/charts/chartist.html">Chartist</a></li>
-                            <li><a href="pages/charts/rickshaw-charts.html">Rickshaw Charts</a></li>
-                            <li><a href="pages/charts/nvd3-charts.html">NVD3 Charts</a></li>
-                            <li><a href="pages/charts/echart.html">eChart</a></li>
-                            <li><a href="pages/amcharts/amcharts.html">amCharts Charts</a></li>
-                            <li><a href="pages/amcharts/amstock-charts.html">amCharts Stock Charts</a></li>
-                            <li><a href="pages/amcharts/ammaps.html">amCharts Maps</a></li>
+                            <li><a href="/">Notifications</a></li>
+                            <li><a href="/">Chats</a></li>
+                            <li><a href="/">Messages</a></li>
+                            <li><a href="/">Mailbox</a></li>
+                            <li><a href="/">Change Color</a></li>
                         </ul>
                     </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-grid"></i>
-                            <span>App</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/app/app-chat.html">Chat app</a></li>
-                            <li><a href="pages/app/project-table.html">Project</a></li>
-                            <li><a href="pages/app/app-contact.html">Contact / Employee</a></li>
-                            <li><a href="pages/app/app-ticket.html">Support Ticket</a></li>
-                            <li><a href="pages/app/calendar.html">Calendar</a></li>
-                            <li><a href="pages/app/profile.html">Profile</a></li>
-                            <li><a href="pages/app/userlist-grid.html">Userlist Grid</a></li>
-                            <li><a href="pages/app/userlist.html">Userlist</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-envelope"></i> <span>Mailbox</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/mailbox/mailbox.html">Inbox</a></li>
-                            <li><a href="pages/mailbox/compose.html">Compose</a></li>
-                            <li><a href="pages/mailbox/read-mail.html">Read</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-drop"></i>
-                            <span>UI Elements</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/UI/badges.html">Badges</a></li>
-                            <li><a href="pages/UI/border-utilities.html">Border</a></li>
-                            <li><a href="pages/UI/buttons.html">Buttons</a></li>
-                            <li><a href="pages/UI/bootstrap-switch.html">Bootstrap Switch</a></li>
-                            <li><a href="pages/UI/cards.html">User Card</a></li>
-                            <li><a href="pages/UI/color-utilities.html">Color</a></li>
-                            <li><a href="pages/UI/date-paginator.html">Date Paginator</a></li>
-                            <li><a href="pages/UI/dropdown.html">Dropdown</a></li>
-                            <li><a href="pages/UI/dropdown-grid.html">Dropdown Grid</a></li>
-                            <li><a href="pages/UI/general.html">General</a></li>
-                            <li><a href="pages/UI/icons.html">Icons</a></li>
-                            <li><a href="pages/UI/media-advanced.html">Advanced Medias</a></li>
-                            <li><a href="pages/UI/modals.html">Modals</a></li>
-                            <li><a href="pages/UI/nestable.html">Nestable</a></li>
-                            <li><a href="pages/UI/notification.html">Notification</a></li>
-                            <li><a href="pages/UI/portlet-draggable.html">Draggable Portlets</a></li>
-                            <li><a href="pages/UI/ribbons.html">Ribbons</a></li>
-                            <li><a href="pages/UI/sliders.html">Sliders</a></li>
-                            <li><a href="pages/UI/sweatalert.html">Sweet Alert</a></li>
-                            <li><a href="pages/UI/tab.html">Tabs</a></li>
-                            <li><a href="pages/UI/timeline.html">Timeline</a></li>
-                            <li><a href="pages/UI/timeline-horizontal.html">Horizontal Timeline</a></li>
-                        </ul>
-                    </li>
-                    <li class="header nav-small-cap">FORMS, TABLE & LAYOUTS</li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-puzzle"></i>
-                            <span>Widgets</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/widgets/blog.html">Blog</a></li>
-                            <li><a href="pages/widgets/chart.html">Chart</a></li>
-                            <li><a href="pages/widgets/list.html">List</a></li>
-                            <li><a href="pages/widgets/social.html">Social</a></li>
-                            <li><a href="pages/widgets/statistic.html">Statistic</a></li>
-                            <li><a href="pages/widgets/tiles.html">Tiles</a></li>
-                            <li><a href="pages/widgets/weather.html">Weather</a></li>
-                            <li><a href="pages/widgets/widgets.html">Widgets</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-layers"></i>
-                            <span>Layout Options</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/layout/boxed.html">Boxed</a></li>
-                            <li><a href="pages/layout/fixed.html">Fixed</a></li>
-                            <li><a href="pages/layout/collapsed-sidebar.html">Collapsed Sidebar</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-loop"></i>
-                            <span>Box</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/box/advanced.html">Advanced</a></li>
-                            <li><a href="pages/box/basic.html">Boxed</a></li>
-                            <li><a href="pages/box/color.html">Color</a></li>
-                            <li><a href="pages/box/group.html">Group</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-note"></i> <span>Forms</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/forms/advanced.html">Advanced Elements</a></li>
-                            <li><a href="pages/forms/code-editor.html">Code Editor</a></li>
-                            <li><a href="pages/forms/editor-markdown.html">Markdown</a></li>
-                            <li><a href="pages/forms/editors.html">Editors</a></li>
-                            <li><a href="pages/forms/form-validation.html">Form Validation</a></li>
-                            <li><a href="pages/forms/form-wizard.html">Form Wizard</a></li>
-                            <li><a href="pages/forms/general.html">General Elements</a></li>
-                            <li><a href="pages/forms/mask.html">Formatter</a></li>
-                            <li><a href="pages/forms/premade.html">Pre-made Forms</a></li>
-                            <li><a href="pages/forms/xeditable.html">Xeditable Editor</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-menu"></i> <span>Tables</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/tables/simple.html">Simple tables</a></li>
-                            <li><a href="pages/tables/data.html">Data tables</a></li>
-                            <li><a href="pages/tables/editable-tables.html">Editable Tables</a></li>
-                            <li><a href="pages/tables/table-color.html">Table Color</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="pages/email/index.html">
-                            <i class="icon-envelope-open"></i> <span>Emails</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="header nav-small-cap">EXTRA COMPONENTS</li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-map"></i> <span>Map</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/map/map-google.html">Google Map</a></li>
-                            <li><a href="pages/map/map-vector.html">Vector Map</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-magnet"></i> <span>Extension</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/extension/fullscreen.html">Fullscreen</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-folder-alt"></i> <span>Sample Pages</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/samplepage/blank.html">Blank</a></li>
-                            <li><a href="pages/samplepage/coming-soon.html">Coming Soon</a></li>
-                            <li><a href="pages/samplepage/custom-scroll.html">Custom Scrolls</a></li>
-                            <li><a href="pages/samplepage/faq.html">FAQ</a></li>
-                            <li><a href="pages/samplepage/gallery.html">Gallery</a></li>
-                            <li><a href="pages/samplepage/invoice.html">Invoice</a></li>
-                            <li><a href="pages/samplepage/lightbox.html">Lightbox Popup</a></li>
-                            <li><a href="pages/samplepage/pace.html">Pace</a></li>
-                            <li><a href="pages/samplepage/pricing.html">Pricing</a></li>
-                            <li class="treeview">
-                                <a href="#">
-                                    Authentication
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-right pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a href="pages/samplepage/login.html">Login</a></li>
-                                    <li><a href="pages/samplepage/register.html">Register</a></li>
-                                    <li><a href="pages/samplepage/lockscreen.html">Lockscreen</a></li>
-                                    <li><a href="pages/samplepage/user-pass.html">Recover password</a></li>
-                                </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="#">
-                                    Error Pages
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-right pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a href="pages/samplepage/404.html">404</a></li>
-                                    <li><a href="pages/samplepage/500.html">500</a></li>
-                                    <li><a href="pages/samplepage/maintenance.html">Maintenance</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-menu"></i> <span>Multilevel</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#">Level One</a></li>
-                            <li class="treeview">
-                                <a href="#">
-                                    Level One
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-right pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a href="#">Level Two</a></li>
-                                    <li class="treeview">
-                                        <a href="#">
-                                            Level Two
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-right pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li><a href="#">Level Three</a></li>
-                                            <li><a href="#">Level Three</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Level One</a></li>
-                        </ul>
-                    </li>
-
                 </ul>
             </section>
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>
-                    Dashboard
-                    <small>Control panel</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
-            </section>
-
-            <!-- Main content -->
-            <section class="content">
-
-                <div class="row">
-                    <div class="col-md-6 col-xl-3">
-                        <div class="box pull-up">
-                            <div class="box-body">
-                                <div class="row align-items-center">
-                                    <div class="col-3">
-                                        <i class="cc BTC font-size-30" title="BTC"></i>
-                                    </div>
-                                    <div class="col-6">
-                                        <h4 class="counter text-dark text-center mb-0">$ 12458 <small class="text-danger pl-10"><i class="mdi mdi-arrow-down text-danger"></i> -7.45%</small></h4>
-
-                                    </div>
-                                    <div class="col-3">
-                                        <a href="#" class="btn btn-success btn-sm float-right">Buy</a>
-                                    </div>
-                                    <div class="col-12">
-                                        <div id="sparkline0" class="mt-10"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-3">
-                        <div class="box pull-up">
-                            <div class="box-body">
-                                <div class="row align-items-center">
-                                    <div class="col-3">
-                                        <i class="cc ETH font-size-30" title="ETH"></i>
-                                    </div>
-                                    <div class="col-6">
-                                        <h4 class="counter text-dark text-center mb-0">$ 845 <small class="text-success pl-10"><i class="mdi mdi-arrow-up text-success"></i> +5.45%</small></h4>
-
-                                    </div>
-                                    <div class="col-3">
-                                        <a href="#" class="btn btn-danger btn-sm float-right">Sell</a>
-                                    </div>
-                                    <div class="col-12">
-                                        <div id="sparkline1" class="mt-10"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-3">
-                        <div class="box pull-up">
-                            <div class="box-body">
-                                <div class="row align-items-center">
-                                    <div class="col-3">
-                                        <i class="cc DASH font-size-30" title="DASH"></i>
-                                    </div>
-                                    <div class="col-6">
-                                        <h4 class="counter text-dark text-center mb-0">$ 4587 <small class="text-danger pl-10"><i class="mdi mdi-arrow-down text-danger"></i> -4.45%</small></h4>
-
-                                    </div>
-                                    <div class="col-3">
-                                        <a href="#" class="btn btn-success btn-sm float-right">Buy</a>
-                                    </div>
-                                    <div class="col-12">
-                                        <div id="sparkline2" class="mt-10"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-3">
-                        <div class="box pull-up">
-                            <div class="box-body">
-                                <div class="row align-items-center">
-                                    <div class="col-3">
-                                        <i class="cc LTC font-size-30" title="LTC"></i>
-                                    </div>
-                                    <div class="col-6">
-                                        <h4 class="counter text-dark text-center mb-0">$ 1458 <small class="text-success pl-10"><i class="mdi mdi-arrow-up text-success"></i> +5.45%</small></h4>
-
-                                    </div>
-                                    <div class="col-3">
-                                        <a href="#" class="btn btn-danger btn-sm float-right">Sell</a>
-                                    </div>
-                                    <div class="col-12">
-                                        <div id="sparkline3" class="mt-10"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <div class="box-body tickers-block">
-                        <ul id="webticker-1">
-                            <li><i class="cc BTC"></i> BTC <span class="text-yellow"> $11.039232</span></li>
-                            <li><i class="cc ETH"></i> ETH <span class="text-yellow"> $1.2792</span></li>
-                            <li><i class="cc GAME"></i> GAME <span class="text-yellow"> $11.039232</span></li>
-                            <li><i class="cc LBC"></i> LBC <span class="text-yellow"> $0.588418</span></li>
-                            <li><i class="cc NEO"></i> NEO <span class="text-yellow"> $161.511</span></li>
-                            <li><i class="cc STEEM"></i> STE <span class="text-yellow"> $0.551955</span></li>
-                            <li><i class="cc LTC"></i> LIT <span class="text-yellow"> $177.80</span></li>
-                            <li><i class="cc NOTE"></i> NOTE <span class="text-yellow"> $13.399</span></li>
-                            <li><i class="cc MINT"></i> MINT <span class="text-yellow"> $0.880694</span></li>
-                            <li><i class="cc IOTA"></i> IOT <span class="text-yellow"> $2.555</span></li>
-                            <li><i class="cc DASH"></i> DAS <span class="text-yellow"> $769.22</span></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-8 col-12">
-                        <div class="box">
-                            <div class="box-header with-border">
-                                <h4 class="box-title">Bitcoin Exchange ETH/BTC</h4>
-                                <ul class="box-controls pull-right">
-                                    <li><a class="box-btn-close" href="#"></a></li>
-                                    <li><a class="box-btn-slide" href="#"></a></li>
-                                    <li><a class="box-btn-fullscreen" href="#"></a></li>
-                                </ul>
-                            </div>
-                            <div class="box-body">
-                                <div class="chart">
-                                    <div id="chartdiv1" style="height: 500px;"></div>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-12">
-                        <div class="row">
-                            <div class="col-lg-6 col-12">
-                                <!-- Chart -->
-                                <div class="box">
-                                    <div class="box-body">
-                                        <div class="chart">
-                                            <div id="chartdiv3" class="" style="height:192px;"></div>
-                                        </div>
-                                    </div>
-                                    <!-- /.box-body -->
-                                </div>
-                                <!-- /.box -->
-                            </div>
-                            <div class="col-lg-6 col-12">
-                                <a class="box box-link-pop text-center" href="javascript:void(0)">
-                                    <div class="box-body">
-                                        <p class="font-size-40 text-pink">
-                                            <i class="fa fa-money text-muted mr-5 mb-20"></i><br>
-                                            <strong>987€</strong>
-                                        </p>
-                                    </div>
-                                    <div class="box-body py-25 bg-light">
-                                        <h3 class="font-weight-600 mt-0">
-                                            Balance
-                                        </h3>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-12">
-                                <div class="box">
-                                    <div class="box-body">
-                                        <div class="chart">
-                                            <div id="chartdiv4" class="" style="height:315px;"></div>
-                                        </div>
-                                    </div>
-                                    <!-- /.box-body -->
-                                </div>
-                                <!-- /.box -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-12">
-                        <div class="box">
-                            <div class="media bb-1 border-fade">
-                                <img class="avatar avatar-lg" src="images/avatar/3.jpg" alt="...">
-                                <div class="media-body">
-                                    <p>
-                                        <strong>Denial Webar</strong>
-                                        <time class="float-right text-lighter" datetime="2017">24 min ago</time>
-                                    </p>
-                                    <p><small>Designer</small></p>
-                                </div>
-                            </div>
-                            <div id="scroll-1">
-                                <div class="box-body bb-1 border-fade">
-                                    <p class="lead">Authoritatively syndicate goal-oriented leadership skills for clicks-and-mortar outsourcing. Synergistically reconceptualize enabled catalysts for change.</p>
-
-                                    <div class="gap-items-4 mt-10">
-                                        <a class="text-lighter hover-light" href="#">
-                                            <i class="fa fa-thumbs-up mr-1"></i> 1254
-                                        </a>
-                                        <a class="text-lighter hover-light" href="#">
-                                            <i class="fa fa-comment mr-1"></i> 25
-                                        </a>
-                                        <a class="text-lighter hover-light" href="#">
-                                            <i class="fa fa-share-alt mr-1"></i> 12
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="media-list media-list-divided bg-lighter">
-                                    <div class="media">
-                                        <a class="avatar" href="#">
-                                            <img src="images/avatar/6.jpg" alt="...">
-                                        </a>
-                                        <div class="media-body">
-                                            <p>
-                                                <a href="#"><strong>Rock Tele</strong></a>
-                                                <time class="float-right text-fade" datetime="2017-07-14 20:00">Just now</time>
-                                            </p>
-                                            <p>Uniquely enhance world-class channels with just in time schemas.</p>
-
-                                            <div class="media px-0 mt-20">
-                                                <a class="avatar" href="#">
-                                                    <img src="images/avatar/8.jpg" alt="...">
-                                                </a>
-                                                <div class="media-body">
-                                                    <p>
-                                                        <a href="#"><strong>Brock Lensar</strong></a>
-                                                        <time class="float-right text-fade" datetime="2017-07-14 20:00">26 mins ago</time>
-                                                    </p>
-                                                    <p>Thank you for your nice comment.</p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="media">
-                                        <a class="avatar" href="#">
-                                            <img src="images/avatar/9.jpg" alt="...">
-                                        </a>
-                                        <div class="media-body">
-                                            <p>
-                                                <a href="#"><strong>Tony Stark</strong></a>
-                                                <time class="float-right text-fade" datetime="2017-07-14 20:00">2 hours ago</time>
-                                            </p>
-                                            <p>Continually drive user friendly solutions through performance based infomediaries.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <form class="publisher bt-1 border-fade bg-white">
-                                <img class="avatar avatar-sm" src="images/avatar/4.jpg" alt="...">
-                                <input class="publisher-input" type="text" placeholder="Add Your Comment">
-                                <a class="publisher-btn" href="#"><i class="fa fa-smile-o"></i></a>
-                                <span class="publisher-btn file-group">
-                                    <i class="fa fa-camera file-browser"></i>
-                                    <input type="file">
-                                </span>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-12">
-                        <div class="box">
-                            <div class="media bb-1 border-fade">
-                                <img class="avatar avatar-lg" src="images/avatar/5.jpg" alt="...">
-                                <div class="media-body">
-                                    <p>
-                                        <strong>Ronit Roy</strong>
-                                        <time class="float-right text-lighter" datetime="2017">24 min ago</time>
-                                    </p>
-                                    <p><small>Designer</small></p>
-                                </div>
-                            </div>
-                            <div id="scroll-2">
-                                <div class="box-body">
-                                    <p>Best memory from the beach...</p>
-                                </div>
-
-                                <div class="row gap-1" data-provide="photoswipe">
-                                    <a class="col-6" href="#">
-                                        <img src="images/gallery/thumb/12.jpg" alt="...">
-                                    </a>
-
-                                    <a class="col-6" href="#">
-                                        <img src="images/gallery/thumb/10.jpg" alt="...">
-                                    </a>
-                                </div>
-
-                                <div class="box-body py-12">
-                                    <div class="gap-items-4">
-                                        <a class="text-lighter hover-light" href="#">
-                                            <i class="fa fa-thumbs-up mr-1"></i> 541
-                                        </a>
-                                        <a class="text-lighter hover-light" href="#">
-                                            <i class="fa fa-comment mr-1"></i> 254
-                                        </a>
-                                        <a class="text-lighter hover-light" href="#">
-                                            <i class="fa fa-share-alt mr-1"></i> 30
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="media-list media-list-divided bg-lighter">
-                                    <div class="media">
-                                        <a class="avatar" href="#">
-                                            <img src="images/avatar/7.jpg" alt="...">
-                                        </a>
-                                        <div class="media-body">
-                                            <p>
-                                                <a href="#"><strong>Tony stark</strong></a>
-                                                <time class="float-right text-fade" datetime="2017-07-14 20:00">25 Jan</time>
-                                            </p>
-                                            <p>Continually drive user friendly solutions through performance based infomediaries.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <form class="publisher bg-transparent bt-1 border-fade">
-                                <img class="avatar avatar-sm" src="images/avatar/5.jpg" alt="...">
-                                <input class="publisher-input" type="text" placeholder="Add Comment">
-                                <a class="publisher-btn" href="#"><i class="fa fa-smile-o"></i></a>
-                                <span class="publisher-btn file-group">
-                                    <i class="fa fa-camera file-browser"></i>
-                                    <input type="file">
-                                </span>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-lg-4 col-12">
-                        <!-- Chart -->
-                        <div class="box">
-                            <div class="box-header with-border">
-                                <h4 class="box-title">Traffic Types</h4>
-                                <ul class="box-controls pull-right">
-                                    <li><a class="box-btn-close" href="#"></a></li>
-                                    <li><a class="box-btn-slide" href="#"></a></li>
-                                    <li><a class="box-btn-fullscreen" href="#"></a></li>
-                                </ul>
-                            </div>
-                            <div class="box-body">
-                                <div class="chart">
-                                    <div id="e_chart_5" class="" style="height:500px;"></div>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-                    </div>
-
-                    <div class="col-lg-3 col-12">
-                        <!-- Chart -->
-                        <div class="box">
-                            <div class="box-header with-border">
-                                <h4 class="box-title">Daly Analysis</h4>
-                                <ul class="box-controls pull-right">
-                                    <li><a class="box-btn-close" href="#"></a></li>
-                                    <li><a class="box-btn-slide" href="#"></a></li>
-                                    <li><a class="box-btn-fullscreen" href="#"></a></li>
-                                </ul>
-                            </div>
-                            <div class="box-body">
-                                <div class="chart">
-                                    <div id="e_chart_2" class="" style="height:500px;"></div>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-                    </div>
-                    <div class="col-lg-5 col-12">
-                        <div class="box">
-                            <div class="box-header with-border">
-                                <h4 class="box-title">Market Depth</h4>
-                                <ul class="box-controls pull-right">
-                                    <li><a class="box-btn-close" href="#"></a></li>
-                                    <li><a class="box-btn-slide" href="#"></a></li>
-                                    <li><a class="box-btn-fullscreen" href="#"></a></li>
-                                </ul>
-                            </div>
-                            <div class="box-body">
-                                <div class="chart">
-                                    <div id="e_chart_3" style="height: 500px;"></div>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="box box-body pull-up bg-hexagons-dark">
-                            <div class="media align-items-center p-0">
-                                <div class="text-center">
-                                    <a href="#"><i class="cc BTC mr-5" title="BTC"></i></a>
-                                </div>
-                                <div>
-                                    <h2 class="no-margin">Bitcoin BTC</h2>
-                                </div>
-                            </div>
-                            <div class="flexbox align-items-center mt-25">
-                                <div>
-                                    <p class="no-margin">2.340000434 <span class="text-gray">BTC</span> <span class="text-info">$0.04</span></p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="no-margin"><span class="text-success">+5.35%</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="box box-body pull-up bg-hexagons-dark">
-                            <div class="media align-items-center p-0">
-                                <div class="text-center">
-                                    <a href="#"><i class="cc LTC mr-5" title="LTC"></i></a>
-                                </div>
-                                <div>
-                                    <h2 class="no-margin">Litecoin LTC</h2>
-                                </div>
-                            </div>
-                            <div class="flexbox align-items-center mt-25">
-                                <div>
-                                    <p class="no-margin">1.34000434 <span class="text-gray">LTC</span> <span class="text-info">$0.14</span></p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="no-margin"><span class="text-danger">-2.35%</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="box box-body pull-up bg-hexagons-dark">
-                            <div class="media align-items-center p-0">
-                                <div class="text-center">
-                                    <a href="#"><i class="cc NEO mr-5" title="NEO"></i></a>
-                                </div>
-                                <div>
-                                    <h2 class="no-margin">Neo NEO</h2>
-                                </div>
-                            </div>
-                            <div class="flexbox align-items-center mt-25">
-                                <div>
-                                    <p class="no-margin">0.30000434 <span class="text-gray">NEO</span> <span class="text-info">$5.04</span></p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="no-margin"><span class="text-success">+4.35%</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="box box-body pull-up bg-hexagons-dark">
-                            <div class="media align-items-center p-0">
-                                <div class="text-center">
-                                    <a href="#"><i class="cc DASH mr-5" title="DASH"></i></a>
-                                </div>
-                                <div>
-                                    <h2 class="no-margin">Dash DASH</h2>
-                                </div>
-                            </div>
-                            <div class="flexbox align-items-center mt-20">
-                                <div>
-                                    <p class="no-margin">0.34000434 <span class="text-gray">DASH</span> <span class="text-info">$0.54</span></p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="no-margin"><span class="text-danger">-5.35%</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-12">
-                        <div class="box">
-                            <div class="box-header with-border">
-                                <h4 class="box-title">Data Tables Markets</h4>
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body">
-                                <div class="table-responsive">
-                                    <table id="example1" class="table table-striped table-bordered no-margin">
-                                        <thead>
-                                            <tr class="bg-pale-dark">
-                                                <th>Coin</th>
-                                                <th>Price</th>
-                                                <th>Change %</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><p class="font-size-18 no-margin">BTC</p></td>
-                                                <td><p class="no-margin"><span>$</span> 11,723.40</p></td>
-                                                <td class="no-wrap"><span class="badge badge-danger"><i class="fa fa-chevron-down"></i> -15.20%</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p class="font-size-18 no-margin">ETH</p></td>
-                                                <td><p class="no-margin"><span>$</span> 1,070.39</p></td>
-                                                <td class="no-wrap"><span class="badge badge-danger"><i class="fa fa-chevron-down"></i> -11.74%</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p class="font-size-18 no-margin">XRP</p> </td>
-                                                <td><p class="no-margin"><span>$</span> 1.64</p></td>
-                                                <td class="no-wrap"><span class="badge badge-danger"><i class="fa fa-chevron-down"></i> -16.44%</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p class="font-size-18 no-margin">ADA</p></td>
-                                                <td><p class="no-margin"><span>$</span> 0.68</p></td>
-                                                <td class="no-wrap"><span class="badge badge-danger"><i class="fa fa-chevron-down"></i> -5.91%</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p class="font-size-18 no-margin">LTC</p></td>
-                                                <td><p class="no-margin"><span>$</span> 198.88</p></td>
-                                                <td class="no-wrap"><span class="badge badge-danger"><i class="fa fa-chevron-down"></i> -15.74%</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p class="font-size-18 no-margin">DASH</p></td>
-                                                <td><p class="no-margin"><span>$</span> 865.27</p></td>
-                                                <td class="no-wrap"><span class="badge badge-danger"><i class="fa fa-chevron-down"></i> -16.47%</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p class="font-size-18 no-margin">ETH</p></td>
-                                                <td><p class="no-margin"><span>$</span> 1,070.39</p></td>
-                                                <td class="no-wrap"><span class="badge badge-danger"><i class="fa fa-chevron-down"></i> -11.74%</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p class="font-size-18 no-margin">XRP</p> </td>
-                                                <td><p class="no-margin"><span>$</span> 1.64</p></td>
-                                                <td class="no-wrap"><span class="badge badge-danger"><i class="fa fa-chevron-down"></i> -16.44%</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-                    </div>
-
-                    <div class="col-lg-8 col-12">
-                        <div class="box">
-                            <div class="box-header with-border">
-                                <h4 class="box-title">Latest Transactions</h4>
-                                <ul class="box-controls pull-right">
-                                    <li><a class="box-btn-close" href="#"></a></li>
-                                    <li><a class="box-btn-slide" href="#"></a></li>
-                                    <li><a class="box-btn-fullscreen" href="#"></a></li>
-                                </ul>
-                            </div>
-                            <div class="box-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered no-margin">
-                                        <thead>
-                                            <tr class="bg-pale-dark">
-                                                <th>Transaction Hash</th>
-                                                <th>BTC</th>
-                                                <th>Time</th>
-                                                <th>Miner Preference</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <a href="#" class="text-yellow hover-warning">
-                                                        9d2c7b06bfa0
-                                                    </a>
-                                                    ...
-                                                </td>
-                                                <td>1.2126281 BTC</td>
-                                                <td>
-                                                    <time class="timeago" datetime="2018-02-01T13:38:01Z" title="2018-02-01 13:38 GMT">2 minutes ago</time>
-                                                </td>
-                                                <td>medium</td>
-                                                <td><span class="label label-success">Confirmed</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="#" class="text-yellow hover-warning">
-                                                        5de67415bfc6
-                                                    </a>
-                                                    ...
-                                                </td>
-                                                <td>0.20522881 BTC</td>
-                                                <td>
-                                                    <time class="timeago" datetime="2018-02-01T13:38:01Z" title="2018-02-01 13:38 GMT">2 minutes ago</time>
-                                                </td>
-                                                <td>high</td>
-                                                <td><span class="label label-warning">Unconfirmed</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="#" class="text-yellow hover-warning">
-                                                        733de15b3cec
-                                                    </a>
-                                                    ...
-                                                </td>
-                                                <td>2.02622033 BTC</td>
-                                                <td>
-                                                    <time class="timeago" datetime="2018-02-01T13:38:01Z" title="2018-02-01 13:38 GMT">2 minutes ago</time>
-                                                </td>
-                                                <td>high</td>
-                                                <td><span class="label label-success">Confirmed</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="#" class="text-yellow hover-warning">
-                                                        6793bcfa4f7f
-                                                    </a>
-                                                    ...
-                                                </td>
-                                                <td>2.43220578 BTC</td>
-                                                <td>
-                                                    <time class="timeago" datetime="2018-02-01T13:38:00Z" title="2018-02-01 13:38 GMT">2 minutes ago</time>
-                                                </td>
-                                                <td>high</td>
-                                                <td><span class="label label-danger">Canceled</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="#" class="text-yellow hover-warning">
-                                                        2c66087936b5
-                                                    </a>
-                                                    ...
-                                                </td>
-                                                <td>14.01099978 BTC</td>
-                                                <td>
-                                                    <time class="timeago" datetime="2018-02-01T13:38:00Z" title="2018-02-01 13:38 GMT">2 minutes ago</time>
-                                                </td>
-                                                <td>high</td>
-                                                <td><span class="label label-danger">Canceled</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="#" class="text-yellow hover-warning">
-                                                        51935e53c294
-                                                    </a>
-                                                    ...
-                                                </td>
-                                                <td>0.3024534 BTC</td>
-                                                <td>
-                                                    <time class="timeago" datetime="2018-02-01T13:38:00Z" title="2018-02-01 13:38 GMT">2 minutes ago</time>
-                                                </td>
-                                                <td>high</td>
-                                                <td><span class="label label-warning">Unconfirmed</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="#" class="text-yellow hover-warning">
-                                                        a3976b73cf5e
-                                                    </a>
-                                                    ...
-                                                </td>
-                                                <td>0.20518486 BTC</td>
-                                                <td>
-                                                    <time class="timeago" datetime="2018-02-01T13:37:59Z" title="2018-02-01 13:37 GMT">2 minutes ago</time>
-                                                </td>
-                                                <td>medium</td>
-                                                <td><span class="label label-success">Confirmed</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="#" class="text-yellow hover-warning">
-                                                        c6b59368635c
-                                                    </a>
-                                                    ...
-                                                </td>
-                                                <td>42.99698306 BTC</td>
-                                                <td>
-                                                    <time class="timeago" datetime="2018-02-01T13:37:58Z" title="2018-02-01 13:37 GMT">2 minutes ago</time>
-                                                </td>
-                                                <td>high</td>
-                                                <td><span class="label label-success">Confirmed</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="#" class="text-yellow hover-warning">
-                                                        a261fc1d717d
-                                                    </a>
-                                                    ...
-                                                </td>
-                                                <td>1.0281818 BTC</td>
-                                                <td>
-                                                    <time class="timeago" datetime="2018-02-01T13:37:58Z" title="2018-02-01 13:37 GMT">2 minutes ago</time>
-                                                </td>
-                                                <td>high</td>
-                                                <td><span class="label label-danger">Canceled</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-
-                    </div>
-
-                </div>
-
-
-            </section>
-            <!-- /.content -->
+            @RenderBody()
         </div>
         <!-- /.content-wrapper -->
 
@@ -1660,53 +702,53 @@
     </div>
     <!-- ./wrapper -->
     <!-- jQuery 3 -->
-    <script src="assets/vendor_components/jquery/dist/jquery.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/assets/vendor_components/jquery/dist/jquery.js"></script>
 
     <!-- popper -->
-    <script src="assets/vendor_components/popper/dist/popper.min.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/assets/vendor_components/popper/dist/popper.min.js"></script>
 
     <!-- Bootstrap 4.0-->
-    <script src="assets/vendor_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/assets/vendor_components/bootstrap/dist/js/bootstrap.js"></script>
 
     <!-- Slimscroll -->
-    <script src="assets/vendor_components/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.js"></script>
 
     <!-- FastClick -->
-    <script src="assets/vendor_components/fastclick/lib/fastclick.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/assets/vendor_components/fastclick/lib/fastclick.js"></script>
 
     <!--amcharts charts -->
-    <script src="lib/3/amcharts.js" type="text/javascript"></script>
-    <script src="lib/3/gauge.js" type="text/javascript"></script>
-    <script src="lib/3/serial.js" type="text/javascript"></script>
-    <script src="lib/3/amstock.js" type="text/javascript"></script>
-    <script src="lib/3/pie.js" type="text/javascript"></script>
-    <script src="lib/3/plugins/animate/animate.min.js" type="text/javascript"></script>
-    <script src="lib/3/plugins/export/export.min.js" type="text/javascript"></script>
-    <script src="lib/3/themes/patterns.js" type="text/javascript"></script>
-    <script src="lib/3/themes/light.js" type="text/javascript"></script>
+    <script src="/templates/UiTemplate/DashboardFace/lib/3/amcharts.js" type="text/javascript"></script>
+    <script src="/templates/UiTemplate/DashboardFace/lib/3/gauge.js" type="text/javascript"></script>
+    <script src="/templates/UiTemplate/DashboardFace/lib/3/serial.js" type="text/javascript"></script>
+    <script src="/templates/UiTemplate/DashboardFace/lib/3/amstock.js" type="text/javascript"></script>
+    <script src="/templates/UiTemplate/DashboardFace/lib/3/pie.js" type="text/javascript"></script>
+    <script src="/templates/UiTemplate/DashboardFace/lib/3/plugins/animate/animate.min.js" type="text/javascript"></script>
+    <script src="/templates/UiTemplate/DashboardFace/lib/3/plugins/export/export.min.js" type="text/javascript"></script>
+    <script src="/templates/UiTemplate/DashboardFace/lib/3/themes/patterns.js" type="text/javascript"></script>
+    <script src="/templates/UiTemplate/DashboardFace/lib/3/themes/light.js" type="text/javascript"></script>
 
     <!-- webticker -->
-    <script src="assets/vendor_components/Web-Ticker-master/jquery.webticker.min.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/assets/vendor_components/Web-Ticker-master/jquery.webticker.min.js"></script>
 
     <!-- EChartJS JavaScript -->
-    <script src="assets/vendor_components/echarts-master/dist/echarts-en.min.js"></script>
-    <script src="assets/vendor_components/echarts-liquidfill-master/dist/echarts-liquidfill.min.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/assets/vendor_components/echarts-master/dist/echarts-en.min.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/assets/vendor_components/echarts-liquidfill-master/dist/echarts-liquidfill.min.js"></script>
 
     <!-- This is data table -->
-    <script src="assets/vendor_plugins/DataTables-1.10.15/media/js/jquery.dataTables.min.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/assets/vendor_plugins/DataTables-1.10.15/media/js/jquery.dataTables.min.js"></script>
 
     <!-- Sparkline -->
-    <script src="assets/vendor_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/assets/vendor_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
 
     <!-- Crypto_Admin App -->
-    <script src="js/template.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/js/template.js"></script>
 
     <!-- Crypto_Admin dashboard demo (This is only for demo purposes) -->
-    <script src="js/pages/dashboard.js"></script>
-    <script src="js/pages/dashboard-chart.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/js/pages/dashboard.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/js/pages/dashboard-chart.js"></script>
 
     <!-- Crypto_Admin for demo purposes -->
-    <script src="js/demo.js"></script>
+    <script src="/templates/UiTemplate/DashboardFace/js/demo.js"></script>
 
 
 </body>

@@ -13,14 +13,5 @@ namespace NiksoftCore.Bourse.Service
         public bool PhoneNumberConfirmed { get; set; }
 
         public virtual ICollection<UserProfile> UserProfiles { get; set; }
-        public virtual ICollection<UserBankAccount> BankAccounts { get; set; }
-        public virtual ICollection<BranchMaster> BranchMasters { get; set; }
-        public virtual ICollection<BranchMarketer> BranchMarketers { get; set; }
-        public virtual ICollection<BranchConsultant> BranchConsultants { get; set; }
-        public virtual ICollection<BranchConsultant> ConsultantMarketers { get; set; }
-        public virtual ICollection<BranchUser> BranchUsers { get; set; }
-        public virtual ICollection<Contract> Contracts { get; set; }
-        public virtual ICollection<Media> Medias { get; set; }
-        public virtual ICollection<PaymentReceipt> PaymentReceipts { get; set; }
     }
 }
