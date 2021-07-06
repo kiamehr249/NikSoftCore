@@ -41,13 +41,18 @@ namespace NiksoftCore.Utilities
             {
                 var fileName = Path.GetFileName(request.File.FileName);
                 var newName = RandomString(6) + "_" + fileName.Replace(" ", "");
-                var folderPath = request.RootPath + "/wwwroot/" + request.UnitPath + "/" + newName;
+                var folderPath = request.RootPath + "/wwwroot/" + request.UnitPath;
 
-                using (var stream = System.IO.File.Create(folderPath))
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                using (var stream = System.IO.File.Create(folderPath + "/" + newName))
                 {
                     await request.File.CopyToAsync(stream);
                     result.FilePath = request.UnitPath + "/" + newName;
-                    result.FullPath = folderPath;
+                    result.FullPath = folderPath + "/" + newName;
                 }
             }
 

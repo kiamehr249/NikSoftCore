@@ -23,7 +23,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.News
         public IActionResult Index(ContentGridRequest request)
         {
             var query = ISystemBaseServ.iGeneralContentServ.ExpressionMaker();
-            query.Add(x => x.ContentCategory.KeyValue == "m_part5");
+            query.Add(x => x.ContentCategory.KeyValue == "news");
 
             var total = ISystemBaseServ.iGeneralContentServ.Count(query);
             var pager = new Pagination(total, 10, request.part);
@@ -31,7 +31,7 @@ namespace NiksoftCore.SystemBase.Controllers.General.News
 
             ViewBag.Contents = ISystemBaseServ.iGeneralContentServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
 
-            ViewData["Title"] = "رویدادها";
+            ViewData["Title"] = "News";
 
             return View();
         }
@@ -40,6 +40,9 @@ namespace NiksoftCore.SystemBase.Controllers.General.News
         {
             var theNews = ISystemBaseServ.iGeneralContentServ.Find(x => x.Id == Id);
             ViewBag.Content = theNews;
+            var sameNews = ISystemBaseServ.iGeneralContentServ.GetPart(x => x.CategoryId == theNews.CategoryId, 0, 5, x => x.Id, true);
+            ViewBag.SameContent = sameNews;
+
 
             ViewData["Title"] = theNews.Title;
             ViewBag.PageTitle = theNews.Title;

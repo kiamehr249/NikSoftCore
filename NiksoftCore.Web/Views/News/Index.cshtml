@@ -5,53 +5,151 @@
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
 }
 
-<section class="blog" id="blog">
-    <div class="section-title dright top_30 bottom_45">
-        <h2>رویدادها</h2>
-    </div>
-    <div class="row">
-        @foreach (var item in contents)
-        {
-            <a href="/News/Single/@item.Id" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-content wow fadeInUp" data-wow-delay="0.4s">
-                <div class="blog-image">
-                    <img src="~/@item.Image">
+<div id="page-title" class="page-title-block page-title-alignment-center page-title-style-1 has-background-image" style="background-image: url('/templates/TraderFace/images/1-5.jpg'); padding-top: 110px; padding-bottom: 110px;">
+    <div class="container">
+        <div class="page-title-title" style="">
+            <h1 class="title-xlarge light" style="">News</h1>
+            <div class="breadcrumbs-container">
+                <div class="container">
+                    <div class="breadcrumbs">
+                        <span>
+                            <a href="/" itemprop="url"><span itemprop="title">Home</span></a>
+                        </span>
+                        <span class="divider"><span class="bc-devider"></span></span>
+                        <span class="current">News</span>
+                    </div>
                 </div>
-                <h2 class="blog-title">@item.Title</h2>
-                <p>@item.Header</p>
-                @*<span class="blog-info"><span>بخش خبری</span></span>*@
-            </a>
-        }
+            </div>
+        </div>
     </div>
-    <div class="pager">
-        @if (pager.TotalSize > pager.PageSize)
-        {
-            <ul class="pagination m-b-5">
-                <li class="page-item">
-                    <a class="page-link" href="@Context.Request.Path?part=1" aria-label="Previous">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </li>
+</div>
 
-                @for (int i = 1; i <= pager.GetTotalParts(); i++)
-                {
-                    if (pager.Part == i)
-                    {
-                        <li class="page-item active"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
-                    }
-                    else
-                    {
-                        <li class="page-item"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
-                    }
+<div class="block-content">
+    <div class="container">
+        <div class="panel row panel-sidebar-position-right with-sidebar">
+            <div class="panel-center col-lg-9 col-md-9 col-sm-12">
+                <article id="post-1219" class="post-1219 page type-page status-publish hentry">
+                    <div class="entry-content post-content clearfix">
+                        <div class="post-meta date-color">
+                            <div class="entry-meta single-post-meta clearfix ct-post-date">
+                                <div id="vc_row-605dabfd12a2e" class="vc_row wpb_row vc_row-fluid">
+                                    <div class="wpb_column vc_column_container vc_col-sm-12">
+                                        <div class="vc_column-inner vc_custom_1520260398179">
+                                            <div class="wpb_wrapper">
+                                                <div class="blog blog-style-default clearfix item-animation-move-up" data-next-page="0">
+                                                    @foreach (var item in contents)
+                                                    {
+                                                        <article id="post-1657" class="item-animations-not-inited post-1657 post type-post status-publish format-standard has-post-thumbnail hentry category-blockchain tag-bitcoin tag-blockchain tag-cryptocurrency tag-ethereum tag-ico tag-investment tag-marketing">
+                                                            <div class="item-post-container">
+                                                                <div class="item-post clearfix">
+                                                                    <div class="post-image">
+                                                                        <div class="post-featured-content">
+                                                                            <a href="/News/Single/@item.Id">
+                                                                                <picture>
+                                                                                    <img src="/@item.Image" width="1170" height="540" class="img-responsive" alt="27" />
+                                                                                </picture>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="post-meta-container date-color">
+                                                                        <div class="post-meta-date">
+                                                                            @item.CreateDate.Value.ToShortDateString() <span class="post-meta-author">by admin</span>
+                                                                        </div>
+                                                                        <div class="post-meta-likes">
+                                                                            <span class="post-meta-like">
+                                                                                <a href="#" class="zilla-likes" id="zilla-likes-1657" title="Like this">
+                                                                                    <span class="zilla-likes-count">0</span> <span class="zilla-likes-postfix"></span>
+                                                                                </a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="post-title">
+                                                                        <h5 class="entry-title">
+                                                                            <a href="/News/Single/@item.Id" rel="bookmark">@item.Title</a>
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="post-text">
+                                                                        <div class="summary">
+                                                                            <p>@item.Header</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="post-footer">
+                                                                        <div class="post-read-more">
+                                                                            <div class="ct-button-container ct-button-position-inline">
+                                                                                <a class="ct-button ct-button-size-small ct-button-style-flat ct-button-text-weight-normal ct-button-icon-position-left" style="border-radius: 20px;" onmouseleave="" onmouseenter="" href="/News/Single/@item.Id" target="_self">
+                                                                                    <i class="ct-print-icon ct-icon-pack-ct-icons ct-icon-more"></i>Read More
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                    }
+                                                </div>
+                                                <div class="ct-pagination">
+                                                    <div class="ct-pagination-links">
+                                                        @if (pager.TotalSize > pager.PageSize)
+                                                        {
+                                                            <a class="prev page-numbers" href="@Context.Request.Path?part=1"></a>
 
-                }
-                <li class="page-item">
-                    <a class="page-link" href="@Context.Request.Path?part=@pager.GetTotalParts()" aria-label="Next">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                </li>
-            </ul>
-        }
+                                                            @if (pager.GetStartShow() >= pager.MaxShow)
+                                                            {
+                                                                <a class='page-numbers' href='@Context.Request.Path?part=@pager.GetBackRang()'>...</a>
+                                                            }
 
+                                                            @for (int i = pager.GetStartShow(); i <= pager.GetEndShow(); i++)
+                                                            {
+                                                                if (pager.Part == i)
+                                                                {
+                                                                    <span aria-current='page' class='page-numbers current'>@i</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <li class="page-item"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                                                                }
+
+                                                            }
+
+                                                            @if ((pager.TotalParts - pager.MaxShow) > pager.Part)
+                                                            {
+                                                                <a class='page-numbers' href='@Context.Request.Path?part=@pager.GetEndShow()'>...</a>
+                                                            }
+
+                                                            <a class="next page-numbers" href="@Context.Request.Path?part=@pager.GetTotalParts()"></a>
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <div class="sidebar col-lg-3 col-md-3 col-sm-12" role="complementary">
+                <div class="widget-area">
+                    <aside id="contacts-2" class="widget widget_contacts">
+                        <h4 class="widget-title">Contact</h4>
+                        <div class="ct-contacts">
+                            <div class="ct-contacts-item ct-contacts-address">Address:<br> 908 New Hampshire Avenue #100, Washington, DC 20037, United States</div>
+                            <div class="ct-contacts-item ct-contacts-phone">Phone: +1 916-85-2235</div>
+                            <div class="ct-contacts-item ct-contacts-fax">Fax: +1 916-85-2235</div>
+                            <div class="ct-contacts-item ct-contacts-email">
+                                Email: <a href="mailto:info@cryption.network">info@cryption.network</a>
+                            </div>
+                            <div class="ct-contacts-item ct-contacts-website">
+                                Website: <a href="http://cryption.network">cryption.network</a>
+                            </div>
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+
+        </div>
     </div>
-</section>
-
+</div>

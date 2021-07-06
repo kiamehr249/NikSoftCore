@@ -1,14 +1,14 @@
 ﻿
 @model NiksoftCore.ViewModel.ContentRequest
 @{
-    ViewData["Title"] = "ایجاد محتوا";
+    ViewData["Title"] = "Create Content";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
 <div class="text-right">
     <div class="btn-group">
         <a href="/Panel/ContentManage" class="btn btn-outline-info btn-sm">
-            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-right"></i>
         </a>
     </div>
 </div>
@@ -19,44 +19,44 @@
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
-                    <label for="txtTitle" class="control-label">عنوان</label>
-                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                    <label for="txtTitle" class="control-label">Title</label>
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "Title", @class = "form-control", @id = "txtTitle" })
                 </div>
                 <div class="form-group">
-                    <label for="txtKeyValue" class="control-label">کلید(انگلیسی)</label>
+                    <label for="txtKeyValue" class="control-label">Key (English)</label>
                     @Html.TextBoxFor(m => m.KeyValue, new { placeholder = "key", @class = "form-control", @id = "txtKeyValue" })
                 </div>
                 <div class="form-group">
-                    <label for="ParentId" class="control-label">دسته بندی</label>
+                    <label for="ParentId" class="control-label">Category</label>
                     <select class="form-control m-b" asp-for="CategoryId" asp-items="ViewBag.Categories">
-                        <option selected="selected" value="0">انتخاب کنید</option>
+                        <option selected="selected" value="0">select category</option>
                     </select>
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label for="txtIcon" class="control-label">آیکن</label>
-                    @Html.TextBoxFor(m => m.Icon, new { placeholder = "آیکن", @class = "form-control", @id = "txtIcon" })
+                    <label for="txtIcon" class="control-label">Icon</label>
+                    @Html.TextBoxFor(m => m.Icon, new { placeholder = "Icon", @class = "form-control", @id = "txtIcon" })
                 </div>
                 <div class="form-group">
                     <label for="ImageFile" class="btn btn-warning">
-                        انتخاب فایل
+                        file selection
                         <input asp-for="ImageFile" type="file" class="d-none" />
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="txtHeader" class="control-label">لید</label>
-                    @Html.TextAreaFor(m => m.Header, new { placeholder = "توضیحات", @class = "form-control", @id = "txtHeader", rows = "3" })
+                    <label for="txtHeader" class="control-label">Header Text</label>
+                    @Html.TextAreaFor(m => m.Header, new { placeholder = "Header", @class = "form-control", @id = "txtHeader", rows = "3" })
                 </div>
                 <div class="form-group">
-                    <label for="txtBodyText" class="control-label">متن اصلی</label>
+                    <label for="txtBodyText" class="control-label">Main Text</label>
                     @Html.TextAreaFor(m => m.BodyText, new { @class = "form-control text-editor", @id = "txtBodyText", rows = "8" })
                 </div>
                 <div class="form-group">
-                    <label for="txtFooter" class="control-label">متن پایین</label>
-                    @Html.TextAreaFor(m => m.Footer, new { placeholder = "توضیحات", @class = "form-control", @id = "txtFooter", rows = "3" })
+                    <label for="txtFooter" class="control-label">Footer Text</label>
+                    @Html.TextAreaFor(m => m.Footer, new { placeholder = "Footer", @class = "form-control", @id = "txtFooter", rows = "3" })
                 </div>
                 <div class="form-group text-center">
-                    <button type="submit" class="btn btn-success">ذخیره</button>
+                    <button type="submit" class="btn btn-success">Save</button>
                 </div>
             </div>
         </div>

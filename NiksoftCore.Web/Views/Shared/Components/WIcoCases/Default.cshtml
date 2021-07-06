@@ -1,0 +1,86 @@
+﻿@using NiksoftCore.Bourse.Service
+@{
+    var contents = (List<IcoCase>)ViewBag.Contents;
+}
+@if (contents.Count > 0)
+{
+    <div class="portfolio portfolio-slider clearfix no-padding col-lg-12 col-md-12 col-sm-12 hover-gradient hover-title columns-3 lazy-loading portfolio_slider_arrow_big background-style-white title-on-hover post-1362 page type-page status-publish hentry" data-ll-item-delay="0" data-hover="gradient">
+        <div class="navigation ">
+            <div class="portolio-slider-prev">
+                <span>&#xe603;</span>
+            </div>
+            <div class="portolio-slider-next">
+                <span>&#xe601;</span>
+            </div>
+            <div class="portolio-slider-content">
+                <div class="portolio-slider-center">
+                    <div class="">
+                        <div class="portfolio-set clearfix" style="margin: -21px;">
+                            @foreach (var item in contents)
+                            {
+                                <div style="padding: 21px;" class="portfolio-item cryptocurrency investment marketing col-md-4 col-xs-6 lazy-loading-item post-1253 ct_pf_item type-ct_pf_item status-publish has-post-thumbnail hentry" data-ll-effect="move-up" data-sort-date="1520254960">
+                                    <div class="wrap clearfix">
+                                        <div class="image post-1253 ct_pf_item type-ct_pf_item status-publish has-post-thumbnail hentry">
+                                            <div class="image-inner">
+                                                <img src="/@item.Icon" width="473" height="290" alt="Digital Tech" />
+                                            </div>
+                                            <div class="overlay">
+                                                <div class="overlay-circle"></div>
+                                                <div class="links-wrapper">
+                                                    <div class="links">
+                                                        <div class="portfolio-icons">
+                                                            <a href="/ICOsPortfolio/SinglePortfolio/@item.Id" target="_self" class="icon self-link "></a>
+                                                            <a href="javascript: void(0);" class="icon share"></a>
+                                                            <div class="overlay-line"></div>
+                                                            <div class="portfolio-sharing-pane">
+                                                                <div class="socials-sharing socials socials-colored-hover socials-rounded">
+                                                                    <a class="socials-item" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fniksoftgroup.ir" title="Facebook">
+                                                                        <i class="socials-item-icon facebook"></i>
+                                                                    </a>
+                                                                    <a class="socials-item" target="_blank" href="https://twitter.com/intent/tweet?text=Digital+Tech&#038;url=http%3A%2F%2Fniksoftgroup.ir" title="Twitter">
+                                                                        <i class="socials-item-icon twitter"></i>
+                                                                    </a>
+                                                                    <a class="socials-item" target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fniksoftgroup.ir" title="Google Plus">
+                                                                        <i class="socials-item-icon google-plus"></i>
+                                                                    </a>
+                                                                    <a class="socials-item" target="_blank" href="https://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fniksoftgroup.ir" title="Pinterest">
+                                                                        <i class="socials-item-icon pinterest"></i>
+                                                                    </a>
+                                                                    <a class="socials-item" target="_blank" href="http://tumblr.com/widgets/share/tool?canonicalUrl=http%3A%2F%2Fniksoftgroup.ir" title="Tumblr">
+                                                                        <i class="socials-item-icon tumblr"></i>
+                                                                    </a>
+                                                                    <a class="socials-item" target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&#038;url=http%3A%2F%2Fniksoftgroup.ir" title="LinkedIn">
+                                                                        <i class="socials-item-icon linkedin"></i>
+                                                                    </a>
+                                                                    <a class="socials-item" target="_blank" href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fniksoftgroup.ir" title="StumbleUpon">
+                                                                        <i class="socials-item-icon stumbleupon"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="caption">
+                                                            <div class="title title-h4">
+                                                                Digital Tech
+                                                                <p>
+                                                                    <span style="font-size:13px;">Collected:</span>
+                                                                    <br /> <span style="font-size:19px;">@item.Collected</span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="description">
+                                                                <div class="info">@item.StartDate.ToShortDateString()</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

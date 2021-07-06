@@ -29,19 +29,19 @@
                     </select>
                     <span asp-validation-for="ControlType" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group d-none">
                     <label for="txtMaxValue" class="control-label">Max Value</label>
                     @Html.TextBoxFor(m => m.MaxValue, new { placeholder = "Max Value", @class = "form-control", @id = "txtMaxValue" })
                 </div>
-                <div class="form-group">
+                <div class="form-group d-none">
                     <label for="txtMaxMessage" class="control-label">Max Value Error Message</label>
                     @Html.TextBoxFor(m => m.MaxMessage, new { placeholder = "Message", @class = "form-control", @id = "txtMaxMessage" })
                 </div>
-                <div class="form-group">
+                <div class="form-group d-none">
                     <label for="txtMinValue" class="control-label">Min Value</label>
                     @Html.TextBoxFor(m => m.MinValue, new { placeholder = "Max Value", @class = "form-control", @id = "txtMinValue" })
                 </div>
-                <div class="form-group">
+                <div class="form-group d-none">
                     <label for="txtMinMessage" class="control-label">Min Value Error Message</label>
                     @Html.TextBoxFor(m => m.MinMessage, new { placeholder = "Message", @class = "form-control", @id = "txtMinMessage" })
                 </div>
@@ -51,7 +51,7 @@
                         Is The item required?
                     </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group d-none">
                     <label for="txtEmptyMessage" class="control-label">Empty Message</label>
                     @Html.TextBoxFor(m => m.EmptyMessage, new { placeholder = "Message", @class = "form-control", @id = "txtEmptyMessage" })
                 </div>

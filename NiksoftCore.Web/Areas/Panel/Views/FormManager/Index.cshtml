@@ -49,7 +49,9 @@
                 <th class="text-primary text-center">Message</th>
                 <th class="text-primary text-center">Login Required</th>
                 <th class="text-primary text-center">Form Controls</th>
-                <th class="text-primary text-center" width="100px">Options</th>
+                <th class="text-primary text-center">User Answers</th>
+                <th class="text-primary text-center">View</th>
+                <th class="text-primary text-center" width="100px">Operation</th>
             </tr>
         </thead>
         <tbody>
@@ -82,6 +84,16 @@
                     <td>
                         <a href="/Panel/FormManager/Controls/?FormId=@item.Id" class="btn btn-outline-info btn-sm">
                             Items <span class="badge badge-warning">@item.FormControls.Count</span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/Panel/FormManager/FormAnswers/?FormId=@item.Id" class="btn btn-outline-info btn-sm">
+                            Answers <span class="badge badge-warning">@item.FormDatas.Count</span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/DynamicForms/?FormId=@item.Id" class="btn btn-outline-info btn-sm" target="_blank">
+                            Form View
                         </a>
                     </td>
                     <td>

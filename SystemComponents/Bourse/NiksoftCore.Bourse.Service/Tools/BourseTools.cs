@@ -1,4 +1,7 @@
-﻿namespace NiksoftCore.Bourse.Service
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+
+namespace NiksoftCore.Bourse.Service
 {
     public static class BourseTools
     {
@@ -16,6 +19,11 @@
                 default:
                     return "نامشخص";
             }
+        }
+
+        public static List<ObjectItem> GetObjectList(this string strObj)
+        {
+            return JsonConvert.DeserializeObject<List<ObjectItem>>(strObj);
         }
     }
 }

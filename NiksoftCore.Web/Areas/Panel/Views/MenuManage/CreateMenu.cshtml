@@ -2,7 +2,7 @@
 @using NiksoftCore.SystemBase.Service
 @model NiksoftCore.ViewModel.MenuRequest
 @{
-    ViewData["Title"] = "ایجاد آیتم";
+    ViewData["Title"] = "Create Menu";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
     var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
 }
@@ -20,28 +20,28 @@
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 <div class="form-group">
-                    <label for="txtTitle" class="control-label">عنوان</label>
-                    @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                    <label for="txtTitle" class="control-label">Title</label>
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "Title", @class = "form-control", @id = "txtTitle" })
                 </div>
                 <div class="form-group">
-                    <label for="txtLink" class="control-label">لینک</label>
-                    @Html.TextBoxFor(m => m.Link, new { placeholder = "key", @class = "form-control", @id = "txtLink" })
+                    <label for="txtLink" class="control-label">Link</label>
+                    @Html.TextBoxFor(m => m.Link, new { placeholder = "Link", @class = "form-control", @id = "txtLink" })
                 </div>
                 <div class="form-group">
                     <label for="ImageFile" class="btn btn-warning">
-                        انتخاب فایل
+                        select image
                         <input asp-for="ImageFile" type="file" class="d-none" />
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="txtHeader" class="control-label">توضیحات</label>
-                    @Html.TextAreaFor(m => m.Description, new { placeholder = "توضیحات", @class = "form-control", @id = "txtHeader", rows = "3" })
+                    <label for="txtHeader" class="control-label">Description</label>
+                    @Html.TextAreaFor(m => m.Description, new { placeholder = "Description", @class = "form-control", @id = "txtHeader", rows = "3" })
                 </div>
                 @Html.HiddenFor(m => m.Id)
                 @Html.HiddenFor(m => m.CategoryId)
                 @Html.HiddenFor(m => m.ParentId)
                 <div class="form-group text-center">
-                    <button type="submit" class="btn btn-success">ذخیره</button>
+                    <button type="submit" class="btn btn-success">Save</button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,151 @@
+﻿@using NiksoftCore.Bourse.Service
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var content = (IcoCase)ViewBag.Content;
+}
+
+<div id="page-title" class="page-title-block page-title-alignment-center page-title-style-1 has-background-image" style="background-image: url('/templates/TraderFace/images/1-5.jpg'); padding-top: 110px; padding-bottom: 110px;">
+    <div class="container">
+        <div class="page-title-title" style="">
+            <h1 class="title-xlarge light" style="">@content.Title</h1>
+            <div class="breadcrumbs-container">
+                <div class="container">
+                    <div class="breadcrumbs">
+                        <span>
+                            <a href="/" itemprop="url"><span itemprop="title">Home</span></a>
+                        </span>
+                        <span class="divider"><span class="bc-devider"></span></span>
+                        <span>
+                            <a href="/ICOsPortfolio" itemprop="url"><span itemprop="title">ICOs</span></a>
+                        </span>
+                        <span class="divider">
+                            <span class="bc-devider"></span>
+                        </span>
+                        <span class="current">@content.Title</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="block-content no-bottom-margin no-top-margin">
+    <div class="container">
+        <div class="panel row">
+            <div class="panel-center col-xs-12">
+                <article id="post-1259" class="post-1259 ct_pf_item type-ct_pf_item status-publish has-post-thumbnail hentry">
+                    <div class="entry-content post-content clearfix">
+                        <div class="vc_row-full-width-before"></div>
+                        <div id="vc_row-605cbb00a2072" data-vc-full-width="true" data-vc-full-width-init="false" class="vc_row wpb_row vc_row-fluid vc_custom_1519197905763">
+                            <script type="text/javascript">
+                                if (typeof (ct_fix_fullwidth_position) == "function") {
+                                    ct_fix_fullwidth_position(document.getElementById("vc_row-605cbb00a2072"));
+                                }
+                            </script>
+                            <div class="wpb_column vc_column_container vc_col-sm-12">
+                                <div class="vc_column-inner">
+                                    <div class="wpb_wrapper">
+                                        <div class="clearboth"></div>
+                                        <div class="ct-divider divider_responsive" style="margin-top: 150px;"></div>
+                                        <div class="vc_row wpb_row vc_inner vc_row-fluid">
+                                            <div class="wpb_column vc_column_container vc_col-sm-12 vc_col-md-9">
+                                                <div class="vc_column-inner">
+                                                    <div class="wpb_wrapper">
+                                                        <div class="wpb_text_column wpb_content_element ">
+                                                            <div class="wpb_wrapper">
+                                                                @Html.Raw(content.FullText)
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearboth"></div>
+                                                        <div class="ct-divider " style="margin-top: 60px;"></div>
+                                                        <div class="clearboth"></div>
+                                                        <div class="ct-divider " style=""></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="wpb_column vc_column_container vc_col-sm-12 vc_col-md-3 vc_hidden-sm vc_hidden-xs">
+                                                <div class="vc_column-inner">
+                                                    <div class="wpb_wrapper">
+                                                        <div data-number-format="(ddd).ddd" class="ct-counter-box row inline-row inline-row-center ct-counter-style-1">
+                                                            <div class="ct-counter col-xs-12 inline-column ct-counter-effect-background-reverse" data-hover-icon-color="#12232f" data-hover-background-color="#00d58b" data-hover-numbers-color="#ffffff" data-hover-text-color="#ffffff">
+                                                                <div class="ct-counter-inner" style="background-color: #f0f4f7">
+                                                                    <div class="ct-counter-icon">
+                                                                        <div class="ct-counter-icon-circle-1">
+                                                                            <div class="ct-icon ct-icon-pack-material ct-icon-size-small  ct-icon-shape-circle" style="border-color: #00d58b;opacity: 1;">
+                                                                                <div class="ct-icon-inner" style="background-color: #00d58b;">
+                                                                                    <span class="ct-icon-half-1" style="color: #12232f;">
+                                                                                        <span class="back-angle">&#xf1fc;</span>
+                                                                                    </span><span class="ct-icon-half-2" style="color: #12232f;">
+                                                                                        <span class="back-angle">&#xf1fc;</span>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ct-counter-number" style="color: #00d58b">
+                                                                        <div class="ct-counter-odometer" data-to=" 420">0</div>
+                                                                        <span class="ct-counter-suffix">+ </span>
+                                                                    </div>
+                                                                    <div class="ct-counter-sep default-sep"></div>
+                                                                    <div class="ct-counter-text styled-subtitle" style="color: #12232f">Lorem ipsum</div>
+                                                                    <a class="ct-counter-link" href="#" target="_self"></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="preloader">
+                                            <div class="preloader-spin"></div>
+                                        </div>
+
+                                        <div class="gallery-preloader-wrapper d-none">
+                                            <div class="row" style="margin-top: -21px">
+                                                <div class="gaps-margin gallery-style-justified ct-gallery-grid col-lg-12 col-md-12 col-sm-12 columns-4 hover-default item-animation-move-up " data-hover="default">
+                                                    <ul style="margin-left: -21px; margin-right: -21px;" class="gallery-set clearfix" data-max-row-height="280">
+                                                        <li style="padding: 21px" class="gallery-item col-lg-3 col-md-3 col-sm-4 col-xs-6 item-animations-not-inited post-1259 ct_pf_item type-ct_pf_item status-publish has-post-thumbnail hentry">
+                                                            <div class="wrap ct-wrapbox-style-default">
+                                                                <div class="overlay-wrap">
+                                                                    <div class="image-wrap ">
+                                                                        <picture>
+                                                                            <source srcset="/ 1x, / 2x" media="(max-width: 550px)">
+                                                                            <source srcset="/ 1x, / 2x" media="(max-width: 1100px)">
+                                                                            <source srcset="/ 1x, / 2x" media="(max-width: 1920px)">
+                                                                            <img src="/" width="660" height="600" class="attachment-ct-gallery-justified" alt="25" />
+                                                                        </picture>
+                                                                    </div>
+                                                                    <div class="overlay ">
+                                                                        <div class="overlay-circle"></div>
+                                                                        <a href="https://codex-themes.com/themes/cryption/wp-content/uploads/sites/9/2018/02/25.jpg" class="gallery-item-link fancy-gallery" data-fancybox-group="gallery-605cbb00a2abd">
+                                                                            <span class="slide-info"> </span>
+                                                                        </a>
+                                                                        <div class="overlay-content">
+                                                                            <div class="overlay-content-center">
+                                                                                <div class="overlay-content-inner">
+                                                                                    <a href="https://codex-themes.com/themes/cryption/wp-content/uploads/sites/9/2018/02/25.jpg" class="icon photo "> </a>
+                                                                                    <div class="overlay-line"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>

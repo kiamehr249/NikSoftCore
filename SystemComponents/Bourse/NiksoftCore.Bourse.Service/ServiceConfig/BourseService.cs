@@ -10,6 +10,8 @@ namespace NiksoftCore.Bourse.Service
         BourseDbContext dbContext { get; }
         IBourseUserService iBourseUserServ { get; set; }
         IUserProfileService iUserProfileServ { get; set; }
+        IPricingPackageService iPricingPackageServ { get; set; }
+        IIcoCaseService iIcoCaseServ { get; set; }
     }
 
     public class BourseService : IBourseService
@@ -17,6 +19,8 @@ namespace NiksoftCore.Bourse.Service
         public BourseDbContext dbContext { get; }
         public IBourseUserService iBourseUserServ { get; set; }
         public IUserProfileService iUserProfileServ { get; set; }
+        public IPricingPackageService iPricingPackageServ { get; set; }
+        public IIcoCaseService iIcoCaseServ { get; set; }
 
         public BourseService(string connection)
         {
@@ -24,6 +28,8 @@ namespace NiksoftCore.Bourse.Service
             IBourseUnitOfWork uow = dbContext;
             iBourseUserServ = new BourseUserService(uow);
             iUserProfileServ = new UserProfileService(uow);
+            iPricingPackageServ = new PricingPackageService(uow);
+            iIcoCaseServ = new IcoCaseService(uow);
         }
 
     }

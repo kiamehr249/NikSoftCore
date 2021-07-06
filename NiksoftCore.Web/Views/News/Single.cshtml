@@ -2,23 +2,156 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var content = (GeneralContent)ViewBag.Content;
+    var sames = (List<GeneralContent>)ViewBag.SameContent;
 }
 
-
-<div class="row">
-    <div class="blog-single col-md-8 col-md-offset-2">
-        <div class="blog-image">
-            <img src="/@content.Image" alt="@content.Title">
-        </div>
-
-        <h1>@content.Title</h1>
-
-        <div class="blog-content">
-            <h2>@content.Header</h2>
-            <div class="box-text">
-                @Html.Raw(content.BodyText)
+<div id="page-title" class="page-title-block page-title-alignment-center page-title-style-1 has-background-image" style="background-image: url('/templates/TraderFace/images/1-5.jpg'); padding-top: 110px; padding-bottom: 110px;">
+    <div class="container">
+        <div class="page-title-title" style="">
+            <h1 class="title-xlarge light" style="">@content.Title</h1>
+            <div class="breadcrumbs-container">
+                <div class="container">
+                    <div class="breadcrumbs">
+                        <span>
+                            <a href="/" itemprop="url"><span itemprop="title">Home</span></a>
+                        </span>
+                        <span class="divider"><span class="bc-devider"></span></span>
+                        <span>
+                            <a href="/" itemprop="url"><span itemprop="title">News</span></a>
+                        </span>
+                        <span class="divider">
+                            <span class="bc-devider"></span>
+                        </span>
+                        <span class="current">@content.Title</span>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+</div>
 
+<div class="block-content">
+    <div class="container">
+        <div class="panel row panel-sidebar-position-right with-sidebar">
+            <div class="panel-center col-lg-9 col-md-9 col-sm-12">
+                <article id="post-1160" class="post-1160 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized tag-bitcoin tag-blockchain tag-cryptocurrency tag-ethereum tag-ico tag-investment tag-marketing">
+                    <div class="entry-content post-content clearfix">
+                        <div class="post-meta date-color">
+                            <div class="entry-meta single-post-meta clearfix ct-post-date">
+                                <div class="post-meta-right d-none">
+                                    <span class="comments-link">
+                                        <a href="/">4</a>
+                                    </span>
+                                    <span class="sep"></span>
+                                    <span class="post-meta-likes">
+                                        <a href="#" class="zilla-likes" id="zilla-likes-1160" title="Like this">
+                                            <span class="zilla-likes-count">1</span> <span class="zilla-likes-postfix"></span>
+                                        </a>
+                                    </span>
+                                    <span class="post-meta-navigation">
+                                        <span class="post-meta-category-link">
+                                            <a href="https://codex-themes.com/themes/cryption/category/uncategorized/">&#xe620;</a>
+                                        </span> <span class="post-meta-navigation-next" title="Next post">
+                                            <a href="https://codex-themes.com/themes/cryption/news-page-3-10/" rel="next">&#xe634;</a>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="post-meta-left">
+                                    <span class="post-meta-date">January 3, 2018</span> <span class="post-meta-author">
+                                        <span>By</span> <span class="post-meta-author-link">admin</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="vc_row-full-width-before"></div>
+
+                        <div id="vc_row-605de7d7ade02" data-vc-full-width="true" data-vc-full-width-init="false" class="vc_row wpb_row vc_row-fluid vc_custom_1519197905763">
+                            <script type="text/javascript">
+                                if (typeof (ct_fix_fullwidth_position) == "function") {
+                                    ct_fix_fullwidth_position(document.getElementById("vc_row-605de7d7ade02"));
+                                }
+                            </script>
+                            <div class="wpb_column vc_column_container vc_col-sm-12">
+                                <div class="vc_column-inner">
+                                    <div class="wpb_wrapper">
+                                        <div class="centered-box ct-image-centered-box">
+                                            <div class="ct-image ct-wrapbox ct-wrapbox-style-default ct-wrapbox-position-centered" style="">
+                                                <div class="ct-wrapbox-inner ">
+                                                    <img class="ct-wrapbox-element img-responsive" src="/@content.Image" alt="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearboth"></div>
+                                        <div class="ct-divider " style="margin-top: 55px;"></div>
+                                        <div class="wpb_text_column wpb_content_element ">
+                                            <div class="wpb_wrapper">
+                                                <div class="title-h4" style="text-align: left;">
+                                                    @content.Title
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="wpb_text_column wpb_content_element ">
+                                            <div class="wpb_wrapper">
+                                                @Html.Raw(content.BodyText)
+                                            </div>
+                                        </div>
+                                        <div class="clearboth"></div>
+                                        <div class="ct-divider " style="margin-top: 55px;"></div>
+                                        <div class="ct-quote ct-quote-style-default">
+                                            <blockquote>@content.Footer</blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </article>
+            </div>
+            <div class="sidebar col-lg-3 col-md-3 col-sm-12" role="complementary">
+                <div class="widget-area">
+                    <aside id="custom_recent_posts-2" class="widget Custom_Recent_Posts">
+                        <h4 class="widget-title">Recent posts</h4>
+                        <ul class="posts  styled">
+                            @foreach (var item in sames)
+                            {
+                                <li class="clearfix ct-pp-posts">
+                                    <div class="ct-pp-posts-image">
+                                        <a href="/News/Single/@item.Id">
+                                            <img src="/@item.Image" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="ct-pp-posts-text">
+                                        <div class="ct-pp-posts-item">
+                                            <a href="/News/Single/@item.Id">@item.Title</a>
+                                        </div>
+                                        <div class="ct-pp-posts-date">@item.CreateDate.Value.ToShortDateString()</div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </aside>
+                    <aside id="contacts-2" class="widget widget_contacts">
+                        <h4 class="widget-title">Contact</h4>
+                        <div class="ct-contacts">
+                            <div class="ct-contacts-item ct-contacts-address">Address:<br> 908 New Hampshire Avenue #100, Washington, DC 20037, United States</div>
+                            <div class="ct-contacts-item ct-contacts-phone">Phone: +1 916-85-2235</div>
+                            <div class="ct-contacts-item ct-contacts-fax">Fax: +1 916-85-2235</div>
+                            <div class="ct-contacts-item ct-contacts-email">
+                                Email: <a href="mailto:info@cryption.network">info@cryption.network</a>
+                            </div>
+                            <div class="ct-contacts-item ct-contacts-website">
+                                Website: <a href="http://cryption.network">cryption.network</a>
+                            </div>
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>

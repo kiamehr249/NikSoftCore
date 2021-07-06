@@ -1,0 +1,168 @@
+﻿@using NiksoftCore.Bourse.Service;
+@model PackageRequest
+@{
+    ViewData["Title"] = "Create Form";
+    Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
+    var Messages = (List<NiksoftCore.ViewModel.NikMessage>)ViewBag.Messages;
+}
+<div class="text-right">
+    <div class="btn-group">
+        <a href="/Panel/PackageManage" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</div>
+<br />
+@Html.ValidationSummary()
+<form id="baseform" action="/Panel/PackageManage/Create" method="post" enctype="multipart/form-data">
+    <div class="registerdiv">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <div class="form-group">
+                    <label for="txtTitle" class="control-label">Title</label>
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "Title", @class = "form-control", @id = "txtTitle" })
+                </div>
+                <div class="form-group">
+                    <label for="txtPric" class="control-label">Pric</label>
+                    @Html.TextBoxFor(m => m.Pric, new { placeholder = "Pric", @class = "form-control", @id = "txtPric" })
+                </div>
+                <div class="form-group">
+                    <label>Color</label>
+                    <div data-color-format="rgb" data-color="@Model.ColorHex" class="colorpicker input-group">
+                        @Html.TextBoxFor(m => m.ColorHex, new { @class = "form-control", @id = "txtColorHex", @readonly = "readonly" })
+                        <span class="input-group-append add-on">
+                            <button class="btn btn-light" type="button">
+                                <i style="background-color: rgb(124, 66, 84);margin-top: 2px;"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div id="objform" class="object-form">
+                    <div v-for="item in form.items" class="form-group">
+                        <label :for="'txtObj' + item.Id">{{'Detail ' + item.Id}}</label>
+                        <input v-model="item.TextValue" type="text" class="form-control" />
+                    </div>
+                    <div class="form-group text-center">
+                        <button v-on:click="addInput()" type="button" class="btn btn-outline-info">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button v-if="form.items.length > 1" v-on:click="removeInput()" type="button" class="btn btn-outline-warning">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtDescription" class="control-label">Description</label>
+                    @Html.TextAreaFor(m => m.Description, new { placeholder = "Description", @class = "form-control", @id = "txtDescription", rows = "3" })
+                </div>
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.ListObjects, new { @id = "listobject" })
+                <div class="form-group text-center">
+                    <button id="submitform" type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        @if (Messages != null)
+        {
+            @foreach (var item in Messages)
+            {
+                if (item.Type == NiksoftCore.ViewModel.MessageType.Error)
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'error'
+                    });
+                    </text>
+                }
+                else
+                {
+                    <text>
+                    showMessage({
+                        text: '@item.Message',
+                        type: 'success'
+                    });
+                    </text>
+                }
+            }
+        }
+
+        $('#submitform').on('click', function () {
+            var vueItem = rootObjects['pricingPackage'];
+            if (vueItem.isValidForm()) {
+                $('#listobject').val(vueItem.getJosn());
+                $('#baseform').submit();
+            } else {
+                return false;
+            }
+        });
+
+        getInstance({
+            el: '#objform',
+            mixins: [utilities],
+            data: {
+                bUrl: '/',
+                form: {
+                    items: [
+                        {
+                            Id: 1,
+                            Title: '',
+                            KeyName: '',
+                            TextValue: '',
+                            ParentId: null,
+                            Items: []
+                        }
+                    ],
+                    editItems: @Html.Raw(Model.ListObjects)
+                }
+            },
+            created: function () {
+                if (this.form.editItems.length > 0) {
+                    this.form.items = this.form.editItems;
+                }
+            },
+            methods: {
+                addInput: function () {
+                    var self = this;
+                    this.form.items.push({
+                        Id: self.form.items.length + 1,
+                        Title: '',
+                        KeyName: '',
+                        TextValue: '',
+                        ParentId: null,
+                        Items: []
+                    });
+                },
+                removeInput: function () {
+                    if (this.form.items.length > 1) {
+                        this.form.items.pop();
+                    }
+                },
+                getJosn: function () {
+                    return JSON.stringify(this.form.items);
+                },
+                isValidForm: function () {
+                    var emptyItem = this.form.items.find(x => x.TextValue === undefined || x.TextValue === '' || x.TextValue === null);
+                    if (emptyItem === undefined) {
+                        return true;
+                    } else {
+                        showMessage({
+                            text: 'Details must have a value',
+                            type: 'error'
+                        });
+                        return false;
+                    }
+                }
+            }
+        }, "pricingPackage");
+
+    });
+</script>

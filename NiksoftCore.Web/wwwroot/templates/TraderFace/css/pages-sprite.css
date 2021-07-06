@@ -10181,13 +10181,14 @@ body .blog {
 .portfolio .item-animations-not-inited,
 .gallery-set .item-animations-not-inited,
 .blog:not(.home) .item-animations-not-inited {
-	visibility: hidden !important;
-	opacity: 0 !important;
+	/*! visibility: hidden !important; */
+	/*! opacity: 1 !important; */
 	-webkit-transition: none !important;
 	-moz-transition: none !important;
 	-o-transition: none !important;
 	transition: none !important;
-	transform: none !important
+	transform: none !important;
+	position: relative !important;
 }
 
 .item-animation-flip .item-animations-inited {
@@ -12472,7 +12473,7 @@ body.one-pager #site-header.fixed.shrink .header-style-4 #primary-menu.no-respon
 #primary-navigation .menu-toggle .menu-line-1,
 #primary-navigation .menu-toggle .menu-line-2,
 #primary-navigation .menu-toggle .menu-line-3 {
-	background: #18d685
+	background: #e30613;
 }
 
 .primary-navigation.responsive li.dl-back:after,
@@ -13221,7 +13222,7 @@ li.clearfix.ct-pp-posts:last-child {
 
 .ct-pp-posts-image img {
 	width: 70px;
-	height: auto;
+	height: 70px;
 	border-radius: 0
 }
 
@@ -17552,7 +17553,8 @@ body .ct-wrapbox-style-5 {
 	overflow: hidden
 }
 
-input[type="text"],
+input[type="text"], input[type="password"], input[type="phone"], 
+input[type="email"], 
 textarea {
 	display: block;
 	width: 100%;
@@ -17914,8 +17916,8 @@ div.wpcf7-mail-sent-ok {
 .mailchimp-form .submit-button-inline-label {
 	position: absolute;
 	width: auto !important;
-	top: 10px !important;
-	right: 20px !important
+	top: 0px !important;
+	right: 10px !important;
 }
 
 .mailchimp-form .submit-button-inline-label button {
@@ -17925,7 +17927,7 @@ div.wpcf7-mail-sent-ok {
 	white-space: nowrap !important;
 	border: 0 none !important;
 	vertical-align: middle !important;
-	height: 44px !important;
+	height: 45px !important;
 	line-height: 44px !important;
 	font-size: 16px;
 	text-transform: capitalize;
@@ -27618,7 +27620,7 @@ ul.wpb_thumbnails-fluid>li {
 }
 
 .vc_row[data-vc-full-width].vc_hidden {
-	opacity: 0
+	/*! opacity: 0 */
 }
 
 .vc_row-no-padding .vc_inner {

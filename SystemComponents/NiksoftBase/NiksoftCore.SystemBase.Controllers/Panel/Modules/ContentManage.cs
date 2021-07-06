@@ -34,7 +34,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             var pager = new Pagination(total, 10, part);
             ViewBag.Pager = pager;
 
-            ViewBag.PageTitle = "مدیریت دسته بندی ها";
+            ViewBag.PageTitle = "Content Management";
 
             ViewBag.Contents = ISystemBaseServ.iGeneralContentServ.GetPart(x => true, pager.StartIndex, pager.PageSize).ToList();
 
@@ -44,7 +44,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.PageTitle = "ایجاد دسته بندی";
+            ViewBag.PageTitle = "Create Content";
 
             var request = new ContentRequest();
             DropDownBinder(request);
@@ -54,6 +54,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] ContentRequest request)
         {
+            ViewBag.PageTitle = "Create Content";
             var user = await userManager.GetUserAsync(HttpContext.User);
 
             if (!FormVlide(request))
@@ -70,7 +71,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 {
                     File = request.ImageFile,
                     RootPath = hosting.ContentRootPath,
-                    UnitPath = Config.GetSection("FileRoot:MarketerFiles").Value
+                    UnitPath = Config.GetSection("FileRoot:ContentDir").Value
                 });
 
                 if (!SaveImage.Success)
@@ -112,7 +113,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpGet]
         public IActionResult Edit(int Id)
         {
-            ViewBag.PageTitle = "بروزرسانی دسته بندی";
+            ViewBag.PageTitle = "Create Content";
 
             var theItem = ISystemBaseServ.iGeneralContentServ.Find(x => x.Id == Id);
             var request = new ContentRequest
@@ -134,11 +135,12 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpPost]
         public async Task<IActionResult> Edit([FromForm] ContentRequest request)
         {
+            ViewBag.PageTitle = "Create Content";
             var user = await userManager.GetUserAsync(HttpContext.User);
 
             if (request.Id < 1)
             {
-                AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید", "fa");
+                AddError("Editing error Please perform the operation from the beginning", "fa");
             }
 
             if (!FormVlide(request))
@@ -155,7 +157,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 {
                     File = request.ImageFile,
                     RootPath = hosting.ContentRootPath,
-                    UnitPath = Config.GetSection("FileRoot:BusinessFile").Value
+                    UnitPath = Config.GetSection("FileRoot:ContentDir").Value
                 });
 
                 if (!Image.Success)
@@ -163,7 +165,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                     DropDownBinder(request);
                     Messages.Add(new NikMessage
                     {
-                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Message = "File upload failed Try again",
                         Type = MessageType.Error,
                         Language = "Fa"
                     });
@@ -230,7 +232,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             bool result = true;
             if (string.IsNullOrEmpty(request.Title))
             {
-                AddError("عنوان باید مقدار داشته باشد", "fa");
+                AddError("The title must have a value", "fa");
                 result = false;
             }
 

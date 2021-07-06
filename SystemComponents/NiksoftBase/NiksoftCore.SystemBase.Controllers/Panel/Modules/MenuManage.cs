@@ -50,18 +50,18 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
 
-            ViewBag.PageTitle = "مدیریت منو ها";
+            ViewBag.PageTitle = "Menu Category Manage";
 
             ViewBag.Contents = ISystemBaseServ.iMenuCategoryServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
 
-            return View();
+            return View(request);
         }
 
         [HttpGet]
         public IActionResult Create(int Id)
         {
 
-            ViewBag.PageTitle = "ایجاد دسته بندی";
+            ViewBag.PageTitle = "Create Menu Category";
 
             var request = new MenuCategoryRequest();
 
@@ -103,12 +103,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
 
                 if (!SaveImage.Success)
                 {
-                    Messages.Add(new NikMessage
-                    {
-                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
-                        Type = MessageType.Error,
-                        Language = "Fa"
-                    });
+                    AddError("File upload failed Try again");
                     ViewBag.Messages = Messages;
                     return View(request);
                 }
@@ -186,7 +181,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             bool result = true;
             if (string.IsNullOrEmpty(request.Title))
             {
-                AddError("عنوان باید مقدار داشته باشد", "fa");
+                AddError("The title must have a value");
                 result = false;
             }
 
@@ -228,7 +223,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             var pager = new Pagination(total, 10, request.part);
             ViewBag.Pager = pager;
 
-            ViewBag.PageTitle = "مدیریت منو / " + category.Title;
+            ViewBag.PageTitle = "Menu Manage / " + category.Title;
 
             ViewBag.Contents = ISystemBaseServ.iMenuServ.GetPart(query, pager.StartIndex, pager.PageSize, x => x.OrderId, true).ToList();
 
@@ -247,7 +242,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 parent = await ISystemBaseServ.iMenuServ.FindAsync(x => x.Id == ParentId);
             }
 
-            ViewBag.PageTitle = category.Title + " / ایجاد آیتم ها / " + parent.Title;
+            ViewBag.PageTitle = category.Title + " / Create Items / " + parent.Title;
 
             var request = new MenuRequest();
 
@@ -299,7 +294,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 {
                     Messages.Add(new NikMessage
                     {
-                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Message = "File upload failed Try again",
                         Type = MessageType.Error,
                         Language = "Fa"
                     });
@@ -430,13 +425,13 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             bool result = true;
             if (string.IsNullOrEmpty(request.Title))
             {
-                AddError("عنوان باید مقدار داشته باشد", "fa");
+                AddError("The title must have a value");
                 result = false;
             }
 
             if (request.CategoryId == 0)
             {
-                AddError("دسته بندی باید مقدار داشته باشد", "fa");
+                AddError("The category must have a value");
                 result = false;
             }
 

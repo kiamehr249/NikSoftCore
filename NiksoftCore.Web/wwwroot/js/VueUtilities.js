@@ -1,9 +1,9 @@
 ﻿
-var rootObjects = [];
+var rootObjects = {};
 
-function getInstance(vueObj, index) {
+function getInstance(vueObj, name) {
 	var instance = new Vue(vueObj);
-	rootObjects[index] = instance;
+	rootObjects[name] = instance;
 	return instance;
 }
 

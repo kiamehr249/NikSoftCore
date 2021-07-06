@@ -1,7 +1,7 @@
 ﻿@using NiksoftCore.SystemBase.Service
 @model NiksoftCore.ViewModel.MenuGridRequest
 @{
-    ViewData["Title"] = "مدیریت منوها";
+    ViewData["Title"] = "Menu Manage";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
     var contents = (List<Menu>)ViewBag.Contents;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
@@ -41,18 +41,10 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="txtTitle" class="control-label">عنوان</label>
-                        @Html.TextBoxFor(m => m.Title, new { placeholder = "عنوان", @class = "form-control", @id = "txtTitle" })
+                        <label for="txtTitle" class="control-label">Title</label>
+                        @Html.TextBoxFor(m => m.Title, new { placeholder = "Title", @class = "form-control", @id = "txtTitle" })
                     </div>
                 </div>
-                @*<div class="col-sm-3">
-                        <div class="form-group">
-                            <label for="CategoryId" class="control-label">Parent Category</label>
-                            <select class="form-control m-b" asp-for="CategoryId" asp-items="ViewBag.Categories">
-                                <option selected="selected" value="0">select category</option>
-                            </select>
-                        </div>
-                    </div>*@
                 @Html.HiddenFor(m => m.ParentId)
                 @Html.HiddenFor(m => m.CategoryId)
                 <div class="col-sm-3" style="padding-top: 29px;">
@@ -70,14 +62,14 @@
     <table class="table table-hover text-center">
         <thead>
             <tr>
-                <th class="text-primary text-center" width="30px">ردیف</th>
-                <th class="text-primary text-center">عنوان</th>
-                <th class="text-primary text-center">تصویر</th>
-                <th class="text-primary text-center">توضیحات</th>
-                <th class="text-primary text-center">آیتم ها</th>
-                <th class="text-primary text-center">وضعیت</th>
-                <th class="text-primary text-center">مرتب سازی</th>
-                <th class="text-primary text-center" width="100px">عملیات</th>
+                <th class="text-primary text-center" width="30px">#</th>
+                <th class="text-primary text-center">Title</th>
+                <th class="text-primary text-center">Image</th>
+                <th class="text-primary text-center">Description</th>
+                <th class="text-primary text-center">Items</th>
+                <th class="text-primary text-center">Status</th>
+                <th class="text-primary text-center">Sorting</th>
+                <th class="text-primary text-center" width="100px">Operations</th>
             </tr>
         </thead>
         <tbody>
@@ -99,7 +91,7 @@
                     </td>
                     <td>
                         <a href="/Panel/MenuManage/MenuGrid?CategoryId=@item.CategoryId&ParentId=@item.Id" class="btn btn-outline-info btn-sm">
-                            آیتم ها <span class="badge badge-warning">@item.Childs.Count</span>
+                            Items <span class="badge badge-warning">@item.Childs.Count</span>
                         </a>
                     </td>
                     <td>

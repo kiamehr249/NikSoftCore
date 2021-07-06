@@ -16,7 +16,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel
 
         public IActionResult Index()
         {
-            ViewBag.PageTitle = "داشبورد";
+            ViewBag.PageTitle = "Dashboard";
             return View();
         }
     }

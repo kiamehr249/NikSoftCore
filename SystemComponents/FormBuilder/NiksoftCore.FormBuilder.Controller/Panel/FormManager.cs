@@ -215,6 +215,8 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
             item.MaxMessage = request.MaxMessage;
             item.MinValue = request.MinValue;
             item.MinMessage = request.MinMessage;
+            item.IsRequired = request.IsRequired;
+            item.EmptyMessage = request.EmptyMessage;
 
             if (request.Id == 0)
             {
@@ -308,31 +310,36 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
                 Id = 2,
                 Title = "Text Area"
             });
-            types.Add(new ListItemModel
-            {
-                Id = 3,
-                Title = "Text Editor"
-            });
-            types.Add(new ListItemModel
-            {
-                Id = 4,
-                Title = "Check Box"
-            });
-            types.Add(new ListItemModel
-            {
-                Id = 5,
-                Title = "Drop Down List"
-            });
-            types.Add(new ListItemModel
-            {
-                Id = 6,
-                Title = "Radio Button List"
-            });
+            //types.Add(new ListItemModel
+            //{
+            //    Id = 3,
+            //    Title = "Text Editor"
+            //});
+            //types.Add(new ListItemModel
+            //{
+            //    Id = 4,
+            //    Title = "Check Box"
+            //});
+            //types.Add(new ListItemModel
+            //{
+            //    Id = 5,
+            //    Title = "Drop Down List"
+            //});
+            //types.Add(new ListItemModel
+            //{
+            //    Id = 6,
+            //    Title = "Radio Button List"
+            //});
             types.Add(new ListItemModel
             {
                 Id = 7,
                 Title = "File Upload"
             });
+            //types.Add(new ListItemModel
+            //{
+            //    Id = 8,
+            //    Title = "Date Picker"
+            //});
             ViewBag.ControlTypes = new SelectList(types, "Id", "Title", ctype);
         }
 
@@ -482,6 +489,42 @@ namespace NiksoftCore.FormBuilder.Controller.Panel
 
         #endregion
 
+        #region FormData
+        public IActionResult FormAnswers(FormDataSearch request)
+        {
+            ViewBag.PageTitle = "Forms Management";
+
+            var query = iFormBuilderServ.iFormDataServ.ExpressionMaker();
+            query.Add(x => x.FormId == request.FormId);
+
+            bool isSearch = false;
+            if (!string.IsNullOrEmpty(request.DataText))
+            {
+                query.Add(x => x.AnswerObject.Contains(request.DataText));
+                isSearch = true;
+            }
+
+            ViewBag.Search = isSearch;
+
+
+            var total = iFormBuilderServ.iFormDataServ.Count(query);
+            var pager = new Pagination(total, 10, request.part);
+            ViewBag.Pager = pager;
+
+            ViewBag.Contents = iFormBuilderServ.iFormDataServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
+            ViewBag.Controls = iFormBuilderServ.iFormControlServ.GetPart(x => x.FormId == request.FormId, 0, 30, x => x.OrderId, false);
+            return View(request);
+        }
+
+        public async Task<IActionResult> RemoveFormData(int Id)
+        {
+            var item = await iFormBuilderServ.iFormDataServ.FindAsync(x => x.Id == Id);
+            var formId = item.FormId;
+            iFormBuilderServ.iFormDataServ.Remove(item);
+            await iFormBuilderServ.iFormDataServ.SaveChangesAsync();
+            return Redirect("/Panel/FormManager/FormAnswers/?FormId=" + formId);
+        }
+        #endregion
 
     }
 }

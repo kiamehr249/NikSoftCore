@@ -10,12 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="General\**" />
-    <EmbeddedResource Remove="General\**" />
-    <None Remove="General\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
@@ -39,10 +33,6 @@
     <ProjectReference Include="..\..\..\Utilities\NiksoftCore.Utilities\NiksoftCore.Utilities.csproj" />
     <ProjectReference Include="..\..\..\ViewModel\NiksoftCore.ViewModel\NiksoftCore.ViewModel.csproj" />
     <ProjectReference Include="..\NiksoftCore.Bourse.Service\NiksoftCore.Bourse.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Panel\" />
   </ItemGroup>
 
 </Project>

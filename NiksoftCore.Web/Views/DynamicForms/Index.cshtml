@@ -2,7 +2,6 @@
 @model FormDataRequest
 @{
     var theForm = (Form)ViewBag.Form;
-    var answers = (List<FormAnswer>)ViewBag.Answers;
     string ansObj = (string)ViewBag.AnsObj;
     ViewData["Title"] = theForm.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,87 +21,64 @@
         <p class="text-center">@theForm.Description</p>
     </div>
 
-    <div class="nik-form">
+    <div id="formbuilder" class="nik-form">
         <div class="row">
             <div class="col-sm-4 col-sm-offset-4">
-                @foreach (var item in answers)
-                {
-                    <div class="form-group">
-                        @if (item.ControlType == 1)
-                        {
-                            <label for="txt_@item.Id">@item.Title</label>
-                            <input id="txt_@item.Id" type="text" class="form-control" />
-                        }
-                        else if (item.ControlType == 2)
-                        {
-                            <label for="txt_@item.Id">@item.Title</label>
-                            <textarea id="txt_@item.Id" type="text" class="form-control" rows="3"></textarea>
-                        }
-                        else if (item.ControlType == 3)
-                        {
-                            <label for="txt_@item.Id">@item.Title</label>
-                            <textarea id="txt_@item.Id" type="text" class="form-control text-editor" rows="3"></textarea>
-                        }
-                        else if (item.ControlType == 4)
-                        {
-                            <label for="chb_@item.Id">
-                                <input type="checkbox" class="checkbox" />
-                                @item.Title
-                            </label>
-                        }
-                        else if (item.ControlType == 5)
-                        {
-                            <label for="txt_@item.Id">@item.Title</label>
-                            <select id="ddl_@item.Id" class="form-control">
-                                @foreach (var citem in item.Items)
-                                {
-                                    if (citem.Selected)
-                                    {
-                                        <option value="@citem.ItemValue" selected>@citem.ItemText</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@citem.ItemValue">@citem.ItemText</option>
-                                    }
-
-                                }
-                            </select>
-                        }
-                        else if (item.ControlType == 6)
-                        {
-                            <label>@item.Title</label>
-                            @foreach (var citem in item.Items)
-                            {
-                                if (citem.Selected)
-                                {
-                                    <div class="radio">
-                                        <label><input type="radio" name="rad_@item.Id" checked> @citem.ItemText</label>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="radio">
-                                        <label><input type="radio" name="rad_@item.Id"> @citem.ItemText</label>
-                                    </div>
-                                }
-
-                            }
-
-                        }
-                        else if (item.ControlType == 7)
-                        {
-                            <label class="btn btn-outline-dark" for="fu_@item.Id">
-                                <input id="fu_@item.Id" type="file" style="display: none;" />
-                                @item.Title
-                            </label>
-                        }
+                <div v-for="item in form.items" class="form-group">
+                    <div v-if="item.ControlType == 1">
+                        <label :for="'txt_' + item.Id">{{item.Title}}</label>
+                        <input v-model="item.AnswerText" :id="'txt_' + item.Id" type="text" class="form-control" />
                     </div>
-                }
+                    <div v-if="item.ControlType == 2">
+                        <label :for="'txt_' + item.Id">{{item.Title}}</label>
+                        <textarea v-model="item.AnswerText" :id="'txt_' + item.Id" type="text" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div v-if="item.ControlType == 3">
+                        <label :for="'txt_' + item.Id">{{item.Title}}</label>
+                        <textarea v-model="item.AnswerText" :id="'txt_' + item.Id" type="text" class="form-control futext-editor" rows="3"></textarea>
+                    </div>
+                    <div v-if="item.ControlType == 4">
+                        <label :for="'chb_' + item.Id">
+                            <input v-model="item.AnswerBoolValue" :id="'chb_' + item.Id" type="checkbox" class="checkbox" />
+                            {{item.Title}}
+                        </label>
+                    </div>
+                    <div v-if="item.ControlType == 5">
+                        <label :for="'ddl_' + item.Id">{{item.Title}}</label>
+                        <select v-model="item.AnswerValue" :id="'ddl_' + item.Id" class="form-control">
+                            <option v-for="citem in item.Items" :value="citem.ItemValue">{{citem.ItemText}}</option>
+                        </select>
+                    </div>
+                    <div v-if="item.ControlType == 6">
+                        <label>{{item.Title}}</label>
+                        <div v-for="citem in item.Items" class="radio">
+                            <label><input v-model="item.AnswerValue" type="radio" :value="citem.ItemValue"> {{citem.ItemText}}</label>
+                        </div>
+                    </div>
+                    <div v-if="item.ControlType == 7">
+                        <label class="btn btn-outline-dark" :for="'fu_' + item.Id">
+                            <input v-on:change="fileChange(item, 'furef' + item.Id)" :id="'fu_' + item.Id" class="fu-upload" :ref="'furef' + item.Id" type="file" style="display: none;" />
+                            {{item.Title}}
+                        </label>
+                        <span :id="'funame_' + item.Id" class="file-name"></span>
+                        <div class="progress-box">
+                            <span id="prognumber">0%</span>
+                            <div class="progress">
+                                <div id="progress" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="item.ControlType == 8">
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <form action="/DynamicForms/?FormId=@theForm.Id" method="post">
+    <form id="baseform" action="/DynamicForms/?FormId=@theForm.Id" method="post">
         <div class="logindiv">
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-4">
@@ -110,7 +86,7 @@
                         @Html.HiddenFor(m => m.AnswerObject, new { @id = "hfObject" })
                         @Html.HiddenFor(m => m.FormId)
                         @Html.HiddenFor(m => m.Id)
-                        <button type="submit" class="btn btn-dark btn-full btn-br-0">Send</button>
+                        <button id="btnfsubmit" type="button" class="btn btn-dark btn-full btn-br-0">Send</button>
                     </div>
                 </div>
             </div>
@@ -119,6 +95,8 @@
 </div>
 <br />
 <script>
+    var formContext = @Html.Raw(ViewBag.AnsObj);
+
     $(document).ready(function () {
         @if (Messages != null)
         {
@@ -144,5 +122,120 @@
                 }
             }
         }
+
+        $('#btnfsubmit').on('click', function () {
+            var formBuilder = rootObjects['formbuilder'];
+            var isValid = formBuilder.validForm();
+            console.log(isValid)
+            if (isValid) {
+                var jsonObj = formBuilder.getJosn();
+                $('#hfObject').val(jsonObj);
+                showMessage({ text: 'The form submit successThe form was registered successfully', type: 'success' });
+                $('#baseform').submit();
+            }
+        });
+
+
+        getInstance({
+            el: '#formbuilder',
+            mixins: [utilities],
+            data: {
+                bUrl: '/api/FormBuilderApi/',
+                form: {
+                    items: @Html.Raw(ViewBag.AnsObj)
+                },
+                stringTypes: [1, 2, 3, 7, 8],
+                listTypes: [5, 6]
+            },
+            created: function () {
+                //this.bindPlugins();
+            },
+            methods: {
+                uploadFile: function (objItem, file) {
+                    var self = this;
+                    var formContent = new FormData();
+                    formContent.append('files', file);
+                    $('#uploadprogress').css({ width: '0%' });
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('post', self.bUrl + 'FileUpload', true);
+                    xhr.upload.addEventListener('progress', function (e) {
+                        let percentage = parseInt((e.loaded / e.total) * 100);
+                        $('#progress').css({ width: percentage + '%' });
+                        $('#prognumber').css({ right: percentage + '%' }).text(percentage + '%');
+                    }, false);
+
+
+                    xhr.onreadystatechange = function (result) {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            var result = JSON.parse(xhr.responseText);
+                            if (result.status == 200) {
+                                objItem.AnswerText = result.data;
+                                $('#progress').css({ width: '100%' });
+                                $('#prognumber').css({ right: '100%' }).text('100%');
+                                $('.btn-submit').prop('disabled', false);
+                                self.showMessage({ message: 'file upload succuessFile uploaded successfully', type: 'success' });
+                            } else {
+                                self.showMessage({ message: result.message, type: 'error' });
+                            }
+                        }
+                    };
+                    xhr.send(formContent);
+                },
+                getJosn: function () {
+                    return JSON.stringify(this.form.items);
+                },
+                bindPlugins: function () {
+                    //futext-editor
+                    //tinymce.init({
+                    //    selector: '.futext-editor',
+                    //    directionality: 'ltr',
+                    //    height: "500"
+                    //});
+
+
+                },
+                fileChange: function (item, refName) {
+                    if (this.$refs['furef8'][0].files.length > 0) {
+                        this.uploadFile(item, this.$refs['furef8'][0].files[0]);
+                    } else {
+                        this.showMessage({ message: 'No file selected', type: 'error' });
+                    }
+                    
+                },
+                validForm: function () {
+                    var self = this;
+                    var result = true;
+                    this.form.items.forEach(function (item, index) {
+                        if (item.IsRequired && self.stringTypes.includes(item.ControlType) && self.isEmpty(item.AnswerText)) {
+                            self.showMessage({ message: item.Title + ' cannot be empty', type: 'error' });
+                            result = false;
+                        }
+
+                        if (item.IsRequired && self.listTypes.includes(item.ControlType) && item.AnswerValue == 0) {
+                            self.showMessage({ message: item.Title + ' must have value', type: 'error' });
+                            result = false;
+                        }
+
+                        if (self.listTypes.includes(item.ControlType)) {
+                            var theSubItem = item.Items.find(x => x.ItemValue == item.AnswerValue);
+                            if (theSubItem != undefined && theSubItem != null) {
+                                item.AnswerText = theSubItem.ItemText;
+                            }
+                        }
+                    });
+                    return result;
+                },
+                isEmpty: function (entery) {
+                    if (entery === null || entery === undefined || entery === '') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }, "formbuilder");
+
+
     });
+
 </script>

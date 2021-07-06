@@ -1,0 +1,56 @@
+﻿@using NiksoftCore.SystemBase.Service
+@{
+    var contents = (List<GeneralContent>)ViewBag.Contents;
+}
+
+@if (contents.Count > 0)
+{
+    <div class="wpb_column vc_column_container vc_col-sm-12 vc_col-md-6">
+        <div class="vc_column-inner">
+            <div class="wpb_wrapper">
+                <div class="preloader">
+                    <div class="preloader-spin"></div>
+                </div>
+                <div class="ct-blog-slider ct-blog-slider-style-halfwidth clearfix">
+                    @foreach (var item in contents)
+                    {
+                        <article id="post-1657" class="no-image clearfix post-1657 post type-post status-publish format-standard has-post-thumbnail hentry category-blockchain tag-bitcoin tag-blockchain tag-cryptocurrency tag-ethereum tag-ico tag-investment tag-marketing">
+                            <div class="ct-slider-item-image">
+                                <a href="/News/Single/@item.Id">
+                                    <img width="564" height="524" src="/@item.SmallImage" class="img-responsive wp-post-image" alt="27" />
+                                </a>
+                            </div>
+                            <div class="ct-slider-item-overlay">
+                                <div class="ct-compact-item-content">
+                                    <div class="post-title">
+                                        <h5 class="entry-title reverse-link-color">
+                                            <a href="/News/Single/@item.Id" rel="bookmark">
+                                                <span>@item.Title</span>
+                                            </a>
+                                        </h5>
+                                    </div>
+                                    <div class="post-text date-color">
+                                        <div class="summary">
+                                            <p>@item.Header</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="post-meta date-color">
+                                    <div class="entry-meta clearfix ct-post-date">
+                                        <div class="post-meta-right"></div>
+                                        <div class="post-meta-left">
+                                            <span class="post-meta-author">By admin</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

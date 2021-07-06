@@ -85,7 +85,7 @@ function enToFaNumbers(str) {
 $(document).ready(function(){
 	tinymce.init({
         selector: '.text-editor',
-		directionality : 'rtl',
+		directionality : 'ltr',
 		height : "500"
     });
 });

@@ -1,6 +1,6 @@
 ﻿@using NiksoftCore.SystemBase.Service
 @{
-    ViewData["Title"] = "مدیریت دسته بندی ها";
+    ViewData["Title"] = "Content Management";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
     var contents = (List<GeneralContent>)ViewBag.Contents;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
@@ -17,12 +17,12 @@
     <table class="table table-hover text-center">
         <thead>
             <tr>
-                <th class="text-primary text-center" width="30px">ردیف</th>
-                <th class="text-primary text-center">عنوان</th>
-                <th class="text-primary text-center">دسته بالاتر</th>
-                <th class="text-primary text-center">تصویر</th>
-                <th class="text-primary text-center">توضیحات</th>
-                <th class="text-primary text-center" width="100px">عملیات</th>
+                <th class="text-primary text-center" width="30px">#</th>
+                <th class="text-primary text-center">Title</th>
+                <th class="text-primary text-center">Category</th>
+                <th class="text-primary text-center">Image</th>
+                <th class="text-primary text-center">Desctiption</th>
+                <th class="text-primary text-center" width="100px">Operation</th>
             </tr>
         </thead>
         <tbody>
@@ -39,24 +39,24 @@
                     <img src="/@item.Image" style="height: 70px; width: 70px;" />
                 </td>
                 <td>
-                    <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" data-toggle="modal" data-target="#mod_@item.Id">جزئیات</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" data-toggle="modal" data-target="#mod_@item.Id">Details</button>
                     <div id="mod_@item.Id" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title m-0" id="custom-width-modalLabel">متن های محتوا</h4>
+                                    <h4 class="modal-title m-0" id="custom-width-modalLabel">Content Texts</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
                                 <div class="modal-body text-left">
-                                    <h4>متن لید</h4>
+                                    <h4>Header Text</h4>
                                     <div>@Html.Raw(item.Header)</div>
-                                    <h4>متن اصلی</h4>
+                                    <h4>Main Text</h4>
                                     <div>@Html.Raw(item.BodyText)</div>
-                                    <h4>متن پایین</h4>
+                                    <h4>Footer Text</h4>
                                     <div>@Html.Raw(item.Footer)</div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">بستن</button>
+                                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">close</button>
                                 </div>
                             </div>
                         </div>

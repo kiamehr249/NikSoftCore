@@ -36,7 +36,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             var pager = new Pagination(total, 10, part);
             ViewBag.Pager = pager;
 
-            ViewBag.PageTitle = "مدیریت دسته بندی ها";
+            ViewBag.PageTitle = "Manage Categories";
             ViewBag.Contents = ISystemBaseServ.iContentCategoryServ.GetPartOptional(query, pager.StartIndex, pager.PageSize).ToList();
 
             return View();
@@ -45,7 +45,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.PageTitle = "ایجاد دسته بندی";
+            ViewBag.PageTitle = "Create Categories";
             var request = new ContentCategoryRequest();
             DropDownBinder(request);
             return View(request);
@@ -75,12 +75,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                 if (!SaveImage.Success)
                 {
                     DropDownBinder(request);
-                    Messages.Add(new NikMessage
-                    {
-                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
-                        Type = MessageType.Error,
-                        Language = "Fa"
-                    });
+                    AddError("File upload failed Try again");
                     ViewBag.Messages = Messages;
                     return View(request);
                 }
@@ -107,7 +102,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         [HttpGet]
         public IActionResult Edit(int Id)
         {
-            ViewBag.PageTitle = "بروزرسانی دسته بندی";
+            ViewBag.PageTitle = "Category Update";
 
             var theItem = ISystemBaseServ.iContentCategoryServ.Find(x => x.Id == Id);
             var request = new ContentCategoryRequest
@@ -129,7 +124,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
         {
             if (request.Id < 1)
             {
-                AddError("خطا در ویرایش لطفا از ابتدا عملیات را انجام دهید", "fa");
+                AddError("Editing error Please perform the operation from the beginning", "fa");
             }
 
             if (!FormVlide(request))
@@ -154,7 +149,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
                     DropDownBinder(request);
                     Messages.Add(new NikMessage
                     {
-                        Message = "آپلود فایل انجام نشد مجدد تلاش کنید",
+                        Message = "File upload failed Try again",
                         Type = MessageType.Error,
                         Language = "Fa"
                     });
@@ -223,7 +218,7 @@ namespace NiksoftCore.SystemBase.Controllers.Panel.Modules
             bool result = true;
             if (string.IsNullOrEmpty(request.Title))
             {
-                AddError("عنوان باید مقدار داشته باشد", "fa");
+                AddError("The title must have a value", "fa");
                 result = false;
             }
 

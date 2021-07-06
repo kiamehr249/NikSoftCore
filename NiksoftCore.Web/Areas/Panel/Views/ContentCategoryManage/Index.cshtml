@@ -1,6 +1,6 @@
 ﻿@using NiksoftCore.SystemBase.Service
 @{
-    ViewData["Title"] = "مدیریت دسته بندی ها";
+    ViewData["Title"] = "Manage Categories";
     Layout = "~/Areas/Panel/Views/Shared/_Layout.cshtml";
     var contents = (List<ContentCategory>)ViewBag.Contents;
     var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
@@ -17,12 +17,12 @@
     <table class="table table-hover text-center">
         <thead>
             <tr>
-                <th class="text-primary text-center" width="30px">ردیف</th>
-                <th class="text-primary text-center">عنوان</th>
-                <th class="text-primary text-center">دسته بالاتر</th>
-                <th class="text-primary text-center">تصویر</th>
-                <th class="text-primary text-center">توضیحات</th>
-                <th class="text-primary text-center" width="100px">عملیات</th>
+                <th class="text-primary text-center" width="30px">#</th>
+                <th class="text-primary text-center">Title</th>
+                <th class="text-primary text-center">Higher Category</th>
+                <th class="text-primary text-center">Image</th>
+                <th class="text-primary text-center">Description</th>
+                <th class="text-primary text-center" width="100px">Operation</th>
             </tr>
         </thead>
         <tbody>

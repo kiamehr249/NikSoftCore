@@ -3498,9 +3498,9 @@ File: Menu
 }
 
 .logo span, .logo-sm span {
-  color: #f2a208;
+  color: #e30613;
   /*! font-family: 'Crete Round', serif; */
-  padding-right: 5px;
+  padding-left: 5px;
 }
 
 .logo-sm {
@@ -3829,7 +3829,7 @@ body.fixed-left .side-menu.left {
 }
 
 #sidebar-menu ul ul li.active a {
-  color: #ec9e07;
+  color: #e30613;
 }
 
 #sidebar-menu ul ul a {
@@ -3839,7 +3839,7 @@ body.fixed-left .side-menu.left {
 }
 
 #sidebar-menu ul ul a:hover {
-  color: #FFA800;
+  color: #E30613;
 }
 
 #sidebar-menu ul ul a i {
@@ -3861,7 +3861,7 @@ body.fixed-left .side-menu.left {
 }
 
 #sidebar-menu > ul > li > a:hover {
-  background-color: #FFA8008A;
+  background-color: #FD949A;
   text-decoration: none;
 }
 
@@ -3900,7 +3900,7 @@ body.fixed-left .side-menu.left {
 
 #sidebar-menu > ul > li > a.active {
   color: #fff !important;
-  background-color: #F2A208 !important;
+  background-color: #E30613 !important;
 }
 
 #sidebar-menu > ul > li > a.active i {
@@ -3912,7 +3912,7 @@ body.fixed-left .side-menu.left {
 }
 
 .subdrop {
-  background: #FDDC9C !important;
+  background: #FFBBBF !important;
   color: #333 !important;
 }
 
@@ -4248,7 +4248,7 @@ body.fixed-left .side-menu.left {
 
 .page-header-title .page-title {
   margin-bottom: 12px;
-  color: #ffa800;
+  color: #e40613;
   font-size: 22px;
 }
 

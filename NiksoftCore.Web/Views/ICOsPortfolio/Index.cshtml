@@ -1,0 +1,157 @@
+﻿@using NiksoftCore.Bourse.Service
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var contents = (List<IcoCase>)ViewBag.Contents;
+    var pager = (NiksoftCore.Utilities.Pagination)ViewBag.Pager;
+}
+
+<div id="page-title" class="page-title-block page-title-alignment-center page-title-style-1 has-background-image" style="background-image: url('/templates/TraderFace/images/1-5.jpg'); padding-top: 110px; padding-bottom: 110px;">
+    <div class="container">
+        <div class="page-title-title" style="">
+            <h1 class="title-xlarge light" style="">ICOs Portfolio</h1>
+            <div class="breadcrumbs-container">
+                <div class="container">
+                    <div class="breadcrumbs">
+                        <span>
+                            <a href="/" itemprop="url"><span itemprop="title">Home</span></a>
+                        </span>
+                        <span class="divider"><span class="bc-devider"></span></span>
+                        <span class="current">ICOs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="block-content no-bottom-margin no-top-margin">
+    <div class="container">
+        <div class="panel row">
+            <div class="panel-center col-xs-12">
+                <article id="post-1245" class="post-1245 page type-page status-publish hentry">
+                    <div class="entry-content post-content clearfix">
+                        <div class="vc_row-full-width-before"></div>
+                        <div id="vc_row-605d027c7097e" data-vc-full-width="true" data-vc-full-width-init="false" class="vc_row wpb_row vc_row-fluid vc_custom_1520256713917 vc_row-has-fill">
+                            <script type="text/javascript">
+                                if (typeof (ct_fix_fullwidth_position) == "function") {
+                                    ct_fix_fullwidth_position(document.getElementById("vc_row-605d027c7097e"));
+                                }
+                            </script>
+                            <div class="wpb_column vc_column_container vc_col-sm-12">
+                                <div class="vc_column-inner">
+                                    <div class="wpb_wrapper">
+                                        <div class="clearboth"></div>
+                                        <div class="ct-divider divider_responsive" style="margin-top: 115px;"></div>
+                                        <div class="preloader">
+                                            <div class="preloader-spin"></div>
+                                        </div>
+                                        <div class="portfolio-preloader-wrapper">
+                                            <div data-per-page="6" data-portfolio-uid="c17df97" class="portfolio no-padding portfolio-pagination-scroll portfolio-style-justified background-style-white hover-zooming-blur item-animation-move-up title-on-page columns-2" data-hover="zooming-blur" data-next-page="0">
+                                                <div class="">
+                                                    <div class="row" style="margin: -21px;">
+                                                        <div class="portfolio-set clearfix" data-max-row-height="380">
+                                                            @foreach (var item in contents)
+                                                            {
+                                                                <div class="portfolio-item blockchain ico-cryptocurrency payment-integration col-sm-6 col-xs-12 item-animations-not-inited post-@item.Id ct_pf_item type-ct_pf_item status-publish has-post-thumbnail hentry" style="padding: 21px;" data-default-sort="1" data-sort-date="1520255342">
+                                                                    <div class="wrap clearfix">
+                                                                        <div class="image post-1259 ct_pf_item type-ct_pf_item status-publish has-post-thumbnail hentry">
+                                                                            <div class="image-inner">
+                                                                                <picture>
+                                                                                    <source srcset="/@item.Image 1x, /@item.Image 2x" media="(max-width: 550px)">
+                                                                                    <source srcset="/@item.Image 1x, /@item.Image 2x" media="(max-width: 1920px)">
+                                                                                    <img src="/@item.Image" width="844" height="767" class="attachment-ct-portfolio-justified" alt="Blockchain in Retail Business" />
+                                                                                </picture>
+                                                                            </div>
+                                                                            <div class="overlay">
+                                                                                <div class="overlay-circle"></div>
+                                                                                <div class="links-wrapper">
+                                                                                    <div class="links">
+                                                                                        <div class="portfolio-icons">
+                                                                                            <a href="/ICOsPortfolio/SinglePortfolio/@item.Id" target="_self" class="icon self-link "></a> <a href="javascript: void(0);" class="icon share"></a>
+                                                                                            <div class="overlay-line"></div>
+                                                                                            <div class="portfolio-sharing-pane">
+                                                                                                <div class="socials-sharing socials socials-colored-hover socials-rounded">
+                                                                                                    <a class="socials-item" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=" title="Facebook">
+                                                                                                        <i class="socials-item-icon facebook"></i>
+                                                                                                    </a> <a class="socials-item" target="_blank" href="https://twitter.com/intent/tweet?text=Blockchain+in+Retail+Business&#038;url=" title="Twitter">
+                                                                                                        <i class="socials-item-icon twitter"></i>
+                                                                                                    </a> <a class="socials-item" target="_blank" href="https://plus.google.com/share?url=" title="Google Plus">
+                                                                                                        <i class="socials-item-icon google-plus"></i>
+                                                                                                    </a> <a class="socials-item" target="_blank" href="https://www.pinterest.com/pin/create/button/?url=" title="Pinterest">
+                                                                                                        <i class="socials-item-icon pinterest"></i>
+                                                                                                    </a> <a class="socials-item" target="_blank" href="http://tumblr.com/widgets/share/tool?canonicalUrl=" title="Tumblr">
+                                                                                                        <i class="socials-item-icon tumblr"></i>
+                                                                                                    </a> <a class="socials-item" target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&#038;url=" title="LinkedIn">
+                                                                                                        <i class="socials-item-icon linkedin"></i>
+                                                                                                    </a> <a class="socials-item" target="_blank" href="http://www.stumbleupon.com/submit?url=" title="StumbleUpon">
+                                                                                                        <i class="socials-item-icon stumbleupon"></i>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="caption shadow-box bordered-box post-1259 ct_pf_item type-ct_pf_item status-publish has-post-thumbnail hentry">
+                                                                            <div class="title"> @item.Title</div>
+                                                                            <div class="caption-separator"></div>
+                                                                            <div class="subtitle">
+                                                                                <p></p>
+                                                                            </div>
+                                                                            <div class="info">
+                                                                                @item.StartDate.ToShortDateString()
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ct-pagination">
+                            <div class="ct-pagination-links">
+                                @if (pager.TotalSize > pager.PageSize)
+                                {
+                                    <a class="prev page-numbers" href="@Context.Request.Path?part=1"></a>
+
+                                    @if (pager.GetStartShow() >= pager.MaxShow)
+                                    {
+                                        <a class='page-numbers' href='@Context.Request.Path?part=@pager.GetBackRang()'>...</a>
+                                    }
+
+                                    @for (int i = pager.GetStartShow(); i <= pager.GetEndShow(); i++)
+                                    {
+                                        if (pager.Part == i)
+                                        {
+                                            <span aria-current='page' class='page-numbers current'>@i</span>
+                                        }
+                                        else
+                                        {
+                                            <li class="page-item"><a href="@Context.Request.Path?part=@i" class="page-link">@i</a></li>
+                                        }
+
+                                    }
+
+                                    @if ((pager.TotalParts - pager.MaxShow) > pager.Part)
+                                    {
+                                        <a class='page-numbers' href='@Context.Request.Path?part=@pager.GetEndShow()'>...</a>
+                                    }
+
+                                    <a class="next page-numbers" href="@Context.Request.Path?part=@pager.GetTotalParts()"></a>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>

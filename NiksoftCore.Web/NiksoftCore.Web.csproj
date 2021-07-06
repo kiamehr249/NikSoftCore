@@ -207,8 +207,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\files\base\" />
+    <Folder Include="wwwroot\files\FormBuilder\" />
     <Folder Include="wwwroot\files\Marketer\" />
+    <Folder Include="wwwroot\files\base\" />
     <Folder Include="wwwroot\lib\noty\" />
     <Folder Include="wwwroot\templates\UiTemplate\DashboardFace\" />
     <Folder Include="wwwroot\templates\UiTemplate\NikFace\" />

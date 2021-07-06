@@ -1,0 +1,75 @@
+﻿@using NiksoftCore.Bourse.Service
+@{
+    var contents = (List<PricingPackage>)ViewBag.Contents;
+}
+@if (contents.Count > 0)
+{
+    <div id="vc_row-605c71d562806" data-vc-full-width="true" data-vc-full-width-init="false" class="vc_row wpb_row vc_row-fluid vc_custom_1521107280178 vc_row-has-fill">
+        <script type="text/javascript">
+            if (typeof (ct_fix_fullwidth_position) == "function") { ct_fix_fullwidth_position(document.getElementById("vc_row-605c71d562806")); }
+        </script>
+        <div class="wpb_column vc_column_container vc_col-sm-12">
+            <div class="vc_column-inner">
+                <div class="wpb_wrapper">
+                    <div class="clearboth"></div>
+                    <div class="ct-divider divider_responsive" style="margin-top: 100px;"></div>
+                    <div class="wpb_text_column wpb_content_element  wpb_animate_when_almost_visible wpb_fadeIn fadeIn vc_custom_1523108061178">
+                        <div class="wpb_wrapper">
+                            <div class="title-h3" style="text-align: center;">
+                                <span style="color: #ffffff;">Cryption</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wpb_text_column wpb_content_element  wpb_animate_when_almost_visible wpb_fadeIn fadeIn">
+                        <div class="wpb_wrapper">
+                            <div class="title-h1" style="text-align: center;">
+                                <span class="light" style="color: #ffffff;">Pricing Package </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearboth"></div>
+                    <div class="ct-divider divider_responsive" style="margin-top: 58px;"></div>
+                    <div class="pricing-table row inline-row inline-row-center pricing-table-style-1 button-icon-default">
+                        @foreach (var item in contents)
+                        {
+                            var thisItems = item.ListObjects.GetObjectList();
+                            <div class="pricing-column-wrapper col-md-4 col-sm-4 col-xs-6  inline-column">
+                                <div class="pricing-column">
+                                    <div class="pricing-price-row  " style="color: @item.ColorHex; ">
+                                        <div class="pricing-price-title-wrapper">
+                                            <div style="color: @item.ColorHex" class="pricing-price-title">@item.Title</div>
+                                            <div class="pricing-price-subtitle"></div>
+                                        </div>
+                                        <div class="pricing-price-wrapper">
+                                            <div class="pricing-price" style="">
+                                                <div style=" color: @item.ColorHex; font-size: 50px;" class="pricing-cost">@item.Pric$</div>
+                                                <div class="time" style=d isplay:inline-block;color:#18d685;font-size:15px;>Per Month</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @foreach (var objItem in thisItems)
+                                    {
+                                        <figure class="pricing-row">
+                                            <span style="color: #ffffff;">@objItem.TextValue</span>
+                                        </figure>
+                                    }
+                                    <div class="pricing-footer">
+                                        <div class="ct-button-container ct-button-position-center">
+                                            <a class="ct-button ct-button-size-medium ct-button-style-outline ct-button-text-weight-normal ct-button-border-1"
+                                               style="border-radius: 25px; border-color: #fb5934; color: #fb5934; "
+                                               onmouseleave="this.style.borderColor = '@item.ColorHex'; this.style.backgroundColor = 'transparent'; this.style.color = '@item.ColorHex';"
+                                               onmouseenter="this.style.backgroundColor='@item.ColorHex';this.style.color='#fff';"
+                                               href="/" target="_blank">BUY NOW</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="clearboth"></div>
+                    <div class="ct-divider divider_responsive" style="margin-top: 150px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

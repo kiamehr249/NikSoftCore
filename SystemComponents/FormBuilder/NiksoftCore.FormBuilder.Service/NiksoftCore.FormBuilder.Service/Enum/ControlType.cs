@@ -8,6 +8,7 @@
         CheckBox = 4,
         DropDown = 5,
         RadioList = 6,
-        FileUpload = 7
+        FileUpload = 7,
+        DatePicker = 8
     }
 }

@@ -1,9 +1,9 @@
 ﻿$(document).ready(function () {
-    $('.datepicker').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dateFormat: 'yy/mm/dd'
-    });
+    //$('.datepicker').datepicker({
+    //    changeMonth: true,
+    //    changeYear: true,
+    //    dateFormat: 'yy/mm/dd'
+    //});
 
     $('input.emp-check').on('focusout', function () {
         if ($(this).val() != '') {
@@ -14,4 +14,14 @@
             $(this).addClass('is-invalid');
         }
     });
+
+    $('.datepicker').datepicker({
+        autoclose: !0,
+        todayHighlight: !0
+    });
+
+    $('.colorpicker').colorpicker({
+        format: 'hex'
+    });
+
 });

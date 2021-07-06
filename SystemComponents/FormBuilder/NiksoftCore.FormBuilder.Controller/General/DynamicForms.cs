@@ -75,13 +75,19 @@ namespace NiksoftCore.FormBuilder.Controller.General
                     Title = ctrl.Title,
                     AnswerValue = 0,
                     AnswerText = "",
+                    AnswerBoolValue = false,
                     ControlType = (int)ctrl.ControlType,
+                    MaxValue = ctrl.MaxValue,
+                    MaxMessage = ctrl.MaxMessage,
+                    MinValue = ctrl.MinValue,
+                    MinMessage = ctrl.MinMessage,
+                    IsRequired = ctrl.IsRequired,
+                    EmptyMessage = ctrl.EmptyMessage,
                     OrderId = ctrl.OrderId,
                     Items = items
                 });
             }
 
-            ViewBag.Answers = Answers;
             ViewBag.AnsObj = JsonConvert.SerializeObject(Answers);
             request.FormId = theForm.Id;
             return View(request);
@@ -118,13 +124,19 @@ namespace NiksoftCore.FormBuilder.Controller.General
                         Title = ctrl.Title,
                         AnswerValue = 0,
                         AnswerText = "",
+                        AnswerBoolValue = false,
                         ControlType = (int)ctrl.ControlType,
+                        MaxValue = ctrl.MaxValue,
+                        MaxMessage = ctrl.MaxMessage,
+                        MinValue = ctrl.MinValue,
+                        MinMessage = ctrl.MinMessage,
+                        IsRequired = ctrl.IsRequired,
+                        EmptyMessage = ctrl.EmptyMessage,
                         OrderId = ctrl.OrderId,
                         Items = items
                     });
                 }
 
-                ViewBag.Answers = Answers;
                 ViewBag.AnsObj = JsonConvert.SerializeObject(Answers);
 
                 return View(request);
@@ -148,6 +160,7 @@ namespace NiksoftCore.FormBuilder.Controller.General
                 }
                 item.UserCookie = HttpContext.Request.Cookies[".AspNetCore.Identity.Application"];
                 item.UserIP = HttpContext.Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                item.CreateDate = DateTime.Now;
                 iFormBuilderServ.iFormDataServ.Add(item);
             }
 
