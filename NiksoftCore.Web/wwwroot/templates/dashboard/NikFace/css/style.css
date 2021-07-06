@@ -3486,7 +3486,7 @@ File: Menu
 }
 
 .logo img, .logo-sm img {
-  height: 40px;
+  height: 60px;
 }
 
 .logo, .logo-sm {
@@ -3495,6 +3495,7 @@ File: Menu
   font-weight: 700;
   letter-spacing: .03em;
   line-height: 70px;
+  display: block;
 }
 
 .logo span, .logo-sm span {
