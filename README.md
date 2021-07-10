@@ -1,2 +1,2 @@
 # NikSoftCore
-Web Application Framework
+.NET 5 Web Application Framework
