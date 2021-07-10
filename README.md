@@ -1,2 +1,2 @@
-# NikSoftGroup
+# NikSoftCore
 Web Application Framework
