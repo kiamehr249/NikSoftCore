@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Enum\" />
+    <Folder Include="Map\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="ServiceConfig\" />
+    <Folder Include="Service\" />
+    <Folder Include="Poco\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\DataAccess\NiksoftCore.DataAccess\NiksoftCore.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>

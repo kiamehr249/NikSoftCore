@@ -37,9 +37,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiksoftCore.Bourse.Service"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FormBuilder", "FormBuilder", "{36E53AAD-CE14-490A-9F44-892D08342E2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiksoftCore.FormBuilder.Controller", "SystemComponents\FormBuilder\NiksoftCore.FormBuilder.Controller\NiksoftCore.FormBuilder.Controller.csproj", "{F4E582A5-5A28-423E-8362-2FA4B6CEA079}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiksoftCore.FormBuilder.Controller", "SystemComponents\FormBuilder\NiksoftCore.FormBuilder.Controller\NiksoftCore.FormBuilder.Controller.csproj", "{F4E582A5-5A28-423E-8362-2FA4B6CEA079}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiksoftCore.FormBuilder.Service", "SystemComponents\FormBuilder\NiksoftCore.FormBuilder.Service\NiksoftCore.FormBuilder.Service\NiksoftCore.FormBuilder.Service.csproj", "{CEEDD101-220F-46E6-BB39-D58B296C5DFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiksoftCore.FormBuilder.Service", "SystemComponents\FormBuilder\NiksoftCore.FormBuilder.Service\NiksoftCore.FormBuilder.Service\NiksoftCore.FormBuilder.Service.csproj", "{CEEDD101-220F-46E6-BB39-D58B296C5DFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LMS", "LMS", "{786834C5-72DF-47AA-8276-31A477167841}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiksoftCore.LMS.Service", "SystemComponents\LMS\NiksoftCore.LMS.Service\NiksoftCore.LMS.Service.csproj", "{68C36267-05A7-49BF-90E3-55891EDED1DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiksoftCore.LMS.Controller", "SystemComponents\LMS\NiksoftCore.LMS.Controller\NiksoftCore.LMS.Controller.csproj", "{6D46CC9B-5CD7-44FE-87EC-3E516A1A9E2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +101,14 @@ Global
 		{CEEDD101-220F-46E6-BB39-D58B296C5DFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEEDD101-220F-46E6-BB39-D58B296C5DFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEEDD101-220F-46E6-BB39-D58B296C5DFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68C36267-05A7-49BF-90E3-55891EDED1DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68C36267-05A7-49BF-90E3-55891EDED1DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68C36267-05A7-49BF-90E3-55891EDED1DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68C36267-05A7-49BF-90E3-55891EDED1DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D46CC9B-5CD7-44FE-87EC-3E516A1A9E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D46CC9B-5CD7-44FE-87EC-3E516A1A9E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D46CC9B-5CD7-44FE-87EC-3E516A1A9E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D46CC9B-5CD7-44FE-87EC-3E516A1A9E2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +128,9 @@ Global
 		{36E53AAD-CE14-490A-9F44-892D08342E2B} = {A950F06B-CEB5-4058-B77F-064324C9100D}
 		{F4E582A5-5A28-423E-8362-2FA4B6CEA079} = {36E53AAD-CE14-490A-9F44-892D08342E2B}
 		{CEEDD101-220F-46E6-BB39-D58B296C5DFE} = {36E53AAD-CE14-490A-9F44-892D08342E2B}
+		{786834C5-72DF-47AA-8276-31A477167841} = {A950F06B-CEB5-4058-B77F-064324C9100D}
+		{68C36267-05A7-49BF-90E3-55891EDED1DE} = {786834C5-72DF-47AA-8276-31A477167841}
+		{6D46CC9B-5CD7-44FE-87EC-3E516A1A9E2C} = {786834C5-72DF-47AA-8276-31A477167841}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6ECD2A52-14E6-44F0-9716-4BA1C6ADC664}
