@@ -11,12 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Enum\" />
-    <Folder Include="Map\" />
     <Folder Include="ViewModel\" />
-    <Folder Include="ServiceConfig\" />
-    <Folder Include="Service\" />
-    <Folder Include="Poco\" />
   </ItemGroup>
 
   <ItemGroup>

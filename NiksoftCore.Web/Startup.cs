@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using NiksoftCore.DataAccess;
 using NiksoftCore.DataModel;
+using NiksoftCore.LMS.Service;
 using NiksoftCore.SystemBase.Service;
 using NiksoftCore.Utilities.Routing;
 using System;
@@ -47,6 +48,8 @@ namespace NiksoftCore.Web
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<ILmsDataService, LmsDataService>();
 
             services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
             opt =>

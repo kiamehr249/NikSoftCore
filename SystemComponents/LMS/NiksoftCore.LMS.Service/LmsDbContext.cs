@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NiksoftCore.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NiksoftCore.LMS.Service
 {
@@ -20,11 +15,25 @@ namespace NiksoftCore.LMS.Service
             optionsBuilder.UseLazyLoadingProxies();
         }
 
-        //public DbSet<BourseUser> Users { get; set; }
+        public DbSet<LmsUser> LmsUsers { get; set; }
+        public DbSet<Term> Terms { get; set; }
+        public DbSet<Calendar> Calendars { get; set; }
+        public DbSet<CalendarDay> CalendarDays { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Leason> Leasons { get; set; }
+        public DbSet<LeasonFile> LeasonFiles { get; set; }
+        public DbSet<UserCourse> UserCourses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.ApplyConfiguration(new BourseUserMap());
+            builder.ApplyConfiguration(new LmsUserMap());
+            builder.ApplyConfiguration(new TermMap());
+            builder.ApplyConfiguration(new CalendarMap());
+            builder.ApplyConfiguration(new CalendarDayMap());
+            builder.ApplyConfiguration(new CourseMap());
+            builder.ApplyConfiguration(new LeasonMap());
+            builder.ApplyConfiguration(new LeasonFileMap());
+            builder.ApplyConfiguration(new UserCourseMap());
         }
     }
 }

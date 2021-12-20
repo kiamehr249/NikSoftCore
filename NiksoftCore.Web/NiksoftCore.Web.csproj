@@ -200,6 +200,8 @@
     <ProjectReference Include="..\SystemComponents\Bourse\NiksoftCore.Bourse.Service\NiksoftCore.Bourse.Service.csproj" />
     <ProjectReference Include="..\SystemComponents\FormBuilder\NiksoftCore.FormBuilder.Controller\NiksoftCore.FormBuilder.Controller.csproj" />
     <ProjectReference Include="..\SystemComponents\FormBuilder\NiksoftCore.FormBuilder.Service\NiksoftCore.FormBuilder.Service\NiksoftCore.FormBuilder.Service.csproj" />
+    <ProjectReference Include="..\SystemComponents\LMS\NiksoftCore.LMS.Controller\NiksoftCore.LMS.Controller.csproj" />
+    <ProjectReference Include="..\SystemComponents\LMS\NiksoftCore.LMS.Service\NiksoftCore.LMS.Service.csproj" />
     <ProjectReference Include="..\SystemComponents\NiksoftBase\NiksoftCore.SystemBase.Controllers\NiksoftCore.SystemBase.Controllers.csproj" />
     <ProjectReference Include="..\SystemComponents\NiksoftBase\NiksoftCore.SystemBase.Service\NiksoftCore.SystemBase.Service.csproj" />
     <ProjectReference Include="..\Utilities\NiksoftCore.Utilities\NiksoftCore.Utilities.csproj" />
